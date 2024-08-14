@@ -1,0 +1,304 @@
+/* .safetbg{
+  background-image:  url(referbg.jpg);
+  background-size: 100% 50vh;
+} */
+.refbtn {
+  margin-top: 10px;
+}
+
+.referbanner {
+  padding: 20px 0;
+}
+
+.referbanner h1 {
+  font-size: 35px;
+  font-weight: 400;
+  line-height: 52px;
+  letter-spacing: 3px;
+  text-align: center;
+  color: #01463A;
+}
+
+.referbanner p {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #818181;
+  text-align: center;
+}
+
+.referbannerimg {
+  width: 100%;
+  height: 60vh;
+  position: relative;
+}
+
+.referbannerimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* or 'contain' depending on your preference */
+}
+
+.referbanner .refrbannercontenttext {
+  position: absolute;
+  top: 45%;
+  left: 23%;
+  max-width: 470px;
+  text-align: center;
+
+}
+
+.referbanner .refrbannercontenttext p {
+
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #02231D;
+  margin-bottom: 15px;
+}
+
+.referbanner .refrbannercontenttext button {
+  width: 231px;
+  height: 56px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #5DC2B0;
+  box-shadow: 0px 2px 8px 0px #00000040;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 450;
+  line-height: 24px;
+  letter-spacing: 0.05em;
+  transition: all 0.5s;
+
+}
+
+.referbanner .refrbannercontenttext button:hover {
+  background: #45ae9b;
+  box-shadow: 0px 5px 10px 0px #0000006e;
+  transform: scale(1.1);
+
+}
+.refermainbox{
+  cursor: pointer;
+}
+
+.refergreen {
+  padding: 40px 0 0 0;
+  width: 256px;
+  height: 330px;
+  border-radius: 60px;
+  opacity: 0px;
+  background: #FFFFFF;
+
+  box-shadow: 2px 2px 10px 0px #00000040;
+  overflow: hidden;
+
+
+}
+
+.referround {
+  padding: 14px 3px;
+  border-radius: 45px;
+  background: #5DC2B0;
+
+}
+
+.referround p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 1px;
+  text-align: center;
+
+}
+
+@media (max-width:1600px) {
+  .referbanner .refrbannercontenttext {
+    left: 18%;
+  }
+
+}
+
+@media (max-width:1400px) {
+  .referbanner .refrbannercontenttext {
+    left: 15%;
+  }
+
+}
+
+@media (max-width:1200px) {
+  .referbanner .refrbannercontenttext {
+    left: 8%;
+  }
+
+}
+
+@media (max-width:1080px) {
+  .referbanner .refrbannercontenttext {
+    left: 4%;
+  }
+
+}
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .referbanner h1 {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  .referbanner p {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .referbannerimg {
+    height: 500px;
+  }
+
+}
+
+@media (max-width:1080px) {
+  .referbanner .refrbannercontenttext {
+    left: 2%;
+  }
+
+}
+
+@media (max-width:900px) {
+
+
+  .referbanner .refrbannercontenttext {
+    max-width: 400px;
+    left: 2%;
+
+
+  }
+
+}
+
+@media (max-width: 768px) {
+  .referbanner h1 {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .referbanner p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .referbannerimg {
+    height: 300px;
+  }
+
+  .referbanner .refrbannercontenttext {
+    max-width: 290px;
+    left: 10%;
+  }
+
+  .referbanner .refrbannercontenttext p {
+    line-height: 26px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #02231D;
+    margin-bottom: 15px;
+  }
+
+  .referbanner .refrbannercontenttext button {
+
+    width: 151px;
+    height: 40px;
+    padding: 8px;
+    line-height: 24px;
+    font-size: 18px;
+
+  }
+}
+
+@media (max-width:600px) {
+  .referbanner .refrbannercontenttext {
+    max-width: 250px;
+    left: 5%;
+  }
+
+  .referbanner .refrbannercontenttext p {
+    line-height: 22px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #02231D;
+    margin-bottom: 15px;
+  }
+
+  .referbanner .refrbannercontenttext button {
+
+    width: 131px;
+    height: 40px;
+    padding: 8px;
+    line-height: 24px;
+    font-size: 16px;
+
+  }
+
+}
+
+@media (max-width: 480px) {
+  .referbanner h1 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .referbanner p {
+    font-size: 10px;
+    line-height: 18px;
+  }
+
+  .referbannerimg {
+    height: 200px;
+  }
+
+  .referbanner .refrbannercontenttext p {
+    display: none;
+  }
+
+  .referbanner .refrbannercontenttext {
+    width: 45%;
+
+  }
+
+  .referbanner .refrbannercontenttext button {
+    margin-top: 20px;
+    width: 81px;
+    height: 40px;
+    padding: 8px;
+    line-height: 24px;
+    font-size: 14px;
+
+  }
+}
+
+.refbtn button {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  padding: 14px 25px;
+  background-color: #7b7df3;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.refbtn button:hover {
+
+  background-color: rgb(72, 126, 206);
+
+
+}

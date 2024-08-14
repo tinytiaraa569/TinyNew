@@ -1,0 +1,30 @@
+@media (max-width : 1400px) {
+    .createproduct{
+        margin-top: 40px;
+
+        width: 70% !important;
+    }
+}
+@media (max-width : 1200px) {
+    .createproduct{
+        margin-top: 40px;
+
+        width: 80% !important;
+    }
+}
+@media (max-width : 1080px) {
+    .createproduct{
+        margin-top: 40px;
+
+        width: 80% !important;
+    }
+}
+@media (max-width : 780px) {
+    .createproduct{
+        margin-top: 40px;
+        width: 85% !important;
+        height: 80vh !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+    }
+}
