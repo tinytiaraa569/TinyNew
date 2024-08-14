@@ -13,7 +13,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'https://tiny-new-gmpe.vercel.app/',
+    origin: 'https://tiny-new-gmpe.vercel.app',
     credentials: true
 }));
 
