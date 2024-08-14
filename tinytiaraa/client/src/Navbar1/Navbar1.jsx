@@ -410,7 +410,7 @@ function Navbar1() {
                         setbars(false)
                         navigate("/")
                     }} >
-                        <img className='w-[150px] h-[60px] object-contain' src="https://lirp.cdn-website.com/48f148a6/dms3rep/multi/opt/Tiny+Tiaraa_C5-1920w.png" alt="" />
+                        <img className='w-[150px] h-[60px] object-contain' src={logo} alt="" />
                     </div>
 
                     <div>

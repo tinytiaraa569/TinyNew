@@ -178,7 +178,11 @@
 .navbar1 .mobileresp i {
     font-size: 30px;
 }
+.mobile-nav .logo img{
+    cursor: pointer;
+    transform: scale(1.5);
 
+}
 @media (max-width:1300px) {
     .navbar1 .logo img {
         width: 150px;
