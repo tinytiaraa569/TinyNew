@@ -19,8 +19,12 @@
 }
 .footerone{
     width: 20%;
+    height: 200px;
 }
 .footermain .footerone img{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
     cursor: pointer;
 }
 .footertwo{

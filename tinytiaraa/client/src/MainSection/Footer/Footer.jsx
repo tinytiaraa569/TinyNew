@@ -2,6 +2,8 @@ import React from 'react'
 import './Footer.css'
 import { Link } from 'react-router-dom'
 
+import logoimg from '../../Navbar1/logo.png'
+
 function Footer() {
     const scrollToTop = () => {
         window.scrollTo({
@@ -13,7 +15,7 @@ function Footer() {
             
         <div className='footer'>
             <div className="footerone">
-                <img src="https://lirp.cdn-website.com/48f148a6/dms3rep/multi/opt/Tiny+Tiaraa_C5-217w.png" alt="" />
+                <img src={logoimg} alt="" />
             </div>
             <div className="footertwo">
                 <h4 className='footerheading'>LOCATE US</h4>

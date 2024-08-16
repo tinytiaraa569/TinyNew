@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
+import { FaAngleRight, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { MdChevronRight, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
 import navimg from './about.jpg'
 import { categoriesData } from '@/static/data';
@@ -23,6 +23,7 @@ import { backend_url } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { usePriceRange } from '@/pricerange/PriceRangeContext';
 import logo from './logo.png'
+import { IoSearchOutline } from 'react-icons/io5';
 
 
 function Navbar1() {
@@ -84,16 +85,26 @@ function Navbar1() {
         fade: true,
     };
     const handleSearchChange = (e) => {
-        const term = e.target.value
-        setsearchTerm(term)
+        e.preventDefault();
+        const term = e.target.value;
+        setsearchTerm(term);
 
-        const filteredProducts = products && products.filter((product) => {
-            return product.name.toLowerCase().includes(term.toLowerCase())
-
-        })
-        setsearchData(filteredProducts)
-
-    }
+        if (term === "") {
+            // If the search term is empty, reset the searchData to null or empty array
+            setsearchData(null);
+        } else {
+            // Filter the products based on the search term
+            const filteredProducts = products && products.filter((product) => {
+                // Convert both name and SKU ID to lowercase for case-insensitive search
+                const lowerCaseTerm = term.toLowerCase();
+                return (
+                    product.name.toLowerCase().includes(lowerCaseTerm) ||
+                    (product.skuid && product.skuid.toLowerCase().includes(lowerCaseTerm))
+                );
+            });
+            setsearchData(filteredProducts);
+        }
+    };
 
     const handleMouseEnter = () => {
         setDropDown(true);
@@ -112,6 +123,10 @@ function Navbar1() {
         setOpen(false);
         setOpenWishlist(true)
     }
+    const resetSearch = () => {
+        setsearchTerm("");
+        setsearchData(null);
+    };
     return (
         <>
 
@@ -311,10 +326,58 @@ function Navbar1() {
 
                         <div className='flex gap-[10px] items-center'>
                             <div className={`${styles.noramlFlex}`}>
-                                <div className="relative cursor-pointer mr-[2px]">
-                                    {/* <FaSearch size={23} className='iconnav' /> */}
-                                    <CgSearch size={28} className='mt-1' />
+                                <div className="relative cursor-pointer mr-[20px]">
+                                    <div className='searchconstyle'>
+                                        <form onSubmit={(e) => e.preventDefault()}>
+
+
+                                            <input type="search" placeholder='Search Product..' className='' value={searchTerm} onChange={handleSearchChange} />
+
+                                            <div className='searchiconadjustpos'>
+                                            <IoSearchOutline size={22}/>
+
+                                            </div>
+
+
+                                            {
+                                                searchData && searchData.length !== 0 ?
+                                                    (
+                                                        <div className="absolute left-0  min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+                                                            {
+                                                                searchData && searchData.map((i, index) => {
+                                                                    const d = i.name;
+                                                                    const Product_name = d.replace(/\s+/g, "-")
+                                                                    return (
+
+                                                                        <div
+                                                                            onClick={() => {
+                                                                                navigate(`/product/${Product_name}`)
+                                                                                resetSearch();
+
+                                                                            }}>
+                                                                            <div className="w-full flex items-center pb-3 overflow-hidden">
+                                                                                <img src={`${i.images[1]?.url}`} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
+                                                                                <p className='font-Poppins text-[15px]'>{i.name}</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    )
+
+                                                                })
+                                                            }
+
+                                                        </div>
+                                                    ) :
+                                                    null
+                                            }
+
+                                        </form>
+                                    </div>
+
                                 </div>
+
+
+
                             </div>
 
 
@@ -435,7 +498,7 @@ function Navbar1() {
                 {
                     open && (
                         <div className='fixed w-full bg-[#0000005f] z-[20] h-full top-0 left-0'>
-                            <div className='fixed w-[60%] bg-[white] h-screen top-0 left-0 z-10'>
+                            <div className='mobajustnavsall fixed w-[60%]  bg-[white] h-screen top-0 left-0 z-10'>
                                 <div className="w-full justify-between flex pr-3">
                                     <div>
 
@@ -466,12 +529,17 @@ function Navbar1() {
                                                             const Product_name = d.replace(/\s+/g, "-")
                                                             return (
                                                                 <>
-                                                                    <Link to={`/product/${Product_name}`}>
+                                                                    <div
+                                                                        onClick={() => {
+                                                                            navigate(`/product/${Product_name}`)
+                                                                            resetSearch();
+                                                                            closenavbar();
+                                                                        }}>
                                                                         <div className="w-full flex items-center pb-3 overflow-hidden">
-                                                                            <img src={i.image_Url[0].url} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
+                                                                            <img src={`${i.images[1]?.url}`} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
                                                                             <p className='font-Poppins text-[15px]'>{i.name}</p>
                                                                         </div>
-                                                                    </Link>
+                                                                    </div>
                                                                 </>
                                                             )
 
@@ -490,72 +558,54 @@ function Navbar1() {
                                     <ul className={`flex flex-col gap-10  ${bars ? "menuopen menu" : "menu"}`}  >
 
                                         <li><NavLink to="/" onClick={closenavbar} activeClassName="active">Home</NavLink></li>
-                                        <li><NavLink to="/about" onClick={closenavbar} activeClassName="active">About</NavLink></li>
-                                        <li className='relative parenthover' >
-                                            <NavLink to="/shop" onClick={closenavbar} activeClassName="active">Products</NavLink>
-                                            {
-                                                dropDown ?
-                                                    <IoIosArrowUp
-                                                        size={20}
-                                                        className="absolute right-0 top-0 cursor-pointer"
-                                                    // onClick={() => setDropDown(!dropDown)}
-                                                    />
+                                        <li><NavLink to="/about" onClick={closenavbar} activeClassName="active">Our Story </NavLink></li>
+                                        <li className="relative group">
+                                            <NavLink
+                                                to="/products"
+                                                onClick={closenavbar}
+                                                className="flex items-center text-black hover:text-blue-500"
+                                                activeClassName="active"
+                                            >
+                                                Shop
+                                                <FaAngleRight className='ml-3' />
 
-                                                    :
+                                            </NavLink>
+                                            <div className="absolute top-[50%] left-0 w-[300px] mt-2 bg-white rounded-md shadow-lg hidden group-hover:block">
+                                                <div className="p-4">
+                                                    <div className="mb-4">
+                                                        <h3 className="font-semibold text-lg text-center">Shop Now
 
-                                                    <IoIosArrowDown
-                                                        size={20}
-                                                        className="absolute right-0 top-0 cursor-pointer"
-                                                    // onClick={() => setDropDown(!dropDown)}
-                                                    />
+                                                        </h3>
+                                                        <h6 className="pb-2 collectionnav1" onClick={() => {
+                                                            navigate("/products")
+                                                            closenavbar()
+                                                        }}>Gold</h6>
+                                                        <h6 className="pb-2 collectionnav1">Silver</h6>
+                                                    </div>
+                                                    <div className="mb-4">
+                                                        <h3 className="font-semibold text-lg text-center">By Category</h3>
+                                                        <div>
+                                                            {categoriesData && categoriesData.map((i, index) => (
+                                                                <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} >
+                                                                    <img src={i.image_Url} alt="" style={{ width: "35px", height: "45px", objectFit: "contain", userSelect: "none" }} />
+                                                                    <h3 className="m-1 cursor-pointer select-none font-Poppins hover:text-blue-500">{i.title}</h3>
+                                                                    <div className={`subcatchild top-3 left-[70%] pb-4 w-64 bg-white absolute z-30 rounded-b-md shadow-sm`}>
+                                                                        {i.subcategories.map((val, subIndex) => (
+                                                                            <div key={subIndex}>
+                                                                                <h3 className="m-3 cursor-pointer select-none font-Poppins hover:text-blue-500">{val.name}</h3>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
 
-                                            }
-
-                                            {/* {
-    dropDown ? (
-        <DropDown
-            categoriesData={categoriesData}
-            setDropDown={setDropDown}
-        />
-
-    ) :
-        null
-} */}
-                                            <ul className='productnavmaincategory w-[150px] pb-4 bg-[#fff] mt-5 z-30 rounded-b-md shadow-sm'  >
-                                                <li className='relative pb-2' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
-                                                    <span className='flex justify-between items-center '>
-                                                        <Link href="">18 KT Diamond</Link>
-                                                        <MdOutlineKeyboardArrowRight />
-                                                    </span>
-                                                    <ul className='absolute top-0 left-[97%] chngcat'>
-
-                                                        <li className='py-2'>
-
-                                                            {
-                                                                dropDown ? (
-                                                                    <DropDown
-                                                                        categoriesData={categoriesData}
-                                                                        setDropDown={setDropDown}
-                                                                    />
-
-                                                                ) :
-                                                                    null
-                                                            }
-                                                        </li>
-                                                    </ul>
-
-
-
-
-                                                </li>
-
-                                            </ul>
-
-
-
+                                                </div>
+                                            </div>
                                         </li>
-                                        <li><NavLink to="/personalised-prosperity" onClick={closenavbar} activeClassName="active">Customized Jewellery</NavLink></li>
-                                        <li><Link to="/contacts" onClick={closenavbar} activeClassName="active">Contact</Link></li>
+                                        <li><NavLink to="/personalised-prosperity" onClick={closenavbar} activeClassName="active">Customization</NavLink></li>
+                                        <li><Link to="/contacts" onClick={closenavbar} activeClassName="active">Contact Us</Link></li>
                                     </ul>
                                 </div>
 
