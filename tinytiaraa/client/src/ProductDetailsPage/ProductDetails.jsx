@@ -79,7 +79,7 @@ function ProductDetails({ data }) {
     };
 
     const productSlug = createSlug(data.name);
-    const productUrl = `https://tiny-tiaraa.vercel.app/product/${productSlug}`;
+    const productUrl = `https://tiny-tiaraanew.vercel.app/product/${productSlug}`;
 
 
     // // console.log(data.withchainimages)

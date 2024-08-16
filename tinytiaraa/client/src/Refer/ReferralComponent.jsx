@@ -23,13 +23,13 @@ const ReferralComponent = () => {
     const fetchUserReferralCode = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:8000/api/v2/referral/user-referral-code',
+                'https://tiny-new.vercel.app/api/v2/referral/user-referral-code',
                 { withCredentials: true }
             );
             const { referralCode } = response.data;
 
             if (referralCode) {
-                const newReferralLink = `http://localhost:5173/?referral=${referralCode}`;
+                const newReferralLink = `https://tiny-tiaraanew.vercel.app/?referral=${referralCode}`;
 
                 // Save to localStorage
                 localStorage.setItem('referralCode', referralCode);
@@ -55,7 +55,7 @@ const ReferralComponent = () => {
             // Validate the referral code
             const validateReferralCode = async () => {
                 try {
-                    const response = await axios.post('http://localhost:8000/api/v2/referral/validate-referral-code', { referralCode: storedReferralCode });
+                    const response = await axios.post('https://tiny-new.vercel.app/api/v2/referral/validate-referral-code', { referralCode: storedReferralCode });
                     console.log('Validation Response:', response.data);
                     if (response.data.success) {
                         setReferralCode(storedReferralCode);
@@ -80,11 +80,11 @@ const ReferralComponent = () => {
         setIsGenerating(true);
         setError('');
         try {
-            const response = await axios.post('http://localhost:8000/api/v2/referral/generate-referral-code', {}, { withCredentials: true });
+            const response = await axios.post('https://tiny-new.vercel.app/api/v2/referral/generate-referral-code', {}, { withCredentials: true });
             const { referralCode } = response.data;
 
             // Generate the referral link
-            const newReferralLink = `http://localhost:5173/?referral=${referralCode}`;
+            const newReferralLink = `https://tiny-tiaraanew.vercel.app/?referral=${referralCode}`;
 
             // Save to localStorage
             localStorage.setItem('referralCode', referralCode);
