@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Styles/styles'
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai';
-import { MdOutlineVerified } from "react-icons/md";
+import { MdOutlineEmail, MdOutlineVerified } from "react-icons/md";
 import { RiRefund2Line } from "react-icons/ri";
 import { RiExchangeFundsLine } from "react-icons/ri";
-import { CiCalendarDate } from "react-icons/ci";
+import { CiCalendarDate, CiFacebook } from "react-icons/ci";
 import { AiOutlineGold } from "react-icons/ai";
 import { IoChevronBackOutline, IoChevronForwardOutline, IoDiamondOutline } from "react-icons/io5";
 import { RxDimensions } from "react-icons/rx";
 import { MdFeaturedPlayList } from "react-icons/md";
 import { MdHealthAndSafety } from "react-icons/md";
-import { FaAngleRight, FaChild } from "react-icons/fa";
+import { FaAngleRight, FaChild, FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { TbBrandMinecraft } from "react-icons/tb";
 import { TbCertificate } from "react-icons/tb";
 import { MdOutlineAppRegistration } from "react-icons/md";
@@ -35,6 +35,16 @@ import review1img from './reviewsimages/review1.jpg'
 import review2img from './reviewsimages/review2.jpg'
 import axios from 'axios';
 import Modal from 'react-modal';
+import './productdetails.css'
+
+import withchainimg from './withchain.svg'
+import withoutchainimg from './withoutchain.svg'
+
+
+import { EmailIcon, FacebookIcon, WhatsappIcon, } from "react-share";
+import { EmailShareButton, FacebookShareButton, WhatsappShareButton, } from "react-share";
+
+
 Modal.setAppElement('#root'); // Replace '#root' with the ID of your root element
 
 function ProductDetails({ data }) {
@@ -64,6 +74,13 @@ function ProductDetails({ data }) {
 
     const [selectedEnamelColor, setSelectedEnamelColor] = useState(null)
 
+    const createSlug = (name) => {
+        return name.toLowerCase().replace(/[\s]+/g, '-').replace(/[^\w-]+/g, '');
+    };
+
+    const productSlug = createSlug(data.name);
+    const productUrl = `https://tiny-tiaraa.vercel.app/product/${productSlug}`;
+
 
     // // console.log(data.withchainimages)
     // const addToCartHandler = (id) => {
@@ -84,11 +101,11 @@ function ProductDetails({ data }) {
     //     }
 
     // }
-    const addToCartHandler = (id) => {
+    const addToCartHandler = (id, shouldNavigate = false) => {
         console.log("Selected Color:", selectedColor);
         console.log("Show With Chain:", showWithChain);
         console.log("Selected Enamel Color:", selectedEnamelColor);
-    
+
         if (validateForm()) {
             // Check if the item already exists in the cart with the same combination of options
             const isItemExists = cart && cart.find((i) =>
@@ -97,7 +114,7 @@ function ProductDetails({ data }) {
                 i.showWithChain === showWithChain &&
                 i.selectedEnamelColor === selectedEnamelColor
             );
-    
+
             if (isItemExists) {
                 toast.error("Item Already in cart");
             } else {
@@ -113,19 +130,39 @@ function ProductDetails({ data }) {
                     };
                     dispatch(addToCart(cartData));
                     toast.success("Product Added to cart");
-    
+
                     // Console log the updated cart value
                     console.log("Updated Cart:", cart); // Assuming `cart` is from useSelector
-    
+
                     // Optionally, you can also console log the `cartData` if needed
                     console.log("Added to Cart:", cartData);
+                    if (shouldNavigate) {
+                        navigate('/cart');
+                    }
                 }
             }
         } else {
             toast.error("Please select color and chain options.");
         }
     };
-    
+
+    const calculateDiscountPercentage = (originalPrice, discountPrice) => {
+        if (originalPrice > 0 && discountPrice > 0 && originalPrice > discountPrice) {
+            return Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+        }
+        return 0;
+    };
+    const discountPercentage = calculateDiscountPercentage(data.originalPrice, data.discountPrice);
+
+
+
+    const shareOnInstagram = (product) => {
+        // const caption = `Check out this amazing product: ${product.name}!`;
+
+        console.log(product, "share data")
+        const url = `https://www.instagram.com/?url=${productUrl}`;
+        window.open(url, '_blank');
+    };
 
     useEffect(() => {
 
@@ -300,7 +337,7 @@ function ProductDetails({ data }) {
     const validateForm = () => {
         const hasChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
         const isEnamelColorRequired = shouldShowEnamel && availableEnamelColors.length > 0;
-    
+
         if (!hasChainOptions) {
             return selectedColor !== null && (!isEnamelColorRequired || selectedEnamelColor !== null);
         }
@@ -483,12 +520,13 @@ function ProductDetails({ data }) {
 
                                 <div className='w-full 800px:w-[50%] pt-5'>
 
-                                    <h1 className={`${styles.productTitle}`}>{data.name}</h1>
+                                    <h1 className={`${styles.productTitle} `}>{data.name}</h1>
                                     <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-2`}>{data.skuid}</h3>
-                                    <p className="font-Poppins pt-3">{data.description}</p>
+                                    <p className="font-Poppins pt-1">{data.description}</p>
+                                    
 
-                                    <div className="flex pt-3">
-                                        <h5 className={`${styles.productDiscountPrice}`}>
+                                    <div className="flex items-center pt-3">
+                                        <h5 className={`${styles.productDiscountPrice} !stext-[#01463A]`}>
                                             ₹
                                             {data.originalPrice === 0
                                                 ? data.originalPrice
@@ -497,12 +535,28 @@ function ProductDetails({ data }) {
                                         <h4 className={`${styles.price} line-through`}>
                                             {data.originalPrice ? " ₹" + data.originalPrice : null}
                                         </h4>
+                                        {discountPercentage > 0 && (
+                                            <span className="ml-2  text-[#4B4B4B] font-[450]">
+                                                Save {discountPercentage}%
+                                            </span>
+                                        )}
 
+                                    </div>
+
+                                    <div className="instockcon">
+                                        <div className='instockconflex'>
+                                            <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                            </svg>
+                                            <span>
+                                            In Stock
+                                            </span>
+                                        </div>
                                     </div>
 
                                     {/* metal options */}
 
-                                    <div>
+                                    {/* <div>
                                         {Object.keys(data.MetalColor).length > 0 && (
                                             <div className="metal-color-options">
                                                 <h3 className='text-[20px] font-[600] font-Poppins'>Metal Color</h3>
@@ -531,14 +585,54 @@ function ProductDetails({ data }) {
                                                 })}
                                             </div>
                                         )}
+                                    </div> */}
+                                    <div className='metaloptionproduct'>
+                                        {Object.keys(data.MetalColor).length > 0 && (
+                                            <>
+                                                <div className='metaltitle'>
+                                                    <h3>Metal Color :</h3>
+                                                </div>
+                                                <div className='metalmaincolor'>
+                                                    {Object.keys(data.MetalColor).map((key, index) => {
+                                                        // Remove "clr" from the end of color name
+                                                        const label = key.replace(/clr$/i, '');
+                                                        const isSelected = selectedColor === index;
+
+                                                        return (
+                                                            <div key={index} className={`metalcolor ${isSelected ? 'selected' : ''}`}>
+                                                                <input
+                                                                    type="radio"
+                                                                    name='colorcode'
+                                                                    id={`color-${key}`}
+                                                                    value={key}
+                                                                    checked={isSelected}
+                                                                    onChange={() => handleColorChange(index) || setSelectedColor(index)}
+                                                                    className='hidden' // Hide the default radio button
+                                                                />
+                                                                <label
+                                                                    htmlFor={`color-${key}`}
+                                                                    className='flex items-center flex-col cursor-pointer'
+                                                                >
+                                                                    <span className={`metalcolorcon ${key} ${isSelected ? 'selected' : ''}`}></span>
+                                                                    <span className='ml-2'>{label}</span>
+                                                                </label>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
+
 
                                     {/* enamel option */}
 
                                     {shouldShowEnamel && (
-                                        <div className="pt-3">
-                                            <h3 className="text-[20px] font-[600] font-Poppins">Enamel Color</h3>
-                                            <div className="radio-option text-[16px] font-Poppins py-1">
+                                        <div className="enamelotion pt-3">
+                                            <div className='enameltitle'>
+                                                <h3 className="text-[20px] font-[600] font-Poppins">Enamel Color : </h3>
+                                            </div>
+                                            <div className="enamelselect text-[16px] font-Poppins py-1">
                                                 <select
                                                     name="enamelColors"
                                                     id="enamelColors"
@@ -559,7 +653,7 @@ function ProductDetails({ data }) {
 
 
                                     {/* chain options */}
-                                    {shouldShowChainOptions && (
+                                    {/* {shouldShowChainOptions && (
 
                                         <div className='pt-3'>
                                             <h3 className='text-[20px] font-[600] font-Poppins'>Chain</h3>
@@ -590,7 +684,67 @@ function ProductDetails({ data }) {
                                                 </label>
                                             </div>
                                         </div>
+                                    )} */}
+
+
+
+                                    {shouldShowChainOptions && (
+                                        <div className='chainotionproduct'>
+                                            <div className='chainopiontitle'>
+                                                <h3>Chain Type :</h3>
+                                            </div>
+
+                                            <div className='chainotionproductflex'>
+                                                <div className='withchainoption'>
+                                                    <div className='withchainoptioncon text-[16px] font-Poppins py-1'>
+                                                        <input
+                                                            type='radio'
+                                                            id='withChain'
+                                                            name='chainOption'
+                                                            value='with'
+                                                            onChange={() => toggleChainOption('with')}
+                                                            checked={showWithChain}
+                                                        />
+                                                        <label htmlFor='withChain' className='pl-2 cursor-pointer'>
+                                                            With 1 gm Chain
+                                                            <span>( 13 inches) (+₹ 7,200)</span>
+
+                                                            <div className='withchainimgcon'>
+                                                                <img src={withchainimg} alt="" />
+                                                            </div>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                                <div className='withchainoption'>
+                                                    <div className='withchainoptioncon text-[16px] font-Poppins py-1'>
+                                                        <input
+                                                            type='radio'
+                                                            id='withoutChain'
+                                                            name='chainOption'
+                                                            value='without'
+                                                            onChange={() => toggleChainOption('without')}
+                                                            checked={!showWithChain}
+                                                        />
+                                                        <label htmlFor='withoutChain' className='pl-2 cursor-pointer'>
+                                                            Without Chain
+                                                            <div className='withchainimgcon mt-[22px]'>
+                                                                <img src={withoutchainimg} alt="" />
+                                                            </div>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+
                                     )}
+
+
 
                                     {/* Validation Error */}
                                     {validationError && (
@@ -601,113 +755,111 @@ function ProductDetails({ data }) {
 
 
 
-
-
-
-                                    {/* <div>
-                                        {
-                                            data.Enamelcolor.length ?
-                                                <div className='mt-4'>
-                                                    <h3 className='text-[20px] font-[600] font-Poppins'>Enamel Color</h3>
-                                                    <select className='border text-[16px] font-Poppins py-0.5 '>
-                                                        <option value="" selected disabled>Select Enamel Color</option>
-                                                        {
-                                                            data.metalcolor.map((val) => {
-                                                                return (
-                                                                    <option value="">{val.colorname}</option>
-                                                                )
-
-                                                            })
-                                                        }
-                                                    </select>
-                                                </div>
-                                                :
-                                                null
-                                        }
-                                    </div> */}
-
-                                    {/* <div className='mt-4'>
-                                        <h3 className='text-[20px] font-[600] font-Poppins'>Chain</h3>
-                                        {
-                                            data.chain.length ?
-                                                (
-                                                    <>
-                                                        {
-
-                                                            data.chain.map((val) => {
-                                                                return (
-                                                                    <div className='flex text-[16px] font-Poppins py-0.5'>
-                                                                        <input type="radio" name='chainoption' id={val.yes || val.no} />
-                                                                        <div className='pl-2'>
-                                                                            <label htmlFor={val.yes}><p>{val.yes}</p></label>
-                                                                            <label htmlFor={val.no}><p>{val.no}</p></label>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                )
-
-                                                            })
-                                                        }
-
-                                                    </>
-                                                )
-                                                :
-                                                null
-                                        }
-
-
-                                    </div> */}
-
-                                    <div className='flex items-center mt-5 justify-between pr-3'>
-                                        <div className='overflow-hidden'>
-                                            <button onClick={decrementCount} className="bg-gradient-to-r font-Poppins from-[#1BB8E5] to-[#1fa3c7] text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out">-</button>
-                                            <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[9.1px] font-Poppins overflow-hidden">
+                                    <div className='flex items-center mt-5 gap-[20px] pr-3'>
+                                        <div className='cartqtycon overflow-hidden'>
+                                            <button onClick={decrementCount} className="text-black font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out">-</button>
+                                            <span className="bg-white text-black font-medium px-4 py-[9.1px] font-Poppins overflow-hidden">
                                                 {count}
                                             </span>
                                             <button onClick={incrementCount}
-                                                className="bg-gradient-to-r from-[#1BB8E5] font-Poppins to-[#1fa3c7] text-white font-bold rounded-br rounded-tr px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+                                                className="text-black font-bold rounded-br rounded-tr px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
                                             >+ </button>
                                         </div>
-                                        <div>
-                                            {
-                                                click ?
-                                                    <AiFillHeart
-                                                        size={30}
-                                                        className='cursor-pointer '
-                                                        color={click ? "red" : "#333"}
-                                                        onClick={() => removeFromWishlistHandler(data)}
-                                                        title='Remove from wishlist'
-                                                    />
-                                                    :
-                                                    <AiOutlineHeart
-                                                        size={30}
-                                                        className='cursor-pointer '
-                                                        color={click ? "red" : "#333"}
-                                                        onClick={() => addToWishlistHandler(data)}
-                                                        title='Add to wishlist'
 
-
-                                                    />
-                                            }
+                                        <div
+                                            className={`${styles.button} mt-2 rounded-[4px] !h-[45px] flex items-center !bg-[#01463A]`}
+                                            onClick={() => addToCartHandler(data._id)}
+                                        >
+                                            <span className="text-[#fff] flex items-center font-Poppins">
+                                                Add to cart <AiOutlineShoppingCart className="ml-1" />
+                                            </span>
                                         </div>
-
                                     </div>
 
                                     <div
-                                        className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
-                                        onClick={() => addToCartHandler(data._id)}
+                                        className={`${styles.button} productbuynowbtn mt-2 rounded-[4px]  flex items-center `}
+                                        onClick={() => addToCartHandler(data._id, true)}
                                     >
-                                        <span className="text-[#fff] flex items-center font-Poppins">
-                                            Add to cart <AiOutlineShoppingCart className="ml-1" />
+                                        <span className="flex items-center font-Poppins">
+                                            Buy Now
                                         </span>
                                     </div>
 
 
-                                    <div className={`${styles.button} mt-6 !w-[190px] p-4 !rounded !h-[40px]`} onClick={handleMessageSubmit}>
-                                        <span className='text-white flex items-center'> Send Message <AiOutlineMessage className='ml-2' /></span>
+                                    {/* add to wishlist */}
+
+                                    <div className='productaddtowish'>
+                                        {
+                                            click ?
+
+                                                <div className='productaddtowishflex cursor-pointer ' onClick={() => removeFromWishlistHandler(data)}>
+                                                    <AiFillHeart
+                                                        size={24}
+                                                        className='cursor-pointer '
+                                                        color={click ? "red" : "#333"}
+
+                                                        title='Remove from wishlist'
+                                                    />
+
+                                                    <span>Already in wishlist</span>
+
+                                                </div>
+                                                :
+                                                <div className='productaddtowishflex cursor-pointer ' onClick={() => addToWishlistHandler(data)}>
+                                                    <AiOutlineHeart
+                                                        size={24}
+
+                                                        color={click ? "red" : "#333"}
+
+                                                        title='Add to wishlist'
+
+
+                                                    />
+                                                    <span>Add to wishlist</span>
+                                                </div>
+                                        }
                                     </div>
+
+                                    {/* share product */}
+                                    <div className='shareproductlist'>
+                                        <div className='sharelisttitle'>
+                                            <h3>Share this product :</h3>
+
+                                        </div>
+
+                                        <div className='productsharelisticon'>
+                                            <FacebookShareButton url={productUrl} >
+                                                <FaFacebook size={28} className="share-icon" />
+
+                                                {/* <FacebookIcon size={32} round={true} /> */}
+                                            </FacebookShareButton>
+
+                                            <WhatsappShareButton url={productUrl} >
+                                                <FaWhatsapp size={28} className="share-icon" />
+
+                                                {/* <WhatsappIcon size={28} round={true} /> */}
+                                            </WhatsappShareButton>
+
+                                            <EmailShareButton url={productUrl} >
+                                                <MdOutlineEmail size={28} className="share-icon" />
+
+                                                {/* <EmailIcon size={28} round={true} /> */}
+                                            </EmailShareButton>
+
+                                            <div onClick={() => { shareOnInstagram(data) }}>
+                                                <FaInstagram size={28} className="share-icon" />
+
+                                                {/* <i className="fa-brands fa-square-instagram instasty" style={{ cursor: 'pointer' }}></i> */}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* <div className={`${styles.button} mt-6 !w-[190px] p-4 !rounded !h-[40px]`} onClick={handleMessageSubmit}>
+                                        <span className='text-white flex items-center'> Send Message <AiOutlineMessage className='ml-2' /></span>
+                                    </div> */}
 
 
 
@@ -758,6 +910,7 @@ const ProductDetailsInfo = ({ data }) => {
                     <>
                         <div className='mb-3'>
                             <h1 className={`text-[20px] font-[600] font-Poppins text-[#333] pt-1`}>{data.name}</h1>
+                            <p className="font-Poppins pt-1">{data.description}</p>
                             <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-1`}>{data.skuid}</h3>
 
                         </div>

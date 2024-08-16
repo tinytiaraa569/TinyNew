@@ -1,0 +1,238 @@
+.metaloptionproduct {
+    margin-top: 10px;
+
+    display: flex;
+    gap: 20px;
+}
+
+.metaloptionproduct .metaltitle h3 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #6A6A6A;
+}
+
+.metaloptionproduct .metalcolor {
+    width: 60px;
+    text-align: center;
+}
+
+.metaloptionproduct .metalcolor .metalcolorcon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.metaloptionproduct .metalmaincolor {
+    display: flex;
+    gap: 12px;
+}
+
+.YellowGoldclr {
+    background: #F6CE89;
+
+}
+
+.RoseGoldclr {
+    background: #FACBB9;
+
+}
+
+.WhiteGoldclr {
+    background: #B5B5B5;
+
+}
+
+.metaloptionproduct .metalcolor span {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #7D7878;
+    letter-spacing: 0.5px;
+}
+
+.metalcolorcon.selected {
+    border: 2px solid #5a5a5a;
+    /* Adjust the color and width as needed */
+}
+
+.metalcolor.selected span {
+    font-size: 11px;
+
+    font-weight: 600;
+    /* Makes the text slightly bolder */
+}
+
+.chainotionproduct {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.chainotionproduct .chainotionproductflex {
+    display: flex;
+    gap: 20px;
+}
+
+.chainotionproduct .chainopiontitle {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #6A6A6A;
+
+}
+
+.chainotionproduct .withchainoption .withchainoptioncon {
+    width: 140px;
+    height: auto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #464646;
+
+}
+
+.chainotionproduct .withchainoption .withchainoptioncon label {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #464646;
+
+}
+
+.chainotionproduct .withchainoption .withchainoptioncon label span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #464646;
+
+}
+
+.chainotionproduct .withchainimgcon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.chainotionproduct .withchainimgcon img {
+    width: 40px;
+    height: 40px;
+}
+
+.enamelotion {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.enamelotion .enameltitle h3 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #6A6A6A;
+
+}
+
+.enamelselect select {
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 55px;
+    color: #727272;
+
+
+}
+
+.cartqtycon {
+    border-radius: 8px;
+    border: 0.5px solid #000000cb
+}
+
+.productbuynowbtn {
+    letter-spacing: 2px;
+    width: 300px !important;
+    height: 40px !important;
+    background: #fff !important;
+    border: 0.5px solid #000000 !important;
+    transition: all 0.5s;
+    color: #000000;
+}
+
+.productbuynowbtn:hover {
+    transform: scale(1.01);
+    background: #107b69 !important;
+    border: 0.2px solid #0000009d;
+
+    color: #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.607);
+
+}
+
+.productaddtowish {
+    margin-top: 10px;
+    width: 210px;
+    height: 26px;
+
+}
+
+.productaddtowish .productaddtowishflex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shareproductlist {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.shareproductlist .sharelisttitle h3 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #464646;
+
+
+}
+
+.shareproductlist .productsharelisticon {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.shareproductlist .productsharelisticon .instasty {
+    border-radius: 50%;
+}
+
+.shareproductlist .share-icon {
+    fill: #3F3F3F;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+
+    &:hover {
+        fill: #131313;
+        /* Change to a darker color on hover */
+    }
+}
+.instockcon{
+    margin-top: 2px;
+}
+.instockcon .instockconflex{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.instockcon span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0B8D08;
+
+}
