@@ -1,33 +1,42 @@
-.freqques{
+.freqques {
     padding: 35px 30px;
     width: 100%;
     background-color: rgb(216, 232, 247);
     font-family: "Poppins", sans-serif;
-    text-align: center;
 
 }
-.freqques h1{
+
+.freqques h1 {
     font-weight: 600;
     font-size: 35px;
     letter-spacing: 4px;
+    text-align: center;
+
 }
-.freqques p{
+
+.freqques p {
     font-size: 18px;
+    text-align: center;
+
 }
-.accordiansmain{
+
+.accordiansmain {
     padding: 15px 0;
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 20px;
 }
-.accordiansleft{
+
+.accordiansleft {
     width: 45%;
 }
-.accordiansright{
+
+.accordiansright {
     width: 45%;
 }
-.freqbtn{
+
+.freqbtn {
     padding: 15px 25px;
     border: none;
     background-color: black;
@@ -39,30 +48,98 @@
 
 }
 
-.accordiansleft img ,.accordiansright img{
+.accordiansleft img,
+.accordiansright img {
     width: 30px;
     height: 30px;
     margin-right: 8px;
 }
+
+.moreques {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.moreques h3 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 52px;
+    color: #1F1F1F;
+}
+
+.moreques .morequespop {
+    padding-bottom: 25px;
+    width: 480px;
+    height: auto;
+}
+
+.moreques .morequespop .morequespopcon {
+    padding: 5px 25px;
+}
+
+.moreques .morequespop .morequespopcon h3 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 55px;
+    color: #727272;
+}
+
+.moreques .morequespop .morequespopcon textarea {
+    padding: 5px 15px;
+    width: 429px;
+    height: 124px;
+    border: 1px solid #D9D9D9;
+    resize: none;
+
+}
+
+.moreques .morequespop .morequespopcon textarea::placeholder {
+    color: #59595966;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+
+
+}
+
+.moreques .morequespop .morequespopcon button {
+    width: 150px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #5DC2B0;
+    color: #1F1F1F;
+    box-shadow: 0px 2px 8px 0px #00000040;
+    font-weight: 500;
+
+
+}
+
+
 @media (max-width:869px) {
-    .accordiansmain{
+    .accordiansmain {
         align-items: center;
         flex-direction: column;
         gap: 0;
     }
-    .accordiansleft{
+
+    .accordiansleft {
         width: 95%;
     }
-    .accordiansright{
+
+    .accordiansright {
         width: 95%;
     }
 }
 
 @media (max-width:600px) {
-    
-.accordiansleft img ,.accordiansright img{
-   
-    margin-right: 2px;
-}
-    
+
+    .accordiansleft img,
+    .accordiansright img {
+
+        margin-right: 2px;
+    }
+
 }

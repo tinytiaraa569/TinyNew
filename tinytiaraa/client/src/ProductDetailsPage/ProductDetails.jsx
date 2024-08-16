@@ -520,9 +520,9 @@ function ProductDetails({ data }) {
 
                                 <div className='w-full 800px:w-[50%] pt-5'>
 
-                                    <h1 className={`${styles.productTitle} `}>{data.name}</h1>
+                                    <h1 className={`${styles.productTitle} !font-[450]`}>{data.name}</h1>
                                     <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-2`}>{data.skuid}</h3>
-                                    <p className="font-Poppins pt-1">{data.description}</p>
+                                    <p className="font-Poppins pt-1 text-[14px]">{data.description}</p>
                                     
 
                                     <div className="flex items-center pt-3">

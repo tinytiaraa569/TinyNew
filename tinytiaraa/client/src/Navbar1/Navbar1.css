@@ -20,8 +20,11 @@
 }
 
 .nav1banner .customerinfo {
+    display: flex;
+    align-items: center;
     font-size: 14px;
     white-space: nowrap;
+    gap: 5px;
 }
 
 .nav1banner .couponscetion {

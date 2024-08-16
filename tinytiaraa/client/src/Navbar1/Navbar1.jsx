@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
-import { MdChevronRight, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag } from 'react-icons/md';
+import { MdChevronRight, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
 import navimg from './about.jpg'
 import { categoriesData } from '@/static/data';
 import styles from '@/Styles/styles';
@@ -118,8 +118,8 @@ function Navbar1() {
             <div className="navbar1mian">
                 {           /* //top nav */}
                 <div className='nav1banner '>
-                    <div className='customerinfo '>
-                        <span>Customer Care: +91 86570 62511 |</span>
+                    <div className='customerinfo'>
+                        <span className='flex items-center'><MdSupportAgent size={30} /> +91 86570 62511 |</span>
                         <span className='ml-[3px]'>care@tinytiaraa.com</span>
 
                     </div>
