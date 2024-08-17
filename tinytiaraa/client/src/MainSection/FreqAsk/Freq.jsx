@@ -16,6 +16,12 @@ import freq7 from './images/freq7.svg'
 import freq8 from './images/freq8.svg'
 import freq9 from './images/freq9.svg'
 import freq10 from './images/freq10.svg'
+import thankuimg from './images/thanku.svg'
+import swal from 'sweetalert';
+
+
+
+
 import { useNavigate } from 'react-router-dom';
 import { RxCross2 } from 'react-icons/rx';
 
@@ -77,6 +83,9 @@ function CustomizedAccordions() {
 
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
+  const [opendone, setOpenDone] = React.useState(false)
+
+
 
 
   return (
@@ -223,7 +232,7 @@ function CustomizedAccordions() {
           <h3>Did you find information on this page useful?</h3>
         </div>
         <div className='flex items-center gap-2'>
-          <div className='cursor-pointer' onClick={() => setOpen(true)}>
+          <div className='cursor-pointer' onClick={() => setOpenDone(true)}>
 
             <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="15.4023" cy="15.4023" r="15.4023" fill="#006B18" />
@@ -239,19 +248,25 @@ function CustomizedAccordions() {
             </svg>
           </div>
 
+          
+          {/* Thankupopup */}
+
           {
-            open && (
+            opendone && (
               <div className="fixed top-0 left-0 w-full h-screen bg-[#0000006c] z-[1000] flex justify-center items-center">
                 <div className="morequespop bg-white rounded-md shadow ">
                   <div className="w-full pt-4 pr-4 flex justify-end">
-                    <RxCross2 size={30} className='cursor-pointer' onClick={() => setOpen(false)} />
+                    <RxCross2 size={30} className='cursor-pointer' onClick={() => setOpenDone(false)} />
                   </div>
-                  <div className='morequespopcon'>
-                    <h3>What can we do better?</h3>
+                  <div className='morequespopcon morequespopconthanku'>
+                    <div className='flex justify-center mb-2'>
+                      <img src={thankuimg} alt="" />
 
-                    <textarea name="" id="" placeholder='Enter your feedback here.Note: This is an anonymized feedback. if yo would like us to contact you , please mention your number and email ID '></textarea>
+                    </div>
+                    <h3>Thank you </h3>
+                    <p>Your message has been received </p>
 
-                    <div className='mt-4 flex justify-center'>
+                    <div className='mt-5 flex justify-center'>
                       <button>
                         Submit
                       </button>
@@ -263,6 +278,45 @@ function CustomizedAccordions() {
             )
           }
 
+          {/* MoreQuespopup */}
+
+          {
+            open && (
+              <div className="fixed top-0 left-0 w-full h-screen bg-[#0000006c] z-[1000] flex justify-center items-center">
+                <div className="morequespop bg-white rounded-md shadow ">
+                  <div className="w-full pt-4 pr-4 flex justify-end">
+                    <RxCross2 size={30} className='cursor-pointer' onClick={() => setOpen(false)} />
+                  </div>
+                  <form action="" onSubmit={(e) => {
+                    e.preventDefault()
+                    setOpen(false)
+                    swal({
+                      title: "Thank you !",
+                      text: "Your message has been received !",
+                      icon: "success",
+                    });
+
+                  }}>
+                    <div className='morequespopcon'>
+                      <h3>What can we do better?</h3>
+
+                      <textarea required name="" id="" placeholder='Enter your feedback here.Note: This is an anonymized feedback. if yo would like us to contact you , please mention your number and email ID '></textarea>
+
+                      <div className='mt-4 flex justify-center'>
+                        <button type='submit'>
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            )
+          }
+
+
+          
 
 
 

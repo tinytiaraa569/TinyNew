@@ -74,7 +74,7 @@ function OrderDetails() {
         1: "Rose Gold",
         2: "White Gold",
     };
-   
+
 
     return (
         <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -95,16 +95,17 @@ function OrderDetails() {
             </div>
 
             <div className='w-full flex items-center justify-between pt-6'>
-                <h5 className='text-[#000b]'>Order Id : - #<span>{data?._id?.slice(0, 8)}</span></h5>
+                <h5 className='text-[#000b]'>Order Id : - #<span>{data?._id}</span></h5>
 
                 <h5 className='text-[#000b]'>Placed on :- <span>{data?.createdAt?.slice(0, 10)}</span> </h5>
             </div>
             {/* order items */}
+            <div >
             {
                 data && data?.cart.map((item, index) => {
                     return (
-                        <div key={index} className='w-full flex items-start mt-5 mb-5'>
-                            <img src={`${backend_url}/${item.images[0]}`} alt="" className='w-[280px] h-[280px]' />
+                        <div key={index} className='w-full px-3 py-4 flex items-start mt-5 mb-5 border border-[#ddd]'>
+                            <img src={`${item.images[0].url}`} alt="" className='w-[280px] h-[280px]' />
 
 
                             <div className="w-full">
@@ -116,12 +117,23 @@ function OrderDetails() {
 
 
                                 <div className='mt-2'>
-                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'><span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'}</h5>
-                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'><span className='font-[600]'>Metal Color :</span> {metalColors[item.selectedColor]}</h5>
-                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'><span className='font-[600]'>Enamel :</span> Remaining </h5>
+                                    {item.showWithChain !== undefined && (
+                                        <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                            <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'}
+                                        </h5>
+                                    )}
 
+                                    {item.selectedColor !== undefined && (
+                                        <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                            <span className='font-[600]'>Metal Color :</span> {metalColors[item.selectedColor]}
+                                        </h5>
+                                    )}
 
-
+                                    {item.selectedEnamelColor !== null && (
+                                        <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                            <span className='font-[600]'>Enamel :</span> {item.selectedEnamelColor}
+                                        </h5>
+                                    ) }
                                 </div>
                                 <div className='mt-3'>
                                     <h5 className='pl-3 text-[14px] text-[#0000008c]'><span className='font-[600]'>Weight </span></h5>
@@ -142,6 +154,9 @@ function OrderDetails() {
                     )
                 })
             }
+            </div>
+
+            
             <div className='border-t w-full text-right mb-5'>
                 <h5 className='pt-3 text-[18px]'>Total Price : <strong>₹{data?.totalPrice}</strong> </h5>
 
@@ -230,7 +245,7 @@ function OrderDetails() {
                     Update Status
 
                 </div>
-               
+
             </div>
 
 

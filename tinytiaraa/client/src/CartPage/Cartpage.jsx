@@ -530,36 +530,43 @@ function Cartpage() {
 
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
+
   const [value, setValue] = useState(data.qty)
-
-  const totalPrice = data.discountPrice * value;
-
-
-
-  const increment = (data) => {
-    if (data.stock < value) {
-      toast.error("Product Stock limit")
-    } else {
-      setValue(value + 1)
-      const updateCartData = { ...data, qty: value + 1 }
-      quantityChangeHandler(updateCartData)
-    }
-
-
-  }
-  const decrement = (data) => {
-    setValue(value === 1 ? 1 : value - 1)
-    const updateCartData = { ...data, qty: value === 1 ? 1 : value - 1 }
-    quantityChangeHandler(updateCartData)
-  }
   const metalColors = {
     0: "Yellow Gold",
     1: "Rose Gold",
     2: "White Gold",
   };
-  const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
+  const totalPrice = data.discountPrice * value;
+
+  const enamelColor = data.selectedEnamelColor?.toLowerCase();
+  const metalColor = metalColors[data.selectedColor]?.replace(" ", "") + "clrStock";
+
+  const enamelStock = data.Enamelcolorstock?.[enamelColor]?.[`${enamelColor}${metalColor}`];
+
+
+    const increment = () => {
+      if (enamelStock === undefined || enamelStock === null || value >= enamelStock) {
+        toast.error("Product Stock limit for this Variant");
+        return;
+      }
+      setValue(value + 1);
+      const updateCartData = { ...data, qty: value + 1 };
+      quantityChangeHandler(updateCartData);
+    };
+  
+    const decrement = () => {
+      if (value > 1) {
+        setValue(value - 1);
+        const updateCartData = { ...data, qty: value - 1 };
+        quantityChangeHandler(updateCartData);
+      }
+    };
 
  
+  const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
+
+
   return (
 
     // <div>
@@ -650,7 +657,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
           <div className="item-qty">
             <div className="qty-field b1 ">
               <label htmlFor="qty">QTY: </label>
-              <span value={data.qty}>{data.qty}</span>
+              <span value={data.qty}>{value}</span>
             </div>
 
           </div>
@@ -678,19 +685,20 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             </div>
 
           </div>
-          <div className='flex gap-2 mt-2'>
-
-            <div className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] ${styles.noramlFlex} justify-center cursor-pointer`}
-              onClick={() => increment(data)}>
+          <div className="flex gap-2 mt-2">
+            <div
+              className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] flex justify-center cursor-pointer`}
+              onClick={increment}
+            >
               <HiPlus size={18} color="#fff" />
             </div>
-            <span>{data.qty}</span>
-
-            <div className={`bg-[#a7abb14f] border border-[#a7abb14f] text-[#000] rounded-full w-[25px] h-[25px] ${styles.noramlFlex} justify-center cursor-pointer`}
-              onClick={() => decrement(data)}>
+            <span>{value}</span>
+            <div
+              className={`bg-[#a7abb14f] border border-[#a7abb14f] text-[#000] rounded-full w-[25px] h-[25px] flex justify-center cursor-pointer`}
+              onClick={decrement}
+            >
               <HiOutlineMinus size={18} color="#000" />
             </div>
-
           </div>
           <div className="checkoutsectionprice mt-1 mb-0.5">
             <h3 className='text-[0.8rem] '>₹{data.discountPrice} * {value}</h3>

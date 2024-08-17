@@ -134,7 +134,7 @@ function App() {
 
 
 
-    
+
 
 
     location.pathname.startsWith('/order/:id')
@@ -191,223 +191,208 @@ function App() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <div>
 
 
 
 
-<PriceRangeProvider>
+      <PriceRangeProvider>
 
 
-      {!shouldHideNavbar && <Navbar1 />}
+        {!shouldHideNavbar && <Navbar1 />}
 
 
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='/personalised-prosperity' element={<CustomisedJewels />} />
-        <Route path='/contacts' element={<Conatct />} />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/personalised-prosperity' element={<CustomisedJewels />} />
+          <Route path='/contacts' element={<Conatct />} />
 
 
-        <Route path='/terms-and-conditions' element={<TermsCon />} />
-        <Route path='/privacy-policy' element={<Privacy />} />
-        <Route path='/warranty-extension' element={<Exchange />} />
-        <Route path='/exchange-policy' element={<ExchangePolicy />} />
-        <Route path='/return-policy' element={<ReturnPolicy />} />
-        <Route path='/affiliate-program-commission-policy' element={<Affiliatepolicy />} />
-        <Route path='/gold-jewellery-insurance-policy' element={<Goldinsurance />} />
+          <Route path='/terms-and-conditions' element={<TermsCon />} />
+          <Route path='/privacy-policy' element={<Privacy />} />
+          <Route path='/warranty-extension' element={<Exchange />} />
+          <Route path='/exchange-policy' element={<ExchangePolicy />} />
+          <Route path='/return-policy' element={<ReturnPolicy />} />
+          <Route path='/affiliate-program-commission-policy' element={<Affiliatepolicy />} />
+          <Route path='/gold-jewellery-insurance-policy' element={<Goldinsurance />} />
 
-        <Route path='/children-safety-jewellery-policy' element={<Childrensafety />} />
-        <Route path='/customised-jewellery-policy' element={<CustomisedPolicy />} />
-        <Route path='/gold-coin-promotion-with-personalised-horoscope-engraving-policy' element={<Engravingpolicy />} />
-        <Route path='/gold-and-diamond-jewellery-certification-policy' element={<CertificationPolicy />} />
+          <Route path='/children-safety-jewellery-policy' element={<Childrensafety />} />
+          <Route path='/customised-jewellery-policy' element={<CustomisedPolicy />} />
+          <Route path='/gold-coin-promotion-with-personalised-horoscope-engraving-policy' element={<Engravingpolicy />} />
+          <Route path='/gold-and-diamond-jewellery-certification-policy' element={<CertificationPolicy />} />
 
 
 
 
 
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/sign-up' element={<SignupPage />} />
-        <Route path='/activation/:activation_token' element={<ActivationPage />} />
-        <Route path='/products' element={<ProductsPage />} />
-        <Route path='/product/:name' element={<ProductDetailsPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/sign-up' element={<SignupPage />} />
+          <Route path='/activation/:activation_token' element={<ActivationPage />} />
+          <Route path='/products' element={<ProductsPage />} />
+          <Route path='/product/:name' element={<ProductDetailsPage />} />
 
 
-        <Route path='/profile' element={
-          <ProtectedRoute >
+          <Route path='/profile' element={
+            <ProtectedRoute >
 
-            <ProfilePage />
-          </ProtectedRoute>} />
+              <ProfilePage />
+            </ProtectedRoute>} />
 
-        <Route path='/user/order/:id' element={
-          <ProtectedRoute >
+          <Route path='/user/order/:id' element={
+            <ProtectedRoute >
 
-            <OrderDetailspage />
-          </ProtectedRoute>} />
+              <OrderDetailspage />
+            </ProtectedRoute>} />
 
-        <Route path='/referrals' element={
-          <ProtectedRoute >
+          <Route path='/referrals' element={
+            <ProtectedRoute >
 
-            <ReferPage />
-          </ProtectedRoute>} />
+              <ReferPage />
+            </ProtectedRoute>} />
 
 
 
-        <Route path='/user/track/order/:id' element={
-          <ProtectedRoute >
-            <TrackOrderPage />
-          </ProtectedRoute>} />
+          <Route path='/user/track/order/:id' element={
+            <ProtectedRoute >
+              <TrackOrderPage />
+            </ProtectedRoute>} />
 
-        <Route path='/inbox' element={
-          <ProtectedRoute >
-            <UserInbox />
-          </ProtectedRoute>} />
+          <Route path='/inbox' element={
+            <ProtectedRoute >
+              <UserInbox />
+            </ProtectedRoute>} />
 
 
 
-        <Route path='/shop-create' element={<ShopcreatePage />} />
-        <Route path='/seller/activation/:activation_token' element={<SellerActivatinPage />} />
-        <Route path='/shop-login' element={<ShopLoginPage />} />
-        <Route path='/admin-manage/:id' element={
-          <SellerProtectedRoute >
-            <ShopHomePage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/shop-create' element={<ShopcreatePage />} />
+          <Route path='/seller/activation/:activation_token' element={<SellerActivatinPage />} />
+          <Route path='/shop-login' element={<ShopLoginPage />} />
+          <Route path='/admin-manage/:id' element={
+            <SellerProtectedRoute >
+              <ShopHomePage />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard' element={
-          <SellerProtectedRoute >
-            <ShopDashboardPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard' element={
+            <SellerProtectedRoute >
+              <ShopDashboardPage />
+            </SellerProtectedRoute>
+          } />
 
 
-        <Route path='/settings' element={
-          <SellerProtectedRoute >
-            <ShopSettingPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/settings' element={
+            <SellerProtectedRoute >
+              <ShopSettingPage />
+            </SellerProtectedRoute>
+          } />
 
 
-        <Route path='/catalog' element={
-          <SellerProtectedRoute >
-            <CatalogPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/catalog' element={
+            <SellerProtectedRoute >
+              <CatalogPage />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard/categories/create' element={
-          <SellerProtectedRoute >
-            <NewCategoryPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard/categories/create' element={
+            <SellerProtectedRoute >
+              <NewCategoryPage />
+            </SellerProtectedRoute>
+          } />
 
 
 
-        <Route path='/create-category' element={
-          <SellerProtectedRoute >
-            <Categoriespage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/create-category' element={
+            <SellerProtectedRoute >
+              <Categoriespage />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-orders' element={
-          <SellerProtectedRoute >
-            <ShopAllOrders />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-orders' element={
+            <SellerProtectedRoute >
+              <ShopAllOrders />
+            </SellerProtectedRoute>
+          } />
 
 
-        <Route path='/dashboard-create-product' element={
-          <SellerProtectedRoute >
-            <ShopCreateProductPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-create-product' element={
+            <SellerProtectedRoute >
+              <ShopCreateProductPage />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-create-event' element={
-          <SellerProtectedRoute >
-            <ShopCreateEvents />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-create-event' element={
+            <SellerProtectedRoute >
+              <ShopCreateEvents />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-events' element={
-          <SellerProtectedRoute >
-            <ShopAllEvents />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-events' element={
+            <SellerProtectedRoute >
+              <ShopAllEvents />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-coupons' element={
-          <SellerProtectedRoute >
-            <ShopAllCoupouns />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-coupons' element={
+            <SellerProtectedRoute >
+              <ShopAllCoupouns />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-products' element={
-          <SellerProtectedRoute >
-            <ShopAllProducts />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-products' element={
+            <SellerProtectedRoute >
+              <ShopAllProducts />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-refunds' element={
-          <SellerProtectedRoute >
-            <ShopAllRefunds />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-refunds' element={
+            <SellerProtectedRoute >
+              <ShopAllRefunds />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-referral' element={
-          <SellerProtectedRoute >
-            <ShopAllReferral />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-referral' element={
+            <SellerProtectedRoute >
+              <ShopAllReferral />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-requests' element={
-          <SellerProtectedRoute >
-            <ShopAllRequests />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-requests' element={
+            <SellerProtectedRoute >
+              <ShopAllRequests />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-Contactus' element={
-          <SellerProtectedRoute >
-            <ShopContactReq />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-Contactus' element={
+            <SellerProtectedRoute >
+              <ShopContactReq />
+            </SellerProtectedRoute>
+          } />
 
-        <Route path='/dashboard-ratecard' element={
-          <SellerProtectedRoute >
-            <ShopRateCardPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-ratecard' element={
+            <SellerProtectedRoute >
+              <ShopRateCardPage />
+            </SellerProtectedRoute>
+          } />
 
 
 
 
-        <Route path='/dashboard-messages' element={
-          <SellerProtectedRoute >
-            <ShopInboxPage />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/dashboard-messages' element={
+            <SellerProtectedRoute >
+              <ShopInboxPage />
+            </SellerProtectedRoute>
+          } />
 
 
-        <Route path='/order/:id' element={
-          <SellerProtectedRoute >
-            <ShopOrderDetails />
-          </SellerProtectedRoute>
-        } />
+          <Route path='/order/:id' element={
+            <SellerProtectedRoute >
+              <ShopOrderDetails />
+            </SellerProtectedRoute>
+          } />
 
 
 
@@ -420,27 +405,27 @@ function App() {
 
 
 
-        <Route path='/cart' element={<Cartpage />} />
-        <Route path='/checkout-page' element={<CheckoutPage />} />
-        <Route path='/payment' element={<PaymentPage />} />
-        <Route path='/order/success' element={<OrderSuccessPage />} />
+          <Route path='/cart' element={<Cartpage />} />
+          <Route path='/checkout-page' element={<CheckoutPage />} />
+          <Route path='/payment' element={<PaymentPage />} />
+          <Route path='/order/success' element={<OrderSuccessPage />} />
 
 
 
-      </Routes>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
 
-      />
-      <Footer />
+        />
+        <Footer />
 
       </PriceRangeProvider>
 

@@ -113,10 +113,27 @@
     color: #1F1F1F;
     box-shadow: 0px 2px 8px 0px #00000040;
     font-weight: 500;
+}
+
+.morequespopconthanku h3 {
+    text-align: center !important;
+    font-size: 25px !important;
+    font-weight: 500 !important;
+    line-height: 37.5px !important;
+    color: #01463A !important;
+    text-transform: uppercase;
+}
+
+.morequespopconthanku p {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 22.5px;
+    text-align: center;
+    color: #727272;
+    
 
 
 }
-
 
 @media (max-width:869px) {
     .accordiansmain {

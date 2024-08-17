@@ -180,41 +180,41 @@ function PaymentPage() {
         }
     };
 
-    const handlePaymentSuccess = async (paymentDetails) => {
-        console.log('Payment successful. Details:', paymentDetails);
-        const updatedOrder = {
-            ...order,
-            paymentInfo: {
-                id: paymentDetails.razorpay_payment_id,
-                status: 'success',
-                type: 'Razorpay',
-            },
-        };
+    // const handlePaymentSuccess = async (paymentDetails) => {
+    //     console.log('Payment successful. Details:', paymentDetails);
+    //     const updatedOrder = {
+    //         ...order,
+    //         paymentInfo: {
+    //             id: paymentDetails.razorpay_payment_id,
+    //             status: 'success',
+    //             type: 'Razorpay',
+    //         },
+    //     };
 
-        try {
-            console.log('Sending updated order to server:', updatedOrder);
-            const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            console.log('Server response:', response.data);
+    //     try {
+    //         console.log('Sending updated order to server:', updatedOrder);
+    //         const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             }
+    //         });
+    //         console.log('Server response:', response.data);
 
-            toast.success("Order Successfully Placed");
-            localStorage.setItem("cartItems", JSON.stringify([]));
-            localStorage.setItem("latestOrder", JSON.stringify([]));
-            localStorage.setItem("orderDetails", JSON.stringify(updatedOrder));
-            navigate("/order/success");
-            window.location.reload()
+    //         toast.success("Order Successfully Placed");
+    //         localStorage.setItem("cartItems", JSON.stringify([]));
+    //         localStorage.setItem("latestOrder", JSON.stringify([]));
+    //         localStorage.setItem("orderDetails", JSON.stringify(updatedOrder));
+    //         navigate("/order/success");
+    //         window.location.reload()
 
-            // Handle actions upon successful payment
-            alert(`Payment successful! Payment ID: ${paymentDetails.razorpay_payment_id}`);
-        } catch (error) {
-            console.log(error)
-            toast.error("Failed to place order. Please try again.");
-        }
-        // You can perform actions like updating database, clearing cart, etc.
-    };
+    //         // Handle actions upon successful payment
+    //         alert(`Payment successful! Payment ID: ${paymentDetails.razorpay_payment_id}`);
+    //     } catch (error) {
+    //         console.log(error)
+    //         toast.error("Failed to place order. Please try again.");
+    //     }
+    //     // You can perform actions like updating database, clearing cart, etc.
+    // };
 
     // const handlecashondel = async (e) => {
     //     e.preventDefault()
@@ -502,7 +502,88 @@ function PaymentPage() {
     //     }
     // };
 
-
+    const handlePaymentSuccess = async (paymentDetails) => {
+        console.log('Payment successful. Details:', paymentDetails);
+    
+        // Retrieve referral code from session storage
+        const referralCode = sessionStorage.getItem('referralCode');
+        console.log('Captured referral code:', referralCode);
+    
+        const latestOrderData = localStorage.getItem("latestOrder");
+    
+        if (!latestOrderData) {
+            console.error("No latest order data found.");
+            return;
+        }
+    
+        const latestOrder = JSON.parse(latestOrderData);
+        const referralBalanceUsed = latestOrder.appliedReferral || 0;
+        const user = latestOrder.user;
+    
+        // Define the updatedOrder object
+        const updatedOrder = {
+            ...order,
+            paymentInfo: {
+                id: paymentDetails.razorpay_payment_id,
+                status: 'success',
+                type: 'Razorpay',
+            },
+            referralCode: referralCode,
+        };
+    
+        try {
+            // Send updated order to server
+            const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+    
+            console.log('Server response:', response.data);
+            const orderId = response.data.order._id;
+            console.log('Order ID:', orderId);
+    
+            if (referralBalanceUsed > 0 && user) {
+                // Deduct referral balance if applied
+                const currentReferralBalance = user.referralBalance || 0;
+    
+                let updatedReferralBalance;
+                if (currentReferralBalance < referralBalanceUsed) {
+                    // Use all available balance and set it to zero
+                    updatedReferralBalance = 0;
+                    toast.warning(`Referral balance used: ${currentReferralBalance}. Remaining balance is zero.`);
+                } else {
+                    // Deduct the used balance from the current balance
+                    updatedReferralBalance = currentReferralBalance - referralBalanceUsed;
+                }
+    
+                // Update the backend with the new referral balance
+                await updateReferralBalanceInBackend(user._id, updatedReferralBalance);
+    
+                // Update the user object with the new referral balance
+                user.referralBalance = updatedReferralBalance;
+            }
+    
+            // Clear local storage and navigate to success page
+            localStorage.setItem("cartItems", JSON.stringify([]));
+            localStorage.setItem("latestOrder", JSON.stringify([]));
+            localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
+            navigate("/order/success");
+            window.location.reload();
+    
+            // Provide feedback to the user
+            toast.success("Order Successfully Placed");
+            // alert(`Payment successful! Payment ID: ${paymentDetails.razorpay_payment_id}`);
+    
+            // Optional: Reload the page if needed
+    
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to place order. Please try again.");
+            // Optionally, navigate back to the checkout page or show additional error details
+        }
+    };
+    
     const handlecashondel = async (e) => {
         e.preventDefault();
         const referralCode = sessionStorage.getItem('referralCode'); // Retrieve the referral code from session storage
@@ -537,7 +618,10 @@ function PaymentPage() {
                 }
             });
             console.log('Server response:', response.data);
-            console.log('Server response:', response.data._id);
+            console.log('Server response:', response.data.order._id);
+
+            const orderId = response.data.order._id; // Extract orderId
+            console.log('Order ID:', orderId);
 
             if (referralBalanceUsed > 0 && user) {
                 // Deduct referral balance if applied
@@ -563,7 +647,7 @@ function PaymentPage() {
             toast.success("Order Successfully Placed");
             localStorage.setItem("cartItems", JSON.stringify([]));
             localStorage.setItem("latestOrder", JSON.stringify([]));
-            localStorage.setItem("orderDetails", JSON.stringify(updatedOrder));
+            localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             navigate("/order/success");
              window.location.reload()
 

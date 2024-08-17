@@ -53,6 +53,7 @@
     "scrollreveal": "^4.0.9",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.5",
+    "sweetalert": "^2.1.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "timeago.js": "^4.0.2"
