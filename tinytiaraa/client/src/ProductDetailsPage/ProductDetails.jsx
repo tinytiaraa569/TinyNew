@@ -234,33 +234,6 @@ function ProductDetails({ data }) {
     //                     : data.images;
 
     // Function to normalize key format (remove underscores and convert to camel case)
-    const imagesArray = (() => {
-        const enamelColorData = data.enamelColors[selectedEnamelColor] || {};
-        console.log(enamelColorData, "see enamel data");
-        console.log(selectedEnamelColor, "see enamel color");
-
-        if (selectedEnamelColor) {
-            // Format the enamel color part
-            const formattedColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-
-            // Construct the full key
-            const enamelKey = `${formattedColor}${selectedColor === 0 ? "YellowGoldclr" : selectedColor === 1 ? "RoseGoldclr" : "WhiteGoldclr"}`;
-            console.log("Enamel Key:", enamelKey);
-
-            return enamelColorData[enamelKey] || []; // Return images for the selected enamel color
-        }
-
-        // Default to metal color images if no enamel color is selected
-        if (showWithChain === true) return data.withchainimages || [];
-        if (showWithChain === false) return data.withchainoutimages || [];
-        if (selectedColor === 0) return data.MetalColor.YellowGoldclr || [];
-        if (selectedColor === 1) return data.MetalColor.RoseGoldclr || [];
-        if (selectedColor === 2) return data.MetalColor.WhiteGoldclr || [];
-
-        return data.images || [];
-    })();
-
-    console.log(imagesArray, "see image array");
 
 
 
@@ -337,51 +310,77 @@ function ProductDetails({ data }) {
     const validateForm = () => {
         const hasChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
         const isEnamelColorRequired = shouldShowEnamel && availableEnamelColors.length > 0;
-
+    
         if (!hasChainOptions) {
-            return selectedColor !== null && (!isEnamelColorRequired || selectedEnamelColor !== null);
+            if (selectedColor === null) {
+                setValidationError('Please select a metal color.');
+                return false;
+            }
+            if (isEnamelColorRequired && selectedEnamelColor === null) {
+                setValidationError('Please select an enamel color.');
+                return false;
+            }
+            return true;
         }
-        return selectedColor !== null && showWithChain !== null && (!isEnamelColorRequired || selectedEnamelColor !== null);
+    
+        if (selectedColor === null) {
+            setValidationError('Please select a metal color.');
+            return false;
+        }
+        if (showWithChain === null) {
+            setValidationError('Please select a chain option.');
+            return false;
+        }
+        if (isEnamelColorRequired && selectedEnamelColor === null) {
+            setValidationError('Please select an enamel color.');
+            return false;
+        }
+        
+        return true;
     };
     useEffect(() => {
         // Reset validation error on color or chain change
+        
         setValidationError('');
-    }, [selectedColorIndex, showWithChain]);
+    }, [selectedColorIndex, showWithChain ,selectedColor ,selectedEnamelColor]);
 
     // Determine if chain options should be displayed
     const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
 
-    const getAvailableEnamelColors = (enamelColors) => {
-        return Object.entries(enamelColors)
-            .filter(([color, colorData]) => {
-                // Format the enamel color part
-                const baseColor = color.toLowerCase().replace(/_/g, '');
+    // const getAvailableEnamelColors = (enamelColors) => {
+    //     return Object.entries(enamelColors)
+    //         .filter(([color, colorData]) => {
+    //             // Format the enamel color part
+    //             const baseColor = color.toLowerCase().replace(/_/g, '');
 
-                // Construct the correct keys for data access
-                const yellowGoldKey = `${baseColor}YellowGoldclr`;
-                const roseGoldKey = `${baseColor}RoseGoldclr`;
-                const whiteGoldKey = `${baseColor}WhiteGoldclr`;
+    //             // Construct the correct keys for data access
+    //             const yellowGoldKey = `${baseColor}YellowGoldclr`;
+    //             const roseGoldKey = `${baseColor}RoseGoldclr`;
+    //             const whiteGoldKey = `${baseColor}WhiteGoldclr`;
 
-                // Safeguard checks to ensure arrays are defined and not empty
-                const hasYellowGoldclr = Array.isArray(colorData[yellowGoldKey]) && colorData[yellowGoldKey].length > 0;
-                const hasRoseGoldclr = Array.isArray(colorData[roseGoldKey]) && colorData[roseGoldKey].length > 0;
-                const hasWhiteGoldclr = Array.isArray(colorData[whiteGoldKey]) && colorData[whiteGoldKey].length > 0;
+    //             // Safeguard checks to ensure arrays are defined and not empty
+    //             const hasYellowGoldclr = Array.isArray(colorData[yellowGoldKey]) && colorData[yellowGoldKey].length > 0;
+    //             const hasRoseGoldclr = Array.isArray(colorData[roseGoldKey]) && colorData[roseGoldKey].length > 0;
+    //             const hasWhiteGoldclr = Array.isArray(colorData[whiteGoldKey]) && colorData[whiteGoldKey].length > 0;
 
-                // Debug: Log the availability status
-                console.log(`Color: ${color}, YellowGold: ${hasYellowGoldclr}, RoseGold: ${hasRoseGoldclr}, WhiteGold: ${hasWhiteGoldclr}`);
+    //             // Debug: Log the availability status
+    //             console.log(`Color: ${color}, YellowGold: ${hasYellowGoldclr}, RoseGold: ${hasRoseGoldclr}, WhiteGold: ${hasWhiteGoldclr}`);
 
-                // Return true if any of the arrays are non-empty
-                return hasYellowGoldclr || hasRoseGoldclr || hasWhiteGoldclr;
-            })
-            .map(([color]) => ({ _id: color, enamelColorName: color.replace(/_/g, ' ') })); // Format color names
-    };
+    //             // Return true if any of the arrays are non-empty
+    //             return hasYellowGoldclr || hasRoseGoldclr || hasWhiteGoldclr;
+    //         })
+    //         .map(([color]) => ({ _id: color, enamelColorName: color.replace(/_/g, ' ') })); // Format color names
+    // };
 
     // Determine if there are any available enamel colors
-    const availableEnamelColors = getAvailableEnamelColors(data.enamelColors || {});
-    const shouldShowEnamel = availableEnamelColors.length > 0;
 
-    // Debug: Print available enamel colors
-    console.log("Available Enamel Colors:", availableEnamelColors);
+
+
+    // const availableEnamelColors = getAvailableEnamelColors(data.enamelColors || {});
+    // const shouldShowEnamel = availableEnamelColors.length > 0;
+
+    // // Debug: Print available enamel colors
+    // console.log("Available Enamel Colors:", availableEnamelColors);
 
 
 
@@ -389,9 +388,79 @@ function ProductDetails({ data }) {
 
     // Gallery Navigation Handlers
 
+    // const getAvailableEnamelColors = (enamelColors, selectedMetalColor) => {
+    //     return Object.entries(enamelColors)
+    //         .filter(([color, colorData]) => {
+    //             // Format the enamel color part
+    //             const baseColor = color.toLowerCase().replace(/_/g, '');
+
+    //             // Construct the correct key for the selected metal color
+    //             const metalColorKey = `${baseColor}${selectedMetalColor}`;
+
+    //             // Safeguard checks to ensure the array is defined and not empty
+    //             const hasMetalColor = Array.isArray(colorData[metalColorKey]) && colorData[metalColorKey].length > 0;
+
+    //             // Debug: Log the availability status
+    //             console.log(`Color: ${color}, Metal Color Key: ${metalColorKey}, Has Metal Color: ${hasMetalColor}`);
+
+    //             // Return true if the array for the selected metal color is non-empty
+    //             return hasMetalColor;
+    //         })
+    //         .map(([color]) => ({ _id: color, enamelColorName: color.replace(/_/g, ' ') })); // Format color names
+    // };
+
+    // // Call the function with the selected metal color
+    // const selectedMetalColorKey = selectedColor === 0 ? "YellowGoldclr" : selectedColor === 1 ? "RoseGoldclr" : "WhiteGoldclr";
+    // const availableEnamelColors = getAvailableEnamelColors(data.enamelColors || {}, selectedMetalColorKey);
+    // const shouldShowEnamel = availableEnamelColors.length > 0;
+
+    // Debug: Print available enamel colors based on selected metal color
+    // console.log("Available Enamel Colors for Selected Metal:", availableEnamelColors);
 
 
+  const getAvailableEnamelColors = (enamelColors, selectedMetalColor) => {
+    return Object.entries(enamelColors)
+        .filter(([color, colorData]) => {
+            const baseColor = color.toLowerCase().replace(/_/g, '');
+            const enamelKeys = [
+                `${baseColor}YellowGoldclr`,
+                `${baseColor}RoseGoldclr`,
+                `${baseColor}WhiteGoldclr`
+            ];
 
+            if (selectedMetalColor) {
+                // Filter based on specific metal color
+                const enamelKey = `${baseColor}${selectedMetalColor}clr`;
+                return Array.isArray(colorData[enamelKey]) && colorData[enamelKey].length > 0;
+            } else {
+                // Show all colors that have images in any metal color
+                return enamelKeys.some(key => Array.isArray(colorData[key]) && colorData[key].length > 0);
+            }
+        })
+        .map(([color]) => {
+            const baseColor = color.toLowerCase().replace(/_/g, '');
+            const availableKeys = [
+                `${baseColor}YellowGoldclr`,
+                `${baseColor}RoseGoldclr`,
+                `${baseColor}WhiteGoldclr`
+            ].filter(key => Array.isArray(enamelColors[color][key]) && enamelColors[color][key].length > 0);
+
+            return {
+                _id: color,
+                enamelColorName: color.replace(/_/g, ' '),
+                availableKeys
+            };
+        });
+};
+    
+    
+
+    // In your component, update the code to use the selected metal color when available:
+    const availableEnamelColors = getAvailableEnamelColors(
+        data.enamelColors || {},
+        selectedColor !== null ? ["YellowGold", "RoseGold", "WhiteGold"][selectedColor] : null
+    );
+    const shouldShowEnamel = availableEnamelColors.length > 0;
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex < imagesArray.length - 1 ? prevIndex + 1 : 0
@@ -403,6 +472,50 @@ function ProductDetails({ data }) {
             prevIndex > 0 ? prevIndex - 1 : imagesArray.length - 1
         );
     };
+
+    const imagesArray = (() => {
+        const enamelColorData = data.enamelColors[selectedEnamelColor] || {};
+        console.log(enamelColorData, "see enamel data");
+        console.log(selectedEnamelColor, "see enamel color");
+
+        if (selectedEnamelColor) {
+            const formattedColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+    
+            if (selectedColor !== null) {
+                // Construct the enamel key for the selected metal color
+                const enamelKey = `${formattedColor}${["YellowGold", "RoseGold", "WhiteGold"][selectedColor]}clr`;
+                console.log("Enamel Key:", enamelKey);
+    
+                // Return images for the selected enamel and metal color
+                const images = enamelColorData[enamelKey] || [];
+                if (images.length > 0) {
+                    return images;
+                } else {
+                    // Reset selectedEnamelColor if no images are found for the selected metal color
+                    setSelectedEnamelColor(null);
+                }
+            } else {
+                // Initial state: Show all images for the selected enamel color across all metal colors
+                const availableKeys = getAvailableEnamelColors(data.enamelColors || {}, null)
+                    .find(color => color._id === selectedEnamelColor)?.availableKeys || [];
+    
+                return availableKeys.flatMap(key => enamelColorData[key] || []);
+            }
+        }
+    
+
+        // Default to metal color images if no enamel color is selected
+        if (showWithChain === true) return data.withchainimages || [];
+        if (showWithChain === false) return data.withchainoutimages || [];
+        if (selectedColor === 0) return data.MetalColor.YellowGoldclr || [];
+        if (selectedColor === 1) return data.MetalColor.RoseGoldclr || [];
+        if (selectedColor === 2) return data.MetalColor.WhiteGoldclr || [];
+
+        return data.images || [];
+    })();
+
+    console.log(imagesArray, "see image array");
+
     return (
         <div className='bg-white'>
             {
@@ -523,7 +636,7 @@ function ProductDetails({ data }) {
                                     <h1 className={`${styles.productTitle} !font-[450]`}>{data.name}</h1>
                                     <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-2`}>{data.skuid}</h3>
                                     <p className="font-Poppins pt-1 text-[14px]">{data.description}</p>
-                                    
+
 
                                     <div className="flex items-center pt-3">
                                         <h5 className={`${styles.productDiscountPrice} !stext-[#01463A]`}>
@@ -549,7 +662,7 @@ function ProductDetails({ data }) {
                                                 <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
                                             </svg>
                                             <span>
-                                            In Stock
+                                                In Stock
                                             </span>
                                         </div>
                                     </div>
@@ -586,7 +699,7 @@ function ProductDetails({ data }) {
                                             </div>
                                         )}
                                     </div> */}
-                                    <div className='metaloptionproduct'>
+                                    {/* <div className='metaloptionproduct'>
                                         {Object.keys(data.MetalColor).length > 0 && (
                                             <>
                                                 <div className='metaltitle'>
@@ -622,11 +735,70 @@ function ProductDetails({ data }) {
                                                 </div>
                                             </>
                                         )}
-                                    </div>
+                                    </div> */}
+                                    <div className='metaloptionproduct'>
+                                        {Object.keys(data.MetalColor).length > 0 && (
+                                            <>
+                                                <div className='metaltitle'>
+                                                    <h3>Metal Color :</h3>
+                                                </div>
+                                                <div className='metalmaincolor'>
+                                                    {Object.keys(data.MetalColor).map((key, index) => {
+                                                        // Remove "clr" from the end of color name
+                                                        const label = key.replace(/clr$/i, '');
+                                                        const isSelected = selectedColor === index;
 
+                                                        return (
+                                                            <div key={index} className={`metalcolor ${isSelected ? 'selected' : ''}`}>
+                                                                <input
+                                                                    type="radio"
+                                                                    name='colorcode'
+                                                                    id={`color-${key}`}
+                                                                    value={key}
+                                                                    checked={isSelected}
+                                                                    onChange={() => handleColorChange(index)}
+                                                                    className='hidden' // Hide the default radio button
+                                                                />
+                                                                <label
+                                                                    htmlFor={`color-${key}`}
+                                                                    className='flex items-center flex-col cursor-pointer'
+                                                                >
+                                                                    <span className={`metalcolorcon ${key} ${isSelected ? 'selected' : ''}`}></span>
+                                                                    <span className='ml-2'>{label}</span>
+                                                                </label>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
 
                                     {/* enamel option */}
 
+                                    {/* {shouldShowEnamel && (
+                                        <div className="enamelotion pt-3">
+                                            <div className='enameltitle'>
+                                                <h3 className="text-[20px] font-[600] font-Poppins">Enamel Color : </h3>
+                                            </div>
+                                            <div className="enamelselect text-[16px] font-Poppins py-1">
+                                                <select
+                                                    name="enamelColors"
+                                                    id="enamelColors"
+                                                    className="border"
+                                                    onChange={(e) => setSelectedEnamelColor(e.target.value)}
+                                                    value={selectedEnamelColor}
+                                                >
+                                                    <option value="">Select Enamel Color</option>
+                                                    {availableEnamelColors.map((color) => (
+                                                        <option key={color._id} value={color._id}>
+                                                            {color.enamelColorName}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    )} */}
                                     {shouldShowEnamel && (
                                         <div className="enamelotion pt-3">
                                             <div className='enameltitle'>
@@ -650,7 +822,6 @@ function ProductDetails({ data }) {
                                             </div>
                                         </div>
                                     )}
-
 
                                     {/* chain options */}
                                     {/* {shouldShowChainOptions && (
