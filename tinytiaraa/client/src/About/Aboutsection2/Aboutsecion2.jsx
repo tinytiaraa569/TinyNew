@@ -23,10 +23,10 @@ function Aboutsecion2() {
                         <h5>Join the Magic</h5>
 
 
-                        <div className='w-[215px] h-[100px] font-[400] text-[12px] text-center'>
+                        <div className='w-[215px] h-[auto] font-[400] text-[12px] text-center'>
 
 
-                            <p>Craftsmanship is our core. Every piece is meticulously handcrafted with quality materials, ensuring beauty, safety, and comfort for children.</p>
+                            <p>At Tiny Tiaraa, discover magical jewelry that lights up children's eyes and creates cherished, unforgettable moments—perfect for gifts and keepsakes.</p>
 
                         </div>
                     </div>
@@ -39,10 +39,10 @@ function Aboutsecion2() {
                         <h5>Collections</h5>
 
 
-                        <div className='w-[215px] h-[100px] font-[400] text-[12px] text-center'>
+                        <div className='w-[215px] h-[auto] font-[400] text-[12px] text-center'>
 
 
-                            <p>Craftsmanship is our core. Every piece is meticulously handcrafted with quality materials, ensuring beauty, safety, and comfort for children.</p>
+                            <p>Our jewelry collections offer whimsical charms and elegant pieces, ensuring every child finds something that matches their unique style.</p>
 
                         </div>
                     </div>
@@ -58,7 +58,7 @@ function Aboutsecion2() {
                         <div className='w-[215px] h-[100px] font-[400] text-[12px] text-center'>
 
 
-                            <p>Craftsmanship is our core. Every piece is meticulously handcrafted with quality materials, ensuring beauty, safety, and comfort for children.</p>
+                            <p>We prioritize safety by using hypoallergenic materials and strict quality checks, ensuring jewelry that parents trust and kids enjoy worry-free.</p>
 
                         </div>
                     </div>

@@ -112,18 +112,16 @@ function ProductCard({ data }) {
           <p className={`${styles.skuid}`}>{data.skuid}</p>
 
           <div className="py-2 mt-2 flex items-center justify-between">
-            <div className="flex ">
+            <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-                ₹
-                {data.originalPrice === 0
-                  ? data.originalPrice
-                  : data.discountPrice}
+                ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
               </h5>
-              <h4 className={`${styles.price} line-through`}>
-                {data.originalPrice ? " ₹" + data.originalPrice : null}
-              </h4>
+              {data.originalPrice > 0 && (
+                <h4 className={`${styles.price} line-through`}>
+                  ₹{data.originalPrice.toFixed(0)}
+                </h4>
+              )}
             </div>
-            {/* <span className="font-[400] text-[14px] text-[#151816] font-Poppins">{data?.sold_out} Sold</span> */}
           </div>
         </div>
 

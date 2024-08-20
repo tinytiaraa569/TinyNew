@@ -42,20 +42,25 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    width: calc(25% - 20px); /* Each item takes 25% of the row width minus the gap */
-    margin-bottom: 30px; /* Add bottom margin to create space between rows */
+    width: calc(25% - 20px);
+    /* Each item takes 25% of the row width minus the gap */
+    margin-bottom: 30px;
+    /* Add bottom margin to create space between rows */
 }
 
 /* For the second row of three items */
 .whypage .whypiconcon .whypiconconflex:nth-child(n+5) {
-    width: calc(33.33% - 20px); /* Adjust width to maintain space around items in the second row */
+    width: calc(33.33% - 20px);
+    /* Adjust width to maintain space around items in the second row */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
     .whypage .whypiconcon .whypiconconflex {
-        width: calc(33.33% - 20px); /* Three items per row for medium screens */
+        width: calc(33.33% - 20px);
+        /* Three items per row for medium screens */
     }
+
     .whypage .whypagecon h5 {
         font-size: 30px;
         line-height: 40px;
@@ -69,8 +74,10 @@
 
 @media (max-width: 768px) {
     .whypage .whypiconcon {
-        justify-content: center; /* Center items in a single column */
+        justify-content: center;
+        /* Center items in a single column */
     }
+
     .whypage .whypagecon h5 {
         font-size: 28px;
         line-height: 35px;
@@ -80,18 +87,56 @@
         font-size: 18px;
         line-height: 40px;
     }
-    
+
 }
 
 @media (max-width: 480px) {
     .whypage .whypagecon h5 {
-        font-size: 24px;
+        font-size: 22px;
         line-height: 30px;
     }
 
     .whypage .whypagecon span {
-        font-size: 16px;
-        line-height: 30px;
+        font-size: 14px;
+        line-height: 15px;
+    }
+
+    .whypage .whypiconcon {
+        flex-direction: row; /* Align items in a row */
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: center; /* Center items */
+        gap: 10px; /* Gap between items */
+    }
+
+    .whypage .whypiconcon .whypiconconflex {
+        width: calc(50% - 10px) !important; /* Two items per row */
+        margin-bottom: 10px; /* Add bottom margin to create space between rows */
+    }
+
+    /* Ensure the last row has exactly 2 items by setting a max-width for the last item */
+    .whypage .whypiconcon .whypiconconflex:nth-last-child(-n+2) {
+        width: calc(50% - 10px); /* Last two items */
+    }
+    .whypiconconflex h6{
+        font-size: 14px;
+
+    }
+
+    .whypage .whypiconcon img {
+        width: 80px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 320px) {
+    .whypage .whypagecon h5 {
+        font-size: 18px !important;
+        line-height: 10px !important;
+    }
+
+    .whypage .whypagecon span {
+        font-size: 13px !important;
+        line-height: 5px !important;
     }
     .whypage .whypiconcon {
         flex-direction: column; /* Stack items vertically */
@@ -112,9 +157,9 @@
         font-size: 28px;
         line-height: 40px;
     }
+    .whypiconconflex h6{
+        font-size: 14px;
 
-    .whypage .whypagecon span {
-        font-size: 18px;
-        line-height: 30px;
     }
+   
 }

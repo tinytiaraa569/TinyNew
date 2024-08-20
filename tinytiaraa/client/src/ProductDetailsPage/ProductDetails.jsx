@@ -1057,10 +1057,11 @@ function ProductDetails({ data }) {
 const ProductDetailsInfo = ({ data }) => {
     const [active, setActive] = useState(1)
     console.log(data, "see the data")
+    const [expanded, setExpanded] = useState(true);
 
 
     return (
-        <div className='bg-[#fafafa] mb-5 px-10 800px:px-2 py-2 rounded pb-5'>
+        <div className='bg-[#fcfcfc] shadow-lg  border-[0.1px] border-[#f8f8f8] mb-5 px-10 800px:px-2 py-2 rounded pb-5'>
             <div className="w-full flex justify-between border-b pt-10 pb-2">
                 <div className="relative">
                     <h5 className={`${active === 1 ? "text-[#1BB8E5] font-[700]" : "text-[#000]"} text-[18px]  px-1 leading-5 cursor-pointer 800px:text-[20px] font-Poppins `} onClick={() => setActive(1)} >Product Details</h5>
@@ -1090,68 +1091,68 @@ const ProductDetailsInfo = ({ data }) => {
 
                         <div className='flex flex-wrap  gap-5'>
 
-                            <div className="bg-[#fff3e9] w-[320px] font-Poppins mb-3">
+                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><AiOutlineGold /></span>
                                     <span className='font-[500]'>Gold</span>
                                 </div>
                                 <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Weight</div>
                                         <p className='text-[#4f3267] text-[14px]'> {data?.goldWeight ? data.goldWeight.weight : "Not Updated"} </p>
                                     </div>
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Purity</div>
                                         <p className='text-[#4f3267] text-[14px]'>{data?.goldWeight ? data.goldWeight.purity : "18 kt"}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#fff3e9] w-[320px] font-Poppins mb-3">
+                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><IoDiamondOutline /></span>
                                     <span className='font-[500]'>Diamond</span>
                                 </div>
                                 <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Weight</div>
                                         <p className='text-[#4f3267] text-[14px]'>{data?.diamondWeight ? data.diamondWeight.weight : "Not Updated"} </p>
                                     </div>
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Quality</div>
                                         <p className='text-[#4f3267] text-[14px]'>{data?.diamondWeight ? data.diamondWeight.quality : " GH-VS"}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#fff3e9] w-[320px] font-Poppins mb-3">
+                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><RxDimensions /></span>
                                     <span className='font-[500]'>Dimension</span>
                                 </div>
                                 <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Height</div>
                                         <p className='text-[#4f3267] text-[14px]'> {data?.dimension ? data.dimension.height : "Not Updated"}</p>
                                     </div>
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Width</div>
                                         <p className='text-[#4f3267] text-[14px]'>{data?.dimension ? data.dimension.width : "Not Updated"} </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#fff3e9] w-[320px] font-Poppins mb-3">
+                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><GiHeartNecklace /></span>
                                     <span className='font-[500]'>Chain </span>
                                 </div>
                                 <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Length</div>
                                         <p className='text-[#4f3267] text-[14px]'>13 inch</p>
                                     </div>
-                                    <div className='w-[200px] bg-[#fff9f5] mr-[1.5px] px-[10px] py-[10px]'>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Weight</div>
                                         <p className='text-[#4f3267] text-[14px]'> 1gm </p>
                                     </div>
@@ -1164,45 +1165,46 @@ const ProductDetailsInfo = ({ data }) => {
 
 
 
-                        <div className="bg-[#fff3e9] w-full font-Poppins mb-3">
-                            <Accordion >
+                        <div className="!bg-[#5DC2B0] w-full font-Poppins mb-3 mt-4">
+                            <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1-content"
                                     id="panel1-header"
+                                    className='!bg-[#68c7b6] rounded-[8px]'
                                 >
-                                    <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
+                                    <div className=" w-full  t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                         <span><MdFeaturedPlayList /></span>
                                         <span className='font-[500]'>Features</span>
                                     </div>
                                 </AccordionSummary>
-                                <AccordionDetails className="bg-[#fff9f5]">
+                                <AccordionDetails className="bg-[#d1fbf3]">
                                     <div className="tsec2 flex flex-col font-Poppins">
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center '>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center '>
                                             <div className='font-[500] '><GiMaterialsScience /></div>
                                             <p className='text-[#4f3267] text-[15px]'> Hypoallergenic Material</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><MdHealthAndSafety /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Quality and Safety First</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><FaChild /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Age-Appropriate Styles</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><GiHeartNecklace /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Everyday Use Jewellery</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><TbBrandMinecraft /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Crafted with Love</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><TbCertificate /></div>
                                             <p className='text-[#4f3267] text-[14px]'>Natural Diamonds with SGL Certificate</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#fff9f5] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><MdOutlineAppRegistration /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Design Registration No. 417519-003</p>
                                         </div>

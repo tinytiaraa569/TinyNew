@@ -2,10 +2,10 @@
 import religiousimg from './religious.jpg'
 import pendantimg from './pendents.jpg'
 import setimg from './set.jpg'
-import bangleimg from './bangle.jpg'
+import bangleimg from './bangles.jpg'
 import earringimg from './earrings.jpg'
 import pearlimg from './pearl.jpg'
-
+import meandmomimg from './meandmon.jpg'
 
 
 
@@ -310,7 +310,7 @@ export const categoriesData = [
   {
     id: 8,
     title: "Me & Mom Collections",
-    bannerimg: "https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw65fd7088/images/hi-res/50D1D1VEM1S02_1.jpg",
+    bannerimg: meandmomimg,
 
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",

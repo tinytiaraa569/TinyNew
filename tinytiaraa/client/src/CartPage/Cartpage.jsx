@@ -664,7 +664,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
           <div className="leftcardprice mb-2">
             <span className="oprice">₹{data.originalPrice}</span>
             <span className="disprice pl-1">₹{data.discountPrice}</span>
-            <span className='text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1'>save₹{data.originalPrice - data.discountPrice}</span>
+            <span className='text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1'>save ₹{(data.originalPrice - data.discountPrice).toFixed(2)}</span>
           </div>
 
           <div className="details">

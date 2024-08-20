@@ -58,30 +58,35 @@
     height: 30px;
 }
 .followus .socialfb{
+    opacity: 70%;
     background: #3B5998;
 }
 .followus .socialwhatsapp{
+    opacity: 70%;
     background: #0CB44B;
 }
 .followus .socialinsta{
+    opacity: 70%;
     background: #D22E8F;
 }
 .followus .socialpintrest{
+    opacity: 70%;
     background: #E60023;
 
 }
 
 .followus .socialfb:hover{
-    background: #2a447a;
+    opacity: 100%;
+   
 }
 .followus .socialwhatsapp:hover{
-    background: #0d9d44;
+    opacity: 100%;
 }
 .followus .socialinsta:hover{
-    background: #9e276d;
+    opacity: 100%;
 }
 .followus .socialpintrest:hover{
-    background: #ac182e;
+    opacity: 100%;
 
 }
 

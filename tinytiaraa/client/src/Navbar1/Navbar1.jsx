@@ -17,7 +17,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { CgProfile, CgSearch } from 'react-icons/cg';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp, IoMdMail } from 'react-icons/io';
 import DropDown from '@/Navbar/DropDown';
 import { backend_url } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
@@ -134,8 +134,12 @@ function Navbar1() {
                 {           /* //top nav */}
                 <div className='nav1banner '>
                     <div className='customerinfo'>
-                        <span className='flex items-center'><MdSupportAgent size={30} /> +91 86570 62511 |</span>
-                        <span className='ml-[3px]'>care@tinytiaraa.com</span>
+                        <span className='flex items-center'>
+                        <Link to="tel:+91 8657062511" className='ml-[2px] flex items-center font-[450]'><MdSupportAgent size={26} className='mr-[2px]' /> +91 86570 62511 | </Link>
+                            </span>
+                        <span className='ml-[3px] flex items-center'> 
+                            <Link to="mailto:care@tinytiaraa.com" className='ml-[2px] flex items-center font-[450]'><IoMdMail size={24} className='mr-[2px]' />care@tinytiaraa.com </Link>
+                        </span> 
 
                     </div>
 
@@ -165,9 +169,7 @@ function Navbar1() {
                             <i className="fab fa-whatsapp" />
                         </Link>
 
-                        <Link to="mailto:care@tinytiaraa.com">
-                            <i className="fa-regular fa-envelope"></i>
-                        </Link>
+
                     </div>
 
                 </div>
@@ -188,7 +190,7 @@ function Navbar1() {
                             <li><NavLink to="/" activeClassName="active">Home</NavLink></li>
                             <li><NavLink to="/about" activeClassName="active">Our Story</NavLink></li>
                             <span className=' parenthover' >
-                                <li ><NavLink to="/shop" activeClassName="active">Shop</NavLink>
+                                <li ><NavLink to="/products" activeClassName="active">Shop</NavLink>
 
                                     <div className='shopdrop shadow-sm`'>
                                         <div className='flex gap-5'>
@@ -216,11 +218,11 @@ function Navbar1() {
                                                         <h3 className='font-[500]'>Collection</h3>
                                                     </div>
 
-                                                    <h6 className='pb-2 collectionnav1'>Baby (0-3 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1'>Kids (3-10 Yrs)</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/products") }}>Baby (0-3 Yrs)</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/products") }}>Kids (3-10 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1'>Teens</h6>
                                                     <h6 className='pb-2 collectionnav1'>Mom & Me <span className='text-[red]'> | New</span></h6>
-                                                    <h6 className='pb-2 collectionnav1'>Customization</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gifts</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gallery </h6>
                                                     <h6 className='pb-2 collectionnav1'>Media</h6>
@@ -274,34 +276,50 @@ function Navbar1() {
                                             </div>
 
 
-                                            <div className='mt-5 ml-4'>
+                                            <div className='pricenav mt-5 ml-7'>
                                                 <div className='mb-2'>
                                                     <h3 className='font-[500] text-black'>By Price</h3>
                                                 </div>
 
                                                 <Link
                                                     to={`/products${buildQueryString(0, 5000)}`}
-                                                    className='pb-2 collectionnav1 text-white'
+                                                    className='pb-2 collectionnav1 text-white text-[15px]'
                                                 >
-                                                    Jewelry Under ₹ 5000
+                                                    <h6 className='mb-1'>Jewelry Under ₹ 5000</h6>
+
                                                 </Link>
                                                 <Link
                                                     to={`/products${buildQueryString(0, 10000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    Jewelry Under ₹ 10000
+                                                    <h6 className='mb-1'>Jewelry Under ₹ 10000</h6>
+
+
                                                 </Link>
                                                 <Link
                                                     to={`/products${buildQueryString(0, 20000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    Jewelry Under ₹ 20000
+                                                    <h6 className='mb-1'>Jewelry Under ₹ 20000</h6>
+
+
                                                 </Link>
                                                 <Link
                                                     to={`/products${buildQueryString(0, 30000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    Jewelry Under ₹ 30000
+                                                    <h6 className='mb-1'>Jewelry Under ₹ 30000</h6>
+
+
+                                                </Link>
+
+                                                <Link
+                                                    to={`/products${buildQueryString(0, 40000)}`}
+                                                    className='pb-2 collectionnav1 text-white'
+                                                >
+                                                    <h6 className='mb-1'>Jewelry Under ₹ 40000</h6>
+
+
                                                 </Link>
                                             </div>
                                         </div>
@@ -334,7 +352,7 @@ function Navbar1() {
                                             <input type="search" placeholder='Search Product..' className='' value={searchTerm} onChange={handleSearchChange} />
 
                                             <div className='searchiconadjustpos'>
-                                            <IoSearchOutline size={22}/>
+                                                <IoSearchOutline size={22} />
 
                                             </div>
 

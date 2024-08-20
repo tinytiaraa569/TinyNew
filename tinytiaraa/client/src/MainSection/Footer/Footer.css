@@ -93,7 +93,11 @@
     width: 100%;
 
 }
+.footericons .footericonmain a:hover{
+    transform: scale(1.15);
+    transition: all 0.5s;
 
+}
 .footerfour ul li a{
     text-decoration: none;
     color: white;
@@ -119,10 +123,10 @@
     color: transparent;
 }
 .footericonmain .fa-envelope{
-    color: rgb(129, 128, 134);
+    color: rgb(255, 255, 255);
 }
 .footericonmain .fa-phone{
-    color: rgb(6, 31, 192);
+    color: rgb(255, 255, 255);
 }
 .footericonmain i:hover{
     transition: all 1s;
