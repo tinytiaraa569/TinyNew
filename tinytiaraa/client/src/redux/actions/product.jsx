@@ -65,6 +65,9 @@ export const createProduct = (
     lotusgreenWhiteGoldclrStock,
     // enamelColorImages
 
+    gender,
+    ageGroup
+
 ) => async (dispatch) => {
     try {
         dispatch({
@@ -133,6 +136,8 @@ export const createProduct = (
             lotusgreenYellowGoldclrStock,
             lotusgreenRoseGoldclrStock,
             lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup,
             config
         )
 

@@ -127,6 +127,17 @@ function Navbar1() {
         setsearchTerm("");
         setsearchData(null);
     };
+   
+    const submitHandleagegroup = (ageGroupKey) => {
+        if (!products || !ageGroupKey) return;
+    
+        const filteredProducts = products.filter(product => 
+            product.ageGroup && product.ageGroup[ageGroupKey] === true
+        );
+        console.log("age group",filteredProducts)
+        navigate(`/products?ageGroup=${ageGroupKey}`, { state: { filteredProducts } });
+        setShopDropdownOpen(false);
+    };
     return (
         <>
 
@@ -218,10 +229,10 @@ function Navbar1() {
                                                         <h3 className='font-[500]'>Collection</h3>
                                                     </div>
 
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/products") }}>Baby (0-3 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/products") }}>Kids (3-10 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1'>Teens</h6>
-                                                    <h6 className='pb-2 collectionnav1'>Mom & Me <span className='text-[red]'> | New</span></h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => {submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[red]'> | New</span></h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gifts</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gallery </h6>

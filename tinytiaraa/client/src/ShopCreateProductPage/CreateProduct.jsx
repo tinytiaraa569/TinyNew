@@ -1082,18 +1082,31 @@ function CreateProduct() {
     const [blackRoseGoldclrStock, setblackRoseGoldclrStock] = useState('');
     const [blackWhiteGoldclrStock, setblackWhiteGoldclrStock] = useState('');
 
-     // deepgreen emanel stock
+    // deepgreen emanel stock
 
-     const [deepgreenYellowGoldclrStock, setdeepgreenYellowGoldclrStock] = useState('');
-     const [deepgreenRoseGoldclrStock, setdeepgreenRoseGoldclrStock] = useState('');
-     const [deepgreenWhiteGoldclrStock, setdeepgreenWhiteGoldclrStock] = useState('');
+    const [deepgreenYellowGoldclrStock, setdeepgreenYellowGoldclrStock] = useState('');
+    const [deepgreenRoseGoldclrStock, setdeepgreenRoseGoldclrStock] = useState('');
+    const [deepgreenWhiteGoldclrStock, setdeepgreenWhiteGoldclrStock] = useState('');
 
-      // lotusgreen emanel stock
+    // lotusgreen emanel stock
 
     const [lotusgreenYellowGoldclrStock, setlotusgreenYellowGoldclrStock] = useState('');
     const [lotusgreenRoseGoldclrStock, setlotusgreenRoseGoldclrStock] = useState('');
     const [lotusgreenWhiteGoldclrStock, setlotusgreenWhiteGoldclrStock] = useState('');
 
+
+
+    const [gender, setGender] = useState({
+        girl: false,
+        boy: false,
+        unisex: false,
+    });
+    const [ageGroup, setAgeGroup] = useState({
+        infants: false,
+        kids: false,
+        teens: false,
+        mom: false,
+    });
 
 
     const handleSubmit = (e) => {
@@ -1228,6 +1241,8 @@ function CreateProduct() {
         newForm.append("shopId", seller._id)
 
         newForm.append("designno", designno)
+        newForm.append("gender", gender);
+        newForm.append("ageGroup", ageGroup);
 
 
 
@@ -1266,7 +1281,7 @@ function CreateProduct() {
         newForm.append("redWhiteGoldclrStock", redWhiteGoldclrStock);
 
 
-        
+
         // deepgreen emanel stock
         newForm.append("deepgreenYellowGoldclrStock", deepgreenYellowGoldclrStock);
         newForm.append("deepgreenRoseGoldclrStock", deepgreenRoseGoldclrStock);
@@ -1376,8 +1391,8 @@ function CreateProduct() {
             lotusgreenWhiteGoldclrStock,
 
 
-            
-
+            gender,
+            ageGroup
         }))
 
         // console.log(newForm)
@@ -3188,7 +3203,7 @@ function CreateProduct() {
                         value={designno}
                         onChange={(e) => { setDesignno(e.target.value) }} />
                 </div>
-                
+
 
 
 
@@ -3262,6 +3277,9 @@ function CreateProduct() {
                 </div>
 
 
+
+
+
                 <div className='font-Poppins mt-4'>
                     <label htmlFor="" className='pb-2 font-[600]'>Dimension <span className='text-red-500'>*</span></label>
                     <div className='flex justify-between items-center'>
@@ -3296,9 +3314,88 @@ function CreateProduct() {
                 </div>
 
 
-
-
                 {/* weight section */}
+
+
+
+                {/* gender */}
+                <div className='font-Poppins mt-4'>
+                    <label htmlFor="" className='pb-2 font-[600]'>Select Gender <span className='text-red-500'>*</span></label>
+                    <div className='flex justify-between items-center'>
+                        <div className='mt-1 w-[30%]'>
+                            <input
+                                type="checkbox"
+                                id="girl"
+                                checked={gender.girl}
+                                onChange={(e) => setGender({ ...gender, girl: e.target.checked })}
+                            />
+                            <label htmlFor="girl" className="ml-2">Girl</label>
+                        </div>
+                        <div className='mt-1 w-[30%]'>
+                            <input
+                                type="checkbox"
+                                id="boy"
+                                checked={gender.boy}
+                                onChange={(e) => setGender({ ...gender, boy: e.target.checked })}
+                            />
+                            <label htmlFor="boy" className="ml-2">Boy</label>
+                        </div>
+                        <div className='mt-1 w-[30%]'>
+                            <input
+                                type="checkbox"
+                                id="unisex"
+                                checked={gender.unisex}
+                                onChange={(e) => setGender({ ...gender, unisex: e.target.checked })}
+                            />
+                            <label htmlFor="unisex" className="ml-2">Unisex</label>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Age Group Selection */}
+                <div className='font-Poppins mt-4'>
+                    <label htmlFor="" className='pb-2 font-[600]'>Select Age Group <span className='text-red-500'>*</span></label>
+                    <div className='flex justify-between items-center'>
+                        <div className='mt-1 w-[23%]'>
+                            <input
+                                type="checkbox"
+                                id="infants"
+                                checked={ageGroup.infants}
+                                onChange={(e) => setAgeGroup({ ...ageGroup, infants: e.target.checked })}
+                            />
+                            <label htmlFor="infants" className="ml-2">Infants (0-3 yrs)</label>
+                        </div>
+                        <div className='mt-1 w-[23%]'>
+                            <input
+                                type="checkbox"
+                                id="kids"
+                                checked={ageGroup.kids}
+                                onChange={(e) => setAgeGroup({ ...ageGroup, kids: e.target.checked })}
+                            />
+                            <label htmlFor="kids" className="ml-2">Kids (3-12 yrs)</label>
+                        </div>
+                        <div className='mt-1 w-[23%]'>
+                            <input
+                                type="checkbox"
+                                id="teens"
+                                checked={ageGroup.teens}
+                                onChange={(e) => setAgeGroup({ ...ageGroup, teens: e.target.checked })}
+                            />
+                            <label htmlFor="teens" className="ml-2">Teens</label>
+                        </div>
+                        <div className='mt-1 w-[23%]'>
+                            <input
+                                type="checkbox"
+                                id="mom"
+                                checked={ageGroup.mom}
+                                onChange={(e) => setAgeGroup({ ...ageGroup, mom: e.target.checked })}
+                            />
+                            <label htmlFor="mom" className="ml-2">Mom</label>
+                        </div>
+                    </div>
+                </div>
+
+
 
                 <div className='font-Poppins mt-4 cursor-pointer'>
                     <label htmlFor="" className='pb-2'>Upload Images <span className='text-red-500'>*</span></label>

@@ -19,6 +19,7 @@ function ProductsPage() {
   const { products } = useSelector((state) => state.products);
   const [selectedEnamelColor, setSelectedEnamelColor] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState("");
 
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
@@ -54,10 +55,17 @@ function ProductsPage() {
     }
   }, [searchParams, products, selectedEnamelColor]); // Include only searchParams and products as dependencies
 
-
+  useEffect(() => {
+    const ageGroupParam = searchParams.get("ageGroup");
+    if (ageGroupParam) {
+      setSelectedAgeGroup(ageGroupParam);
+    }
+  }, [searchParams]);
   useEffect(() => {
     filterProducts();
-  }, [priceRange])
+  }, [priceRange, selectedAgeGroup])
+
+  console.log("slected", selectedAgeGroup)
   const filterProducts = () => {
     try {
       if (!products || !Array.isArray(products)) {
@@ -276,7 +284,16 @@ function ProductsPage() {
       }
 
 
-
+      if (selectedAgeGroup) {
+        filteredProducts = filteredProducts.filter((product) => {
+          // Check if `ageGroup` is defined and is an object
+          if (product.ageGroup && typeof product.ageGroup === 'object') {
+            // Check if `selectedAgeGroup` exists in `ageGroup`
+            return product.ageGroup[selectedAgeGroup] === true;
+          }
+          return false; // Exclude products with undefined or invalid `ageGroup`
+        });
+      }
       // Sort products
       switch (sortOption) {
         case "priceLowToHigh":
@@ -346,6 +363,10 @@ function ProductsPage() {
     setSearchParams(params);
   };
 
+  const handleAgeGroupChange = (e) => {
+    setSelectedAgeGroup(e.target.value);
+    updateURLParams({ ageGroup: e.target.value });
+  };
   const handleTagClick = (tag) => {
     console.log(tag.toLowerCase(), "product tagselcted")
     setSelectedTag(tag.toLowerCase());
@@ -378,6 +399,10 @@ function ProductsPage() {
         setSelectedTag("");
         updateURLParams({ tag: '' });
         break;
+      case "ageGroup":
+        setSelectedAgeGroup("");
+        updateURLParams({ ageGroup: '' });
+        break;
 
       default:
         break;
@@ -395,12 +420,10 @@ function ProductsPage() {
     // Navigate to the products page with the category as a query parameter
     navigate(`/products?category=${categoryTitle}`);
   };
-
-  console.log(priceRange, "price range is from ")
   return (
     <>
       <div className="productbanner">
-        {/* <img src={bannerimg} alt="" /> */}
+        <img src={bannerimg} alt="" />
       </div>
       <button
         onClick={toggleFilterVisibility}
@@ -479,6 +502,16 @@ function ProductsPage() {
                       <RiCloseFill
                         className="ml-2 cursor-pointer"
                         onClick={() => removeFilter("tag")}
+                      />
+                    </div>
+                  )}
+
+                  {selectedAgeGroup && (
+                    <div className="flex items-center bg-blue-200 px-2 py-1 rounded-md">
+                      <span>AgeGroup: {selectedAgeGroup}</span>
+                      <RiCloseFill
+                        className="ml-2 cursor-pointer"
+                        onClick={() => removeFilter("ageGroup")}
                       />
                     </div>
                   )}
@@ -568,17 +601,17 @@ function ProductsPage() {
                 <div className="producttagsingle" onClick={() => handleTagClick("Pendant")}>
                   Pendant
                 </div>
-                <div className="producttagsingle"  onClick={() => handleTagClick("Earrings")}>
+                <div className="producttagsingle" onClick={() => handleTagClick("Earrings")}>
                   Earrings
                 </div>
-                <div className="producttagsingle"  onClick={() => handleTagClick("Bracelets")}>
+                <div className="producttagsingle" onClick={() => handleTagClick("Bracelets")}>
                   Bracelets
                 </div>
 
-                <div className="producttagsingle"  onClick={() => handleTagClick("Nazariya")}>
+                <div className="producttagsingle" onClick={() => handleTagClick("Nazariya")}>
                   Nazariya
                 </div>
-                <div className="producttagsingle"  onClick={() => handleTagClick("Mom & me")}>
+                <div className="producttagsingle" onClick={() => handleTagClick("Mom & me")}>
                   Mom & me
                 </div>
                 <div className="producttagsingle" onClick={() => handleTagClick("Gifts")}>

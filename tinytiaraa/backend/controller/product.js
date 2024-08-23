@@ -699,6 +699,9 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         } = req.body;
 
 
+        const {gender,ageGroup} = req.body;
+
+
         const productData = req.body;
         productData.images = imagesLinks;
         productData.withchainimages = withchainimagesLinks;
@@ -801,6 +804,9 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
                 blackWhiteGoldclr: blackWhiteGoldclrLinks,
             },
         };
+
+        productData.gender = gender;
+        productData.ageGroup = ageGroup;
 
 
 

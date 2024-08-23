@@ -461,7 +461,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 
-    designno:{
+    designno: {
         type: String,
         required: true
     },
@@ -531,6 +531,20 @@ const productSchema = new mongoose.Schema({
     ratings: {
         type: Number
     },
+
+    gender: {
+        girl: Boolean,
+        boy: Boolean,
+        unisex: Boolean
+    },
+
+    ageGroup: {
+        infants: { type: Boolean },
+        kids: { type: Boolean },
+        teens: { type: Boolean },
+        mom: { type: Boolean },
+    },
+
     sold_out: {
         type: Number,
         default: 0,
