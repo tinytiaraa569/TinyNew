@@ -1124,7 +1124,19 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
     try {
         const productId = req.params.id;
 
-        console.log(productId,"productID")
+        // Log the entire request object (this can be very large, so be careful)
+        console.log("Request Object:", req);
+
+        // Log the request body to see what data is being sent
+        console.log("Request Body:", req.body);
+
+        // Log the request headers to check any specific headers being sent
+        console.log("Request Headers:", req.headers);
+
+        // Log any files attached to the request (if any)
+        if (req.files) {
+            console.log("Request Files:", req.files);
+        }
 
         // Extract data from the request body
         const {
@@ -1177,8 +1189,56 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             ageGroup
         } = req.body;
 
-        console.log(req.body,"request data")
-
+        // Log each extracted variable to see its value
+        console.log("Extracted Data:", {
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId,
+            images,
+            withchainimages,
+            withchainoutimages,
+            YellowGoldclr,
+            RoseGoldclr,
+            WhiteGoldclr,
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            goldWeight,
+            diamondWeight,
+            dimension,
+            enamelColors,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        });
 
         // Prepare the update object
         const updateData = {
@@ -1231,8 +1291,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             ageGroup
         };
 
-        console.log(updateData,"updated data")
-
+        // Log the final updateData object to see what will be updated in the database
+        console.log("Update Data:", updateData);
 
         // Find the product by ID and update
         const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, {
@@ -1249,6 +1309,7 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             product: updatedProduct
         });
     } catch (error) {
+        console.log("Error Occurred:", error.message);
         return next(new ErrorHandler(error.message, 400));
     }
 }));

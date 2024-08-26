@@ -1970,7 +1970,7 @@ function CreateProduct() {
                                     <div className="mb-3">
                                         <div className='flex gap-2'>
                                             <input type="checkbox" id='withchain' onChange={() => toggleShowImages('withchain')} />
-                                            <label htmlFor="withchain">With Chain</label>
+                                            <label htmlFor="withchain">With Chain ({withchainimages.length})</label>
                                         </div>
 
                                         {showWithChainImages && (
@@ -2014,7 +2014,7 @@ function CreateProduct() {
                                     <div className="mb-3">
                                         <div className='flex gap-2'>
                                             <input type="checkbox" id='withoutchain' onChange={() => toggleShowImages('withoutchain')} />
-                                            <label htmlFor="withoutchain">Without Chain</label>
+                                            <label htmlFor="withoutchain">Without Chain ({withchainoutimages.length})</label>
                                         </div>
                                         {showWithoutChainImages && (
                                             <div>
@@ -2145,7 +2145,7 @@ function CreateProduct() {
                                                 id="yellowgold"
                                                 onChange={handleToggleWithYellowclr}
                                             />
-                                            <label htmlFor="yellowgold">Yellow Gold</label>
+                                            <label htmlFor="yellowgold">Yellow Gold ({YellowGoldclr.length})</label>
                                         </div>
 
                                         {showWithYellowclrImages && (
@@ -2220,7 +2220,7 @@ function CreateProduct() {
                                                 id="rosegold"
                                                 onChange={handleToggleWithRoseclr}
                                             />
-                                            <label htmlFor="rosegold">Rose Gold</label>
+                                            <label htmlFor="rosegold">Rose Gold ({RoseGoldclr.length})</label>
                                         </div>
 
                                         {showWithRoseclrImages && (
@@ -2295,7 +2295,7 @@ function CreateProduct() {
                                                 id="whitegold"
                                                 onChange={handleToggleWithWhiteclr}
                                             />
-                                            <label htmlFor="whitegold">White Gold</label>
+                                            <label htmlFor="whitegold">White Gold ({WhiteGoldclr.length})</label>
                                         </div>
 
                                         {showWithWhiteclrImages && (
@@ -2491,7 +2491,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepblueyellowgold' onChange={deepbluehandleToggleWithYellowclr} />
-                                                <label htmlFor="deepblueyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="deepblueyellowgold">Enamel Yellow Gold ({deepblueYellowGoldclr.length})</label>
                                             </div>
 
 
@@ -2550,7 +2550,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepbluerosegold' onChange={deepbluehandleToggleWithRoseclr} />
-                                                <label htmlFor="deepbluerosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="deepbluerosegold">Enamel Rose Gold ({deepblueRoseGoldclr.length})</label>
                                             </div>
 
 
@@ -2610,7 +2610,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepbluewhitegold' onChange={deepbluehandleToggleWithWhiteclr} />
-                                                <label htmlFor="deepbluewhitegold">Enamel White Gold</label>
+                                                <label htmlFor="deepbluewhitegold">Enamel White Gold ({deepblueWhiteGoldclr.length})</label>
                                             </div>
 
 
@@ -2703,7 +2703,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='pinkyellowgold' onChange={pinkhandleToggleWithYellowclr} />
-                                                <label htmlFor="pinkyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="pinkyellowgold">Enamel Yellow Gold ({pinkYellowGoldclr.length})</label>
                                             </div>
 
                                             {pinkshowWithYellowclrImages && (
@@ -2759,7 +2759,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='pinkrosegold' onChange={pinkhandleToggleWithRoseclr} />
-                                                <label htmlFor="pinkrosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="pinkrosegold">Enamel Rose Gold ({pinkRoseGoldclr.length})</label>
                                             </div>
 
                                             {pinkshowWithRoseclrImages && (
@@ -2815,7 +2815,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='pinkwhitegold' onChange={pinkhandleToggleWithWhiteclr} />
-                                                <label htmlFor="pinkwhitegold">Enamel White Gold</label>
+                                                <label htmlFor="pinkwhitegold">Enamel White Gold ({pinkWhiteGoldclr.length})</label>
                                             </div>
 
                                             {pinkshowWithWhiteclrImages && (
@@ -2904,7 +2904,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='turquoiseyellowgold' onChange={turquoisehandleToggleWithYellowclr} />
-                                                <label htmlFor="turquoiseyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="turquoiseyellowgold">Enamel Yellow Gold ({turquoiseYellowGoldclr.length})</label>
                                             </div>
 
                                             {turquoiseshowWithYellowclrImages && (
@@ -2960,7 +2960,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='turquoiserosegold' onChange={turquoisehandleToggleWithRoseclr} />
-                                                <label htmlFor="turquoiserosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="turquoiserosegold">Enamel Rose Gold ({turquoiseRoseGoldclr.length})</label>
                                             </div>
 
                                             {turquoiseshowWithRoseclrImages && (
@@ -3015,7 +3015,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='turquoisewhitegold' onChange={turquoisehandleToggleWithWhiteclr} />
-                                                <label htmlFor="turquoisewhitegold">Enamel White Gold</label>
+                                                <label htmlFor="turquoisewhitegold">Enamel White Gold ({turquoiseWhiteGoldclr.length})</label>
                                             </div>
 
                                             {turquoiseshowWithWhiteclrImages && (
@@ -3105,7 +3105,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='redyellowgold' onChange={redhandleToggleWithYellowclr} />
-                                                <label htmlFor="redyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="redyellowgold">Enamel Yellow Gold ({redYellowGoldclr.length})</label>
                                             </div>
 
                                             {redshowWithYellowclrImages && (
@@ -3161,7 +3161,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='redrosegold' onChange={redhandleToggleWithRoseclr} />
-                                                <label htmlFor="redrosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="redrosegold">Enamel Rose Gold ({redRoseGoldclr.length})</label>
                                             </div>
 
                                             {redshowWithRoseclrImages && (
@@ -3216,7 +3216,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='redwhitegold' onChange={redhandleToggleWithWhiteclr} />
-                                                <label htmlFor="redwhitegold">Enamel White Gold</label>
+                                                <label htmlFor="redwhitegold">Enamel White Gold ({redWhiteGoldclr.length})</label>
                                             </div>
 
                                             {redshowWithWhiteclrImages && (
@@ -3305,7 +3305,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='blackyellowgold' onChange={blackhandleToggleWithYellowclr} />
-                                                <label htmlFor="blackyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="blackyellowgold">Enamel Yellow Gold ({blackYellowGoldclr.length})</label>
                                             </div>
 
                                             {blackshowWithYellowclrImages && (
@@ -3360,7 +3360,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='blackrosegold' onChange={blackhandleToggleWithRoseclr} />
-                                                <label htmlFor="blackrosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="blackrosegold">Enamel Rose Gold ({blackRoseGoldclr.length})</label>
                                             </div>
 
                                             {blackshowWithRoseclrImages && (
@@ -3415,7 +3415,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='blackwhitegold' onChange={blackhandleToggleWithWhiteclr} />
-                                                <label htmlFor="blackwhitegold">Enamel White Gold</label>
+                                                <label htmlFor="blackwhitegold">Enamel White Gold ({blackWhiteGoldclr.length})</label>
                                             </div>
 
                                             {blackshowWithWhiteclrImages && (
@@ -3503,7 +3503,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepgreenyellowgold' onChange={deepgreenHandleToggleWithYellowclr} />
-                                                <label htmlFor="deepgreenyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="deepgreenyellowgold">Enamel Yellow Gold ({deepgreenYellowGoldclr.length})</label>
                                             </div>
 
                                             {deepgreenShowWithYellowclrImages && (
@@ -3559,7 +3559,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepgreenrosegold' onChange={deepgreenHandleToggleWithRoseclr} />
-                                                <label htmlFor="deepgreenrosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="deepgreenrosegold">Enamel Rose Gold ({deepgreenRoseGoldclr.length})</label>
                                             </div>
 
                                             {deepgreenShowWithRoseclrImages && (
@@ -3614,7 +3614,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='deepgreenwhitegold' onChange={deepgreenHandleToggleWithWhiteclr} />
-                                                <label htmlFor="deepgreenwhitegold">Enamel White Gold</label>
+                                                <label htmlFor="deepgreenwhitegold">Enamel White Gold ({deepgreenWhiteGoldclr.length})</label>
                                             </div>
 
                                             {deepgreenShowWithWhiteclrImages && (
@@ -3702,7 +3702,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='lotusgreenyellowgold' onChange={lotusgreenHandleToggleWithYellowclr} />
-                                                <label htmlFor="lotusgreenyellowgold">Enamel Yellow Gold</label>
+                                                <label htmlFor="lotusgreenyellowgold">Enamel Yellow Gold ({lotusgreenYellowGoldclr.length})</label>
                                             </div>
 
                                             {lotusgreenShowWithYellowclrImages && (
@@ -3757,7 +3757,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='lotusgreenrosegold' onChange={lotusgreenHandleToggleWithRoseclr} />
-                                                <label htmlFor="lotusgreenrosegold">Enamel Rose Gold</label>
+                                                <label htmlFor="lotusgreenrosegold">Enamel Rose Gold ({lotusgreenRoseGoldclr.length})</label>
                                             </div>
 
                                             {lotusgreenShowWithRoseclrImages && (
@@ -3812,7 +3812,7 @@ function CreateProduct() {
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='lotusgreenwhitegold' onChange={lotusgreenHandleToggleWithWhiteclr} />
-                                                <label htmlFor="lotusgreenwhitegold">Enamel White Gold</label>
+                                                <label htmlFor="lotusgreenwhitegold">Enamel White Gold ({lotusgreenWhiteGoldclr.length})</label>
                                             </div>
 
                                             {lotusgreenShowWithWhiteclrImages && (
@@ -4126,7 +4126,7 @@ function CreateProduct() {
 
 
                 <div className='font-Poppins mt-4 cursor-pointer'>
-                    <label htmlFor="" className='pb-2'>Upload Images <span className='text-red-500'>*</span></label>
+                    <label htmlFor="" className='pb-2'>Upload Images ({images.length})<span className='text-red-500'>*</span></label>
                     <div className='w-full flex items-center flex-wrap'>
                         <input type="file" className='hidden' id='upload' multiple onChange={handleImageChange} />
                         <label htmlFor="upload">

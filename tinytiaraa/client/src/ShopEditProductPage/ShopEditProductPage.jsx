@@ -23,7 +23,6 @@ import axios from 'axios'
 function ShopEditProductPage() {
     const { seller } = useSelector((state) => state.seller)
 
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
     console.log(seller, "seller information")
@@ -1253,503 +1252,502 @@ function ShopEditProductPage() {
         }
     }, [products, id]);
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-
-
-    //     const newForm = new FormData()
-
-    //     images.forEach((image) => {
-    //         newForm.set("images", image);
-    //     });
-
-    //     withchainimages.forEach((image) => {
-    //         newForm.set("withchainimages", image)
-    //     })
-
-    //     withchainoutimages.forEach((image) => {
-    //         newForm.set("withchainoutimages", image)
-    //     })
-
-
-    //     YellowGoldclr.forEach((image) => {
-    //         newForm.set("YellowGoldclr", image)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const newForm = new FormData()
+
+        images.forEach((image) => {
+            newForm.set("images", image);
+        });
+
+        withchainimages.forEach((image) => {
+            newForm.set("withchainimages", image)
+        })
+
+        withchainoutimages.forEach((image) => {
+            newForm.set("withchainoutimages", image)
+        })
+
+
+        YellowGoldclr.forEach((image) => {
+            newForm.set("YellowGoldclr", image)
+
+        })
+        RoseGoldclr.forEach((image) => {
+            newForm.set("RoseGoldclr", image)
+
+        })
+        WhiteGoldclr.forEach((image) => {
+            newForm.set("WhiteGoldclr", image)
+
+        })
+
+
+
+
+
+
+
+
+        //enamel 
+        deepblueYellowGoldclr.forEach((image) => {
+            newForm.set("deepblueYellowGoldclr", image)
+        })
+        deepblueRoseGoldclr.forEach((image) => {
+            newForm.set("deepblueRoseGoldclr", image)
+        })
+        deepblueWhiteGoldclr.forEach((image) => {
+            newForm.set("deepblueWhiteGoldclr", image)
+        })
 
-    //     })
-    //     RoseGoldclr.forEach((image) => {
-    //         newForm.set("RoseGoldclr", image)
+        pinkYellowGoldclr.forEach((image) => {
+            newForm.set("pinkYellowGoldclr", image);
+        });
+        pinkRoseGoldclr.forEach((image) => {
+            newForm.set("pinkRoseGoldclr", image);
+        });
+        pinkWhiteGoldclr.forEach((image) => {
+            newForm.set("pinkWhiteGoldclr", image);
+        });
 
-    //     })
-    //     WhiteGoldclr.forEach((image) => {
-    //         newForm.set("WhiteGoldclr", image)
-
-    //     })
-
-
-
-
-
-
-
+        // For Turquoise
+        turquoiseYellowGoldclr.forEach((image) => {
+            newForm.set("turquoiseYellowGoldclr", image);
+        });
+        turquoiseRoseGoldclr.forEach((image) => {
+            newForm.set("turquoiseRoseGoldclr", image);
+        });
+        turquoiseWhiteGoldclr.forEach((image) => {
+            newForm.set("turquoiseWhiteGoldclr", image);
+        });
 
-    //     //enamel 
-    //     deepblueYellowGoldclr.forEach((image) => {
-    //         newForm.set("deepblueYellowGoldclr", image)
-    //     })
-    //     deepblueRoseGoldclr.forEach((image) => {
-    //         newForm.set("deepblueRoseGoldclr", image)
-    //     })
-    //     deepblueWhiteGoldclr.forEach((image) => {
-    //         newForm.set("deepblueWhiteGoldclr", image)
-    //     })
+        // For Red
+        redYellowGoldclr.forEach((image) => {
+            newForm.set("redYellowGoldclr", image);
+        });
+        redRoseGoldclr.forEach((image) => {
+            newForm.set("redRoseGoldclr", image);
+        });
+        redWhiteGoldclr.forEach((image) => {
+            newForm.set("redWhiteGoldclr", image);
+        });
 
-    //     pinkYellowGoldclr.forEach((image) => {
-    //         newForm.set("pinkYellowGoldclr", image);
-    //     });
-    //     pinkRoseGoldclr.forEach((image) => {
-    //         newForm.set("pinkRoseGoldclr", image);
-    //     });
-    //     pinkWhiteGoldclr.forEach((image) => {
-    //         newForm.set("pinkWhiteGoldclr", image);
-    //     });
+        // For Black
+        blackYellowGoldclr.forEach((image) => {
+            newForm.set("blackYellowGoldclr", image);
+        });
+        blackRoseGoldclr.forEach((image) => {
+            newForm.set("blackRoseGoldclr", image);
+        });
+        blackWhiteGoldclr.forEach((image) => {
+            newForm.set("blackWhiteGoldclr", image);
+        });
 
-    //     // For Turquoise
-    //     turquoiseYellowGoldclr.forEach((image) => {
-    //         newForm.set("turquoiseYellowGoldclr", image);
-    //     });
-    //     turquoiseRoseGoldclr.forEach((image) => {
-    //         newForm.set("turquoiseRoseGoldclr", image);
-    //     });
-    //     turquoiseWhiteGoldclr.forEach((image) => {
-    //         newForm.set("turquoiseWhiteGoldclr", image);
-    //     });
 
-    //     // For Red
-    //     redYellowGoldclr.forEach((image) => {
-    //         newForm.set("redYellowGoldclr", image);
-    //     });
-    //     redRoseGoldclr.forEach((image) => {
-    //         newForm.set("redRoseGoldclr", image);
-    //     });
-    //     redWhiteGoldclr.forEach((image) => {
-    //         newForm.set("redWhiteGoldclr", image);
-    //     });
+        // For Deep Green
+        deepgreenYellowGoldclr.forEach((image) => {
+            newForm.set("deepgreenYellowGoldclr", image);
+        });
+        deepgreenRoseGoldclr.forEach((image) => {
+            newForm.set("deepgreenRoseGoldclr", image);
+        });
+        deepgreenWhiteGoldclr.forEach((image) => {
+            newForm.set("deepgreenWhiteGoldclr", image);
+        });
 
-    //     // For Black
-    //     blackYellowGoldclr.forEach((image) => {
-    //         newForm.set("blackYellowGoldclr", image);
-    //     });
-    //     blackRoseGoldclr.forEach((image) => {
-    //         newForm.set("blackRoseGoldclr", image);
-    //     });
-    //     blackWhiteGoldclr.forEach((image) => {
-    //         newForm.set("blackWhiteGoldclr", image);
-    //     });
-
-
-    //     // For Deep Green
-    //     deepgreenYellowGoldclr.forEach((image) => {
-    //         newForm.set("deepgreenYellowGoldclr", image);
-    //     });
-    //     deepgreenRoseGoldclr.forEach((image) => {
-    //         newForm.set("deepgreenRoseGoldclr", image);
-    //     });
-    //     deepgreenWhiteGoldclr.forEach((image) => {
-    //         newForm.set("deepgreenWhiteGoldclr", image);
-    //     });
-
-    //     // For Lotus green
-    //     lotusgreenYellowGoldclr.forEach((image) => {
-    //         newForm.set("lotusgreenYellowGoldclr", image);
-    //     });
-    //     lotusgreenRoseGoldclr.forEach((image) => {
-    //         newForm.set("lotusgreenRoseGoldclr", image);
-    //     });
-    //     lotusgreenWhiteGoldclr.forEach((image) => {
-    //         newForm.set("lotusgreenWhiteGoldclr", image);
-    //     });
-
-
-
-
-
-
-
-    //     newForm.append("name", name)
-    //     newForm.append("skuid", skuid)
-    //     newForm.append("description", description)
-    //     newForm.append("category", category)
-    //     newForm.append("subcategory", subcategory)
-    //     newForm.append("tags", tags)
-    //     newForm.append("originalPrice", originalPrice)
-    //     newForm.append("discountPrice", discountPrice)
-    //     newForm.append("stock", stock)
-    //     newForm.append("shopId", seller._id)
-
-    //     newForm.append("designno", designno)
-    //     newForm.append("gender", gender);
-    //     newForm.append("ageGroup", ageGroup);
-
-
-
-
-    //     // weight
-
-    //     newForm.append('goldWeight.weight', goldWeight.weight);
-    //     newForm.append('goldWeight.purity', goldWeight.purity);
-    //     newForm.append('diamondWeight.weight', diamondWeight.weight);
-    //     newForm.append('diamondWeight.quality', diamondWeight.quality);
-    //     newForm.append('dimension.height', height);
-    //     newForm.append('dimension.width', width);
-
-    //     newForm.append("YellowGoldclrStock", YellowGoldclrStock);
-    //     newForm.append("RoseGoldclrStock", RoseGoldclrStock);
-    //     newForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
-
-
-    //     newForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
-    //     newForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
-    //     newForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
-
-    //     // pink emanel stock
-    //     newForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
-    //     newForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
-    //     newForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
-
-    //     // turquoise emanel stock
-    //     newForm.append("turquoiseYellowGoldclrStock", turquoiseYellowGoldclrStock);
-    //     newForm.append("turquoiseRoseGoldclrStock", turquoiseRoseGoldclrStock);
-    //     newForm.append("turquoiseWhiteGoldclrStock", turquoiseWhiteGoldclrStock);
-
-    //     // red emanel stock
-    //     newForm.append("redYellowGoldclrStock", redYellowGoldclrStock);
-    //     newForm.append("redRoseGoldclrStock", redRoseGoldclrStock);
-    //     newForm.append("redWhiteGoldclrStock", redWhiteGoldclrStock);
-
-
-
-    //     // deepgreen emanel stock
-    //     newForm.append("deepgreenYellowGoldclrStock", deepgreenYellowGoldclrStock);
-    //     newForm.append("deepgreenRoseGoldclrStock", deepgreenRoseGoldclrStock);
-    //     newForm.append("deepgreenWhiteGoldclrStock", deepgreenWhiteGoldclrStock)
-
-    //     // lotusgreen emanel stock
-    //     newForm.append("lotusgreenYellowGoldclrStock", lotusgreenYellowGoldclrStock);
-    //     newForm.append("lotusgreenRoseGoldclrStock", lotusgreenRoseGoldclrStock);
-    //     newForm.append("lotusgreenWhiteGoldclrStock", lotusgreenWhiteGoldclrStock)
-
-    //     const dimension = {
-    //         height: height,
-    //         width: width
-    //     };
-
-
-    //     console.log("Product Details:", {
-    //         id,
-    //         name,
-    //         skuid,
-    //         description,
-    //         category,
-    //         subcategory,
-    //         tags,
-    //         originalPrice,
-    //         discountPrice,
-    //         stock,
-    //         designno,
-    //         shopId: seller?._id,
-    //         goldWeight,
-    //         diamondWeight,
-    //         dimension: {
-    //             height,
-    //             width
-    //         },
-    //         YellowGoldclrStock,
-    //         RoseGoldclrStock,
-    //         WhiteGoldclrStock,
-    //         deepblueYellowGoldclrStock,
-    //         deepblueRoseGoldclrStock,
-    //         deepblueWhiteGoldclrStock,
-    //         pinkYellowGoldclrStock,
-    //         pinkRoseGoldclrStock,
-    //         pinkWhiteGoldclrStock,
-    //         turquoiseYellowGoldclrStock,
-    //         turquoiseRoseGoldclrStock,
-    //         turquoiseWhiteGoldclrStock,
-    //         redYellowGoldclrStock,
-    //         redRoseGoldclrStock,
-    //         redWhiteGoldclrStock,
-    //         blackYellowGoldclrStock,
-    //         blackRoseGoldclrStock,
-    //         blackWhiteGoldclrStock,
-    //         deepgreenYellowGoldclrStock,
-    //         deepgreenRoseGoldclrStock,
-    //         deepgreenWhiteGoldclrStock,
-    //         lotusgreenYellowGoldclrStock,
-    //         lotusgreenRoseGoldclrStock,
-    //         lotusgreenWhiteGoldclrStock,
-    //         gender,
-    //         ageGroup
-    //     });
-
-    //     dispatch(updateProduct({
-    //         id,
-    //         name,
-    //         skuid,
-    //         description,
-    //         category,
-    //         subcategory,
-    //         tags,
-    //         originalPrice,
-    //         discountPrice,
-    //         stock,
-    //         designno,
-    //         shopId: seller?._id,
-    //         goldWeight,
-    //         diamondWeight,
-    //         dimension: {
-    //             height,
-    //             width
-    //         },
-    //         YellowGoldclrStock,
-    //         RoseGoldclrStock,
-    //         WhiteGoldclrStock,
-    //         deepblueYellowGoldclrStock,
-    //         deepblueRoseGoldclrStock,
-    //         deepblueWhiteGoldclrStock,
-    //         pinkYellowGoldclrStock,
-    //         pinkRoseGoldclrStock,
-    //         pinkWhiteGoldclrStock,
-    //         turquoiseYellowGoldclrStock,
-    //         turquoiseRoseGoldclrStock,
-    //         turquoiseWhiteGoldclrStock,
-    //         redYellowGoldclrStock,
-    //         redRoseGoldclrStock,
-    //         redWhiteGoldclrStock,
-    //         blackYellowGoldclrStock,
-    //         blackRoseGoldclrStock,
-    //         blackWhiteGoldclrStock,
-    //         deepgreenYellowGoldclrStock,
-    //         deepgreenRoseGoldclrStock,
-    //         deepgreenWhiteGoldclrStock,
-    //         lotusgreenYellowGoldclrStock,
-    //         lotusgreenRoseGoldclrStock,
-    //         lotusgreenWhiteGoldclrStock,
-    //         gender,
-    //         ageGroup
-    //     }))
-
-
-
-
-
-    // }
-
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     try {
-    //         const newForm = new FormData();
-
-    //         // Append images
-    //         images.forEach((image) => newForm.append("images", image));
-    //         withchainimages.forEach((image) => newForm.append("withchainimages", image));
-    //         withchainoutimages.forEach((image) => newForm.append("withchainoutimages", image));
-
-    //         // Append metal color images
-    //         YellowGoldclr.forEach((image) => newForm.append("YellowGoldclr", image));
-    //         RoseGoldclr.forEach((image) => newForm.append("RoseGoldclr", image));
-    //         WhiteGoldclr.forEach((image) => newForm.append("WhiteGoldclr", image));
-
-    //         // Append enamel color images
-    //         deepblueYellowGoldclr.forEach((image) => newForm.append("deepblueYellowGoldclr", image));
-    //         deepblueRoseGoldclr.forEach((image) => newForm.append("deepblueRoseGoldclr", image));
-    //         deepblueWhiteGoldclr.forEach((image) => newForm.append("deepblueWhiteGoldclr", image));
-    //         pinkYellowGoldclr.forEach((image) => newForm.append("pinkYellowGoldclr", image));
-    //         pinkRoseGoldclr.forEach((image) => newForm.append("pinkRoseGoldclr", image));
-    //         pinkWhiteGoldclr.forEach((image) => newForm.append("pinkWhiteGoldclr", image));
-    //         turquoiseYellowGoldclr.forEach((image) => newForm.append("turquoiseYellowGoldclr", image));
-    //         turquoiseRoseGoldclr.forEach((image) => newForm.append("turquoiseRoseGoldclr", image));
-    //         turquoiseWhiteGoldclr.forEach((image) => newForm.append("turquoiseWhiteGoldclr", image));
-    //         redYellowGoldclr.forEach((image) => newForm.append("redYellowGoldclr", image));
-    //         redRoseGoldclr.forEach((image) => newForm.append("redRoseGoldclr", image));
-    //         redWhiteGoldclr.forEach((image) => newForm.append("redWhiteGoldclr", image));
-    //         blackYellowGoldclr.forEach((image) => newForm.append("blackYellowGoldclr", image));
-    //         blackRoseGoldclr.forEach((image) => newForm.append("blackRoseGoldclr", image));
-    //         blackWhiteGoldclr.forEach((image) => newForm.append("blackWhiteGoldclr", image));
-    //         deepgreenYellowGoldclr.forEach((image) => newForm.append("deepgreenYellowGoldclr", image));
-    //         deepgreenRoseGoldclr.forEach((image) => newForm.append("deepgreenRoseGoldclr", image));
-    //         deepgreenWhiteGoldclr.forEach((image) => newForm.append("deepgreenWhiteGoldclr", image));
-    //         lotusgreenYellowGoldclr.forEach((image) => newForm.append("lotusgreenYellowGoldclr", image));
-    //         lotusgreenRoseGoldclr.forEach((image) => newForm.append("lotusgreenRoseGoldclr", image));
-    //         lotusgreenWhiteGoldclr.forEach((image) => newForm.append("lotusgreenWhiteGoldclr", image));
-
-    //         // Append other form fields
-    //         newForm.append("name", name);
-    //         newForm.append("skuid", skuid);
-    //         newForm.append("description", description);
-    //         newForm.append("category", category);
-    //         newForm.append("subcategory", subcategory);
-    //         newForm.append("tags", tags);
-    //         newForm.append("originalPrice", originalPrice);
-    //         newForm.append("discountPrice", discountPrice);
-    //         newForm.append("stock", stock);
-    //         newForm.append("shopId", seller._id);
-    //         newForm.append("designno", designno);
-    //         newForm.append("gender", gender);
-    //         newForm.append("ageGroup", ageGroup);
-
-    //         // Append weight and dimensions
-    //         newForm.append('goldWeight.weight', goldWeight.weight);
-    //         newForm.append('goldWeight.purity', goldWeight.purity);
-    //         newForm.append('diamondWeight.weight', diamondWeight.weight);
-    //         newForm.append('diamondWeight.quality', diamondWeight.quality);
-    //         newForm.append('dimension.height', height);
-    //         newForm.append('dimension.width', width);
-
-    //         // Append stock for different metal and enamel colors
-    //         newForm.append("YellowGoldclrStock", YellowGoldclrStock);
-    //         newForm.append("RoseGoldclrStock", RoseGoldclrStock);
-    //         newForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
-    //         newForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
-    //         newForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
-    //         newForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
-    //         newForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
-    //         newForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
-    //         newForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
-    //         newForm.append("turquoiseYellowGoldclrStock", turquoiseYellowGoldclrStock);
-    //         newForm.append("turquoiseRoseGoldclrStock", turquoiseRoseGoldclrStock);
-    //         newForm.append("turquoiseWhiteGoldclrStock", turquoiseWhiteGoldclrStock);
-    //         newForm.append("redYellowGoldclrStock", redYellowGoldclrStock);
-    //         newForm.append("redRoseGoldclrStock", redRoseGoldclrStock);
-    //         newForm.append("redWhiteGoldclrStock", redWhiteGoldclrStock);
-    //         newForm.append("blackYellowGoldclrStock", blackYellowGoldclrStock);
-    //         newForm.append("blackRoseGoldclrStock", blackRoseGoldclrStock);
-    //         newForm.append("blackWhiteGoldclrStock", blackWhiteGoldclrStock);
-    //         newForm.append("deepgreenYellowGoldclrStock", deepgreenYellowGoldclrStock);
-    //         newForm.append("deepgreenRoseGoldclrStock", deepgreenRoseGoldclrStock);
-    //         newForm.append("deepgreenWhiteGoldclrStock", deepgreenWhiteGoldclrStock);
-    //         newForm.append("lotusgreenYellowGoldclrStock", lotusgreenYellowGoldclrStock);
-    //         newForm.append("lotusgreenRoseGoldclrStock", lotusgreenRoseGoldclrStock);
-    //         newForm.append("lotusgreenWhiteGoldclrStock", lotusgreenWhiteGoldclrStock);
-
-    //         const response = await axios.put(`${server}/product/update-product/${id}`, newForm, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data',
-    //             },
-    //         });
-
-    //         console.log(response.data, "updated data");
-
-    //         // Handle success
-    //         if (response.status === 200) {
-    //             toast.success('Product updated successfully!');
-    //         } else {
-    //             toast.error('Failed to update product. Please try again.');
-    //         }
-    //     } catch (error) {
-    //         // Handle error
-    //         console.error(error); // Log the error for debugging
-    //         toast.error(`Error: ${error.response.data.message || error.message}`);
-    //     }
-    // };
-
-const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const updatedForm = new FormData();
-
-    images.forEach((image) => {
-        updatedForm.append("images", image);
-    });
-
-    withchainimages.forEach((image) => {
-        updatedForm.append("withchainimages", image);
-    });
-
-    withchainoutimages.forEach((image) => {
-        updatedForm.append("withchainoutimages", image);
-    });
-
-    YellowGoldclr.forEach((image) => {
-        updatedForm.append("YellowGoldclr", image);
-    });
-
-    RoseGoldclr.forEach((image) => {
-        updatedForm.append("RoseGoldclr", image);
-    });
-
-    WhiteGoldclr.forEach((image) => {
-        updatedForm.append("WhiteGoldclr", image);
-    });
-
-    // Enamel Colors
-    deepblueYellowGoldclr.forEach((image) => {
-        updatedForm.append("deepblueYellowGoldclr", image);
-    });
-    deepblueRoseGoldclr.forEach((image) => {
-        updatedForm.append("deepblueRoseGoldclr", image);
-    });
-    deepblueWhiteGoldclr.forEach((image) => {
-        updatedForm.append("deepblueWhiteGoldclr", image);
-    });
-
-    pinkYellowGoldclr.forEach((image) => {
-        updatedForm.append("pinkYellowGoldclr", image);
-    });
-    pinkRoseGoldclr.forEach((image) => {
-        updatedForm.append("pinkRoseGoldclr", image);
-    });
-    pinkWhiteGoldclr.forEach((image) => {
-        updatedForm.append("pinkWhiteGoldclr", image);
-    });
-
-    // Other Enamel Colors (Turquoise, Red, Black, Deep Green, Lotus Green)
-    // Add similar code for other enamel colors...
-
-    // Append other form fields
-    updatedForm.append("name", name);
-    updatedForm.append("skuid", skuid);
-    updatedForm.append("description", description);
-    updatedForm.append("category", category);
-    updatedForm.append("subcategory", subcategory);
-    updatedForm.append("tags", tags);
-    updatedForm.append("originalPrice", originalPrice);
-    updatedForm.append("discountPrice", discountPrice);
-    updatedForm.append("stock", stock);
-    updatedForm.append("designno", designno);
-    updatedForm.append("gender", gender);
-    updatedForm.append("ageGroup", ageGroup);
+        // For Lotus green
+        lotusgreenYellowGoldclr.forEach((image) => {
+            newForm.set("lotusgreenYellowGoldclr", image);
+        });
+        lotusgreenRoseGoldclr.forEach((image) => {
+            newForm.set("lotusgreenRoseGoldclr", image);
+        });
+        lotusgreenWhiteGoldclr.forEach((image) => {
+            newForm.set("lotusgreenWhiteGoldclr", image);
+        });
+
+
+
+
+
+
+
+        newForm.append("name", name)
+        newForm.append("skuid", skuid)
+        newForm.append("description", description)
+        newForm.append("category", category)
+        newForm.append("subcategory", subcategory)
+        newForm.append("tags", tags)
+        newForm.append("originalPrice", originalPrice)
+        newForm.append("discountPrice", discountPrice)
+        newForm.append("stock", stock)
+        newForm.append("shopId", seller._id)
+
+        newForm.append("designno", designno)
+        newForm.append("gender", gender);
+        newForm.append("ageGroup", ageGroup);
+
+
+
+
+        // weight
+
+        newForm.append('goldWeight.weight', goldWeight.weight);
+        newForm.append('goldWeight.purity', goldWeight.purity);
+        newForm.append('diamondWeight.weight', diamondWeight.weight);
+        newForm.append('diamondWeight.quality', diamondWeight.quality);
+        newForm.append('dimension.height', height);
+        newForm.append('dimension.width', width);
+
+        newForm.append("YellowGoldclrStock", YellowGoldclrStock);
+        newForm.append("RoseGoldclrStock", RoseGoldclrStock);
+        newForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
+
+
+        newForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
+        newForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
+        newForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
+
+        // pink emanel stock
+        newForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
+        newForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
+        newForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
+
+        // turquoise emanel stock
+        newForm.append("turquoiseYellowGoldclrStock", turquoiseYellowGoldclrStock);
+        newForm.append("turquoiseRoseGoldclrStock", turquoiseRoseGoldclrStock);
+        newForm.append("turquoiseWhiteGoldclrStock", turquoiseWhiteGoldclrStock);
+
+        // red emanel stock
+        newForm.append("redYellowGoldclrStock", redYellowGoldclrStock);
+        newForm.append("redRoseGoldclrStock", redRoseGoldclrStock);
+        newForm.append("redWhiteGoldclrStock", redWhiteGoldclrStock);
+
+
+
+        // deepgreen emanel stock
+        newForm.append("deepgreenYellowGoldclrStock", deepgreenYellowGoldclrStock);
+        newForm.append("deepgreenRoseGoldclrStock", deepgreenRoseGoldclrStock);
+        newForm.append("deepgreenWhiteGoldclrStock", deepgreenWhiteGoldclrStock)
+
+        // lotusgreen emanel stock
+        newForm.append("lotusgreenYellowGoldclrStock", lotusgreenYellowGoldclrStock);
+        newForm.append("lotusgreenRoseGoldclrStock", lotusgreenRoseGoldclrStock);
+        newForm.append("lotusgreenWhiteGoldclrStock", lotusgreenWhiteGoldclrStock)
+
+        const dimension = {
+            height: height,
+            width: width
+        };
+
+
+        console.log("Product Details:", {
+            id,
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId: seller?._id,
+            goldWeight,
+            diamondWeight,
+            dimension: {
+                height,
+                width
+            },
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        });
+
+      
+        dispatch(updateProduct({
+            id,
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId: seller?._id,
+            goldWeight,
+            diamondWeight,
+            dimension: {
+                height,
+                width
+            },
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        }))
+
+
+
+
+
+    }
+
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+
+//         try {
+//             const newForm = new FormData();
+
+//             // Append images
+//             images.forEach((image) => newForm.append("images", image));
+//             withchainimages.forEach((image) => newForm.append("withchainimages", image));
+//             withchainoutimages.forEach((image) => newForm.append("withchainoutimages", image));
+
+//             // Append metal color images
+//             YellowGoldclr.forEach((image) => newForm.append("YellowGoldclr", image));
+//             RoseGoldclr.forEach((image) => newForm.append("RoseGoldclr", image));
+//             WhiteGoldclr.forEach((image) => newForm.append("WhiteGoldclr", image));
+
+//             // Append enamel color images
+//             deepblueYellowGoldclr.forEach((image) => newForm.append("deepblueYellowGoldclr", image));
+//             deepblueRoseGoldclr.forEach((image) => newForm.append("deepblueRoseGoldclr", image));
+//             deepblueWhiteGoldclr.forEach((image) => newForm.append("deepblueWhiteGoldclr", image));
+//             pinkYellowGoldclr.forEach((image) => newForm.append("pinkYellowGoldclr", image));
+//             pinkRoseGoldclr.forEach((image) => newForm.append("pinkRoseGoldclr", image));
+//             pinkWhiteGoldclr.forEach((image) => newForm.append("pinkWhiteGoldclr", image));
+//             turquoiseYellowGoldclr.forEach((image) => newForm.append("turquoiseYellowGoldclr", image));
+//             turquoiseRoseGoldclr.forEach((image) => newForm.append("turquoiseRoseGoldclr", image));
+//             turquoiseWhiteGoldclr.forEach((image) => newForm.append("turquoiseWhiteGoldclr", image));
+//             redYellowGoldclr.forEach((image) => newForm.append("redYellowGoldclr", image));
+//             redRoseGoldclr.forEach((image) => newForm.append("redRoseGoldclr", image));
+//             redWhiteGoldclr.forEach((image) => newForm.append("redWhiteGoldclr", image));
+//             blackYellowGoldclr.forEach((image) => newForm.append("blackYellowGoldclr", image));
+//             blackRoseGoldclr.forEach((image) => newForm.append("blackRoseGoldclr", image));
+//             blackWhiteGoldclr.forEach((image) => newForm.append("blackWhiteGoldclr", image));
+//             deepgreenYellowGoldclr.forEach((image) => newForm.append("deepgreenYellowGoldclr", image));
+//             deepgreenRoseGoldclr.forEach((image) => newForm.append("deepgreenRoseGoldclr", image));
+//             deepgreenWhiteGoldclr.forEach((image) => newForm.append("deepgreenWhiteGoldclr", image));
+//             lotusgreenYellowGoldclr.forEach((image) => newForm.append("lotusgreenYellowGoldclr", image));
+//             lotusgreenRoseGoldclr.forEach((image) => newForm.append("lotusgreenRoseGoldclr", image));
+//             lotusgreenWhiteGoldclr.forEach((image) => newForm.append("lotusgreenWhiteGoldclr", image));
+
+//             // Append other form fields
+//             newForm.append("name", name);
+//             newForm.append("skuid", skuid);
+//             newForm.append("description", description);
+//             newForm.append("category", category);
+//             newForm.append("subcategory", subcategory);
+//             newForm.append("tags", tags);
+//             newForm.append("originalPrice", originalPrice);
+//             newForm.append("discountPrice", discountPrice);
+//             newForm.append("stock", stock);
+//             newForm.append("shopId", seller._id);
+//             newForm.append("designno", designno);
+//             newForm.append("gender", gender);
+//             newForm.append("ageGroup", ageGroup);
+
+//             // Append weight and dimensions
+//             newForm.append('goldWeight.weight', goldWeight.weight);
+//             newForm.append('goldWeight.purity', goldWeight.purity);
+//             newForm.append('diamondWeight.weight', diamondWeight.weight);
+//             newForm.append('diamondWeight.quality', diamondWeight.quality);
+//             newForm.append('dimension.height', height);
+//             newForm.append('dimension.width', width);
+
+//             // Append stock for different metal and enamel colors
+//             newForm.append("YellowGoldclrStock", YellowGoldclrStock);
+//             newForm.append("RoseGoldclrStock", RoseGoldclrStock);
+//             newForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
+//             newForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
+//             newForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
+//             newForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
+//             newForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
+//             newForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
+//             newForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
+//             newForm.append("turquoiseYellowGoldclrStock", turquoiseYellowGoldclrStock);
+//             newForm.append("turquoiseRoseGoldclrStock", turquoiseRoseGoldclrStock);
+//             newForm.append("turquoiseWhiteGoldclrStock", turquoiseWhiteGoldclrStock);
+//             newForm.append("redYellowGoldclrStock", redYellowGoldclrStock);
+//             newForm.append("redRoseGoldclrStock", redRoseGoldclrStock);
+//             newForm.append("redWhiteGoldclrStock", redWhiteGoldclrStock);
+//             newForm.append("blackYellowGoldclrStock", blackYellowGoldclrStock);
+//             newForm.append("blackRoseGoldclrStock", blackRoseGoldclrStock);
+//             newForm.append("blackWhiteGoldclrStock", blackWhiteGoldclrStock);
+//             newForm.append("deepgreenYellowGoldclrStock", deepgreenYellowGoldclrStock);
+//             newForm.append("deepgreenRoseGoldclrStock", deepgreenRoseGoldclrStock);
+//             newForm.append("deepgreenWhiteGoldclrStock", deepgreenWhiteGoldclrStock);
+//             newForm.append("lotusgreenYellowGoldclrStock", lotusgreenYellowGoldclrStock);
+//             newForm.append("lotusgreenRoseGoldclrStock", lotusgreenRoseGoldclrStock);
+//             newForm.append("lotusgreenWhiteGoldclrStock", lotusgreenWhiteGoldclrStock);
+
+//             const response = await axios.put(`${server}/product/update-product/${id}`, newForm, {
+//                 headers: {
+//                     'Content-Type': 'multipart/form-data',
+//                 },
+//             });
+
+//             console.log(response.data, "updated data");
+
+//             // Handle success
+//             if (response.status === 200) {
+//                 toast.success('Product updated successfully!');
+//             } else {
+//                 toast.error('Failed to update product. Please try again.');
+//             }
+//         } catch (error) {
+//             // Handle error
+//             console.error(error); // Log the error for debugging
+//             toast.error(`Error: ${error.response.data.message || error.message}`);
+//         }
+//     };
+
+//  const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     const updatedForm = new FormData();
+
+//     images.forEach((image) => {
+//         updatedForm.append("images", image);
+//     });
+
+//     withchainimages.forEach((image) => {
+//         updatedForm.append("withchainimages", image);
+//     });
+
+//     withchainoutimages.forEach((image) => {
+//         updatedForm.append("withchainoutimages", image);
+//     });
+
+//     YellowGoldclr.forEach((image) => {
+//         updatedForm.append("YellowGoldclr", image);
+//     });
+
+//     RoseGoldclr.forEach((image) => {
+//         updatedForm.append("RoseGoldclr", image);
+//     });
+
+//     WhiteGoldclr.forEach((image) => {
+//         updatedForm.append("WhiteGoldclr", image);
+//     });
+
+//     // Enamel Colors
+//     deepblueYellowGoldclr.forEach((image) => {
+//         updatedForm.append("deepblueYellowGoldclr", image);
+//     });
+//     deepblueRoseGoldclr.forEach((image) => {
+//         updatedForm.append("deepblueRoseGoldclr", image);
+//     });
+//     deepblueWhiteGoldclr.forEach((image) => {
+//         updatedForm.append("deepblueWhiteGoldclr", image);
+//     });
+
+//     pinkYellowGoldclr.forEach((image) => {
+//         updatedForm.append("pinkYellowGoldclr", image);
+//     });
+//     pinkRoseGoldclr.forEach((image) => {
+//         updatedForm.append("pinkRoseGoldclr", image);
+//     });
+//     pinkWhiteGoldclr.forEach((image) => {
+//         updatedForm.append("pinkWhiteGoldclr", image);
+//     });
+
+//     // Other Enamel Colors (Turquoise, Red, Black, Deep Green, Lotus Green)
+//     // Add similar code for other enamel colors...
+
+//     // Append other form fields
+//     updatedForm.append("name", name);
+//     updatedForm.append("skuid", skuid);
+//     updatedForm.append("description", description);
+//     updatedForm.append("category", category);
+//     updatedForm.append("subcategory", subcategory);
+//     updatedForm.append("tags", tags);
+//     updatedForm.append("originalPrice", originalPrice);
+//     updatedForm.append("discountPrice", discountPrice);
+//     updatedForm.append("stock", stock);
+//     updatedForm.append("designno", designno);
+//     updatedForm.append("gender", gender);
+//     updatedForm.append("ageGroup", ageGroup);
     
-    // Weight and Dimension
-    updatedForm.append('goldWeight.weight', goldWeight.weight);
-    updatedForm.append('goldWeight.purity', goldWeight.purity);
-    updatedForm.append('diamondWeight.weight', diamondWeight.weight);
-    updatedForm.append('diamondWeight.quality', diamondWeight.quality);
-    updatedForm.append('dimension.height', height);
-    updatedForm.append('dimension.width', width);
+//     // Weight and Dimension
+//     updatedForm.append('goldWeight.weight', goldWeight.weight);
+//     updatedForm.append('goldWeight.purity', goldWeight.purity);
+//     updatedForm.append('diamondWeight.weight', diamondWeight.weight);
+//     updatedForm.append('diamondWeight.quality', diamondWeight.quality);
+//     updatedForm.append('dimension.height', height);
+//     updatedForm.append('dimension.width', width);
 
-    updatedForm.append("YellowGoldclrStock", YellowGoldclrStock);
-    updatedForm.append("RoseGoldclrStock", RoseGoldclrStock);
-    updatedForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
+//     updatedForm.append("YellowGoldclrStock", YellowGoldclrStock);
+//     updatedForm.append("RoseGoldclrStock", RoseGoldclrStock);
+//     updatedForm.append("WhiteGoldclrStock", WhiteGoldclrStock);
 
-    updatedForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
-    updatedForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
-    updatedForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
+//     updatedForm.append("deepblueYellowGoldclrStock", deepblueYellowGoldclrStock);
+//     updatedForm.append("deepblueRoseGoldclrStock", deepblueRoseGoldclrStock);
+//     updatedForm.append("deepblueWhiteGoldclrStock", deepblueWhiteGoldclrStock);
 
-    // Pink Enamel Stock
-    updatedForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
-    updatedForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
-    updatedForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
+//     // Pink Enamel Stock
+//     updatedForm.append("pinkYellowGoldclrStock", pinkYellowGoldclrStock);
+//     updatedForm.append("pinkRoseGoldclrStock", pinkRoseGoldclrStock);
+//     updatedForm.append("pinkWhiteGoldclrStock", pinkWhiteGoldclrStock);
 
-    // Other Enamel Stock (Turquoise, Red, Black, Deep Green, Lotus Green)
-    // Add similar code for other enamel stocks...
+//     // Other Enamel Stock (Turquoise, Red, Black, Deep Green, Lotus Green)
+//     // Add similar code for other enamel stocks...
 
-    // Add product ID for updating
-    updatedForm.append("productId", selectedProduct._id);  // Ensure you have the product ID available
+//     // Add product ID for updating
+//     updatedForm.append("productId", selectedProduct._id);  // Ensure you have the product ID available
 
-    dispatch(updateProduct(updatedForm));  // Call the update action
-};
+//     dispatch(updateProduct(updatedForm));  // Call the update action
+// };
 
     
 
