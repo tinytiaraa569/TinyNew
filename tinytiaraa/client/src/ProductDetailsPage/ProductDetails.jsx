@@ -1206,7 +1206,7 @@ const ProductDetailsInfo = ({ data }) => {
                                         </div>
                                         <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
                                             <div className='font-[500] '><MdOutlineAppRegistration /></div>
-                                            <p className='text-[#4f3267] text-[15px]'>Design Registration No. 417519-003</p>
+                                            <p className='text-[#4f3267] text-[15px]'>Design Registration No. {data.designno}</p>
                                         </div>
 
 

@@ -82,7 +82,20 @@ export const productReducer = createReducer(initialState,(builder)=>{
        
     })
 
-
+    // Product update
+    .addCase("productUpdateRequest", (state) => {
+        state.isLoading = true;
+    })
+    .addCase("productUpdateSuccess", (state, action) => {
+        state.isLoading = false;
+        state.product = action.payload;
+        state.success = true;
+    })
+    .addCase("productUpdateFail", (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.success = false;
+    })
 
 
 

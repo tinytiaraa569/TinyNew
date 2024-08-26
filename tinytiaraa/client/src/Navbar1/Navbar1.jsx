@@ -152,6 +152,8 @@ function Navbar1() {
                             <Link to="mailto:care@tinytiaraa.com" className='ml-[2px] flex items-center font-[450]'><IoMdMail size={24} className='mr-[2px]' />care@tinytiaraa.com </Link>
                         </span> 
 
+                        {/* <span onClick={()=>{navigate('/shop-login')}}>Shop</span> */}
+
                     </div>
 
                     <div className='couponscetion w-[70%]'>

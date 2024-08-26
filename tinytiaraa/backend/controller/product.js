@@ -941,55 +941,33 @@ router.get("/get-all-products-shop/:id", catchAsyncErrors(async (req, res, next)
 
 router.delete("/delete-shop-product/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
     try {
-        // const productId = req.params.id
+        const productId = req.params.id
 
-        // const productData = await Product.findById(productId)
-        // productData.images.forEach((imageUrl) => {
-        //     const filename = imageUrl
-        //     const filePath = `uploads/${filename}`
+        const productData = await Product.findById(productId)
+        productData.images.forEach((imageUrl) => {
+            const filename = imageUrl
+            const filePath = `uploads/${filename}`
 
-        //     fs.unlink(filePath, (err) => {
-        //         if (err) {
-        //             console.log(err)
-        //         }
-        //     })
-        // })
+            fs.unlink(filePath, (err) => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        })
 
-        // const product = await Product.findByIdAndDelete(productId)
-
-
-        // if (!product) {
-        //     return next(new ErrorHandler('product Not Found with this Id !', 500))
-        // }
-
-        // res.status(201).json({
-        //     success: true,
-        //     message: "Product Deleted Successfully"
-        // })
+        const product = await Product.findByIdAndDelete(productId)
 
 
-        try {
-            const product = await Product.findById(req.params.id);
-
-            if (!product) {
-                return next(new ErrorHandler("Product is not found with this id", 404));
-            }
-
-            for (let i = 0; 1 < product.images.length; i++) {
-                const result = await cloudinary.v2.uploader.destroy(
-                    product.images[i].public_id
-                );
-            }
-
-            await product.remove();
-
-            res.status(201).json({
-                success: true,
-                message: "Product Deleted successfully!",
-            });
-        } catch (error) {
-            return next(new ErrorHandler(error, 400));
+        if (!product) {
+            return next(new ErrorHandler('product Not Found with this Id !', 500))
         }
+
+        res.status(201).json({
+            success: true,
+            message: "Product Deleted Successfully"
+        })
+
+
 
 
     } catch (error) {
@@ -1139,6 +1117,233 @@ router.post('/update-rate-card', async (req, res) => {
     }
 });
 
+
+
+// Update product by ID
+router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
+    try {
+        const productId = req.params.id;
+
+        console.log(productId,"productID")
+
+        // Extract data from the request body
+        const {
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId,
+            images,
+            withchainimages,
+            withchainoutimages,
+            YellowGoldclr,
+            RoseGoldclr,
+            WhiteGoldclr,
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            goldWeight,
+            diamondWeight,
+            dimension,
+            enamelColors,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        } = req.body;
+
+        console.log(req.body,"request data")
+
+
+        // Prepare the update object
+        const updateData = {
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId,
+            images,
+            withchainimages,
+            withchainoutimages,
+            YellowGoldclr,
+            RoseGoldclr,
+            WhiteGoldclr,
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            goldWeight,
+            diamondWeight,
+            dimension,
+            enamelColors,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        };
+
+        console.log(updateData,"updated data")
+
+
+        // Find the product by ID and update
+        const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, {
+            new: true, // Return the updated document
+            runValidators: true // Validate the update data
+        });
+
+        if (!updatedProduct) {
+            return next(new ErrorHandler('Product Not Found with this Id!', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            product: updatedProduct
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+}));
+
+
+
+// router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
+//     try {
+//         const productId = req.params.id;
+//         const product = await Product.findById(productId);
+//         if (!product) {
+//             return next(new ErrorHandler("Product not found", 404));
+//         }
+
+//         const uploadImages = async (imageArray, folder) => {
+//             const uploadPromises = imageArray.map(image => 
+//                 cloudinary.v2.uploader.upload(image, { folder })
+//             );
+//             return Promise.all(uploadPromises);
+//         };
+
+//         const handleColorImages = async (colorKey) => {
+//             const colorImages = req.body[colorKey];
+//             if (typeof colorImages === "string") {
+//                 return [await cloudinary.v2.uploader.upload(colorImages, { folder: "products" })];
+//             } else {
+//                 return uploadImages(colorImages, "products");
+//             }
+//         };
+
+//         // Handle images
+//         const imagesLinks = await uploadImages(
+//             typeof req.body.images === "string" ? [req.body.images] : req.body.images, 
+//             "products"
+//         );
+//         const withchainimagesLinks = await uploadImages(
+//             typeof req.body.withchainimages === "string" ? [req.body.withchainimages] : req.body.withchainimages, 
+//             "products"
+//         );
+//         const withchainoutimagesLinks = await uploadImages(
+//             typeof req.body.withchainoutimages === "string" ? [req.body.withchainoutimages] : req.body.withchainoutimages, 
+//             "products"
+//         );
+
+//         // Handle metal colors
+//         const YellowGoldclrLinks = await handleColorImages("YellowGoldclr");
+//         const RoseGoldclrLinks = await handleColorImages("RoseGoldclr");
+//         const WhiteGoldclrLinks = await handleColorImages("WhiteGoldclr");
+
+//         // Handle enamel colors
+//         const deepblueYellowGoldclrLinks = await handleColorImages("deepblueYellowGoldclr");
+//         const deepblueRoseGoldclrLinks = await handleColorImages("deepblueRoseGoldclr");
+//         const deepblueWhiteGoldclrLinks = await handleColorImages("deepblueWhiteGoldclr");
+
+//         const pinkYellowGoldclrLinks = await handleColorImages("pinkYellowGoldclr");
+//         const pinkRoseGoldclrLinks = await handleColorImages("pinkRoseGoldclr");
+//         const pinkWhiteGoldclrLinks = await handleColorImages("pinkWhiteGoldclr");
+
+//         const turquoiseYellowGoldclrLinks = await handleColorImages("turquoiseYellowGoldclr");
+//         const turquoiseRoseGoldclrLinks = await handleColorImages("turquoiseRoseGoldclr");
+//         const turquoiseWhiteGoldclrLinks = await handleColorImages("turquoiseWhiteGoldclr");
+
+//         const redYellowGoldclrLinks = await handleColorImages("redYellowGoldclr");
+//         const redRoseGoldclrLinks = await handleColorImages("redRoseGoldclr");
+//         const redWhiteGoldclrLinks = await handleColorImages("redWhiteGoldclr");
+
+//         const blackYellowGoldclrLinks = await handleColorImages("blackYellowGoldclr");
+//         const blackRoseGoldclrLinks = await handleColorImages("blackRoseGoldclr");
+//         const blackWhiteGoldclrLinks = await handleColorImages("blackWhiteGoldclr");
+
+//         const deepgreenYellowGoldclrLinks = await handleColorImages("deepgreenYellowGoldclr");
+//         const deepgreenRoseGoldclrLinks = await handleColorImages("deepgreenRoseGoldclr");
+//         const deepgreenWhiteGoldclrLinks = await handleColorImages("deepgreenWhiteGoldclr");
+
+//         const lotusgreenYellowGoldclrLinks = await handleColorImages("lotusgreenYellowGoldclr");
+//         const lotusgreenRoseGoldclrLinks = await handleColorImages("lotusgreenRoseGoldclr");
+//         const lotusgreenWhiteGoldclrLinks = await handleColorImages("lotusgreenWhiteGoldclr");
+
+//         // Update product with new links
+//         product.images = imagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+//         product.withchainimages = withchainimagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+//         product.withchainoutimages = withchainoutimagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+//         product.YellowGoldclr = YellowGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+//         product.RoseGoldclr = RoseGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+//         product.WhiteGoldclr = WhiteGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
+
+//         // Update enamel colors similarly
+//         // Add the remaining code for updating product with enamel color links...
+
+//         await product.save();
+//         res.status(200).json({ success: true, message: "Product updated successfully", product });
+//     } catch (error) {
+//         next(error);
+//     }
+// }));
 
 
 

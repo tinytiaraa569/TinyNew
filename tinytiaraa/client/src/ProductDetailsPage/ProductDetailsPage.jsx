@@ -18,7 +18,9 @@ function ProductDetailsPage() {
     const [recentlyViewed, setRecentlyViewed] = useState([]);
     useEffect(() => {
         if (products && products.length > 0) {
-            const product = products.find((product) => product.name === productName);
+            const product = products.find(
+                (product) => product.name === productName || product.name.replace(/ /g, "-") === name
+            );
             if (product) {
                 setData(product);
 
@@ -46,9 +48,9 @@ function ProductDetailsPage() {
         <div>
             {data && <ProductDetails data={data} />}
             {data && <SuggestedProduct data={data} />}
-            {data && <RecentlyViewedProducts recentlyViewed={recentlyViewed} /> }
+            {data && <RecentlyViewedProducts recentlyViewed={recentlyViewed} />}
 
-            
+
         </div>
     )
 }

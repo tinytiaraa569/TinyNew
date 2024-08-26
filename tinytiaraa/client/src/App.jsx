@@ -75,6 +75,8 @@ import ShopAllRequests from './ShopAllRequests/ShopAllRequests';
 import ShopContactReq from './ShopContactRequest/ShopContactReq';
 import { PriceRangeProvider } from './pricerange/PriceRangeContext';
 import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
+import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
+import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 
 
 
@@ -378,6 +380,17 @@ function App() {
             </SellerProtectedRoute>
           } />
 
+          <Route path='/shopproduct/:name' element={
+            <SellerProtectedRoute >
+              <ShopProductDetailsPage />
+            </SellerProtectedRoute>
+          } />
+          <Route path='/editproduct/:id' element={
+            <SellerProtectedRoute >
+              <ShopEditProductPage />
+            </SellerProtectedRoute>
+          } />
+
 
 
 
@@ -393,6 +406,8 @@ function App() {
               <ShopOrderDetails />
             </SellerProtectedRoute>
           } />
+
+
 
 
 

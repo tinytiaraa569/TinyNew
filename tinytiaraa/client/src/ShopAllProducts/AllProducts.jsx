@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProduct, getAllProductShop } from '../redux/actions/product'
-import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai'
+import { Link, useNavigate } from 'react-router-dom'
 import Loader from '../Loader/Loader'
 import { DataGrid } from '@mui/x-data-grid'
 import { getAllEventsShop } from '@/redux/actions/event'
@@ -15,6 +15,7 @@ function AllProducts() {
     console.log(products)
     
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
 
 
@@ -24,7 +25,9 @@ function AllProducts() {
         window.location.reload()
     }
 
-    
+    const handleEdit = (id) => {
+        navigate(`/editproduct/${id}`);
+    };
 
     useEffect(() => {
         dispatch(getAllProductShop(seller._id));
@@ -47,11 +50,23 @@ function AllProducts() {
             minWidth: 100,
             sortable: false,
             renderCell: (params) => (
-                <Link to={`/product/${params.id}`}>
+                <Link to={`/shopproduct/${params.row.name}`}>
                     <button>
                         <AiOutlineEye size={20} />
                     </button>
                 </Link>
+            ),
+        },
+        {
+            field: 'Edit',
+            headerName: 'Edit',
+            flex: 0.8,
+            minWidth: 100,
+            sortable: false,
+            renderCell: (params) => (
+                <button onClick={() => handleEdit(params.id)}>
+                    <AiOutlineEdit size={20} />
+                </button>
             ),
         },
         {

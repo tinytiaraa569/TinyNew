@@ -106,7 +106,7 @@ function ProductCard({ data }) {
         </div>
         <div className='w-full h-[auto] overflow-hidden '>
 
-          <Link href="">
+          <Link to={`/product/${product_name}`}>
             <h4 className='pb-1 font-[500]  text-center'>{data.name.length > 70 ? data.name.slice(0, 70) + "..." : data.name}</h4>
           </Link>
           <p className={`${styles.skuid}`}>{data.skuid}</p>

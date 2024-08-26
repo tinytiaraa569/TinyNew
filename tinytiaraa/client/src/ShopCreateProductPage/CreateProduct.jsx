@@ -90,8 +90,6 @@ function CreateProduct() {
 
 
 
-
-
     useEffect(() => {
 
         if (error) {
@@ -380,7 +378,7 @@ function CreateProduct() {
         e.preventDefault()
 
         const files = Array.from(e.target.files);
-        deepbluesetYellowGoldclr([]);
+        // deepbluesetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -399,8 +397,7 @@ function CreateProduct() {
     };
 
     const deepbluehandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...deepblueYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueYellowGoldclr.filter(i => i !== index);
         deepbluesetYellowGoldclr(updatedImages);
     };
 
@@ -416,7 +413,7 @@ function CreateProduct() {
         e.preventDefault()
 
         const files = Array.from(e.target.files);
-        deepbluesetRoseGoldclr([]);
+        // deepbluesetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -434,8 +431,7 @@ function CreateProduct() {
     };
 
     const deepbluehandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...deepblueRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueRoseGoldclr.filter(i => i !== index);
         deepbluesetRoseGoldclr(updatedImages);
     };
 
@@ -450,7 +446,7 @@ function CreateProduct() {
         e.preventDefault()
 
         const files = Array.from(e.target.files);
-        deepbluesetWhiteGoldclr([]);
+        // deepbluesetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -468,8 +464,7 @@ function CreateProduct() {
     };
 
     const deepbluehandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...deepblueWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueWhiteGoldclr.filter(i => i !== index);
         deepbluesetWhiteGoldclr(updatedImages);
     };
 
@@ -482,7 +477,7 @@ function CreateProduct() {
     const pinkhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetYellowGoldclr([]);
+        // pinksetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -497,8 +492,9 @@ function CreateProduct() {
         pinksetShowWithYellowclrImages(!pinkshowWithYellowclrImages);
     };
     const pinkhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...pinkYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+
+        const updatedImages = pinkYellowGoldclr.filter(i => i !== index);
         pinksetYellowGoldclr(updatedImages);
     };
 
@@ -508,7 +504,7 @@ function CreateProduct() {
     const pinkhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetRoseGoldclr([]);
+        // pinksetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -523,8 +519,7 @@ function CreateProduct() {
         pinksetShowWithRoseclrImages(!pinkshowWithRoseclrImages);
     };
     const pinkhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...pinkRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = pinkRoseGoldclr.filter(i => i !== index);
         pinksetRoseGoldclr(updatedImages);
     };
 
@@ -534,7 +529,7 @@ function CreateProduct() {
     const pinkhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetWhiteGoldclr([]);
+        // pinksetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -549,8 +544,7 @@ function CreateProduct() {
         pinksetShowWithWhiteclrImages(!pinkshowWithWhiteclrImages);
     };
     const pinkhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...pinkWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = pinkWhiteGoldclr.filter(i => i !== index);
         pinksetWhiteGoldclr(updatedImages);
     };
 
@@ -566,7 +560,7 @@ function CreateProduct() {
     const turquoisehandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetYellowGoldclr([]);
+        // turquoisesetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -581,8 +575,7 @@ function CreateProduct() {
         turquoisesetShowWithYellowclrImages(!turquoiseshowWithYellowclrImages);
     };
     const turquoisehandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...turquoiseYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseYellowGoldclr.filter(i => i !== index);
         turquoisesetYellowGoldclr(updatedImages);
     };
 
@@ -592,7 +585,7 @@ function CreateProduct() {
     const turquoisehandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetRoseGoldclr([]);
+        // turquoisesetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -607,8 +600,7 @@ function CreateProduct() {
         turquoisesetShowWithRoseclrImages(!turquoiseshowWithRoseclrImages);
     };
     const turquoisehandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...turquoiseRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseRoseGoldclr.filter(i => i !== index);
         turquoisesetRoseGoldclr(updatedImages);
     };
 
@@ -618,7 +610,7 @@ function CreateProduct() {
     const turquoisehandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetWhiteGoldclr([]);
+        // turquoisesetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -633,8 +625,7 @@ function CreateProduct() {
         turquoisesetShowWithWhiteclrImages(!turquoiseshowWithWhiteclrImages);
     };
     const turquoisehandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...turquoiseWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseWhiteGoldclr.filter(i => i !== index);
         turquoisesetWhiteGoldclr(updatedImages);
     };
     // ------------- turquoise color -----------
@@ -648,7 +639,7 @@ function CreateProduct() {
     const redhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetYellowGoldclr([]);
+        // redsetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -663,8 +654,7 @@ function CreateProduct() {
         redsetShowWithYellowclrImages(!redshowWithYellowclrImages);
     };
     const redhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...redYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redYellowGoldclr.filter(i => i !== index);
         redsetYellowGoldclr(updatedImages);
     };
 
@@ -674,7 +664,7 @@ function CreateProduct() {
     const redhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetRoseGoldclr([]);
+        // redsetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -689,8 +679,7 @@ function CreateProduct() {
         redsetShowWithRoseclrImages(!redshowWithRoseclrImages);
     };
     const redhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...redRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redRoseGoldclr.filter(i => i !== index);
         redsetRoseGoldclr(updatedImages);
     };
 
@@ -700,7 +689,7 @@ function CreateProduct() {
     const redhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetWhiteGoldclr([]);
+        // redsetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -715,8 +704,7 @@ function CreateProduct() {
         redsetShowWithWhiteclrImages(!redshowWithWhiteclrImages);
     };
     const redhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...redWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redWhiteGoldclr.filter(i => i !== index);
         redsetWhiteGoldclr(updatedImages);
     };
 
@@ -732,7 +720,7 @@ function CreateProduct() {
     const blackhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetYellowGoldclr([]);
+        // blacksetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -747,8 +735,8 @@ function CreateProduct() {
         blacksetShowWithYellowclrImages(!blackshowWithYellowclrImages);
     };
     const blackhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...blackYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackYellowGoldclr.filter(i => i !== index);
         blacksetYellowGoldclr(updatedImages);
     };
 
@@ -758,7 +746,7 @@ function CreateProduct() {
     const blackhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetRoseGoldclr([]);
+        // blacksetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -773,8 +761,8 @@ function CreateProduct() {
         blacksetShowWithRoseclrImages(!blackshowWithRoseclrImages);
     };
     const blackhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...blackRoseGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackRoseGoldclr.filter(i => i !== index);
         blacksetRoseGoldclr(updatedImages);
     };
 
@@ -784,7 +772,7 @@ function CreateProduct() {
     const blackhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetWhiteGoldclr([]);
+        // blacksetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -799,8 +787,8 @@ function CreateProduct() {
         blacksetShowWithWhiteclrImages(!blackshowWithWhiteclrImages);
     };
     const blackhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...blackWhiteGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackWhiteGoldclr.filter(i => i !== index);
         blacksetWhiteGoldclr(updatedImages);
     };
 
@@ -816,7 +804,7 @@ function CreateProduct() {
     const deepgreenHandleWithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetYellowGoldclr([]);
+        // deepgreenSetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -831,8 +819,8 @@ function CreateProduct() {
         deepgreenSetShowWithYellowclrImages(!deepgreenShowWithYellowclrImages);
     };
     const deepgreenHandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...deepgreenYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = deepgreenYellowGoldclr.filter(i => i !== index);
         deepgreenSetYellowGoldclr(updatedImages);
     };
 
@@ -842,7 +830,7 @@ function CreateProduct() {
     const deepgreenHandleWithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetRoseGoldclr([]);
+        // deepgreenSetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -857,8 +845,7 @@ function CreateProduct() {
         deepgreenSetShowWithRoseclrImages(!deepgreenShowWithRoseclrImages);
     };
     const deepgreenHandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...deepgreenRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepgreenRoseGoldclr.filter(i => i !== index);
         deepgreenSetRoseGoldclr(updatedImages);
     };
 
@@ -868,7 +855,7 @@ function CreateProduct() {
     const deepgreenHandleWithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetWhiteGoldclr([]);
+        // deepgreenSetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -883,8 +870,8 @@ function CreateProduct() {
         deepgreenSetShowWithWhiteclrImages(!deepgreenShowWithWhiteclrImages);
     };
     const deepgreenHandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...deepgreenWhiteGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = deepgreenWhiteGoldclr.filter(i => i !== index);
         deepgreenSetWhiteGoldclr(updatedImages);
     };
 
@@ -898,7 +885,7 @@ function CreateProduct() {
     const lotusgreenHandleWithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetYellowGoldclr([]);
+        // lotusgreenSetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -913,8 +900,8 @@ function CreateProduct() {
         lotusgreenSetShowWithYellowclrImages(!lotusgreenShowWithYellowclrImages);
     };
     const lotusgreenHandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...lotusgreenYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = lotusgreenYellowGoldclr.filter(i => i !== index);
         lotusgreenSetYellowGoldclr(updatedImages);
     };
 
@@ -924,7 +911,7 @@ function CreateProduct() {
     const lotusgreenHandleWithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetRoseGoldclr([]);
+        // lotusgreenSetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -939,8 +926,7 @@ function CreateProduct() {
         lotusgreenSetShowWithRoseclrImages(!lotusgreenShowWithRoseclrImages);
     };
     const lotusgreenHandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...lotusgreenRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = lotusgreenRoseGoldclr.filter(i => i !== index);
         lotusgreenSetRoseGoldclr(updatedImages);
     };
 
@@ -950,7 +936,7 @@ function CreateProduct() {
     const lotusgreenHandleWithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetWhiteGoldclr([]);
+        // lotusgreenSetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -965,8 +951,8 @@ function CreateProduct() {
         lotusgreenSetShowWithWhiteclrImages(!lotusgreenShowWithWhiteclrImages);
     };
     const lotusgreenHandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...lotusgreenWhiteGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = lotusgreenWhiteGoldclr.filter(i => i !== index);
         lotusgreenSetWhiteGoldclr(updatedImages);
     };
 
@@ -999,6 +985,7 @@ function CreateProduct() {
     const handleRemoveImage = (index) => {
         setImages(images.filter((_, i) => i !== index));
     };
+
 
 
     //drag for with & without change
@@ -1044,6 +1031,467 @@ function CreateProduct() {
         setwithchainoutImages(updatedImages);
         setDraggingIndexWithoutChain(null); // Reset dragging index
     };
+
+
+
+    // drag for enamel colors for deep blue
+
+    const [draggingIndexDeepBlueYellowGold, setDraggingIndexDeepBlueYellowGold] = useState(null);
+    const [draggingIndexDeepBlueRoseGold, setDraggingIndexDeepBlueRoseGold] = useState(null);
+    const [draggingIndexDeepBlueWhiteGold, setDraggingIndexDeepBlueWhiteGold] = useState(null);
+
+    // Handle drag start event
+    const deepbluehandleDragStartYellowGold = (e, index) => {
+        e.dataTransfer.setData('text/plain', index);
+        setDraggingIndexDeepBlueYellowGold(index);
+    };
+
+    // Handle drag over event
+    const deepbluehandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    // Handle drop event
+    const deepbluehandleDropYellowGold = (e, dropIndex) => {
+        e.preventDefault();
+        const fromIndex = e.dataTransfer.getData('text/plain');
+        if (fromIndex === dropIndex) return;
+
+        const updatedImages = [...deepblueYellowGoldclr];
+        const [movedImage] = updatedImages.splice(fromIndex, 1);
+        updatedImages.splice(dropIndex, 0, movedImage);
+
+        deepbluesetYellowGoldclr(updatedImages);
+        setDraggingIndexDeepBlueYellowGold(null); // Reset dragging index
+    };
+
+    // Handle drag start event
+    const deepbluehandleDragStartRoseGold = (e, index) => {
+        e.dataTransfer.setData('text/plain', index);
+        setDraggingIndexDeepBlueRoseGold(index);
+    };
+
+    // Handle drag over event
+    const deepbluehandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    // Handle drop event
+    const deepbluehandleDropRoseGold = (e, dropIndex) => {
+        e.preventDefault();
+        const fromIndex = e.dataTransfer.getData('text/plain');
+        if (fromIndex === dropIndex) return;
+
+        const updatedImages = [...deepblueRoseGoldclr];
+        const [movedImage] = updatedImages.splice(fromIndex, 1);
+        updatedImages.splice(dropIndex, 0, movedImage);
+
+        deepbluesetRoseGoldclr(updatedImages);
+        setDraggingIndexDeepBlueRoseGold(null); // Reset dragging index
+    };
+
+    // Handle drag start event
+    const deepbluehandleDragStartWhiteGold = (e, index) => {
+        e.dataTransfer.setData('text/plain', index);
+        setDraggingIndexDeepBlueWhiteGold(index);
+    };
+
+    // Handle drag over event
+    const deepbluehandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    // Handle drop event
+    const deepbluehandleDropWhiteGold = (e, dropIndex) => {
+        e.preventDefault();
+        const fromIndex = e.dataTransfer.getData('text/plain');
+        if (fromIndex === dropIndex) return;
+
+        const updatedImages = [...deepblueWhiteGoldclr];
+        const [movedImage] = updatedImages.splice(fromIndex, 1);
+        updatedImages.splice(dropIndex, 0, movedImage);
+
+        deepbluesetWhiteGoldclr(updatedImages);
+        setDraggingIndexDeepBlueWhiteGold(null); // Reset dragging index
+    };
+
+
+
+
+
+    // Drag and drop handlers for Pink enamel color images
+    const [draggingIndexPinkYellowGold, setDraggingIndexPinkYellowGold] = useState(null);
+    const [draggingIndexPinkRoseGold, setDraggingIndexPinkRoseGold] = useState(null);
+    const [draggingIndexPinkWhiteGold, setDraggingIndexPinkWhiteGold] = useState(null);
+
+    const pinkhandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexPinkYellowGold(index);
+    };
+
+    const pinkhandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const pinkhandleDropYellowGold = (e, index) => {
+        const draggedImage = pinkYellowGoldclr[draggingIndexPinkYellowGold];
+        const remainingImages = pinkYellowGoldclr.filter((_, i) => i !== draggingIndexPinkYellowGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        pinksetYellowGoldclr(newImages);
+        setDraggingIndexPinkYellowGold(null);
+    };
+
+    const pinkhandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexPinkRoseGold(index);
+    };
+
+    const pinkhandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const pinkhandleDropRoseGold = (e, index) => {
+        const draggedImage = pinkRoseGoldclr[draggingIndexPinkRoseGold];
+        const remainingImages = pinkRoseGoldclr.filter((_, i) => i !== draggingIndexPinkRoseGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        pinksetRoseGoldclr(newImages);
+        setDraggingIndexPinkRoseGold(null);
+    };
+
+    const pinkhandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexPinkWhiteGold(index);
+    };
+
+    const pinkhandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const pinkhandleDropWhiteGold = (e, index) => {
+        const draggedImage = pinkWhiteGoldclr[draggingIndexPinkWhiteGold];
+        const remainingImages = pinkWhiteGoldclr.filter((_, i) => i !== draggingIndexPinkWhiteGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        pinksetWhiteGoldclr(newImages);
+        setDraggingIndexPinkWhiteGold(null);
+    };
+
+
+
+    // kjhgfd
+    const [draggingIndexTurquoiseYellowGold, setDraggingIndexTurquoiseYellowGold] = useState(null);
+    const [draggingIndexTurquoiseRoseGold, setDraggingIndexTurquoiseRoseGold] = useState(null);
+    const [draggingIndexTurquoiseWhiteGold, setDraggingIndexTurquoiseWhiteGold] = useState(null);
+
+    const turquoisehandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexTurquoiseYellowGold(index);
+    };
+
+    const turquoisehandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const turquoisehandleDropYellowGold = (e, index) => {
+        const draggedImage = turquoiseYellowGoldclr[draggingIndexTurquoiseYellowGold];
+        const remainingImages = turquoiseYellowGoldclr.filter((_, i) => i !== draggingIndexTurquoiseYellowGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        turquoisesetYellowGoldclr(newImages);
+        setDraggingIndexTurquoiseYellowGold(null);
+    };
+    const turquoisehandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexTurquoiseRoseGold(index);
+    };
+
+    const turquoisehandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const turquoisehandleDropRoseGold = (e, index) => {
+        const draggedImage = turquoiseRoseGoldclr[draggingIndexTurquoiseRoseGold];
+        const remainingImages = turquoiseRoseGoldclr.filter((_, i) => i !== draggingIndexTurquoiseRoseGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        turquoisesetRoseGoldclr(newImages);
+        setDraggingIndexTurquoiseRoseGold(null);
+    };
+
+    const turquoisehandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexTurquoiseWhiteGold(index);
+    };
+
+    const turquoisehandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const turquoisehandleDropWhiteGold = (e, index) => {
+        const draggedImage = turquoiseWhiteGoldclr[draggingIndexTurquoiseWhiteGold];
+        const remainingImages = turquoiseWhiteGoldclr.filter((_, i) => i !== draggingIndexTurquoiseWhiteGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        turquoisesetWhiteGoldclr(newImages);
+        setDraggingIndexTurquoiseWhiteGold(null);
+    };
+
+
+
+    // red clolro
+    const [draggingIndexRedYellowGold, setDraggingIndexRedYellowGold] = useState(null);
+    const [draggingIndexRedRoseGold, setDraggingIndexRedRoseGold] = useState(null);
+    const [draggingIndexRedWhiteGold, setDraggingIndexRedWhiteGold] = useState(null);
+
+    const redhandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexRedYellowGold(index);
+    };
+
+    const redhandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const redhandleDropYellowGold = (e, index) => {
+        const draggedImage = redYellowGoldclr[draggingIndexRedYellowGold];
+        const remainingImages = redYellowGoldclr.filter((_, i) => i !== draggingIndexRedYellowGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        redsetYellowGoldclr(newImages);
+        setDraggingIndexRedYellowGold(null);
+    };
+
+    const redhandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexRedRoseGold(index);
+    };
+
+    const redhandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const redhandleDropRoseGold = (e, index) => {
+        const draggedImage = redRoseGoldclr[draggingIndexRedRoseGold];
+        const remainingImages = redRoseGoldclr.filter((_, i) => i !== draggingIndexRedRoseGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        redsetRoseGoldclr(newImages);
+        setDraggingIndexRedRoseGold(null);
+    };
+
+    const redhandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexRedWhiteGold(index);
+    };
+
+    const redhandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const redhandleDropWhiteGold = (e, index) => {
+        const draggedImage = redWhiteGoldclr[draggingIndexRedWhiteGold];
+        const remainingImages = redWhiteGoldclr.filter((_, i) => i !== draggingIndexRedWhiteGold);
+        const newImages = [
+            ...remainingImages.slice(0, index),
+            draggedImage,
+            ...remainingImages.slice(index)
+        ];
+        redsetWhiteGoldclr(newImages);
+        setDraggingIndexRedWhiteGold(null);
+    };
+
+
+    const [draggingIndexBlackYellowGold, setDraggingIndexBlackYellowGold] = useState(null);
+    const [draggingIndexBlackRoseGold, setDraggingIndexBlackRoseGold] = useState(null);
+    const [draggingIndexBlackWhiteGold, setDraggingIndexBlackWhiteGold] = useState(null);
+
+    const blackhandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexBlackYellowGold(index);
+    };
+
+    const blackhandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const blackhandleDropYellowGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...blackYellowGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexBlackYellowGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        blacksetYellowGoldclr(updatedImages);
+        setDraggingIndexBlackYellowGold(null);
+    };
+
+    const blackhandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexBlackRoseGold(index);
+    };
+
+    const blackhandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const blackhandleDropRoseGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...blackRoseGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexBlackRoseGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        blacksetRoseGoldclr(updatedImages);
+        setDraggingIndexBlackRoseGold(null);
+    };
+
+    const blackhandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexBlackWhiteGold(index);
+    };
+
+    const blackhandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const blackhandleDropWhiteGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...blackWhiteGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexBlackWhiteGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        blacksetWhiteGoldclr(updatedImages);
+        setDraggingIndexBlackWhiteGold(null);
+    };
+
+
+
+
+    // deep green drN DROP 
+
+    const [draggingIndexDeepGreenYellowGold, setDraggingIndexDeepGreenYellowGold] = useState(null);
+    const [draggingIndexDeepGreenRoseGold, setDraggingIndexDeepGreenRoseGold] = useState(null);
+    const [draggingIndexDeepGreenWhiteGold, setDraggingIndexDeepGreenWhiteGold] = useState(null);
+
+    const deepgreenhandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexDeepGreenYellowGold(index);
+    };
+
+    const deepgreenhandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const deepgreenhandleDropYellowGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...deepgreenYellowGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexDeepGreenYellowGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        deepgreenSetYellowGoldclr(updatedImages);
+        setDraggingIndexDeepGreenYellowGold(null);
+    };
+
+    const deepgreenhandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexDeepGreenRoseGold(index);
+    };
+
+    const deepgreenhandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const deepgreenhandleDropRoseGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...deepgreenRoseGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexDeepGreenRoseGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        deepgreenSetRoseGoldclr(updatedImages);
+        setDraggingIndexDeepGreenRoseGold(null);
+    };
+
+    const deepgreenhandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexDeepGreenWhiteGold(index);
+    };
+
+    const deepgreenhandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const deepgreenhandleDropWhiteGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...deepgreenWhiteGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexDeepGreenWhiteGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        deepgreenSetWhiteGoldclr(updatedImages);
+        setDraggingIndexDeepGreenWhiteGold(null);
+    };
+
+    //lotus green
+
+    const [draggingIndexLotusGreenYellowGold, setDraggingIndexLotusGreenYellowGold] = useState(null);
+    const [draggingIndexLotusGreenRoseGold, setDraggingIndexLotusGreenRoseGold] = useState(null);
+    const [draggingIndexLotusGreenWhiteGold, setDraggingIndexLotusGreenWhiteGold] = useState(null);
+
+    const lotusgreenhandleDragStartYellowGold = (e, index) => {
+        setDraggingIndexLotusGreenYellowGold(index);
+    };
+
+    const lotusgreenhandleDragOverYellowGold = (e) => {
+        e.preventDefault();
+    };
+
+    const lotusgreenhandleDropYellowGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...lotusgreenYellowGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexLotusGreenYellowGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        lotusgreenSetYellowGoldclr(updatedImages);
+        setDraggingIndexLotusGreenYellowGold(null);
+    };
+
+    const lotusgreenhandleDragStartRoseGold = (e, index) => {
+        setDraggingIndexLotusGreenRoseGold(index);
+    };
+
+    const lotusgreenhandleDragOverRoseGold = (e) => {
+        e.preventDefault();
+    };
+
+    const lotusgreenhandleDropRoseGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...lotusgreenRoseGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexLotusGreenRoseGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        lotusgreenSetRoseGoldclr(updatedImages);
+        setDraggingIndexLotusGreenRoseGold(null);
+    };
+
+    const lotusgreenhandleDragStartWhiteGold = (e, index) => {
+        setDraggingIndexLotusGreenWhiteGold(index);
+    };
+
+    const lotusgreenhandleDragOverWhiteGold = (e) => {
+        e.preventDefault();
+    };
+
+    const lotusgreenhandleDropWhiteGold = (e, index) => {
+        e.preventDefault();
+        const updatedImages = [...lotusgreenWhiteGoldclr];
+        const [movedImage] = updatedImages.splice(draggingIndexLotusGreenWhiteGold, 1);
+        updatedImages.splice(index, 0, movedImage);
+        lotusgreenSetWhiteGoldclr(updatedImages);
+        setDraggingIndexLotusGreenWhiteGold(null);
+    };
+
+
+
 
 
     // stocks related code 
@@ -1509,8 +1957,8 @@ function CreateProduct() {
                                 <label variant="outline">Chain <span className='text-red-500'>(Not Mandatory)</span></label>
                             </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[80%] bg-white relative left-[65%] top-10">
-                            <div className="grid gap-4 bg-white">
+                        <PopoverContent className="w-[100%] h-[auto] bg-[white] relative left-[5%] top-10">
+                            <div className=" gap-4 bg-white">
                                 <div className="space-y-2">
                                     <h4 className="font-medium leading-none">Chain Options</h4>
                                     <p className="text-sm text-muted-foreground">
@@ -1531,7 +1979,7 @@ function CreateProduct() {
                                                     <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                 </label>
                                                 <input type="file" id='withchains' className='hidden' multiple onChange={handlewithImageChange} />
-                                                <div className='flex flex-wrap justify-center gap-2'>
+                                                <div className='image-container'>
                                                     {withchainimages.map((image, index) => (
                                                         <div
                                                             key={`withchain_image_${index}`}
@@ -1539,12 +1987,12 @@ function CreateProduct() {
                                                             onDragStart={(e) => handleDragStartWithChain(e, index)}
                                                             onDragOver={handleDragOver}
                                                             onDrop={(e) => handleDropWithChain(e, index)}
-                                                            className={`relative m-2 ${index === draggingIndexWithChain ? 'opacity-50' : ''}`}
+                                                            className={`image-item relative m-2 ${index === draggingIndexWithChain ? 'opacity-50' : ''}`}
                                                         >
                                                             <img
                                                                 src={image}
                                                                 alt={`With Chain ${index}`}
-                                                                className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                className=' object-cover border-[#555] m-2'
                                                             />
                                                             <AiOutlineCloseCircle
                                                                 size={22}
@@ -1574,7 +2022,7 @@ function CreateProduct() {
                                                     <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                 </label>
                                                 <input type="file" id='withoutchains' className='hidden' multiple onChange={handlewithoutImageChange} />
-                                                <div className='flex flex-wrap justify-center gap-2'>
+                                                <div className='image-container  gap-2'>
                                                     {withchainoutimages.map((image, index) => (
                                                         <div
                                                             key={`withoutchain_image_${index}`}
@@ -1582,12 +2030,12 @@ function CreateProduct() {
                                                             onDragStart={(e) => handleDragStartWithoutChain(e, index)}
                                                             onDragOver={handleDragOver}
                                                             onDrop={(e) => handleDropWithoutChain(e, index)}
-                                                            className={`relative m-2 ${index === draggingIndexWithoutChain ? 'opacity-50' : ''}`}
+                                                            className={`image-item relative m-2 ${index === draggingIndexWithoutChain ? 'opacity-50' : ''}`}
                                                         >
                                                             <img
                                                                 src={image}
                                                                 alt={`Without Chain ${index}`}
-                                                                className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                className=' border-[#555] m-2'
                                                             />
                                                             <AiOutlineCloseCircle
                                                                 size={22}
@@ -1680,7 +2128,7 @@ function CreateProduct() {
                                 </label>
                             </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
+                        <PopoverContent className="w-[100%] bg-white relative left-[5%] top-10">
                             <div className="w-[100%] grid gap-4 bg-white">
                                 <div className="space-y-2">
                                     <h4 className="font-medium leading-none">Metal Color</h4>
@@ -1716,12 +2164,12 @@ function CreateProduct() {
                                                     multiple
                                                     onChange={handlewithYellowclr}
                                                 />
-                                                <div className="flex flex-wrap justify-center gap-2">
+                                                <div className="image-container">
                                                     {YellowGoldclr &&
                                                         YellowGoldclr.map((image, index) => (
                                                             <div
                                                                 key={image}
-                                                                className="relative m-2"
+                                                                className="image-item relative m-2"
                                                                 draggable
                                                                 onDragStart={(e) =>
                                                                     handleDragStartYellowGold(e, index)
@@ -1733,13 +2181,13 @@ function CreateProduct() {
                                                             >
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className="absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
+                                                                    className="absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
                                                                     onClick={() => handleDeleteWithYellowclrImage(index)}
                                                                 />
                                                                 <img
                                                                     src={image}
                                                                     alt={`With Yellow Gold ${index}`}
-                                                                    className={`h-[70px] w-[70px] object-cover border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
+                                                                    className={` border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
                                                                         }`}
                                                                 />
                                                                 {index === draggingIndex && (
@@ -1791,12 +2239,12 @@ function CreateProduct() {
                                                     multiple
                                                     onChange={handlewithRoseclr}
                                                 />
-                                                <div className="flex flex-wrap justify-center gap-2">
+                                                <div className="image-container">
                                                     {RoseGoldclr &&
                                                         RoseGoldclr.map((image, index) => (
                                                             <div
                                                                 key={image}
-                                                                className="relative m-2"
+                                                                className="image-item relative m-2"
                                                                 draggable
                                                                 onDragStart={(e) =>
                                                                     handleDragStartRoseGold(e, index)
@@ -1808,13 +2256,13 @@ function CreateProduct() {
                                                             >
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className="absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
+                                                                    className="absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
                                                                     onClick={() => handleDeleteWithRoseclrImage(index)}
                                                                 />
                                                                 <img
                                                                     src={image}
                                                                     alt={`With Rose Gold ${index}`}
-                                                                    className={`h-[70px] w-[70px] object-cover border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
+                                                                    className={`object-cover border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
                                                                         }`}
                                                                 />
                                                                 {index === draggingIndex && (
@@ -1866,12 +2314,12 @@ function CreateProduct() {
                                                     multiple
                                                     onChange={handlewithWhiteclr}
                                                 />
-                                                <div className="flex flex-wrap justify-center gap-2">
+                                                <div className="image-container">
                                                     {WhiteGoldclr &&
                                                         WhiteGoldclr.map((image, index) => (
                                                             <div
                                                                 key={image}
-                                                                className="relative m-2"
+                                                                className="image-item relative m-2"
                                                                 draggable
                                                                 onDragStart={(e) =>
                                                                     handleDragStartWhiteGold(e, index)
@@ -1883,7 +2331,7 @@ function CreateProduct() {
                                                             >
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className="absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
+                                                                    className="absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1"
                                                                     onClick={() => handleDeleteWithWhiteclrImage(index)}
                                                                 />
                                                                 <img
@@ -2014,26 +2462,30 @@ function CreateProduct() {
                     <h2 className='mb-2 p-2 border border-[#555]'>Add Enamel Color for the Product</h2>
 
                     {/* deep_blue */}
-                    <div>
+                    <div className=''>
 
 
 
                         <Popover className="">
                             <PopoverTrigger >
-                                <div className='flex  items-center'>
+                                <div className='flex items-center'>
 
                                     <IoIosAdd size={20} />
                                     <label variant="outline">Deep Blue  <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color : - Deep Blue</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Set the Color of the product.
-                                        </p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[10px]">
+                                <div className="grid gap-4 bg-white !overflow-y-auto">
+                                    <div className='h-[100%] '>
+
+                                        <div className="space-y-2  ">
+                                            <h4 className="font-medium leading-none">Enamel Color : - Deep Blue</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold foe enamel*/}
                                         <div className="mb-3">
@@ -2049,20 +2501,32 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepblueyellowclr' className='hidden' multiple onChange={deepbluehandlewithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepblueYellowGoldclr && deepblueYellowGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
-                                                                <AiOutlineCloseCircle
-                                                                    size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
-                                                                    onClick={() => deepbluehandleDeleteWithYellowclrImage(i)}
-                                                                />
+                                                    <div className='image-container'>
+                                                        {deepblueYellowGoldclr && deepblueYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepblue_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepbluehandleDragOverYellowGold}
+                                                                onDrop={(e) => deepbluehandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => deepbluehandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item  m-2 '>
+
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className=' object-cover border-[#555] m-2'
                                                                 />
+                                                                <AiOutlineCloseCircle
+                                                                    size={22}
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    onClick={() => deepbluehandleDeleteWithYellowclrImage(i)}
+                                                                />
+                                                                {index === draggingIndexDeepBlueYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
@@ -2096,24 +2560,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepbluerosegoldclr' className='hidden' multiple onChange={deepbluehandlewithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepblueRoseGoldclr && deepblueRoseGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {deepblueRoseGoldclr && deepblueRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepblue_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepbluehandleDragOverRoseGold}
+                                                                onDrop={(e) => deepbluehandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => deepbluehandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => deepbluehandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexDeepBlueRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
+
+
                                             )}
 
                                             <div>
@@ -2144,24 +2620,35 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepbluewhitegoldclr' className='hidden' multiple onChange={deepbluehandlewithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepblueWhiteGoldclr && deepblueWhiteGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {deepblueWhiteGoldclr && deepblueWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepblue_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepbluehandleDragOverWhiteGold}
+                                                                onDrop={(e) => deepbluehandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => deepbluehandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => deepbluehandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexDeepBlueWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
+
                                             )}
                                             <div>
                                                 <label className="block mt-2">Stock</label>
@@ -2192,21 +2679,25 @@ function CreateProduct() {
                     </div>
 
                     {/* pink */}
-
-                    <div>
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger >
-                                <div className='flex  items-center'>
+                                <div className='flex items-center'>
                                     <IoIosAdd size={20} />
-                                    <label variant="outline">pink <span className='text-red-500'>(if Enamel product)</span></label>
+                                    <label variant="outline">Pink <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color : - pink</h4>
-                                        <p className="text-sm text-muted-foreground">Set the Color of the product.</p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[10px]">
+                                <div className="grid gap-4 bg-white !overflow-y-auto">
+                                    <div className='h-[100%]'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color : - Pink</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -2214,31 +2705,44 @@ function CreateProduct() {
                                                 <input type="checkbox" id='pinkyellowgold' onChange={pinkhandleToggleWithYellowclr} />
                                                 <label htmlFor="pinkyellowgold">Enamel Yellow Gold</label>
                                             </div>
+
                                             {pinkshowWithYellowclrImages && (
                                                 <div>
                                                     <label htmlFor="pinkyellowclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='pinkyellowclr' className='hidden' multiple onChange={pinkhandlewithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {pinkYellowGoldclr && pinkYellowGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {pinkYellowGoldclr && pinkYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`pink_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={pinkhandleDragOverYellowGold}
+                                                                onDrop={(e) => pinkhandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => pinkhandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2 '>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => pinkhandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexPinkYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2250,37 +2754,51 @@ function CreateProduct() {
                                                 />
                                             </div>
                                         </div>
+
                                         {/* Option 2: With rose gold for enamel */}
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='pinkrosegold' onChange={pinkhandleToggleWithRoseclr} />
                                                 <label htmlFor="pinkrosegold">Enamel Rose Gold</label>
                                             </div>
+
                                             {pinkshowWithRoseclrImages && (
                                                 <div>
                                                     <label htmlFor="pinkrosegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='pinkrosegoldclr' className='hidden' multiple onChange={pinkhandlewithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {pinkRoseGoldclr && pinkRoseGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {pinkRoseGoldclr && pinkRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`pink_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={pinkhandleDragOverRoseGold}
+                                                                onDrop={(e) => pinkhandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => pinkhandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2 '>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => pinkhandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexPinkRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2292,37 +2810,51 @@ function CreateProduct() {
                                                 />
                                             </div>
                                         </div>
+
                                         {/* Option 3: With white gold for enamel */}
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
                                                 <input type="checkbox" id='pinkwhitegold' onChange={pinkhandleToggleWithWhiteclr} />
                                                 <label htmlFor="pinkwhitegold">Enamel White Gold</label>
                                             </div>
+
                                             {pinkshowWithWhiteclrImages && (
                                                 <div>
                                                     <label htmlFor="pinkwhitegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='pinkwhitegoldclr' className='hidden' multiple onChange={pinkhandlewithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {pinkWhiteGoldclr && pinkWhiteGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {pinkWhiteGoldclr && pinkWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`pink_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={pinkhandleDragOverWhiteGold}
+                                                                onDrop={(e) => pinkhandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => pinkhandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2 '>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => pinkhandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexPinkWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2336,6 +2868,7 @@ function CreateProduct() {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div>
                                     <div className='m-auto w-[80%]'>
                                         <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
@@ -2347,20 +2880,25 @@ function CreateProduct() {
 
                     {/* turquoise */}
 
-                    <div>
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger>
                                 <div className='flex items-center'>
                                     <IoIosAdd size={20} />
-                                    <label variant="outline">turquoise <span className='text-red-500'>(if Enamel product)</span></label>
+                                    <label variant="outline">Turquoise <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color : - turquoise</h4>
-                                        <p className="text-sm text-muted-foreground">Set the Color of the product.</p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[50px]">
+                                <div className="grid gap-4  bg-white !overflow-y-auto">
+                                    <div className='!overflow-y-auto'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color: - Turquoise</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -2368,31 +2906,44 @@ function CreateProduct() {
                                                 <input type="checkbox" id='turquoiseyellowgold' onChange={turquoisehandleToggleWithYellowclr} />
                                                 <label htmlFor="turquoiseyellowgold">Enamel Yellow Gold</label>
                                             </div>
+
                                             {turquoiseshowWithYellowclrImages && (
                                                 <div>
                                                     <label htmlFor="turquoiseyellowclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='turquoiseyellowclr' className='hidden' multiple onChange={turquoisehandlewithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {turquoiseYellowGoldclr && turquoiseYellowGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {turquoiseYellowGoldclr && turquoiseYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`turquoise_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={turquoisehandleDragOverYellowGold}
+                                                                onDrop={(e) => turquoisehandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => turquoisehandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => turquoisehandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexTurquoiseYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2408,34 +2959,46 @@ function CreateProduct() {
                                         {/* Option 2: With rose gold for enamel */}
                                         <div className="mb-3">
                                             <div className='flex gap-2'>
-                                                <input type="checkbox" id='turquoiserozegold' onChange={turquoisehandleToggleWithRoseclr} />
-                                                <label htmlFor="turquoiserozegold">Enamel Rose Gold</label>
+                                                <input type="checkbox" id='turquoiserosegold' onChange={turquoisehandleToggleWithRoseclr} />
+                                                <label htmlFor="turquoiserosegold">Enamel Rose Gold</label>
                                             </div>
+
                                             {turquoiseshowWithRoseclrImages && (
                                                 <div>
-                                                    <label htmlFor="turquoiserozegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
+                                                    <label htmlFor="turquoiserosegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
-                                                    <input type="file" id='turquoiserozegoldclr' className='hidden' multiple onChange={turquoisehandlewithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {turquoiseRoseGoldclr && turquoiseRoseGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <input type="file" id='turquoiserosegoldclr' className='hidden' multiple onChange={turquoisehandlewithRoseclr} />
+                                                    <div className='image-container'>
+                                                        {turquoiseRoseGoldclr && turquoiseRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`turquoise_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={turquoisehandleDragOverRoseGold}
+                                                                onDrop={(e) => turquoisehandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => turquoisehandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => turquoisehandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexTurquoiseRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2454,31 +3017,43 @@ function CreateProduct() {
                                                 <input type="checkbox" id='turquoisewhitegold' onChange={turquoisehandleToggleWithWhiteclr} />
                                                 <label htmlFor="turquoisewhitegold">Enamel White Gold</label>
                                             </div>
+
                                             {turquoiseshowWithWhiteclrImages && (
                                                 <div>
                                                     <label htmlFor="turquoisewhitegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='turquoisewhitegoldclr' className='hidden' multiple onChange={turquoisehandlewithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {turquoiseWhiteGoldclr && turquoiseWhiteGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {turquoiseWhiteGoldclr && turquoiseWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`turquoise_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={turquoisehandleDragOverWhiteGold}
+                                                                onDrop={(e) => turquoisehandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => turquoisehandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => turquoisehandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexTurquoiseWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2491,35 +3066,40 @@ function CreateProduct() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div className='m-auto w-[80%]'>
-                                            <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
-                                        </div>
+                                </div>
+
+                                <div>
+                                    <div className='m-auto w-[80%]'>
+                                        <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
                                     </div>
                                 </div>
                             </PopoverContent>
                         </Popover>
-
-
                     </div>
+
 
 
                     {/* red */}
 
-                    <div>
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger>
                                 <div className='flex items-center'>
                                     <IoIosAdd size={20} />
-                                    <label variant="outline">red <span className='text-red-500'>(if Enamel product)</span></label>
+                                    <label variant="outline">Red <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color : - red</h4>
-                                        <p className="text-sm text-muted-foreground">Set the Color of the product.</p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[50px]">
+                                <div className="grid gap-4  bg-white !overflow-y-auto">
+                                    <div className='!overflow-y-auto'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color: - Red</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -2527,31 +3107,44 @@ function CreateProduct() {
                                                 <input type="checkbox" id='redyellowgold' onChange={redhandleToggleWithYellowclr} />
                                                 <label htmlFor="redyellowgold">Enamel Yellow Gold</label>
                                             </div>
+
                                             {redshowWithYellowclrImages && (
                                                 <div>
                                                     <label htmlFor="redyellowclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='redyellowclr' className='hidden' multiple onChange={redhandlewithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {redYellowGoldclr && redYellowGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {redYellowGoldclr && redYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`red_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={redhandleDragOverYellowGold}
+                                                                onDrop={(e) => redhandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => redhandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => redhandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
                                                                     key={`withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexRedYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2570,31 +3163,43 @@ function CreateProduct() {
                                                 <input type="checkbox" id='redrosegold' onChange={redhandleToggleWithRoseclr} />
                                                 <label htmlFor="redrosegold">Enamel Rose Gold</label>
                                             </div>
+
                                             {redshowWithRoseclrImages && (
                                                 <div>
                                                     <label htmlFor="redrosegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='redrosegoldclr' className='hidden' multiple onChange={redhandlewithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {redRoseGoldclr && redRoseGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {redRoseGoldclr && redRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`red_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={redhandleDragOverRoseGold}
+                                                                onDrop={(e) => redhandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => redhandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => redhandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexRedRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2613,47 +3218,60 @@ function CreateProduct() {
                                                 <input type="checkbox" id='redwhitegold' onChange={redhandleToggleWithWhiteclr} />
                                                 <label htmlFor="redwhitegold">Enamel White Gold</label>
                                             </div>
+
                                             {redshowWithWhiteclrImages && (
                                                 <div>
                                                     <label htmlFor="redwhitegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='redwhitegoldclr' className='hidden' multiple onChange={redhandlewithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {redWhiteGoldclr && redWhiteGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {redWhiteGoldclr && redWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`red_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={redhandleDragOverWhiteGold}
+                                                                onDrop={(e) => redhandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => redhandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => redhandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexRedWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
-                                                        <div>
-                                                            <label className="block mt-2">Stock</label>
-                                                            <input
-                                                                type="number"
-                                                                value={redWhiteGoldclrStock}
-                                                                className="border border-[#555] p-2 w-full"
-                                                                placeholder="Enter stock"
-                                                                onChange={(e) => { setredWhiteGoldclrStock(e.target.value) }}
-                                                            />
-                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
+
+                                            <div>
+                                                <label className="block mt-2">Stock</label>
+                                                <input
+                                                    type="number"
+                                                    value={redWhiteGoldclrStock}
+                                                    className="border border-[#555] p-2 w-full"
+                                                    placeholder="Enter stock"
+                                                    onChange={(e) => { setredWhiteGoldclrStock(e.target.value) }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div className='m-auto w-[80%]'>
-                                            <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
-                                        </div>
+                                </div>
+
+                                <div>
+                                    <div className='m-auto w-[80%]'>
+                                        <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
                                     </div>
                                 </div>
                             </PopoverContent>
@@ -2661,22 +3279,27 @@ function CreateProduct() {
                     </div>
 
 
-                    {/* black */}
-                    <div>
 
+                    {/* black */}
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger>
                                 <div className='flex items-center'>
                                     <IoIosAdd size={20} />
-                                    <label variant="outline">black <span className='text-red-500'>(if Enamel product)</span></label>
+                                    <label variant="outline">Black <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color : - black</h4>
-                                        <p className="text-sm text-muted-foreground">Set the Color of the product.</p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[50px]">
+                                <div className="grid gap-4 bg-white !overflow-y-auto">
+                                    <div className='!overflow-y-auto'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color: - Black</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -2684,26 +3307,37 @@ function CreateProduct() {
                                                 <input type="checkbox" id='blackyellowgold' onChange={blackhandleToggleWithYellowclr} />
                                                 <label htmlFor="blackyellowgold">Enamel Yellow Gold</label>
                                             </div>
+
                                             {blackshowWithYellowclrImages && (
                                                 <div>
                                                     <label htmlFor="blackyellowclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='blackyellowclr' className='hidden' multiple onChange={blackhandlewithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {blackYellowGoldclr && blackYellowGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {blackYellowGoldclr && blackYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`black_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={blackhandleDragOverYellowGold}
+                                                                onDrop={(e) => blackhandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => blackhandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => blackhandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Yellow Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexBlackYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
@@ -2728,31 +3362,43 @@ function CreateProduct() {
                                                 <input type="checkbox" id='blackrosegold' onChange={blackhandleToggleWithRoseclr} />
                                                 <label htmlFor="blackrosegold">Enamel Rose Gold</label>
                                             </div>
+
                                             {blackshowWithRoseclrImages && (
                                                 <div>
                                                     <label htmlFor="blackrosegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='blackrosegoldclr' className='hidden' multiple onChange={blackhandlewithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {blackRoseGoldclr && blackRoseGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {blackRoseGoldclr && blackRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`black_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={blackhandleDragOverRoseGold}
+                                                                onDrop={(e) => blackhandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => blackhandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => blackhandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexBlackRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2771,26 +3417,37 @@ function CreateProduct() {
                                                 <input type="checkbox" id='blackwhitegold' onChange={blackhandleToggleWithWhiteclr} />
                                                 <label htmlFor="blackwhitegold">Enamel White Gold</label>
                                             </div>
+
                                             {blackshowWithWhiteclrImages && (
                                                 <div>
                                                     <label htmlFor="blackwhitegoldclr" className='w-[180px] border border-[#555] flex items-center p-2 gap-2 cursor-pointer'>
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='blackwhitegoldclr' className='hidden' multiple onChange={blackhandlewithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {blackWhiteGoldclr && blackWhiteGoldclr.map((i) => (
-                                                            <div key={`withchain_${i}`} className='relative'>
+                                                    <div className='image-container'>
+                                                        {blackWhiteGoldclr && blackWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`black_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={blackhandleDragOverWhiteGold}
+                                                                onDrop={(e) => blackhandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => blackhandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => blackhandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={`withchain_image_${i}`}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexBlackWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
@@ -2809,10 +3466,11 @@ function CreateProduct() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div className='m-auto w-[80%]'>
-                                            <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
-                                        </div>
+                                </div>
+
+                                <div>
+                                    <div className='m-auto w-[80%]'>
+                                        <button className='bg-slate-800 text-white w-[80%] px-2 py-2 rounded' onClick={handleAddMetalColor}>Add Metal Color</button>
                                     </div>
                                 </div>
                             </PopoverContent>
@@ -2821,9 +3479,7 @@ function CreateProduct() {
 
 
                     {/* deep green */}
-                    <div>
-
-
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger>
                                 <div className='flex items-center'>
@@ -2831,14 +3487,17 @@ function CreateProduct() {
                                     <label variant="outline">Deep Green <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color: Deep Green</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Set the Color of the product.
-                                        </p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[50px]">
+                                <div className="grid gap-4  bg-white !overflow-y-auto">
+                                    <div className='!overflow-y-auto'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color: - Deep Green</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -2853,25 +3512,37 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepgreenyellowclr' className='hidden' multiple onChange={deepgreenHandleWithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepgreenYellowGoldclr && deepgreenYellowGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {deepgreenYellowGoldclr && deepgreenYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepgreen_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepgreenhandleDragOverYellowGold}
+                                                                onDrop={(e) => deepgreenhandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => deepgreenhandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => deepgreenHandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
+                                                                    key={`deepgreen_withchain_image_${i}`}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexDeepGreenYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2897,25 +3568,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepgreenrosegoldclr' className='hidden' multiple onChange={deepgreenHandleWithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepgreenRoseGoldclr && deepgreenRoseGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {deepgreenRoseGoldclr && deepgreenRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepgreen_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepgreenhandleDragOverRoseGold}
+                                                                onDrop={(e) => deepgreenhandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => deepgreenhandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => deepgreenHandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexDeepGreenRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2941,25 +3623,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='deepgreenwhitegoldclr' className='hidden' multiple onChange={deepgreenHandleWithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {deepgreenWhiteGoldclr && deepgreenWhiteGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {deepgreenWhiteGoldclr && deepgreenWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`deepgreen_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={deepgreenhandleDragOverWhiteGold}
+                                                                onDrop={(e) => deepgreenhandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => deepgreenhandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => deepgreenHandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexDeepGreenWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -2985,9 +3678,7 @@ function CreateProduct() {
 
 
                     {/* lotus green */}
-                    <div>
-
-
+                    <div className=''>
                         <Popover className="">
                             <PopoverTrigger>
                                 <div className='flex items-center'>
@@ -2995,14 +3686,17 @@ function CreateProduct() {
                                     <label variant="outline">Lotus Green <span className='text-red-500'>(if Enamel product)</span></label>
                                 </div>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[300px] bg-white relative left-[65%] top-10">
-                                <div className="w-[100%] grid gap-4 bg-white">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Enamel Color: Lotus Green</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Set the Color of the product.
-                                        </p>
+                            <PopoverContent className="w-[100%] h-[100%] bg-white !overflow-y-auto relative left-[5%] top-[50px]">
+                                <div className="grid gap-4  bg-white !overflow-y-auto">
+                                    <div className='!overflow-y-auto'>
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Enamel Color: - Lotus Green</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Set the Color of the product.
+                                            </p>
+                                        </div>
                                     </div>
+
                                     <div className="gap-2">
                                         {/* Option 1: With yellow gold for enamel */}
                                         <div className="mb-3">
@@ -3017,25 +3711,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='lotusgreenyellowclr' className='hidden' multiple onChange={lotusgreenHandleWithYellowclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {lotusgreenYellowGoldclr && lotusgreenYellowGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {lotusgreenYellowGoldclr && lotusgreenYellowGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`lotusgreen_yellowgold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={lotusgreenhandleDragOverYellowGold}
+                                                                onDrop={(e) => lotusgreenhandleDropYellowGold(e, index)}
+                                                                onDragStart={(e) => lotusgreenhandleDragStartYellowGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => lotusgreenHandleDeleteWithYellowclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
                                                                     src={i}
                                                                     alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexLotusGreenYellowGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -3061,25 +3766,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='lotusgreenrosegoldclr' className='hidden' multiple onChange={lotusgreenHandleWithRoseclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {lotusgreenRoseGoldclr && lotusgreenRoseGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {lotusgreenRoseGoldclr && lotusgreenRoseGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`lotusgreen_rosegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={lotusgreenhandleDragOverRoseGold}
+                                                                onDrop={(e) => lotusgreenhandleDropRoseGold(e, index)}
+                                                                onDragStart={(e) => lotusgreenhandleDragStartRoseGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => lotusgreenHandleDeleteWithRoseclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`Rose Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexLotusGreenRoseGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -3105,25 +3821,36 @@ function CreateProduct() {
                                                         <AiOutlinePlusCircle size={20} color='#555' /> Select Images
                                                     </label>
                                                     <input type="file" id='lotusgreenwhitegoldclr' className='hidden' multiple onChange={lotusgreenHandleWithWhiteclr} />
-                                                    <div className='flex flex-wrap justify-center gap-2'>
-                                                        {lotusgreenWhiteGoldclr && lotusgreenWhiteGoldclr.map((i) => (
-                                                            <div key={i} className='relative'>
+                                                    <div className='image-container'>
+                                                        {lotusgreenWhiteGoldclr && lotusgreenWhiteGoldclr.map((i, index) => (
+                                                            <div
+                                                                key={`lotusgreen_whitegold_image_${index}`}
+                                                                draggable
+                                                                onDragOver={lotusgreenhandleDragOverWhiteGold}
+                                                                onDrop={(e) => lotusgreenhandleDropWhiteGold(e, index)}
+                                                                onDragStart={(e) => lotusgreenhandleDragStartWhiteGold(e, index)}
+                                                                className='relative image-item m-2'>
                                                                 <AiOutlineCloseCircle
                                                                     size={22}
-                                                                    className='absolute top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                                                    className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
                                                                     onClick={() => lotusgreenHandleDeleteWithWhiteclrImage(i)}
                                                                 />
                                                                 <img
-                                                                    key={i}
                                                                     src={i}
-                                                                    alt={`With Chain ${i}`}
-                                                                    className='h-[70px] w-[70px] object-cover border-[#555] m-2'
+                                                                    alt={`White Gold ${i}`}
+                                                                    className='object-cover border-[#555] m-2'
                                                                 />
+                                                                {index === draggingIndexLotusGreenWhiteGold && (
+                                                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
+                                                                        <TfiHandDrag size={30} color='#000' />
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
                                             )}
+
                                             <div>
                                                 <label className="block mt-2">Stock</label>
                                                 <input
@@ -3146,6 +3873,7 @@ function CreateProduct() {
                             </PopoverContent>
                         </Popover>
                     </div>
+
 
                 </div>
 
