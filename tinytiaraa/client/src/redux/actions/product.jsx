@@ -464,7 +464,7 @@ export const updateProduct = (
         lotusgreenRoseGoldclrStock,
         lotusgreenWhiteGoldclrStock,
         gender,
-        ageGroup }
+        ageGroup,}
 ) => async (dispatch) => {
     try {
         dispatch({ type: "productUpdateRequest" });
@@ -518,67 +518,71 @@ export const updateProduct = (
             lotusgreenRoseGoldclrStock,
             lotusgreenWhiteGoldclrStock,
             gender,
-            ageGroup
+            ageGroup,
+            images
         }, "from action in redux")
 
+        let updatedproductdata = {
+            id, // Product ID to update
+            name,
+            skuid,
+            description,
+            category,
+            subcategory,
+            tags,
+            originalPrice,
+            discountPrice,
+            stock,
+            designno,
+            shopId,
+            images,
+            withchainimages,
+            withchainoutimages,
+            YellowGoldclr,
+            RoseGoldclr,
+            WhiteGoldclr,
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock,
+            goldWeight,
+            diamondWeight,
+            dimension,
+            enamelColors,
+            deepblueYellowGoldclrStock,
+            deepblueRoseGoldclrStock,
+            deepblueWhiteGoldclrStock,
+            pinkYellowGoldclrStock,
+            pinkRoseGoldclrStock,
+            pinkWhiteGoldclrStock,
+            turquoiseYellowGoldclrStock,
+            turquoiseRoseGoldclrStock,
+            turquoiseWhiteGoldclrStock,
+            redYellowGoldclrStock,
+            redRoseGoldclrStock,
+            redWhiteGoldclrStock,
+            blackYellowGoldclrStock,
+            blackRoseGoldclrStock,
+            blackWhiteGoldclrStock,
+            deepgreenYellowGoldclrStock,
+            deepgreenRoseGoldclrStock,
+            deepgreenWhiteGoldclrStock,
+            lotusgreenYellowGoldclrStock,
+            lotusgreenRoseGoldclrStock,
+            lotusgreenWhiteGoldclrStock,
+            gender,
+            ageGroup
+        }
+
+        console.log(updatedproductdata,"updatedproductdata")
 
         // Send the request
         const { data } = await axios.put(
             `${server}/product/update-product/${id}`, // Endpoint to update the product
-            
-                id, // Product ID to update
-                name,
-                skuid,
-                description,
-                category,
-                subcategory,
-                tags,
-                originalPrice,
-                discountPrice,
-                stock,
-                designno,
-                shopId,
-                images,
-                withchainimages,
-                withchainoutimages,
-                YellowGoldclr,
-                RoseGoldclr,
-                WhiteGoldclr,
-                YellowGoldclrStock,
-                RoseGoldclrStock,
-                WhiteGoldclrStock,
-                goldWeight,
-                diamondWeight,
-                dimension,
-                enamelColors,
-                deepblueYellowGoldclrStock,
-                deepblueRoseGoldclrStock,
-                deepblueWhiteGoldclrStock,
-                pinkYellowGoldclrStock,
-                pinkRoseGoldclrStock,
-                pinkWhiteGoldclrStock,
-                turquoiseYellowGoldclrStock,
-                turquoiseRoseGoldclrStock,
-                turquoiseWhiteGoldclrStock,
-                redYellowGoldclrStock,
-                redRoseGoldclrStock,
-                redWhiteGoldclrStock,
-                blackYellowGoldclrStock,
-                blackRoseGoldclrStock,
-                blackWhiteGoldclrStock,
-                deepgreenYellowGoldclrStock,
-                deepgreenRoseGoldclrStock,
-                deepgreenWhiteGoldclrStock,
-                lotusgreenYellowGoldclrStock,
-                lotusgreenRoseGoldclrStock,
-                lotusgreenWhiteGoldclrStock,
-                gender,
-                ageGroup
-            ,
-            { headers: { "Content-Type": "multipart/form-data" } }
+            updatedproductdata,
+            { headers: { "Content-Type": "application/json" } }
         );
 
-        console.log(data,"Check data")
+        console.log(data, "Check data")
 
         dispatch({
             type: "productUpdateSuccess",

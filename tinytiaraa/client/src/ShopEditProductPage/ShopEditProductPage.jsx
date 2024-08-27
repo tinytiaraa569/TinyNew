@@ -146,10 +146,10 @@ function ShopEditProductPage() {
 
         files.forEach((file) => {
             const reader = new FileReader();
-
+    
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    setImages((old) => [...old, reader.result]);
+                    setImages((old) => [...old, { url: reader.result, isNew: true }]); // Add new images with a flag
                 }
             };
             reader.readAsDataURL(file);
@@ -1256,8 +1256,18 @@ function ShopEditProductPage() {
         e.preventDefault()
         const newForm = new FormData()
 
+        // images.forEach((image) => {
+        //     newForm.set("images", image);
+        // });
+
         images.forEach((image) => {
-            newForm.set("images", image);
+            if (image.isNew) {
+                // Handle new image (e.g., upload to Cloudinary)
+                productData.append('newImages', image.url); // Assuming image.url is a DataURL for new images
+            } else {
+                // Handle existing image, keeping its public_id and URL
+                productData.append('existingImages', JSON.stringify(image));
+            }
         });
 
         withchainimages.forEach((image) => {
@@ -1533,7 +1543,8 @@ function ShopEditProductPage() {
             lotusgreenRoseGoldclrStock,
             lotusgreenWhiteGoldclrStock,
             gender,
-            ageGroup
+            ageGroup,
+            images,
         }))
 
 
