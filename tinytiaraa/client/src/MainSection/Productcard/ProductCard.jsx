@@ -107,11 +107,11 @@ function ProductCard({ data }) {
         <div className='w-full h-[auto] overflow-hidden '>
 
           <Link to={`/product/${product_name}`}>
-            <h4 className='pb-1 font-[500]  text-center'>{data.name.length > 70 ? data.name.slice(0, 70) + "..." : data.name}</h4>
+            <h4 className='pb-1 font-[500] text-[16px] text-center'>{data.name.length > 70 ? data.name.slice(0, 70) + "..." : data.name}</h4>
           </Link>
           <p className={`${styles.skuid}`}>{data.skuid}</p>
 
-          <div className="py-2 mt-2 flex items-center justify-between">
+          <div className=" mt-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
                 ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
@@ -126,7 +126,7 @@ function ProductCard({ data }) {
         </div>
 
         <div>
-          <div className='flex justify-center mb-2' onClick={() => { navigate(`/product/${product_name}`) }}>
+          <div className='flex justify-center mt-1' onClick={() => { navigate(`/product/${product_name}`) }}>
             <button className={`${styles.cart_button} ${styles.cart_button_text}`}>Buy Now</button>
 
           </div>

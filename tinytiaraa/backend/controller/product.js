@@ -699,7 +699,7 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         } = req.body;
 
 
-        const {gender,ageGroup} = req.body;
+        const { gender, ageGroup } = req.body;
 
 
         const productData = req.body;
@@ -1124,172 +1124,1338 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
     try {
         const productId = req.params.id;
 
-        // Log the entire request object (this can be very large, so be careful)
-        console.log("Request Object:", req);
-
-        // Log the request body to see what data is being sent
-        console.log("Request Body:", req.body);
-
-        // Log the request headers to check any specific headers being sent
-        console.log("Request Headers:", req.headers);
-
         // Log any files attached to the request (if any)
         if (req.files) {
             console.log("Request Files:", req.files);
         }
 
-        // Extract data from the request body
-        const {
-            name,
-            skuid,
-            description,
-            category,
-            subcategory,
-            tags,
-            originalPrice,
-            discountPrice,
-            stock,
-            designno,
-            shopId,
-            images,
-            withchainimages,
-            withchainoutimages,
-            YellowGoldclr,
-            RoseGoldclr,
-            WhiteGoldclr,
-            YellowGoldclrStock,
-            RoseGoldclrStock,
-            WhiteGoldclrStock,
-            goldWeight,
-            diamondWeight,
-            dimension,
-            enamelColors,
-            deepblueYellowGoldclrStock,
-            deepblueRoseGoldclrStock,
-            deepblueWhiteGoldclrStock,
-            pinkYellowGoldclrStock,
-            pinkRoseGoldclrStock,
-            pinkWhiteGoldclrStock,
-            turquoiseYellowGoldclrStock,
-            turquoiseRoseGoldclrStock,
-            turquoiseWhiteGoldclrStock,
-            redYellowGoldclrStock,
-            redRoseGoldclrStock,
-            redWhiteGoldclrStock,
-            blackYellowGoldclrStock,
-            blackRoseGoldclrStock,
-            blackWhiteGoldclrStock,
-            deepgreenYellowGoldclrStock,
-            deepgreenRoseGoldclrStock,
-            deepgreenWhiteGoldclrStock,
-            lotusgreenYellowGoldclrStock,
-            lotusgreenRoseGoldclrStock,
-            lotusgreenWhiteGoldclrStock,
-            gender,
-            ageGroup
-        } = req.body;
+        // let images = [];
+        // if (typeof req.body.images === "string") {
+        //     images.push(req.body.images); // Single image as a string
+        // } else if (Array.isArray(req.body.images)) {
+        //     images = req.body.images; // Array of images
+        // }
 
-        // Log each extracted variable to see its value
-        console.log("Extracted Data:", {
-            name,
-            skuid,
-            description,
-            category,
-            subcategory,
-            tags,
-            originalPrice,
-            discountPrice,
-            stock,
-            designno,
-            shopId,
-            images,
-            withchainimages,
-            withchainoutimages,
-            YellowGoldclr,
-            RoseGoldclr,
-            WhiteGoldclr,
-            YellowGoldclrStock,
-            RoseGoldclrStock,
-            WhiteGoldclrStock,
-            goldWeight,
-            diamondWeight,
-            dimension,
-            enamelColors,
-            deepblueYellowGoldclrStock,
-            deepblueRoseGoldclrStock,
-            deepblueWhiteGoldclrStock,
-            pinkYellowGoldclrStock,
-            pinkRoseGoldclrStock,
-            pinkWhiteGoldclrStock,
-            turquoiseYellowGoldclrStock,
-            turquoiseRoseGoldclrStock,
-            turquoiseWhiteGoldclrStock,
-            redYellowGoldclrStock,
-            redRoseGoldclrStock,
-            redWhiteGoldclrStock,
-            blackYellowGoldclrStock,
-            blackRoseGoldclrStock,
-            blackWhiteGoldclrStock,
-            deepgreenYellowGoldclrStock,
-            deepgreenRoseGoldclrStock,
-            deepgreenWhiteGoldclrStock,
-            lotusgreenYellowGoldclrStock,
-            lotusgreenRoseGoldclrStock,
-            lotusgreenWhiteGoldclrStock,
-            gender,
-            ageGroup
-        });
+        // const imagesLinks = []; // This will store only new uploaded images
+
+        // for (let i = 0; i < images.length; i++) {
+        //     const image = images[i];
+
+        //     // Check if the image is an object with a URL or base64 string
+        //     const isExistingImage = typeof image === "object" && image.url && image.public_id;
+
+        //     if (isExistingImage) {
+        //         // This is an existing image, so we just add it to the imagesLinks array
+        //         imagesLinks.push({
+        //             public_id: image.public_id,
+        //             url: image.url,
+        //         });
+        //     } else {
+        //         // This is a new image, either a base64 string or URL that needs to be uploaded
+        //         const imagePath = typeof image === "object" && (image.url || image.path)
+        //             ? image.url || image.path // Handle object case
+        //             : typeof image === "string"
+        //                 ? image // Handle plain string case
+        //                 : null; // Invalid format
+
+        //         if (!imagePath) {
+        //             return next(new ErrorHandler('Invalid image format provided', 400));
+        //         }
+
+        //         // Upload to Cloudinary
+        //         const result = await cloudinary.v2.uploader.upload(imagePath, {
+        //             folder: "products",
+        //         });
+
+        //         imagesLinks.push({
+        //             public_id: result.public_id,
+        //             url: result.secure_url,
+        //         });
+        //     }
+        // }
+
+
+
+        //  with chain  or without chain 
+
+
+
+        // Extract data from the request body
+        // const {
+        //     name,
+        //     skuid,
+        //     description,
+        //     category,
+        //     subcategory,
+        //     tags,
+        //     originalPrice,
+        //     discountPrice,
+        //     stock,
+        //     designno,
+        //     shopId,
+        //     images,
+        //     withchainimages,
+        //     withchainoutimages,
+        //     YellowGoldclr,
+        //     RoseGoldclr,
+        //     WhiteGoldclr,
+        //     YellowGoldclrStock,
+        //     RoseGoldclrStock,
+        //     WhiteGoldclrStock,
+        //     goldWeight,
+        //     diamondWeight,
+        //     dimension,
+        //     enamelColors,
+        //     deepblueYellowGoldclrStock,
+        //     deepblueRoseGoldclrStock,
+        //     deepblueWhiteGoldclrStock,
+        //     pinkYellowGoldclrStock,
+        //     pinkRoseGoldclrStock,
+        //     pinkWhiteGoldclrStock,
+        //     turquoiseYellowGoldclrStock,
+        //     turquoiseRoseGoldclrStock,
+        //     turquoiseWhiteGoldclrStock,
+        //     redYellowGoldclrStock,
+        //     redRoseGoldclrStock,
+        //     redWhiteGoldclrStock,
+        //     blackYellowGoldclrStock,
+        //     blackRoseGoldclrStock,
+        //     blackWhiteGoldclrStock,
+        //     deepgreenYellowGoldclrStock,
+        //     deepgreenRoseGoldclrStock,
+        //     deepgreenWhiteGoldclrStock,
+        //     lotusgreenYellowGoldclrStock,
+        //     lotusgreenRoseGoldclrStock,
+        //     lotusgreenWhiteGoldclrStock,
+        //     gender,
+        //     ageGroup
+        // } = req.body;
+
+        // // Log each extracted variable to see its value
+        // console.log("Extracted Data:", {
+        //     name,
+        //     skuid,
+        //     description,
+        //     category,
+        //     subcategory,
+        //     tags,
+        //     originalPrice,
+        //     discountPrice,
+        //     stock,
+        //     designno,
+        //     shopId,
+        //     images,
+        //     withchainimages,
+        //     withchainoutimages,
+        //     YellowGoldclr,
+        //     RoseGoldclr,
+        //     WhiteGoldclr,
+        //     YellowGoldclrStock,
+        //     RoseGoldclrStock,
+        //     WhiteGoldclrStock,
+        //     goldWeight,
+        //     diamondWeight,
+        //     dimension,
+        //     enamelColors,
+        //     deepblueYellowGoldclrStock,
+        //     deepblueRoseGoldclrStock,
+        //     deepblueWhiteGoldclrStock,
+        //     pinkYellowGoldclrStock,
+        //     pinkRoseGoldclrStock,
+        //     pinkWhiteGoldclrStock,
+        //     turquoiseYellowGoldclrStock,
+        //     turquoiseRoseGoldclrStock,
+        //     turquoiseWhiteGoldclrStock,
+        //     redYellowGoldclrStock,
+        //     redRoseGoldclrStock,
+        //     redWhiteGoldclrStock,
+        //     blackYellowGoldclrStock,
+        //     blackRoseGoldclrStock,
+        //     blackWhiteGoldclrStock,
+        //     deepgreenYellowGoldclrStock,
+        //     deepgreenRoseGoldclrStock,
+        //     deepgreenWhiteGoldclrStock,
+        //     lotusgreenYellowGoldclrStock,
+        //     lotusgreenRoseGoldclrStock,
+        //     lotusgreenWhiteGoldclrStock,
+        //     gender,
+        //     ageGroup
+        // });
+
 
         // Prepare the update object
-        const updateData = {
-            name,
-            skuid,
-            description,
-            category,
-            subcategory,
-            tags,
-            originalPrice,
-            discountPrice,
-            stock,
-            designno,
-            shopId,
-            images,
-            withchainimages,
-            withchainoutimages,
-            YellowGoldclr,
-            RoseGoldclr,
-            WhiteGoldclr,
+        // const updateData = {
+        //     name,
+        //     skuid,
+        //     description,
+        //     category,
+        //     subcategory,
+        //     tags,
+        //     originalPrice,
+        //     discountPrice,
+        //     stock,
+        //     designno,
+        //     shopId,
+        //     images,
+        //     withchainimages,
+        //     withchainoutimages,
+
+        //     MetalColor: {
+        //         YellowGoldclr: YellowGoldclr,
+        //         RoseGoldclr: RoseGoldclr,
+        //         WhiteGoldclr: WhiteGoldclr,
+        //     },
+
+        //     YellowGoldclrStock,
+        //     RoseGoldclrStock,
+        //     WhiteGoldclrStock,
+        //     goldWeight,
+        //     diamondWeight,
+        //     dimension,
+        //     enamelColors,
+        //     deepblueYellowGoldclrStock,
+        //     deepblueRoseGoldclrStock,
+        //     deepblueWhiteGoldclrStock,
+        //     pinkYellowGoldclrStock,
+        //     pinkRoseGoldclrStock,
+        //     pinkWhiteGoldclrStock,
+        //     turquoiseYellowGoldclrStock,
+        //     turquoiseRoseGoldclrStock,
+        //     turquoiseWhiteGoldclrStock,
+        //     redYellowGoldclrStock,
+        //     redRoseGoldclrStock,
+        //     redWhiteGoldclrStock,
+        //     blackYellowGoldclrStock,
+        //     blackRoseGoldclrStock,
+        //     blackWhiteGoldclrStock,
+        //     deepgreenYellowGoldclrStock,
+        //     deepgreenRoseGoldclrStock,
+        //     deepgreenWhiteGoldclrStock,
+        //     lotusgreenYellowGoldclrStock,
+        //     lotusgreenRoseGoldclrStock,
+        //     lotusgreenWhiteGoldclrStock,
+        //     gender,
+        //     ageGroup
+        // };
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return next(new ErrorHandler('Product not found with this ID', 404));
+        }
+        let images = [];
+        if (typeof req.body.images === "string") {
+            images.push(req.body.images); // Single image as a string
+        } else if (Array.isArray(req.body.images)) {
+            images = req.body.images; // Array of images
+        }
+
+        const existingImages = product.images.map(img => img.url);
+        const imagesLinks = [];
+
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+
+            // Extract the URL or base64 string
+            const imagePath = typeof image === "object" && (image.url || image.path)
+                ? image.url || image.path // Handle object case
+                : typeof image === "string"
+                    ? image // Handle plain string case
+                    : null; // Invalid format
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            // Only upload new images that are not already in the database
+            if (!existingImages.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                imagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                // If the image already exists, just add the existing image info
+                imagesLinks.push(product.images.find(img => img.url === imagePath));
+            }
+        }
+
+
+        // Handle withchainimages
+        let withchainimages = [];
+        if (typeof req.body.withchainimages === "string") {
+            withchainimages.push(req.body.withchainimages); // Single image as a string
+        } else if (Array.isArray(req.body.withchainimages)) {
+            withchainimages = req.body.withchainimages; // Array of images
+        }
+
+        const existingWithChainImages = product.withchainimages.map(img => img.url);
+        const withchainimagesLinks = [];
+
+        for (let i = 0; i < withchainimages.length; i++) {
+            const image = withchainimages[i];
+
+            const imagePath = typeof image === "object" && (image.url || image.path)
+                ? image.url || image.path // Handle object case
+                : typeof image === "string"
+                    ? image // Handle plain string case
+                    : null; // Invalid format
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            // Only upload new images that are not already in the database
+            if (!existingWithChainImages.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                withchainimagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                // If the image already exists, just add the existing image info
+                withchainimagesLinks.push(product.withchainimages.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle withchainoutimages
+        let withchainoutimages = [];
+        if (typeof req.body.withchainoutimages === "string") {
+            withchainoutimages.push(req.body.withchainoutimages); // Single image as a string
+        } else if (Array.isArray(req.body.withchainoutimages)) {
+            withchainoutimages = req.body.withchainoutimages; // Array of images
+        }
+
+        const existingWithChainOutImages = product.withchainoutimages.map(img => img.url);
+        const withchainoutimagesLinks = [];
+
+        for (let i = 0; i < withchainoutimages.length; i++) {
+            const image = withchainoutimages[i];
+
+            const imagePath = typeof image === "object" && (image.url || image.path)
+                ? image.url || image.path // Handle object case
+                : typeof image === "string"
+                    ? image // Handle plain string case
+                    : null; // Invalid format
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            // Only upload new images that are not already in the database
+            if (!existingWithChainOutImages.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                withchainoutimagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                // If the image already exists, just add the existing image info
+                withchainoutimagesLinks.push(product.withchainoutimages.find(img => img.url === imagePath));
+            }
+        }
+
+
+        // metal color
+
+
+        // Handle YellowGoldclr images
+        // Handle YellowGoldclr images
+        let YellowGoldclr = [];
+        if (typeof req.body.YellowGoldclr === "string") {
+            YellowGoldclr.push(req.body.YellowGoldclr); // Single image as a string
+        } else if (Array.isArray(req.body.YellowGoldclr)) {
+            YellowGoldclr = req.body.YellowGoldclr; // Array of image objects
+        }
+
+        const existingYellowGoldclr = product.MetalColor.YellowGoldclr.map(img => img.url);
+        const YellowGoldclrLinks = [];
+
+        for (const image of YellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                YellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                YellowGoldclrLinks.push(product.MetalColor.YellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle RoseGoldclr images
+        let RoseGoldclr = [];
+        if (typeof req.body.RoseGoldclr === "string") {
+            RoseGoldclr.push(req.body.RoseGoldclr); // Single image as a string
+        } else if (Array.isArray(req.body.RoseGoldclr)) {
+            RoseGoldclr = req.body.RoseGoldclr; // Array of image objects
+        }
+
+        const existingRoseGoldclr = product.MetalColor.RoseGoldclr.map(img => img.url);
+        const RoseGoldclrLinks = [];
+
+        for (const image of RoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                RoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                RoseGoldclrLinks.push(product.MetalColor.RoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle WhiteGoldclr images
+        let WhiteGoldclr = [];
+        if (typeof req.body.WhiteGoldclr === "string") {
+            WhiteGoldclr.push(req.body.WhiteGoldclr); // Single image as a string
+        } else if (Array.isArray(req.body.WhiteGoldclr)) {
+            WhiteGoldclr = req.body.WhiteGoldclr; // Array of image objects
+        }
+
+        const existingWhiteGoldclr = product.MetalColor.WhiteGoldclr.map(img => img.url);
+        const WhiteGoldclrLinks = [];
+
+        for (const image of WhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                WhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                WhiteGoldclrLinks.push(product.MetalColor.WhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        // enamel color
+
+        // Deep Blue
+
+        // Deep Blue
+        let deepblueYellowGoldclr = [];
+        let deepblueRoseGoldclr = [];
+        let deepblueWhiteGoldclr = [];
+
+        // Handle deepblueYellowGoldclr images
+        if (req.body.deepblueYellowGoldclr) {
+            if (typeof req.body.deepblueYellowGoldclr === "string") {
+                deepblueYellowGoldclr.push(req.body.deepblueYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepblueYellowGoldclr)) {
+                deepblueYellowGoldclr = req.body.deepblueYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepblueYellowGoldclr = product.enamelColors.Deep_Blue ? product.enamelColors.Deep_Blue.deepblueYellowGoldclr.map(img => img.url) : [];
+        const deepblueYellowGoldclrLinks = [];
+
+        for (const image of deepblueYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepblueYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepblueYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepblueYellowGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle deepblueRoseGoldclr images
+        if (req.body.deepblueRoseGoldclr) {
+            if (typeof req.body.deepblueRoseGoldclr === "string") {
+                deepblueRoseGoldclr.push(req.body.deepblueRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepblueRoseGoldclr)) {
+                deepblueRoseGoldclr = req.body.deepblueRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepblueRoseGoldclr = product.enamelColors.Deep_Blue ? product.enamelColors.Deep_Blue.deepblueRoseGoldclr.map(img => img.url) : [];
+        const deepblueRoseGoldclrLinks = [];
+
+        for (const image of deepblueRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepblueRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepblueRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepblueRoseGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle deepblueWhiteGoldclr images
+        if (req.body.deepblueWhiteGoldclr) {
+            if (typeof req.body.deepblueWhiteGoldclr === "string") {
+                deepblueWhiteGoldclr.push(req.body.deepblueWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepblueWhiteGoldclr)) {
+                deepblueWhiteGoldclr = req.body.deepblueWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepblueWhiteGoldclr = product.enamelColors.Deep_Blue ? product.enamelColors.Deep_Blue.deepblueWhiteGoldclr.map(img => img.url) : [];
+        const deepblueWhiteGoldclrLinks = [];
+
+        for (const image of deepblueWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepblueWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepblueWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepblueWhiteGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+        // Pink
+        let pinkYellowGoldclr = [];
+        let pinkRoseGoldclr = [];
+        let pinkWhiteGoldclr = [];
+
+        // Handle pinkYellowGoldclr images
+        if (req.body.pinkYellowGoldclr) {
+            if (typeof req.body.pinkYellowGoldclr === "string") {
+                pinkYellowGoldclr.push(req.body.pinkYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.pinkYellowGoldclr)) {
+                pinkYellowGoldclr = req.body.pinkYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingPinkYellowGoldclr = product.enamelColors.Pink ? product.enamelColors.Pink.pinkYellowGoldclr.map(img => img.url) : [];
+        const pinkYellowGoldclrLinks = [];
+
+        for (const image of pinkYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingPinkYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                pinkYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                pinkYellowGoldclrLinks.push(product.enamelColors.Pink.pinkYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle pinkRoseGoldclr images
+        if (req.body.pinkRoseGoldclr) {
+            if (typeof req.body.pinkRoseGoldclr === "string") {
+                pinkRoseGoldclr.push(req.body.pinkRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.pinkRoseGoldclr)) {
+                pinkRoseGoldclr = req.body.pinkRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingPinkRoseGoldclr = product.enamelColors.Pink ? product.enamelColors.Pink.pinkRoseGoldclr.map(img => img.url) : [];
+        const pinkRoseGoldclrLinks = [];
+
+        for (const image of pinkRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingPinkRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                pinkRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                pinkRoseGoldclrLinks.push(product.enamelColors.Pink.pinkRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle pinkWhiteGoldclr images
+        if (req.body.pinkWhiteGoldclr) {
+            if (typeof req.body.pinkWhiteGoldclr === "string") {
+                pinkWhiteGoldclr.push(req.body.pinkWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.pinkWhiteGoldclr)) {
+                pinkWhiteGoldclr = req.body.pinkWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingPinkWhiteGoldclr = product.enamelColors.Pink ? product.enamelColors.Pink.pinkWhiteGoldclr.map(img => img.url) : [];
+        const pinkWhiteGoldclrLinks = [];
+
+        for (const image of pinkWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingPinkWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                pinkWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                pinkWhiteGoldclrLinks.push(product.enamelColors.Pink.pinkWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        // Turquoise
+        let turquoiseYellowGoldclr = [];
+        let turquoiseRoseGoldclr = [];
+        let turquoiseWhiteGoldclr = [];
+
+        // Handle turquoiseYellowGoldclr images
+        if (req.body.turquoiseYellowGoldclr) {
+            if (typeof req.body.turquoiseYellowGoldclr === "string") {
+                turquoiseYellowGoldclr.push(req.body.turquoiseYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.turquoiseYellowGoldclr)) {
+                turquoiseYellowGoldclr = req.body.turquoiseYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingTurquoiseYellowGoldclr = product.enamelColors.Turquoise ? product.enamelColors.Turquoise.turquoiseYellowGoldclr.map(img => img.url) : [];
+        const turquoiseYellowGoldclrLinks = [];
+
+        for (const image of turquoiseYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingTurquoiseYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                turquoiseYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                turquoiseYellowGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle turquoiseRoseGoldclr images
+        if (req.body.turquoiseRoseGoldclr) {
+            if (typeof req.body.turquoiseRoseGoldclr === "string") {
+                turquoiseRoseGoldclr.push(req.body.turquoiseRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.turquoiseRoseGoldclr)) {
+                turquoiseRoseGoldclr = req.body.turquoiseRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingTurquoiseRoseGoldclr = product.enamelColors.Turquoise ? product.enamelColors.Turquoise.turquoiseRoseGoldclr.map(img => img.url) : [];
+        const turquoiseRoseGoldclrLinks = [];
+
+        for (const image of turquoiseRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingTurquoiseRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                turquoiseRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                turquoiseRoseGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle turquoiseWhiteGoldclr images
+        if (req.body.turquoiseWhiteGoldclr) {
+            if (typeof req.body.turquoiseWhiteGoldclr === "string") {
+                turquoiseWhiteGoldclr.push(req.body.turquoiseWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.turquoiseWhiteGoldclr)) {
+                turquoiseWhiteGoldclr = req.body.turquoiseWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingTurquoiseWhiteGoldclr = product.enamelColors.Turquoise ? product.enamelColors.Turquoise.turquoiseWhiteGoldclr.map(img => img.url) : [];
+        const turquoiseWhiteGoldclrLinks = [];
+
+        for (const image of turquoiseWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingTurquoiseWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                turquoiseWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                turquoiseWhiteGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        // Red
+        let redYellowGoldclr = [];
+        let redRoseGoldclr = [];
+        let redWhiteGoldclr = [];
+
+        // Handle redYellowGoldclr images
+        if (req.body.redYellowGoldclr) {
+            if (typeof req.body.redYellowGoldclr === "string") {
+                redYellowGoldclr.push(req.body.redYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.redYellowGoldclr)) {
+                redYellowGoldclr = req.body.redYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingRedYellowGoldclr = product.enamelColors.Red ? product.enamelColors.Red.redYellowGoldclr.map(img => img.url) : [];
+        const redYellowGoldclrLinks = [];
+
+        for (const image of redYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingRedYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                redYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                redYellowGoldclrLinks.push(product.enamelColors.Red.redYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle redRoseGoldclr images
+        if (req.body.redRoseGoldclr) {
+            if (typeof req.body.redRoseGoldclr === "string") {
+                redRoseGoldclr.push(req.body.redRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.redRoseGoldclr)) {
+                redRoseGoldclr = req.body.redRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingRedRoseGoldclr = product.enamelColors.Red ? product.enamelColors.Red.redRoseGoldclr.map(img => img.url) : [];
+        const redRoseGoldclrLinks = [];
+
+        for (const image of redRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingRedRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                redRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                redRoseGoldclrLinks.push(product.enamelColors.Red.redRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle redWhiteGoldclr images
+        if (req.body.redWhiteGoldclr) {
+            if (typeof req.body.redWhiteGoldclr === "string") {
+                redWhiteGoldclr.push(req.body.redWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.redWhiteGoldclr)) {
+                redWhiteGoldclr = req.body.redWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingRedWhiteGoldclr = product.enamelColors.Red ? product.enamelColors.Red.redWhiteGoldclr.map(img => img.url) : [];
+        const redWhiteGoldclrLinks = [];
+
+        for (const image of redWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingRedWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                redWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                redWhiteGoldclrLinks.push(product.enamelColors.Red.redWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+
+        // Black
+        let blackYellowGoldclr = [];
+        let blackRoseGoldclr = [];
+        let blackWhiteGoldclr = [];
+
+        // Handle blackYellowGoldclr images
+        if (req.body.blackYellowGoldclr) {
+            if (typeof req.body.blackYellowGoldclr === "string") {
+                blackYellowGoldclr.push(req.body.blackYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.blackYellowGoldclr)) {
+                blackYellowGoldclr = req.body.blackYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingBlackYellowGoldclr = product.enamelColors.Black ? product.enamelColors.Black.blackYellowGoldclr.map(img => img.url) : [];
+        const blackYellowGoldclrLinks = [];
+
+        for (const image of blackYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingBlackYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                blackYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                blackYellowGoldclrLinks.push(product.enamelColors.Black.blackYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle blackRoseGoldclr images
+        if (req.body.blackRoseGoldclr) {
+            if (typeof req.body.blackRoseGoldclr === "string") {
+                blackRoseGoldclr.push(req.body.blackRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.blackRoseGoldclr)) {
+                blackRoseGoldclr = req.body.blackRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingBlackRoseGoldclr = product.enamelColors.Black ? product.enamelColors.Black.blackRoseGoldclr.map(img => img.url) : [];
+        const blackRoseGoldclrLinks = [];
+
+        for (const image of blackRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingBlackRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                blackRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                blackRoseGoldclrLinks.push(product.enamelColors.Black.blackRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle blackWhiteGoldclr images
+        if (req.body.blackWhiteGoldclr) {
+            if (typeof req.body.blackWhiteGoldclr === "string") {
+                blackWhiteGoldclr.push(req.body.blackWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.blackWhiteGoldclr)) {
+                blackWhiteGoldclr = req.body.blackWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingBlackWhiteGoldclr = product.enamelColors.Black ? product.enamelColors.Black.blackWhiteGoldclr.map(img => img.url) : [];
+        const blackWhiteGoldclrLinks = [];
+
+        for (const image of blackWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingBlackWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                blackWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                blackWhiteGoldclrLinks.push(product.enamelColors.Black.blackWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        // Deep Green
+        let deepgreenYellowGoldclr = [];
+        let deepgreenRoseGoldclr = [];
+        let deepgreenWhiteGoldclr = [];
+
+        // Handle deepgreenYellowGoldclr images
+        if (req.body.deepgreenYellowGoldclr) {
+            if (typeof req.body.deepgreenYellowGoldclr === "string") {
+                deepgreenYellowGoldclr.push(req.body.deepgreenYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepgreenYellowGoldclr)) {
+                deepgreenYellowGoldclr = req.body.deepgreenYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepgreenYellowGoldclr = product.enamelColors.Deep_Green ? product.enamelColors.Deep_Green.deepgreenYellowGoldclr.map(img => img.url) : [];
+        const deepgreenYellowGoldclrLinks = [];
+
+        for (const image of deepgreenYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepgreenYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepgreenYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepgreenYellowGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle deepgreenRoseGoldclr images
+        if (req.body.deepgreenRoseGoldclr) {
+            if (typeof req.body.deepgreenRoseGoldclr === "string") {
+                deepgreenRoseGoldclr.push(req.body.deepgreenRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepgreenRoseGoldclr)) {
+                deepgreenRoseGoldclr = req.body.deepgreenRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepgreenRoseGoldclr = product.enamelColors.Deep_Green ? product.enamelColors.Deep_Green.deepgreenRoseGoldclr.map(img => img.url) : [];
+        const deepgreenRoseGoldclrLinks = [];
+
+        for (const image of deepgreenRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepgreenRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepgreenRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepgreenRoseGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle deepgreenWhiteGoldclr images
+        if (req.body.deepgreenWhiteGoldclr) {
+            if (typeof req.body.deepgreenWhiteGoldclr === "string") {
+                deepgreenWhiteGoldclr.push(req.body.deepgreenWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.deepgreenWhiteGoldclr)) {
+                deepgreenWhiteGoldclr = req.body.deepgreenWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingDeepgreenWhiteGoldclr = product.enamelColors.Deep_Green ? product.enamelColors.Deep_Green.deepgreenWhiteGoldclr.map(img => img.url) : [];
+        const deepgreenWhiteGoldclrLinks = [];
+
+        for (const image of deepgreenWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingDeepgreenWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                deepgreenWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                deepgreenWhiteGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        // Lotus Green
+        let lotusgreenYellowGoldclr = [];
+        let lotusgreenRoseGoldclr = [];
+        let lotusgreenWhiteGoldclr = [];
+
+        // Handle lotusgreenYellowGoldclr images
+        if (req.body.lotusgreenYellowGoldclr) {
+            if (typeof req.body.lotusgreenYellowGoldclr === "string") {
+                lotusgreenYellowGoldclr.push(req.body.lotusgreenYellowGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.lotusgreenYellowGoldclr)) {
+                lotusgreenYellowGoldclr = req.body.lotusgreenYellowGoldclr; // Array of image objects
+            }
+        }
+
+        const existingLotusgreenYellowGoldclr = product.enamelColors.Lotus_Green ? product.enamelColors.Lotus_Green.lotusgreenYellowGoldclr.map(img => img.url) : [];
+        const lotusgreenYellowGoldclrLinks = [];
+
+        for (const image of lotusgreenYellowGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingLotusgreenYellowGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                lotusgreenYellowGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                lotusgreenYellowGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenYellowGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle lotusgreenRoseGoldclr images
+        if (req.body.lotusgreenRoseGoldclr) {
+            if (typeof req.body.lotusgreenRoseGoldclr === "string") {
+                lotusgreenRoseGoldclr.push(req.body.lotusgreenRoseGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.lotusgreenRoseGoldclr)) {
+                lotusgreenRoseGoldclr = req.body.lotusgreenRoseGoldclr; // Array of image objects
+            }
+        }
+
+        const existingLotusgreenRoseGoldclr = product.enamelColors.Lotus_Green ? product.enamelColors.Lotus_Green.lotusgreenRoseGoldclr.map(img => img.url) : [];
+        const lotusgreenRoseGoldclrLinks = [];
+
+        for (const image of lotusgreenRoseGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingLotusgreenRoseGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                lotusgreenRoseGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                lotusgreenRoseGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenRoseGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+        // Handle lotusgreenWhiteGoldclr images
+        if (req.body.lotusgreenWhiteGoldclr) {
+            if (typeof req.body.lotusgreenWhiteGoldclr === "string") {
+                lotusgreenWhiteGoldclr.push(req.body.lotusgreenWhiteGoldclr); // Single image as a string
+            } else if (Array.isArray(req.body.lotusgreenWhiteGoldclr)) {
+                lotusgreenWhiteGoldclr = req.body.lotusgreenWhiteGoldclr; // Array of image objects
+            }
+        }
+
+        const existingLotusgreenWhiteGoldclr = product.enamelColors.Lotus_Green ? product.enamelColors.Lotus_Green.lotusgreenWhiteGoldclr.map(img => img.url) : [];
+        const lotusgreenWhiteGoldclrLinks = [];
+
+        for (const image of lotusgreenWhiteGoldclr) {
+            const imagePath = image.url || image.path; // Extract URL or path
+
+            if (!imagePath) {
+                return next(new ErrorHandler('Invalid image format provided', 400));
+            }
+
+            if (!existingLotusgreenWhiteGoldclr.includes(imagePath)) {
+                const result = await cloudinary.v2.uploader.upload(imagePath, {
+                    folder: "products",
+                });
+
+                lotusgreenWhiteGoldclrLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                });
+            } else {
+                lotusgreenWhiteGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenWhiteGoldclr.find(img => img.url === imagePath));
+            }
+        }
+
+
+
+        const updateData = req.body;
+        const {
             YellowGoldclrStock,
             RoseGoldclrStock,
             WhiteGoldclrStock,
-            goldWeight,
-            diamondWeight,
-            dimension,
-            enamelColors,
+            // other fields...
+        } = req.body;
+        const { gender, ageGroup } = req.body;
+        updateData.gender = gender;
+        updateData.ageGroup = ageGroup;
+        updateData.Metalcolorstock = {
+            YellowGoldclrStock,
+            RoseGoldclrStock,
+            WhiteGoldclrStock
+        }
+
+        const {
             deepblueYellowGoldclrStock,
             deepblueRoseGoldclrStock,
             deepblueWhiteGoldclrStock,
+
             pinkYellowGoldclrStock,
             pinkRoseGoldclrStock,
             pinkWhiteGoldclrStock,
+
             turquoiseYellowGoldclrStock,
             turquoiseRoseGoldclrStock,
             turquoiseWhiteGoldclrStock,
+
             redYellowGoldclrStock,
             redRoseGoldclrStock,
             redWhiteGoldclrStock,
+
             blackYellowGoldclrStock,
             blackRoseGoldclrStock,
             blackWhiteGoldclrStock,
+
+
             deepgreenYellowGoldclrStock,
             deepgreenRoseGoldclrStock,
             deepgreenWhiteGoldclrStock,
+
             lotusgreenYellowGoldclrStock,
             lotusgreenRoseGoldclrStock,
             lotusgreenWhiteGoldclrStock,
-            gender,
-            ageGroup
+
+            // other fields...
+        } = req.body;
+        updateData.Enamelcolorstock = {
+            deepblue: {
+                deepblueYellowGoldclrStock,
+                deepblueRoseGoldclrStock,
+                deepblueWhiteGoldclrStock,
+            },
+            pink: {
+                pinkYellowGoldclrStock,
+                pinkRoseGoldclrStock,
+                pinkWhiteGoldclrStock
+            },
+            turquoise: {
+                turquoiseYellowGoldclrStock,
+                turquoiseRoseGoldclrStock,
+                turquoiseWhiteGoldclrStock,
+
+            },
+            red: {
+                redYellowGoldclrStock,
+                redRoseGoldclrStock,
+                redWhiteGoldclrStock,
+            },
+            black: {
+                blackYellowGoldclrStock,
+                blackRoseGoldclrStock,
+                blackWhiteGoldclrStock,
+            },
+            deepgreen: {
+                deepgreenYellowGoldclrStock,
+                deepgreenRoseGoldclrStock,
+                deepgreenWhiteGoldclrStock,
+
+            },
+            lotusgreen: {
+                lotusgreenYellowGoldclrStock,
+                lotusgreenRoseGoldclrStock,
+                lotusgreenWhiteGoldclrStock,
+
+            }
+
+
+
+
+
+
+        }
+
+
+
+
+        updateData.images = imagesLinks;
+        updateData.withchainimages = withchainimagesLinks;
+        updateData.withchainoutimages = withchainoutimagesLinks;
+        updateData.MetalColor = {
+            YellowGoldclr: YellowGoldclrLinks,
+            RoseGoldclr: RoseGoldclrLinks,
+            WhiteGoldclr: WhiteGoldclrLinks,
+        }
+        updateData.enamelColors = {
+            Deep_Blue: {
+                deepblueYellowGoldclr: deepblueYellowGoldclrLinks,
+                deepblueRoseGoldclr: deepblueRoseGoldclrLinks,
+                deepblueWhiteGoldclr: deepblueWhiteGoldclrLinks,
+            },
+            Deep_Green: {
+                deepgreenYellowGoldclr: deepgreenYellowGoldclrLinks,
+                deepgreenRoseGoldclr: deepgreenRoseGoldclrLinks,
+                deepgreenWhiteGoldclr: deepgreenWhiteGoldclrLinks,
+            },
+            Lotus_Green: {
+                lotusgreenYellowGoldclr: lotusgreenYellowGoldclrLinks,
+                lotusgreenRoseGoldclr: lotusgreenRoseGoldclrLinks,
+                lotusgreenWhiteGoldclr: lotusgreenWhiteGoldclrLinks,
+            },
+            Pink: {
+                pinkYellowGoldclr: pinkYellowGoldclrLinks,
+                pinkRoseGoldclr: pinkRoseGoldclrLinks,
+                pinkWhiteGoldclr: pinkWhiteGoldclrLinks,
+            },
+            Turquoise: {
+                turquoiseYellowGoldclr: turquoiseYellowGoldclrLinks,
+                turquoiseRoseGoldclr: turquoiseRoseGoldclrLinks,
+                turquoiseWhiteGoldclr: turquoiseWhiteGoldclrLinks,
+            },
+            Red: {
+                redYellowGoldclr: redYellowGoldclrLinks,
+                redRoseGoldclr: redRoseGoldclrLinks,
+                redWhiteGoldclr: redWhiteGoldclrLinks,
+            },
+            Black: {
+                blackYellowGoldclr: blackYellowGoldclrLinks,
+                blackRoseGoldclr: blackRoseGoldclrLinks,
+                blackWhiteGoldclr: blackWhiteGoldclrLinks,
+            },
         };
+
 
         // Log the final updateData object to see what will be updated in the database
         console.log("Update Data:", updateData);
@@ -1313,98 +2479,6 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler(error.message, 400));
     }
 }));
-
-
-
-// router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
-//     try {
-//         const productId = req.params.id;
-//         const product = await Product.findById(productId);
-//         if (!product) {
-//             return next(new ErrorHandler("Product not found", 404));
-//         }
-
-//         const uploadImages = async (imageArray, folder) => {
-//             const uploadPromises = imageArray.map(image => 
-//                 cloudinary.v2.uploader.upload(image, { folder })
-//             );
-//             return Promise.all(uploadPromises);
-//         };
-
-//         const handleColorImages = async (colorKey) => {
-//             const colorImages = req.body[colorKey];
-//             if (typeof colorImages === "string") {
-//                 return [await cloudinary.v2.uploader.upload(colorImages, { folder: "products" })];
-//             } else {
-//                 return uploadImages(colorImages, "products");
-//             }
-//         };
-
-//         // Handle images
-//         const imagesLinks = await uploadImages(
-//             typeof req.body.images === "string" ? [req.body.images] : req.body.images, 
-//             "products"
-//         );
-//         const withchainimagesLinks = await uploadImages(
-//             typeof req.body.withchainimages === "string" ? [req.body.withchainimages] : req.body.withchainimages, 
-//             "products"
-//         );
-//         const withchainoutimagesLinks = await uploadImages(
-//             typeof req.body.withchainoutimages === "string" ? [req.body.withchainoutimages] : req.body.withchainoutimages, 
-//             "products"
-//         );
-
-//         // Handle metal colors
-//         const YellowGoldclrLinks = await handleColorImages("YellowGoldclr");
-//         const RoseGoldclrLinks = await handleColorImages("RoseGoldclr");
-//         const WhiteGoldclrLinks = await handleColorImages("WhiteGoldclr");
-
-//         // Handle enamel colors
-//         const deepblueYellowGoldclrLinks = await handleColorImages("deepblueYellowGoldclr");
-//         const deepblueRoseGoldclrLinks = await handleColorImages("deepblueRoseGoldclr");
-//         const deepblueWhiteGoldclrLinks = await handleColorImages("deepblueWhiteGoldclr");
-
-//         const pinkYellowGoldclrLinks = await handleColorImages("pinkYellowGoldclr");
-//         const pinkRoseGoldclrLinks = await handleColorImages("pinkRoseGoldclr");
-//         const pinkWhiteGoldclrLinks = await handleColorImages("pinkWhiteGoldclr");
-
-//         const turquoiseYellowGoldclrLinks = await handleColorImages("turquoiseYellowGoldclr");
-//         const turquoiseRoseGoldclrLinks = await handleColorImages("turquoiseRoseGoldclr");
-//         const turquoiseWhiteGoldclrLinks = await handleColorImages("turquoiseWhiteGoldclr");
-
-//         const redYellowGoldclrLinks = await handleColorImages("redYellowGoldclr");
-//         const redRoseGoldclrLinks = await handleColorImages("redRoseGoldclr");
-//         const redWhiteGoldclrLinks = await handleColorImages("redWhiteGoldclr");
-
-//         const blackYellowGoldclrLinks = await handleColorImages("blackYellowGoldclr");
-//         const blackRoseGoldclrLinks = await handleColorImages("blackRoseGoldclr");
-//         const blackWhiteGoldclrLinks = await handleColorImages("blackWhiteGoldclr");
-
-//         const deepgreenYellowGoldclrLinks = await handleColorImages("deepgreenYellowGoldclr");
-//         const deepgreenRoseGoldclrLinks = await handleColorImages("deepgreenRoseGoldclr");
-//         const deepgreenWhiteGoldclrLinks = await handleColorImages("deepgreenWhiteGoldclr");
-
-//         const lotusgreenYellowGoldclrLinks = await handleColorImages("lotusgreenYellowGoldclr");
-//         const lotusgreenRoseGoldclrLinks = await handleColorImages("lotusgreenRoseGoldclr");
-//         const lotusgreenWhiteGoldclrLinks = await handleColorImages("lotusgreenWhiteGoldclr");
-
-//         // Update product with new links
-//         product.images = imagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-//         product.withchainimages = withchainimagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-//         product.withchainoutimages = withchainoutimagesLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-//         product.YellowGoldclr = YellowGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-//         product.RoseGoldclr = RoseGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-//         product.WhiteGoldclr = WhiteGoldclrLinks.map(result => ({ public_id: result.public_id, url: result.secure_url }));
-
-//         // Update enamel colors similarly
-//         // Add the remaining code for updating product with enamel color links...
-
-//         await product.save();
-//         res.status(200).json({ success: true, message: "Product updated successfully", product });
-//     } catch (error) {
-//         next(error);
-//     }
-// }));
 
 
 

@@ -66,8 +66,8 @@ export const createProduct = (
     // enamelColorImages
 
     gender,
-    ageGroup
-
+    ageGroup,
+    
 ) => async (dispatch) => {
     try {
         dispatch({
@@ -464,7 +464,41 @@ export const updateProduct = (
         lotusgreenRoseGoldclrStock,
         lotusgreenWhiteGoldclrStock,
         gender,
-        ageGroup,}
+        ageGroup,
+
+        deepblueYellowGoldclr,
+            deepblueRoseGoldclr,
+            deepblueWhiteGoldclr,
+
+            pinkYellowGoldclr,
+            pinkRoseGoldclr,
+            pinkWhiteGoldclr,
+
+            turquoiseYellowGoldclr,
+            turquoiseRoseGoldclr,
+            turquoiseWhiteGoldclr,
+
+            redYellowGoldclr,
+            redRoseGoldclr,
+            redWhiteGoldclr,
+
+            blackYellowGoldclr,
+            blackRoseGoldclr,
+            blackWhiteGoldclr,
+
+            deepgreenYellowGoldclr,
+            deepgreenRoseGoldclr,
+            deepgreenWhiteGoldclr,
+
+            lotusgreenYellowGoldclr,
+            lotusgreenRoseGoldclr,
+            lotusgreenWhiteGoldclr,
+
+
+    
+    
+    
+    }
 ) => async (dispatch) => {
     try {
         dispatch({ type: "productUpdateRequest" });
@@ -519,7 +553,37 @@ export const updateProduct = (
             lotusgreenWhiteGoldclrStock,
             gender,
             ageGroup,
-            images
+
+
+            deepblueYellowGoldclr,
+            deepblueRoseGoldclr,
+            deepblueWhiteGoldclr,
+
+            pinkYellowGoldclr,
+            pinkRoseGoldclr,
+            pinkWhiteGoldclr,
+
+            turquoiseYellowGoldclr,
+            turquoiseRoseGoldclr,
+            turquoiseWhiteGoldclr,
+
+            redYellowGoldclr,
+            redRoseGoldclr,
+            redWhiteGoldclr,
+
+            blackYellowGoldclr,
+            blackRoseGoldclr,
+            blackWhiteGoldclr,
+
+            deepgreenYellowGoldclr,
+            deepgreenRoseGoldclr,
+            deepgreenWhiteGoldclr,
+
+            lotusgreenYellowGoldclr,
+            lotusgreenRoseGoldclr,
+            lotusgreenWhiteGoldclr,
+
+
         }, "from action in redux")
 
         let updatedproductdata = {
@@ -570,7 +634,37 @@ export const updateProduct = (
             lotusgreenRoseGoldclrStock,
             lotusgreenWhiteGoldclrStock,
             gender,
-            ageGroup
+            ageGroup,
+            
+            deepblueYellowGoldclr,
+            deepblueRoseGoldclr,
+            deepblueWhiteGoldclr,
+
+            pinkYellowGoldclr,
+            pinkRoseGoldclr,
+            pinkWhiteGoldclr,
+
+            turquoiseYellowGoldclr,
+            turquoiseRoseGoldclr,
+            turquoiseWhiteGoldclr,
+
+            redYellowGoldclr,
+            redRoseGoldclr,
+            redWhiteGoldclr,
+
+            blackYellowGoldclr,
+            blackRoseGoldclr,
+            blackWhiteGoldclr,
+
+            deepgreenYellowGoldclr,
+            deepgreenRoseGoldclr,
+            deepgreenWhiteGoldclr,
+
+            lotusgreenYellowGoldclr,
+            lotusgreenRoseGoldclr,
+            lotusgreenWhiteGoldclr,
+
+
         }
 
         console.log(updatedproductdata,"updatedproductdata")

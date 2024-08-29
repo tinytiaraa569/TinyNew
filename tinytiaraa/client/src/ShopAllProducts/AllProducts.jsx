@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProduct, getAllProductShop } from '../redux/actions/product'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from 'react-icons/ai'
@@ -9,17 +9,21 @@ import { getAllEventsShop } from '@/redux/actions/event'
 
 function AllProducts() {
     const { seller } = useSelector((state) => state.seller)
-    
-    const { products, isLoading } = useSelector((state) => state.products)
+
+    const { products = [], isLoading } = useSelector((state) => state.products)
 
     console.log(products)
-    
+
+    // State for search query
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
 
 
-    const handleDelete = (id) =>{
+    const handleDelete = (id) => {
         // console.log(id)
         dispatch(deleteProduct(id))
         window.location.reload()
@@ -33,7 +37,15 @@ function AllProducts() {
         dispatch(getAllProductShop(seller._id));
     }, [dispatch]);
 
-
+    useEffect(() => {
+        // Filter products whenever the products or searchQuery changes
+        setFilteredProducts(
+            products.filter((product) =>
+                product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.skuid.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    }, [products, searchQuery]);
     const columns = [
         { field: 'id', headerName: 'Product Id', minWidth: 150, flex: 0.7 },
         { field: 'skuid', headerName: 'Sku Id', minWidth: 150, flex: 0.7 },
@@ -42,7 +54,7 @@ function AllProducts() {
         { field: 'sold', headerName: 'Sold out', type: 'number', minWidth: 130, flex: 0.6 },
         { field: 'price', headerName: 'Price', minWidth: 100, flex: 0.6 },
         { field: 'Stock', headerName: 'Stock', type: 'number', minWidth: 80, flex: 0.5 },
-        
+
         {
             field: 'Preview',
             headerName: 'Preview',
@@ -76,21 +88,21 @@ function AllProducts() {
             minWidth: 120,
             sortable: false,
             renderCell: (params) => (
-                <button onClick={()=>handleDelete(params.id)}>
+                <button onClick={() => handleDelete(params.id)}>
                     <AiOutlineDelete size={20} />
                 </button>
             ),
         },
     ];
 
-    const rows = products?.map((item) => ({
+    const rows = filteredProducts?.map((item) => ({
         id: item._id,
-        skuid:item.skuid,
+        skuid: item.skuid,
         name: item.name,
         price: `₹ ${item.discountPrice}`,
         Stock: item.stock,
         sold: 10, // Replace with actual sold count if available
-        
+
     }));
 
 
@@ -101,6 +113,28 @@ function AllProducts() {
                 <Loader />
             ) : (
                 <div className="w-full mx-8 pt-1 mt-10 bg-white">
+
+                    <div className='w-full flex items-center justify-between'>
+
+                        <div className="mb-4 w-[25%]">
+                            <input
+                                type="text"
+                                placeholder="Search by SKU ID or Name"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="p-2 w-[100%] border border-gray-300 rounded"
+                            />
+                        </div>
+
+                        <div className=''>
+                            <h3>Total Products : - <span className='font-[600]'>{products?.length}</span> products</h3>
+
+                        </div>
+
+                    </div>
+
+
+
                     <DataGrid
                         rows={rows}
                         columns={columns}
