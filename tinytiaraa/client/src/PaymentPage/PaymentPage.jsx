@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import razopayimg from './images/razorpay-icon.svg'
+import payuimg from './images/PayU.svg'
 import { backend_url, server } from '@/server';
 import { Country, State } from 'country-state-city';
 import { useDispatch, useSelector } from 'react-redux';
@@ -504,22 +505,22 @@ function PaymentPage() {
 
     const handlePaymentSuccess = async (paymentDetails) => {
         console.log('Payment successful. Details:', paymentDetails);
-    
+
         // Retrieve referral code from session storage
         const referralCode = sessionStorage.getItem('referralCode');
         console.log('Captured referral code:', referralCode);
-    
+
         const latestOrderData = localStorage.getItem("latestOrder");
-    
+
         if (!latestOrderData) {
             console.error("No latest order data found.");
             return;
         }
-    
+
         const latestOrder = JSON.parse(latestOrderData);
         const referralBalanceUsed = latestOrder.appliedReferral || 0;
         const user = latestOrder.user;
-    
+
         // Define the updatedOrder object
         const updatedOrder = {
             ...order,
@@ -530,7 +531,7 @@ function PaymentPage() {
             },
             referralCode: referralCode,
         };
-    
+
         try {
             // Send updated order to server
             const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
@@ -538,15 +539,15 @@ function PaymentPage() {
                     'Content-Type': 'application/json',
                 }
             });
-    
+
             console.log('Server response:', response.data);
             const orderId = response.data.order._id;
             console.log('Order ID:', orderId);
-    
+
             if (referralBalanceUsed > 0 && user) {
                 // Deduct referral balance if applied
                 const currentReferralBalance = user.referralBalance || 0;
-    
+
                 let updatedReferralBalance;
                 if (currentReferralBalance < referralBalanceUsed) {
                     // Use all available balance and set it to zero
@@ -556,34 +557,85 @@ function PaymentPage() {
                     // Deduct the used balance from the current balance
                     updatedReferralBalance = currentReferralBalance - referralBalanceUsed;
                 }
-    
+
                 // Update the backend with the new referral balance
                 await updateReferralBalanceInBackend(user._id, updatedReferralBalance);
-    
+
                 // Update the user object with the new referral balance
                 user.referralBalance = updatedReferralBalance;
             }
-    
+
             // Clear local storage and navigate to success page
             localStorage.setItem("cartItems", JSON.stringify([]));
             localStorage.setItem("latestOrder", JSON.stringify([]));
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             navigate("/order/success");
             window.location.reload();
-    
+
             // Provide feedback to the user
             toast.success("Order Successfully Placed");
             // alert(`Payment successful! Payment ID: ${paymentDetails.razorpay_payment_id}`);
-    
+
             // Optional: Reload the page if needed
-    
+
         } catch (error) {
             console.log(error);
             toast.error("Failed to place order. Please try again.");
             // Optionally, navigate back to the checkout page or show additional error details
         }
     };
-    
+
+
+
+    // const handlePayUPayment = async () => {
+    //     try {
+    //         // Fetch payment details from your backend
+    //         const response = await fetch(`${backend_url}payu-order`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 amount: orderData.totalPrice,
+    //                 currency: 'INR',
+    //                 email: orderData?.shippingAddress?.email,
+    //                 name: orderData?.shippingAddress?.name,
+    //                 phone: orderData?.shippingAddress?.phoneNumber,
+    //             }),
+    //         });
+    //         const data = await response.json();
+
+    //         // Initialize PayU SDK with payment options
+    //         window.PayUCheckout.configure({
+    //             key: 'XA5XsM', // PayU Merchant Key
+    //             txnid: data.txnid,
+    //             amount: data.amount,
+    //             productinfo: 'Test Product',
+    //             firstname: data.firstname,
+    //             email: data.email,
+    //             phone: data.phone,
+    //             udf1: data.udf1,
+    //             udf2: data.udf2,
+    //             udf3: data.udf3,
+    //             udf4: data.udf4,
+    //             udf5: data.udf5,
+    //             hash: data.hash,
+    //             surl: data.surl, // Success URL
+    //             furl: data.furl, // Failure URL
+    //             mode: 'live', // Use 'test' for testing purposes
+    //         });
+
+    //         // Open PayU payment modal
+    //         window.PayUCheckout.open();
+    //     } catch (error) {
+    //         console.error('Error in handlePayUPayment:', error);
+    //         toast.error('Error occurred while processing PayU payment.');
+    //     }
+    // };
+
+
+
+
     const handlecashondel = async (e) => {
         e.preventDefault();
         const referralCode = sessionStorage.getItem('referralCode'); // Retrieve the referral code from session storage
@@ -649,7 +701,7 @@ function PaymentPage() {
             localStorage.setItem("latestOrder", JSON.stringify([]));
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             navigate("/order/success");
-             window.location.reload()
+            window.location.reload()
 
 
             // Handle actions upon successful payment
@@ -681,10 +733,151 @@ function PaymentPage() {
         }
     };
 
+
+
+    //payu success
+    const handlePayuPaymentSuccess = async (paymentDetails) => {
+        try {
+            // Verify payment status
+            if (paymentDetails.status !== "success") {
+                throw new Error("Payment not successful");
+            }
+
+            // Retrieve order data and referral code
+            const referralCode = sessionStorage.getItem('referralCode');
+            const latestOrderData = localStorage.getItem("latestOrder");
+
+            if (!latestOrderData) {
+                throw new Error("No latest order data found.");
+            }
+
+            const latestOrder = JSON.parse(latestOrderData);
+            const referralBalanceUsed = latestOrder.appliedReferral || 0;
+            const user = latestOrder.user;
+
+            // Prepare the updated order object
+            const updatedOrder = {
+                ...latestOrder,
+                paymentInfo: {
+                    id: paymentDetails.txnid, // PayU transaction ID
+                    status: 'success',
+                    type: 'PayU',
+                },
+                referralCode: referralCode,
+            };
+
+            // Place the order
+            const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const orderId = response.data.order._id;
+
+            // Handle referral balance update if necessary
+            if (referralBalanceUsed > 0 && user) {
+                const currentReferralBalance = user.referralBalance || 0;
+                let updatedReferralBalance;
+
+                if (currentReferralBalance < referralBalanceUsed) {
+                    updatedReferralBalance = 0;
+                    toast.warning(`Referral balance used: ${currentReferralBalance}. Remaining balance is zero.`);
+                } else {
+                    updatedReferralBalance = currentReferralBalance - referralBalanceUsed;
+                }
+
+                await updateReferralBalanceInBackend(user._id, updatedReferralBalance);
+                user.referralBalance = updatedReferralBalance;
+            }
+
+            // Clear local storage and navigate to success page
+            localStorage.setItem("cartItems", JSON.stringify([]));
+            localStorage.setItem("latestOrder", JSON.stringify([]));
+            localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
+            navigate("/order/success");
+            window.location.reload();
+
+            toast.success("Order Successfully Placed");
+        } catch (error) {
+            console.error("Error placing order:", error);
+            toast.error("Failed to place order. Please try again.");
+        }
+    };
+
     const metalColors = {
         0: "Yellow Gold",
         1: "Rose Gold",
         2: "White Gold",
+    };
+    const [hash, setHash] = useState(null)
+    const [transactionId, settransactionId] = useState(null)
+
+
+
+    function generateTransactionID() {
+        const timestamp = Date.now()
+        const randomnum = Math.floor(Math.random() * 1000000);
+        const merchantPrefix = "T"
+        const transactionID = `${merchantPrefix}${timestamp}${randomnum}`
+        return transactionID; // Return the generated transaction ID
+    }
+    useEffect(() => {
+        generateTransactionID()
+    }, [])
+    console.log(hash, "hash from frontnedn")
+    const getHash = async () => {
+        try {
+            const transactionId = generateTransactionID();
+            settransactionId(transactionId);
+
+            const response = await axios.post(`${backend_url}payu/hash`, {
+                name: orderData?.shippingAddress.name,
+                email: orderData?.shippingAddress.email,
+                amount: orderData?.totalPrice,
+                transactionId
+            });
+
+            setHash(response.data.hash);
+        } catch (error) {
+            console.error('Error generating hash:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedPaymentMethod === 'payu') {
+            getHash();
+        }
+    }, [selectedPaymentMethod]);
+
+    const generatePayUForm = () => {
+        if (!transactionId || !hash) {
+            return <p>Loading payment form...</p>; // Optionally show loading indicator
+        }
+
+        return (
+            <form action='https://secure.payu.in/_payment' method='post'>
+                <input type="hidden" name="key" value={"XA5XsM"} />
+                <input type="hidden" name="txnid" value={transactionId} />
+                <input type="hidden" name="amount" value={orderData?.totalPrice} />
+                <input type="hidden" name="productinfo" value="TEST PRODUCT" /> {/* Add product info here */}
+                <input type="hidden" name="firstname" value={orderData?.shippingAddress?.name} /> {/* Add first name here */}
+                <input type="hidden" name="email" value={orderData?.shippingAddress?.email} />
+                <input type="hidden" name="phone" value={orderData?.shippingAddress?.phoneNumber} /> {/* Add phone number here */}
+                <input type="hidden" name="surl" value={`${server}payu/success`} />
+                <input type="hidden" name="furl" value={`${server}payu/failure`} />
+                <input type="hidden" name="udf1" value={"details1"} />
+                <input type="hidden" name="udf2" value={"details2"} />
+                <input type="hidden" name="udf3" value={"details3"} />
+                <input type="hidden" name="udf4" value={"details4"} />
+                <input type="hidden" name="udf5" value={"details5"} />
+                <input type="hidden" name="hash" value={hash} />
+                <div className='button-wrapperdiv'>
+                <input type="submit" value="Pay With PayU" className='payu-button px-[5px] py-[8px]' />
+
+                </div>
+            </form>
+        );
     };
     return (
         <div className='w-full bg-[#fafafa;] pb-8'>
@@ -765,11 +958,11 @@ function PaymentPage() {
                                             value="razorpay"
                                             checked={selectedPaymentMethod === 'razorpay'}
                                             onChange={handlePaymentMethodChange}
-                                            className="int-emailcheck !w-[15px] !h-[15px]"
+                                            className="int-emailcheck !w-[15px] !h-[15px] cursor-pointer"
                                             required
                                         />
                                         <div>
-                                            <label htmlFor="razorpay">
+                                            <label htmlFor="razorpay" className='cursor-pointer'>
                                                 <img src={razopayimg} alt="" className='!w-[100px] !h-[60px]' />
                                             </label>
                                         </div>
@@ -777,6 +970,27 @@ function PaymentPage() {
                                 </div>
 
                                 <div className='flex items-center gap-8'>
+                                <div className='flex items-center gap-2'>
+                                    <input
+                                        id="payu"
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="payu"
+                                        checked={selectedPaymentMethod === 'payu'}
+                                        onChange={handlePaymentMethodChange}
+                                        className="int-emailcheck !w-[15px] !h-[15px] cursor-pointer"
+                                    />
+                                    <label htmlFor="payu" className='cursor-pointer block ml-[-9px]'>
+                                    <img src={payuimg} alt="" className=' !w-[100px] !h-[36px] object-contain ' />
+
+                                    </label>
+
+                                    </div>
+
+                                    
+                                </div>
+
+                                <div className='flex items-center gap-8 mt-3'>
                                     <div className='flex items-center gap-2'>
                                         <input
                                             id="cod"
@@ -785,11 +999,11 @@ function PaymentPage() {
                                             value="cod"
                                             checked={selectedPaymentMethod === 'cod'}
                                             onChange={handlePaymentMethodChange}
-                                            className="int-emailcheck !w-[15px] !h-[15px]"
+                                            className="int-emailcheck !w-[15px] !h-[15px] cursor-pointer"
                                             required
                                         />
                                         <div>
-                                            <label htmlFor="cod">
+                                            <label htmlFor="cod" className='cursor-pointer'>
                                                 <h2>Cash On Delivery</h2>
                                             </label>
                                         </div>
@@ -804,12 +1018,16 @@ function PaymentPage() {
 
                         <div className='flex justify-end '>
                             <div className={`button-wrapperdiv`} >
-                                {
-                                    selectedPaymentMethod === 'razorpay' ?
-                                        <button onClick={handleRazorpayPayment}>Pay With Razorpay</button>
-                                        :
-                                        <button onClick={handlecashondel}>Cash On Delivery</button>
-                                }
+                                {selectedPaymentMethod === 'razorpay' && (
+                                    <button onClick={handleRazorpayPayment}>Pay With Razorpay</button>
+                                )}
+
+                                {selectedPaymentMethod === 'payu' && generatePayUForm()}
+
+
+                                {selectedPaymentMethod === 'cod' && (
+                                    <button onClick={handlecashondel}>Cash On Delivery</button>
+                                )}
 
                             </div>
                         </div>

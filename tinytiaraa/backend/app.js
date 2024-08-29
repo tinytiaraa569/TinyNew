@@ -5,8 +5,8 @@ const bodyParser = require("body-parser")
 const cors = require('cors')
 const Razorpay = require("razorpay");
 const path = require("path")
-
-
+const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express()
 
@@ -19,7 +19,7 @@ app.use(cors({
 
 // app.use(express.json());
 app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: "50mb" , extended: true , parameterLimit:50000}));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 app.use(cookieParser());
 
 
@@ -57,7 +57,13 @@ const contactus = require("./controller/contactus")
 
 
 
+
+
+
+
 const referralRoutes = require('./controller/referralRoutes');
+
+
 
 
 
@@ -81,6 +87,10 @@ app.use("/api/v2/message", message)
 app.use('/api/v2/referral', referralRoutes);
 app.use('/api/v2/customised', customised);
 app.use('/api/v2/contactus', contactus);
+
+
+
+
 
 
 
@@ -130,8 +140,72 @@ app.post("/order/validate", async (req, res) => {
     });
 });
 
+// PayU payment initiation route
+
+app.post("/payu/hash", async (req, res) => {
+    const { name, email, amount, transactionId } = req.body;
+
+    console.log("Received data:", { name, email, amount, transactionId });
+
+    const data = {
+        key: process.env.PAYU_MERCHANT_KEY,
+        salt: process.env.PAYU_SALT,
+        txnid: transactionId,
+        amount: amount,
+        productinfo: "TEST PRODUCT",
+        firstname: name,
+        email: email,
+        udf1: 'details1',
+        udf2: 'details2',
+        udf3: 'details3',
+        udf4: 'details4',
+        udf5: 'details5',
+
+    };
+
+    const cryp = crypto.createHash('sha512');
+    const string = data.key + '|' + data.txnid + '|' + data.amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
+
+    console.log("String to hash:", string);
+
+    cryp.update(string);
+    const hash = cryp.digest('hex');
+
+    console.log("Generated hash:", hash);
+
+    return res.status(200).send({
+        hash: hash,
+        transactionId: transactionId
+    });
+});
+
+app.post("/payu/success", (req, res) => {
+    const { txnid, status, ...otherParams } = req.body;
+
+    if (status === "success") {
+        // Handle successful payment
+        // You can store the transaction details in your database, update order status, etc.
+
+        // Redirect to success page with transaction details
+        return res.redirect(`https://tiny-tiaraanew.vercel.app/order/success?txnid=${txnid}&status=success`);
+    } else {
+        // If the status isn't success, treat it as a failure
+        return res.redirect(`https://tiny-tiaraanew.vercel.app/order/failure?txnid=${txnid}&status=${status}`);
+    }
+});
+
+app.post("/payu/failure", (req, res) => {
+    const { txnid, status, ...otherParams } = req.body;
+
+    // Handle failed payment
+    // You can log the failure details, notify the user, etc.
+
+    // Redirect to failure page with transaction details
+    return res.redirect(`https://tiny-tiaraanew.vercel.app/order/failure?txnid=${txnid}&status=${status}`);
+});
 
 //error handling
 
 app.use(ErrorHandler)
 module.exports = app;
+;
