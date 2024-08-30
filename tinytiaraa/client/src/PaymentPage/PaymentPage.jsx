@@ -865,7 +865,7 @@ function PaymentPage() {
                 <input type="hidden" name="email" value={orderData?.shippingAddress?.email} />
                 <input type="hidden" name="phone" value={orderData?.shippingAddress?.phoneNumber} /> {/* Add phone number here */}
                 <input type="hidden" name="surl" value={`${server}payu/success`} />
-                <input type="hidden" name="furl" value={`${server}payu/failure`} />
+                <input type="hidden" name="furl" value={`http://localhost:5173/payment`} />
                 <input type="hidden" name="udf1" value={"details1"} />
                 <input type="hidden" name="udf2" value={"details2"} />
                 <input type="hidden" name="udf3" value={"details3"} />

@@ -430,8 +430,7 @@ function ShopEditProductPage() {
     };
 
     const deepbluehandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...deepblueYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueYellowGoldclr.filter(i => i !== index);
         deepbluesetYellowGoldclr(updatedImages);
     };
 
@@ -465,8 +464,7 @@ function ShopEditProductPage() {
     };
 
     const deepbluehandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...deepblueRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueRoseGoldclr.filter(i => i !== index);
         deepbluesetRoseGoldclr(updatedImages);
     };
 
@@ -499,10 +497,10 @@ function ShopEditProductPage() {
     };
 
     const deepbluehandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...deepblueWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepblueWhiteGoldclr.filter(i => i !== index);
         deepbluesetWhiteGoldclr(updatedImages);
     };
+
 
 
 
@@ -528,8 +526,7 @@ function ShopEditProductPage() {
         pinksetShowWithYellowclrImages(!pinkshowWithYellowclrImages);
     };
     const pinkhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...pinkYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = pinkYellowGoldclr.filter(i => i !== index);
         pinksetYellowGoldclr(updatedImages);
     };
 
@@ -554,8 +551,7 @@ function ShopEditProductPage() {
         pinksetShowWithRoseclrImages(!pinkshowWithRoseclrImages);
     };
     const pinkhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...pinkRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = pinkRoseGoldclr.filter(i => i !== index);
         pinksetRoseGoldclr(updatedImages);
     };
 
@@ -580,10 +576,10 @@ function ShopEditProductPage() {
         pinksetShowWithWhiteclrImages(!pinkshowWithWhiteclrImages);
     };
     const pinkhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...pinkWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = pinkWhiteGoldclr.filter(i => i !== index);
         pinksetWhiteGoldclr(updatedImages);
     };
+
 
     // ------------- pink color -----------
 
@@ -612,8 +608,7 @@ function ShopEditProductPage() {
         turquoisesetShowWithYellowclrImages(!turquoiseshowWithYellowclrImages);
     };
     const turquoisehandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...turquoiseYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseYellowGoldclr.filter(i => i !== index);
         turquoisesetYellowGoldclr(updatedImages);
     };
 
@@ -638,8 +633,7 @@ function ShopEditProductPage() {
         turquoisesetShowWithRoseclrImages(!turquoiseshowWithRoseclrImages);
     };
     const turquoisehandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...turquoiseRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseRoseGoldclr.filter(i => i !== index);
         turquoisesetRoseGoldclr(updatedImages);
     };
 
@@ -664,8 +658,7 @@ function ShopEditProductPage() {
         turquoisesetShowWithWhiteclrImages(!turquoiseshowWithWhiteclrImages);
     };
     const turquoisehandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...turquoiseWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = turquoiseWhiteGoldclr.filter(i => i !== index);
         turquoisesetWhiteGoldclr(updatedImages);
     };
     // ------------- turquoise color -----------
@@ -694,8 +687,7 @@ function ShopEditProductPage() {
         redsetShowWithYellowclrImages(!redshowWithYellowclrImages);
     };
     const redhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...redYellowGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redYellowGoldclr.filter(i => i !== index);
         redsetYellowGoldclr(updatedImages);
     };
 
@@ -720,8 +712,7 @@ function ShopEditProductPage() {
         redsetShowWithRoseclrImages(!redshowWithRoseclrImages);
     };
     const redhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...redRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redRoseGoldclr.filter(i => i !== index);
         redsetRoseGoldclr(updatedImages);
     };
 
@@ -746,8 +737,7 @@ function ShopEditProductPage() {
         redsetShowWithWhiteclrImages(!redshowWithWhiteclrImages);
     };
     const redhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...redWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = redWhiteGoldclr.filter(i => i !== index);
         redsetWhiteGoldclr(updatedImages);
     };
 
@@ -778,8 +768,8 @@ function ShopEditProductPage() {
         blacksetShowWithYellowclrImages(!blackshowWithYellowclrImages);
     };
     const blackhandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...blackYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackYellowGoldclr.filter(i => i !== index);
         blacksetYellowGoldclr(updatedImages);
     };
 
@@ -804,8 +794,8 @@ function ShopEditProductPage() {
         blacksetShowWithRoseclrImages(!blackshowWithRoseclrImages);
     };
     const blackhandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...blackRoseGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackRoseGoldclr.filter(i => i !== index);
         blacksetRoseGoldclr(updatedImages);
     };
 
@@ -830,10 +820,11 @@ function ShopEditProductPage() {
         blacksetShowWithWhiteclrImages(!blackshowWithWhiteclrImages);
     };
     const blackhandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...blackWhiteGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = blackWhiteGoldclr.filter(i => i !== index);
         blacksetWhiteGoldclr(updatedImages);
     };
+
 
 
     // ------------- black color -----------
@@ -862,10 +853,11 @@ function ShopEditProductPage() {
         deepgreenSetShowWithYellowclrImages(!deepgreenShowWithYellowclrImages);
     };
     const deepgreenHandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...deepgreenYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = deepgreenYellowGoldclr.filter(i => i !== index);
         deepgreenSetYellowGoldclr(updatedImages);
     };
+
 
     // Deep green Rose Gold
     const [deepgreenShowWithRoseclrImages, deepgreenSetShowWithRoseclrImages] = useState(false);
@@ -888,8 +880,7 @@ function ShopEditProductPage() {
         deepgreenSetShowWithRoseclrImages(!deepgreenShowWithRoseclrImages);
     };
     const deepgreenHandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...deepgreenRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepgreenRoseGoldclr.filter(i => i !== index);
         deepgreenSetRoseGoldclr(updatedImages);
     };
 
@@ -914,11 +905,9 @@ function ShopEditProductPage() {
         deepgreenSetShowWithWhiteclrImages(!deepgreenShowWithWhiteclrImages);
     };
     const deepgreenHandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...deepgreenWhiteGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = deepgreenWhiteGoldclr.filter(i => i !== index);
         deepgreenSetWhiteGoldclr(updatedImages);
     };
-
 
 
     // ------------- Lotus Green color -----------
@@ -944,8 +933,8 @@ function ShopEditProductPage() {
         lotusgreenSetShowWithYellowclrImages(!lotusgreenShowWithYellowclrImages);
     };
     const lotusgreenHandleDeleteWithYellowclrImage = (index) => {
-        const updatedImages = [...lotusgreenYellowGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = lotusgreenYellowGoldclr.filter(i => i !== index);
         lotusgreenSetYellowGoldclr(updatedImages);
     };
 
@@ -970,8 +959,7 @@ function ShopEditProductPage() {
         lotusgreenSetShowWithRoseclrImages(!lotusgreenShowWithRoseclrImages);
     };
     const lotusgreenHandleDeleteWithRoseclrImage = (index) => {
-        const updatedImages = [...lotusgreenRoseGoldclr];
-        updatedImages.splice(index, 1);
+        const updatedImages = lotusgreenRoseGoldclr.filter(i => i !== index);
         lotusgreenSetRoseGoldclr(updatedImages);
     };
 
@@ -996,10 +984,11 @@ function ShopEditProductPage() {
         lotusgreenSetShowWithWhiteclrImages(!lotusgreenShowWithWhiteclrImages);
     };
     const lotusgreenHandleDeleteWithWhiteclrImage = (index) => {
-        const updatedImages = [...lotusgreenWhiteGoldclr];
-        updatedImages.splice(index, 1);
+
+        const updatedImages = lotusgreenWhiteGoldclr.filter(i => i !== index);
         lotusgreenSetWhiteGoldclr(updatedImages);
     };
+
 
 
     //drag for images 
@@ -4725,12 +4714,14 @@ function ShopEditProductPage() {
                                         alt=""
                                         className='h-[120px] w-[120px] object-cover rounded-md'
                                     />
-                                    <button
-                                        onClick={() => handleRemoveImage(index)}
-                                        className='absolute top-0 right-0 p-1 text-red-500'
-                                    >
-                                        X
-                                    </button>
+                                   
+
+                                    <AiOutlineCloseCircle
+                                     size={22}
+                                     className='absolute z-10 top-0 right-0 cursor-pointer text-red-500 bg-white rounded-full p-1'
+                                      onClick={() => handleRemoveImage(index)}
+                                      />
+
                                     {index === draggingIndex && (
                                         <div className="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50">
                                             <TfiHandDrag size={30} color='#000' />

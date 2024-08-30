@@ -187,10 +187,10 @@ app.post("/payu/success", (req, res) => {
         // You can store the transaction details in your database, update order status, etc.
 
         // Redirect to success page with transaction details
-        return res.redirect(`https://tiny-tiaraanew.vercel.app/order/success?txnid=${txnid}&status=success`);
+        return res.redirect(`http://localhost:5173/order/success?txnid=${txnid}&status=success`);
     } else {
         // If the status isn't success, treat it as a failure
-        return res.redirect(`https://tiny-tiaraanew.vercel.app/order/failure?txnid=${txnid}&status=${status}`);
+        return res.redirect(`http://localhost:5173/order/failure?txnid=${txnid}&status=${status}`);
     }
 });
 
@@ -201,7 +201,7 @@ app.post("/payu/failure", (req, res) => {
     // You can log the failure details, notify the user, etc.
 
     // Redirect to failure page with transaction details
-    return res.redirect(`https://tiny-tiaraanew.vercel.app/order/failure?txnid=${txnid}&status=${status}`);
+    return res.redirect(`http://localhost:5173/order/failure?txnid=${txnid}&status=${status}`);
 });
 
 //error handling
