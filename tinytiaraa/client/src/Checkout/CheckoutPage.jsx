@@ -114,7 +114,7 @@ function CheckoutPage() {
                 referralBalance: referralBalance - amountToApply,
             }));
         } else {
-            toast.error("Referral balance already applied or no balance available.");
+            // toast.error("Referral balance already applied or no balance available.");
         }
     };
 

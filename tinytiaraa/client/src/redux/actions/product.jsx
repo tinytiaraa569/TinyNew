@@ -66,8 +66,8 @@ export const createProduct = (
     // enamelColorImages
 
     gender,
-    ageGroup,
-    
+    ageGroup
+
 ) => async (dispatch) => {
     try {
         dispatch({

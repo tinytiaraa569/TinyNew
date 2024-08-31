@@ -699,7 +699,7 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         } = req.body;
 
 
-        const { gender, ageGroup } = req.body;
+        const {gender,ageGroup} = req.body;
 
 
         const productData = req.body;
@@ -822,6 +822,7 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler(error.message || "Internal Server Error", 400));
     }
 }));
+
 
 
 // router.post("/create-product", upload.fields([

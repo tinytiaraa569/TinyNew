@@ -492,6 +492,8 @@ function CreateProduct() {
         pinksetShowWithYellowclrImages(!pinkshowWithYellowclrImages);
     };
     const pinkhandleDeleteWithYellowclrImage = (index) => {
+
+
         const updatedImages = pinkYellowGoldclr.filter(i => i !== index);
         pinksetYellowGoldclr(updatedImages);
     };
