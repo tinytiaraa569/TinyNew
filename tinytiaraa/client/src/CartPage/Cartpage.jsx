@@ -35,6 +35,8 @@ function Cartpage() {
 
   // const toatalPrice = data.discountPrice * value
   const { cart } = useSelector((state) => state.cart)
+
+  console.log(cart,"see the details of cart page")
   const { user } = useSelector((state) => state.user)
   const [couponCode, setCouponCode] = useState("");
   const [couponCodeData, setCouponCodeData] = useState(null)
@@ -61,7 +63,9 @@ function Cartpage() {
     setCouponCodeData(null);
     setCouponCode("");
   };
-  const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * item.discountPrice, 0)
+  const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * (item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice) , 0)
+
+  
 
   const shipping = "Free Shipping"
 
@@ -196,6 +200,7 @@ function Cartpage() {
       discountPrice,
       referralBalance, // Include referral balance
       appliedReferral,
+      
 
     }
 
@@ -537,7 +542,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
     1: "Rose Gold",
     2: "White Gold",
   };
-  const totalPrice = data.discountPrice * value;
+  const totalPrice = data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice * value;
 
   const enamelColor = data.selectedEnamelColor?.toLowerCase();
   const metalColor = metalColors[data.selectedColor]?.replace(" ", "") + "clrStock";
@@ -545,26 +550,38 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const enamelStock = data.Enamelcolorstock?.[enamelColor]?.[`${enamelColor}${metalColor}`];
 
 
-    const increment = () => {
-      if (enamelStock === undefined || enamelStock === null || value >= enamelStock) {
-        toast.error("Product Stock limit for this Variant");
-        return;
-      }
-      setValue(value + 1);
-      const updateCartData = { ...data, qty: value + 1 };
-      quantityChangeHandler(updateCartData);
-    };
-  
-    const decrement = () => {
-      if (value > 1) {
-        setValue(value - 1);
-        const updateCartData = { ...data, qty: value - 1 };
-        quantityChangeHandler(updateCartData);
-      }
-    };
+  const increment = () => {
+    if (enamelStock === undefined || enamelStock === null || value >= enamelStock) {
+      toast.error("Product Stock limit for this Variant");
+      return;
+    }
+    setValue(value + 1);
+    const updateCartData = { ...data, qty: value + 1 };
+    quantityChangeHandler(updateCartData);
+  };
 
- 
+  const decrement = () => {
+    if (value > 1) {
+      setValue(value - 1);
+      const updateCartData = { ...data, qty: value - 1 };
+      quantityChangeHandler(updateCartData);
+    }
+  };
+
+
   const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
+  function getAvailableMetalColors(metalColors) {
+    return Object.keys(metalColors)
+      .filter((key) => metalColors[key].length > 0)
+      .map((key) => {
+        return {
+          colorKey: key,
+          colorName: key.replace(/clr$/i, '')
+        };
+      });
+  }
+  const availableMetalColors = getAvailableMetalColors(data.MetalColor || {});
+  const shouldShowMetalColors = availableMetalColors.length > 0;
 
 
   return (
@@ -633,13 +650,13 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
     <div className="leftcartpage">
       <div className="leftcardsec1">
         <div className="leftcardimg">
-          <a className="image-container" href="">
+          <Link className="cartimage-container" href="">
             <img
               src={`${data?.images[0]?.url}`}
               width={166}
               height={166}
             />
-          </a>
+          </Link>
         </div>
         <div className="leftcarddetail">
           <div className="leftcarddeatilhead">
@@ -662,14 +679,18 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
           </div>
           <div className="leftcardprice mb-2">
-            <span className="oprice">₹{data.originalPrice}</span>
-            <span className="disprice pl-1">₹{data.discountPrice}</span>
+            <span className="oprice">₹ {data.chainPrice > 0 ? data.originalPrice + data.chainPrice : data.originalPrice} </span>
+            <span className="disprice pl-1">₹ {data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice} </span>
             <span className='text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1'>save ₹{(data.originalPrice - data.discountPrice).toFixed(2)}</span>
           </div>
 
           <div className="details">
             <div className="checkoutoptions ">
-              <h3 className='text-[0.6rem]'><span className='font-[500]'>Metal Colour:</span>  {metalColors[data.selectedColor]}</h3>
+              {
+                shouldShowMetalColors && (
+                  <h3 className='text-[0.6rem]'><span className='font-[500]'>Metal Colour:</span>  {metalColors[data.selectedColor]}</h3>
+                )
+              }
 
               {data.selectedEnamelColor && (
                 <h3 className="text-[0.6rem]">
@@ -701,7 +722,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             </div>
           </div>
           <div className="checkoutsectionprice mt-1 mb-0.5">
-            <h3 className='text-[0.8rem] '>₹{data.discountPrice} * {value}</h3>
+            <h3 className='text-[0.8rem] '>₹{data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice} * {value}</h3>
             <div>
               <span className='text-[#EB4F5C] text-[0.8rem]'>SubTotal :-  ₹ {totalPrice}</span>
             </div>

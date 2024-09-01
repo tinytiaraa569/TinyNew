@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../../Styles/styles';
 import ProductCard from '../Productcard/ProductCard';
+import './newarrivals.css'
 
 function NewArrivals() {
   const { products } = useSelector((state) => state.products);
@@ -28,12 +29,12 @@ function NewArrivals() {
 
   return (
     <div className='bg-[#fff] py-5'>
-      <div className={`${styles.section}`}>
+      <div className={`customheadingnewarrivals ${styles.section}`}>
         <div className={`${styles.heading}`}>
           <h1 className='text-[#01463A] text-[35px] font-[400] text-center'>Featured product</h1>
           <p className='text-[#3A3A3A] text-[22px] text-center font-[300]'>Shop by our top-selling categories, bought frequently by most customers</p>
         </div>
-        <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 border-0">
+        <div className="grid custom-grid gap-[20px]">
           {
             products && Array.isArray(products) && products.slice(0, visibleCount).map((i, index) => (
               <ProductCard data={i} key={index} />

@@ -933,25 +933,68 @@ router.get(
 //order update details status
 
 
+// router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
+//     try {
+
+//         const order = await Order.findById(req.params.id);
+
+//         if (!order) {
+//             return next(new ErrorHandler("Order not found with this id", 400));
+//         }
+//         if (req.body.status === "Shipping") {
+//             order.cart.forEach(async (o) => {
+//                 await updateOrder(o._id, o.qty);
+//             });
+//         }
+//         order.status = req.body.status;
+
+//         if (req.body.status === "Delivered") {
+//             order.deliveredAt = Date.now();
+//             order.paymentInfo.status = "Succeeded";
+
+//         }
+
+//         await order.save({ validateBeforeSave: false });
+
+//         res.status(200).json({
+//             success: true,
+//             order,
+//         });
+
+//         async function updateOrder(id, qty) {
+//             const product = await Product.findById(id);
+
+//             product.stock -= qty;
+//             product.sold_out += qty;
+
+//             await product.save({ validateBeforeSave: false });
+//         }
+
+//     } catch (error) {
+//         return next(new ErrorHandler(error.message, 500));
+
+//     }
+// }))
+
 router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
     try {
-
         const order = await Order.findById(req.params.id);
 
         if (!order) {
             return next(new ErrorHandler("Order not found with this id", 400));
         }
+
         if (req.body.status === "Shipping") {
-            order.cart.forEach(async (o) => {
-                await updateOrder(o._id, o.qty);
-            });
+            for (const o of order.cart) {
+                await updateOrder(o);
+            }
         }
+
         order.status = req.body.status;
 
         if (req.body.status === "Delivered") {
             order.deliveredAt = Date.now();
             order.paymentInfo.status = "Succeeded";
-
         }
 
         await order.save({ validateBeforeSave: false });
@@ -961,20 +1004,67 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
             order,
         });
 
-        async function updateOrder(id, qty) {
-            const product = await Product.findById(id);
+        async function updateOrder(cartItem) {
+            const product = await Product.findById(cartItem._id);
 
-            product.stock -= qty;
-            product.sold_out += qty;
+            // Log the cart item being processed
+            console.log("Processing cart item:", cartItem);
+            const metalColors = {
+                0: "YellowGold",
+                1: "RoseGold",
+                2: "WhiteGold",
+            };
+
+            // Check if the product has enamel and metal color options
+            const selectedMetalColor = metalColors[cartItem.selectedColor];
+            const selectedEnamelColor = cartItem.selectedEnamelColor;
+
+            if (selectedEnamelColor) {
+                // Clean the selectedEnamelColor key to match the data format
+                const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+
+                // Construct the key to access the specific enamel color stock
+                const enamelKey = `${cleanedEnamelColor}${selectedMetalColor.replace(/ /g, '')}clrStock`;
+
+                // Decrement stock for the specific enamel color and metal color
+                product.Enamelcolorstock[cleanedEnamelColor][enamelKey] -= cartItem.qty;
+
+                // Log which stocks are being updated
+                // console.log(`Decrementing stock for ${selectedEnamelColor} with ${selectedMetalColor}: -${cartItem.qty}`);
+            } else if (selectedMetalColor) {
+                // Construct the key to access the specific metal color stock
+                const metalKey = `${selectedMetalColor}clrStock`;
+
+                // Decrement stock for the specific metal color
+                product.Metalcolorstock[metalKey] -= cartItem.qty;
+
+                // Log which metal color stock is being updated
+                // console.log(`Decrementing stock for ${selectedMetalColor}: -${cartItem.qty}`);
+
+                // console.log(`Decrementing stock for ${ product.Metalcolorstock[metalKey]}: -${cartItem.qty}`);
+
+            } else {
+                // Decrement general stock
+                product.stock -= cartItem.qty;
+
+                // Log which general stock is being updated
+                // console.log(`Decrementing general stock: -${cartItem.qty}`);
+            }
+
+
+            // Increment sold_out based on the quantity ordered
+            product.sold_out += cartItem.qty;
+
+            // Log the updated product state
+            // console.log("Updated product state:", product);
 
             await product.save({ validateBeforeSave: false });
         }
 
     } catch (error) {
         return next(new ErrorHandler(error.message, 500));
-
     }
-}))
+}));
 
 //give a refund 
 

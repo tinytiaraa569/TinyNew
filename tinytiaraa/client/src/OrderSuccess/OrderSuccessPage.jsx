@@ -4,6 +4,7 @@ import animationData from "./success-icon.json";
 import { useNavigate } from 'react-router-dom';
 
 function OrderSuccessPage() {
+    
     const [orderDetails, setOrderDetails] = useState(null);
     const [gstAmount, setGstAmount] = useState(0);
     const [couponDiscount, setCouponDiscount] = useState(0);
@@ -32,7 +33,7 @@ function OrderSuccessPage() {
         if (storedOrder) {
             const totalPrice = parseFloat(storedOrder.totalPrice);
             const couponDisc = parseFloat(storedOrder.couponDiscount) || 0;
-            
+
             // Calculate GST (3% of totalPrice before discount)
             const gst = (totalPrice / (1 - 0.03)) * 0.03;
             setGstAmount(gst.toFixed(2));
@@ -81,7 +82,11 @@ function OrderSuccessPage() {
                                     <div className='ml-4'>
                                         <h4 className='text-gray-700 font-medium'>{item.name}</h4>
                                         <p className='text-gray-500 text-sm'> {item.skuid}</p>
-                                        <p className='text-gray-500 text-sm'>Metal Color: {metalColors[item.selectedColor]}</p>
+                                        {
+                                            item.selectedColor !== null && (
+                                                <p className='text-gray-500 text-sm'>Metal Color: {metalColors[item.selectedColor]}</p>
+                                            )
+                                        }
                                         {item.selectedEnamelColor && (
                                             <p className='text-gray-500 text-sm'>Enamel Color: {item.selectedEnamelColor.replace(/_/g, ' ')}</p>
                                         )}
@@ -90,7 +95,7 @@ function OrderSuccessPage() {
                                         )}
                                     </div>
                                 </div>
-                                <p className='text-gray-700 font-medium'>₹{item.discountPrice}</p>
+                                <p className='text-gray-700 font-medium'>₹{item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
                             </div>
                         ))}
                     </div>
@@ -104,7 +109,7 @@ function OrderSuccessPage() {
                     </div>
 
                     <div className='flex justify-center mt-4'>
-                        <button className='bg-[#448176] text-[#fff] px-7 py-3 rounded-[8px] shadow-lg' onClick={()=>{
+                        <button className='bg-[#448176] text-[#fff] px-7 py-3 rounded-[8px] shadow-lg' onClick={() => {
                             navigate("/")
                         }}>Shop More</button>
                     </div>

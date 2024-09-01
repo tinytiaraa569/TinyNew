@@ -74,6 +74,8 @@ function ProductDetails({ data }) {
 
     const [selectedEnamelColor, setSelectedEnamelColor] = useState(null)
 
+
+    const [selectedChainSize, setSelectedChainSize] = useState("");
     const createSlug = (name) => {
         return name.toLowerCase().replace(/[\s]+/g, '-').replace(/[^\w-]+/g, '');
     };
@@ -101,10 +103,124 @@ function ProductDetails({ data }) {
     //     }
 
     // }
+    // const addToCartHandler = (id, shouldNavigate = false) => {
+    //     console.log("Selected Color:", selectedColor);
+    //     console.log("Show With Chain:", showWithChain);
+    //     console.log("Selected Enamel Color:", selectedEnamelColor);
+
+    //     if (validateForm()) {
+    //         // Check if the item already exists in the cart with the same combination of options
+    //         const isItemExists = cart && cart.find((i) =>
+    //             i._id === id &&
+    //             i.selectedColor === selectedColor &&
+    //             i.showWithChain === showWithChain &&
+    //             i.selectedEnamelColor === selectedEnamelColor
+    //         );
+
+    //         if (isItemExists) {
+    //             toast.error("Item Already in cart");
+    //         } else {
+    //             if (data.stock < count) {
+    //                 toast.error("Product Stock limited");
+    //             } else {
+    //                 const cartData = {
+    //                     ...data,
+    //                     qty: count,
+    //                     selectedColor: selectedColor,
+    //                     showWithChain: showWithChain,
+    //                     selectedEnamelColor: selectedEnamelColor
+    //                 };
+    //                 dispatch(addToCart(cartData));
+    //                 toast.success("Product Added to cart");
+
+    //                 // Console log the updated cart value
+    //                 console.log("Updated Cart:", cart); // Assuming `cart` is from useSelector
+
+    //                 // Optionally, you can also console log the `cartData` if needed
+    //                 console.log("Added to Cart:", cartData);
+    //                 if (shouldNavigate) {
+    //                     navigate('/cart');
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         toast.error("Please select color and chain options.");
+    //     }
+    // };
+
+    // const addToCartHandler = (id, shouldNavigate = false) => {
+    //     console.log("Selected Color:", selectedColor);
+    //     console.log("Show With Chain:", showWithChain);
+    //     console.log("Selected Enamel Color:", selectedEnamelColor);
+
+    //     if (validateForm()) {
+    //         // Check if the item already exists in the cart with the same combination of options
+    //         const isItemExists = cart && cart.find((i) =>
+    //             i._id === id &&
+    //             i.selectedColor === selectedColor &&
+    //             i.showWithChain === showWithChain &&
+    //             i.selectedEnamelColor === selectedEnamelColor
+    //         );
+
+    //         if (isItemExists) {
+    //             toast.error("Item Already in cart");
+    //             return;
+    //         }
+
+    //         // Determine the stock to validate against
+    //         let availableStock = data.stock; // Default stock
+
+    //         if (selectedEnamelColor) {
+    //             const enamelKey = `${selectedEnamelColor.toLowerCase()}${selectedColor}clrStock`;
+    //             availableStock = data.Enamelcolorstock[selectedEnamelColor]?.[enamelKey] || 0;
+    //         } else if (selectedColor) {
+    //             const metalKey = `${selectedColor}clrStock`;
+    //             availableStock = data.Metalcolorstock[metalKey] || 0;
+    //         }
+
+    //         // Validate stock
+    //         // if (availableStock < count) {
+    //         //     toast.error("Product Stock limited");
+    //         //     return;
+    //         // }
+
+    //         // Proceed with adding to cart
+    //         const cartData = {
+    //             ...data,
+    //             qty: count,
+    //             selectedColor: selectedColor,
+    //             showWithChain: showWithChain,
+    //             selectedEnamelColor: selectedEnamelColor
+    //         };
+    //         dispatch(addToCart(cartData));
+    //         toast.success("Product Added to cart");
+
+    //         // Console log the updated cart value
+    //         console.log("Updated Cart:", cart); // Assuming `cart` is from useSelector
+
+    //         // Optionally, you can also console log the `cartData` if needed
+    //         console.log("Added to Cart:", cartData);
+    //         if (shouldNavigate) {
+    //             navigate('/cart');
+    //         }
+    //     } else {
+    //         toast.error("Please select color and chain options.");
+    //     }
+    // };
+
+    const metalColors = {
+        0: "Yellow Gold",
+        1: "Rose Gold",
+        2: "White Gold",
+    };
+
     const addToCartHandler = (id, shouldNavigate = false) => {
-        console.log("Selected Color:", selectedColor);
+        console.log("Selected Color Index:", selectedColor);
         console.log("Show With Chain:", showWithChain);
         console.log("Selected Enamel Color:", selectedEnamelColor);
+
+        // Convert the selectedColor index to the actual metal color name
+        const selectedMetalColor = metalColors[selectedColor];
 
         if (validateForm()) {
             // Check if the item already exists in the cart with the same combination of options
@@ -116,35 +232,87 @@ function ProductDetails({ data }) {
             );
 
             if (isItemExists) {
-                toast.error("Item Already in cart");
-            } else {
-                if (data.stock < count) {
-                    toast.error("Product Stock limited");
-                } else {
-                    const cartData = {
-                        ...data,
-                        qty: count,
-                        selectedColor: selectedColor,
-                        showWithChain: showWithChain,
-                        selectedEnamelColor: selectedEnamelColor
-                    };
-                    dispatch(addToCart(cartData));
-                    toast.success("Product Added to cart");
+                toast.error("Item already in cart");
+                return;
+            }
 
-                    // Console log the updated cart value
-                    console.log("Updated Cart:", cart); // Assuming `cart` is from useSelector
+            // Determine the stock to validate against
+            let availableStock = data.stock; // Default stock
+            let stockMessage = ''; // Message to show stock availability
 
-                    // Optionally, you can also console log the `cartData` if needed
-                    console.log("Added to Cart:", cartData);
-                    if (shouldNavigate) {
-                        navigate('/cart');
-                    }
+            if (selectedEnamelColor) {
+                // Clean the selectedEnamelColor key to match the data format
+                const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+
+                // Construct the key to access the specific enamel color stock
+                const enamelKey = `${cleanedEnamelColor}${selectedMetalColor.replace(/ /g, '')}clrStock`;
+
+                // Access the stock value for the selected enamel color and metal color
+                availableStock = data.Enamelcolorstock[cleanedEnamelColor]?.[enamelKey] || 0;
+
+                if (availableStock === null) {
+                    availableStock = 0; // Treat null as zero stock
                 }
+
+                stockMessage = `Stock for ${selectedEnamelColor} with ${selectedMetalColor}: ${availableStock}`;
+            } else if (selectedMetalColor) {
+                // Construct the key to access the specific metal color stock
+                const metalKey = `${selectedMetalColor.replace(/ /g, '')}clrStock`;
+
+                // Access the stock value for the selected metal color
+                availableStock = data.Metalcolorstock[metalKey] || 0;
+
+                if (availableStock === null) {
+                    availableStock = 0; // Treat null as zero stock
+                }
+
+                stockMessage = `Stock for ${selectedMetalColor}: ${availableStock}`;
+            } else {
+                // Default stock message
+                stockMessage = `Default stock: ${availableStock}`;
+            }
+
+            // Validate stock and show message
+            if (availableStock < count) {
+                toast.error(`Stock limited. ${stockMessage}`);
+                return;
+            } else {
+                // toast.info(stockMessage); // Inform the user about available stock
+            }
+
+            const chainPrice = selectedChainSize === '13inch' ? 7200 : (selectedChainSize === '18inch' ? 14400 : 0);
+       
+            // Proceed with adding to cart
+            const cartData = {
+                ...data,
+                qty: count,
+                selectedColor: selectedColor,
+                showWithChain: showWithChain,
+                selectedEnamelColor: selectedEnamelColor,
+                selectedChainSize: selectedChainSize, // Add selected chain size,
+                chainPrice:chainPrice
+            };
+            dispatch(addToCart(cartData));
+            toast.success("Product added to cart");
+
+            // Console log the updated cart value
+            console.log("Updated Cart:", cart); // Assuming `cart` is from useSelector
+
+            // Optionally, you can also console log the `cartData` if needed
+            console.log("Added to Cart:", cartData);
+            if (shouldNavigate) {
+                navigate('/cart');
             }
         } else {
             toast.error("Please select color and chain options.");
         }
     };
+
+
+
+
+
+
 
     const calculateDiscountPercentage = (originalPrice, discountPrice) => {
         if (originalPrice > 0 && discountPrice > 0 && originalPrice > discountPrice) {
@@ -207,14 +375,28 @@ function ProductDetails({ data }) {
         setSelectedColor(colorIndex); // Update selectedColor state with the index of the color
         setSelect(0); // Reset selected image index to 0 when color changes
 
-        setShowWithChain(null);
+        // setShowWithChain(null);
     };
     const [showWithChain, setShowWithChain] = useState(null);
 
     const toggleChainOption = (option) => {
-        setShowWithChain(option === 'with'); // Set showWithChain based on the selected option ('with' or 'without')
-        setSelect(0); // Reset selected image index when toggling chain option
+        if (option === 'with') {
+            setShowWithChain(true);
+            setSelectedChainSize('13inch'); // Set default to 13 inches
+            setFinalPrice(data.discountPrice + 7200);
+            setFinalOriginalPrice(data.originalPrice + 7200);
+        } else {
+            setShowWithChain(false);
+            setSelectedChainSize(null); // Clear the selection when "Without Chain" is selected
+            setFinalPrice(data.discountPrice);
+            setFinalOriginalPrice(data.originalPrice);
+        }
+        // setShowWithChain(option === 'with'); // Set showWithChain based on the selected option ('with' or 'without')
+        // setSelect(0); // Reset selected image index when toggling chain option
         // setSelectedColorIndex(null);
+        if (option === 'without') {
+            setSelectedChainSize(""); // Reset selected chain size when without chain is chosen
+        }
     };
 
     // const imagesArray =
@@ -310,7 +492,7 @@ function ProductDetails({ data }) {
     const validateForm = () => {
         const hasChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
         const isEnamelColorRequired = shouldShowEnamel && availableEnamelColors.length > 0;
-    
+        const hasMetalColors = availableMetalColors.length > 0;
         if (!hasChainOptions) {
             if (selectedColor === null) {
                 setValidationError('Please select a metal color.');
@@ -322,8 +504,8 @@ function ProductDetails({ data }) {
             }
             return true;
         }
-    
-        if (selectedColor === null) {
+
+        if (hasMetalColors && selectedColor === null) {
             setValidationError('Please select a metal color.');
             return false;
         }
@@ -335,14 +517,14 @@ function ProductDetails({ data }) {
             setValidationError('Please select an enamel color.');
             return false;
         }
-        
+
         return true;
     };
     useEffect(() => {
         // Reset validation error on color or chain change
-        
+
         setValidationError('');
-    }, [selectedColorIndex, showWithChain ,selectedColor ,selectedEnamelColor]);
+    }, [selectedColorIndex, showWithChain, selectedColor, selectedEnamelColor]);
 
     // Determine if chain options should be displayed
     const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
@@ -418,42 +600,42 @@ function ProductDetails({ data }) {
     // console.log("Available Enamel Colors for Selected Metal:", availableEnamelColors);
 
 
-  const getAvailableEnamelColors = (enamelColors, selectedMetalColor) => {
-    return Object.entries(enamelColors)
-        .filter(([color, colorData]) => {
-            const baseColor = color.toLowerCase().replace(/_/g, '');
-            const enamelKeys = [
-                `${baseColor}YellowGoldclr`,
-                `${baseColor}RoseGoldclr`,
-                `${baseColor}WhiteGoldclr`
-            ];
+    const getAvailableEnamelColors = (enamelColors, selectedMetalColor) => {
+        return Object.entries(enamelColors)
+            .filter(([color, colorData]) => {
+                const baseColor = color.toLowerCase().replace(/_/g, '');
+                const enamelKeys = [
+                    `${baseColor}YellowGoldclr`,
+                    `${baseColor}RoseGoldclr`,
+                    `${baseColor}WhiteGoldclr`
+                ];
 
-            if (selectedMetalColor) {
-                // Filter based on specific metal color
-                const enamelKey = `${baseColor}${selectedMetalColor}clr`;
-                return Array.isArray(colorData[enamelKey]) && colorData[enamelKey].length > 0;
-            } else {
-                // Show all colors that have images in any metal color
-                return enamelKeys.some(key => Array.isArray(colorData[key]) && colorData[key].length > 0);
-            }
-        })
-        .map(([color]) => {
-            const baseColor = color.toLowerCase().replace(/_/g, '');
-            const availableKeys = [
-                `${baseColor}YellowGoldclr`,
-                `${baseColor}RoseGoldclr`,
-                `${baseColor}WhiteGoldclr`
-            ].filter(key => Array.isArray(enamelColors[color][key]) && enamelColors[color][key].length > 0);
+                if (selectedMetalColor) {
+                    // Filter based on specific metal color
+                    const enamelKey = `${baseColor}${selectedMetalColor}clr`;
+                    return Array.isArray(colorData[enamelKey]) && colorData[enamelKey].length > 0;
+                } else {
+                    // Show all colors that have images in any metal color
+                    return enamelKeys.some(key => Array.isArray(colorData[key]) && colorData[key].length > 0);
+                }
+            })
+            .map(([color]) => {
+                const baseColor = color.toLowerCase().replace(/_/g, '');
+                const availableKeys = [
+                    `${baseColor}YellowGoldclr`,
+                    `${baseColor}RoseGoldclr`,
+                    `${baseColor}WhiteGoldclr`
+                ].filter(key => Array.isArray(enamelColors[color][key]) && enamelColors[color][key].length > 0);
 
-            return {
-                _id: color,
-                enamelColorName: color.replace(/_/g, ' '),
-                availableKeys
-            };
-        });
-};
-    
-    
+                return {
+                    _id: color,
+                    enamelColorName: color.replace(/_/g, ' '),
+                    availableKeys
+                };
+            });
+    };
+
+
 
     // In your component, update the code to use the selected metal color when available:
     const availableEnamelColors = getAvailableEnamelColors(
@@ -473,6 +655,21 @@ function ProductDetails({ data }) {
         );
     };
 
+
+
+    function getAvailableMetalColors(metalColors) {
+        return Object.keys(metalColors)
+            .filter((key) => metalColors[key].length > 0)
+            .map((key) => {
+                return {
+                    colorKey: key,
+                    colorName: key.replace(/clr$/i, '')
+                };
+            });
+    }
+    const availableMetalColors = getAvailableMetalColors(data.MetalColor || {});
+    const shouldShowMetalColors = availableMetalColors.length > 0;
+
     const imagesArray = (() => {
         const enamelColorData = data.enamelColors[selectedEnamelColor] || {};
         console.log(enamelColorData, "see enamel data");
@@ -480,12 +677,12 @@ function ProductDetails({ data }) {
 
         if (selectedEnamelColor) {
             const formattedColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-    
+
             if (selectedColor !== null) {
                 // Construct the enamel key for the selected metal color
                 const enamelKey = `${formattedColor}${["YellowGold", "RoseGold", "WhiteGold"][selectedColor]}clr`;
                 console.log("Enamel Key:", enamelKey);
-    
+
                 // Return images for the selected enamel and metal color
                 const images = enamelColorData[enamelKey] || [];
                 if (images.length > 0) {
@@ -498,11 +695,11 @@ function ProductDetails({ data }) {
                 // Initial state: Show all images for the selected enamel color across all metal colors
                 const availableKeys = getAvailableEnamelColors(data.enamelColors || {}, null)
                     .find(color => color._id === selectedEnamelColor)?.availableKeys || [];
-    
+
                 return availableKeys.flatMap(key => enamelColorData[key] || []);
             }
         }
-    
+
 
         // Default to metal color images if no enamel color is selected
         if (showWithChain === true) return data.withchainimages || [];
@@ -515,6 +712,29 @@ function ProductDetails({ data }) {
     })();
 
     console.log(imagesArray, "see image array");
+
+    const [finalPrice, setFinalPrice] = useState(data.discountPrice);
+    const [finalOriginalPrice, setFinalOriginalPrice] = useState(data.originalPrice);
+
+
+    const handleChainSizeChange = (event) => {
+        setSelectedChainSize(event.target.value);
+
+        // Calculate the new price based on the selected chain size
+        const chainSize = event.target.value;
+        let additionalPrice = 0;
+        if (chainSize === "13inch") {
+            additionalPrice = 7200;
+        } else if (chainSize === "18inch") {
+            additionalPrice = 14400;
+        }
+        const basePrice = data.discountPrice;
+        setFinalPrice(basePrice + additionalPrice);
+        setFinalOriginalPrice(data.originalPrice + additionalPrice);
+    };
+
+    console.log(selectedChainSize, "chain size")
+
 
     return (
         <div className='bg-white'>
@@ -631,7 +851,7 @@ function ProductDetails({ data }) {
                                 </div>
 
 
-                                <div className='w-full 800px:w-[50%] pt-5'>
+                                <div className='w-full 800px:w-[50%] pt-2'>
 
                                     <h1 className={`${styles.productTitle} !font-[450]`}>{data.name}</h1>
                                     <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-2`}>{data.skuid}</h3>
@@ -640,13 +860,11 @@ function ProductDetails({ data }) {
 
                                     <div className="flex items-center pt-3">
                                         <h5 className={`${styles.productDiscountPrice} !stext-[#01463A]`}>
-                                            ₹
-                                            {data.originalPrice === 0
-                                                ? data.originalPrice
-                                                : data.discountPrice}
+
+                                            ₹{finalPrice}
                                         </h5>
                                         <h4 className={`${styles.price} line-through`}>
-                                            {data.originalPrice ? " ₹" + data.originalPrice : null}
+                                            {finalOriginalPrice ? " ₹" + finalOriginalPrice : null}
                                         </h4>
                                         {discountPercentage > 0 && (
                                             <span className="ml-2  text-[#4B4B4B] font-[450]">
@@ -736,43 +954,51 @@ function ProductDetails({ data }) {
                                             </>
                                         )}
                                     </div> */}
-                                    <div className='metaloptionproduct'>
-                                        {Object.keys(data.MetalColor).length > 0 && (
-                                            <>
-                                                <div className='metaltitle'>
-                                                    <h3>Metal Color :</h3>
-                                                </div>
-                                                <div className='metalmaincolor'>
-                                                    {Object.keys(data.MetalColor).map((key, index) => {
-                                                        // Remove "clr" from the end of color name
-                                                        const label = key.replace(/clr$/i, '');
-                                                        const isSelected = selectedColor === index;
 
-                                                        return (
-                                                            <div key={index} className={`metalcolor ${isSelected ? 'selected' : ''}`}>
-                                                                <input
-                                                                    type="radio"
-                                                                    name='colorcode'
-                                                                    id={`color-${key}`}
-                                                                    value={key}
-                                                                    checked={isSelected}
-                                                                    onChange={() => handleColorChange(index)}
-                                                                    className='hidden' // Hide the default radio button
-                                                                />
-                                                                <label
-                                                                    htmlFor={`color-${key}`}
-                                                                    className='flex items-center flex-col cursor-pointer'
-                                                                >
-                                                                    <span className={`metalcolorcon ${key} ${isSelected ? 'selected' : ''}`}></span>
-                                                                    <span className='ml-2'>{label}</span>
-                                                                </label>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
+
+                                    {
+                                        shouldShowMetalColors && (
+                                            <div className='metaloptionproduct'>
+                                                {Object.keys(data.MetalColor).length > 0 && (
+                                                    <>
+                                                        <div className='metaltitle'>
+                                                            <h3>Metal Color :</h3>
+                                                        </div>
+                                                        <div className='metalmaincolor'>
+                                                            {Object.keys(data.MetalColor).map((key, index) => {
+                                                                // Remove "clr" from the end of color name
+                                                                const label = key.replace(/clr$/i, '');
+                                                                const isSelected = selectedColor === index;
+
+                                                                return (
+                                                                    <div key={index} className={`metalcolor ${isSelected ? 'selected' : ''}`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name='colorcode'
+                                                                            id={`color-${key}`}
+                                                                            value={key}
+                                                                            checked={isSelected}
+                                                                            onChange={() => handleColorChange(index)}
+                                                                            className='hidden' // Hide the default radio button
+                                                                        />
+                                                                        <label
+                                                                            htmlFor={`color-${key}`}
+                                                                            className='flex items-center flex-col cursor-pointer'
+                                                                        >
+                                                                            <span className={`metalcolorcon ${key} ${isSelected ? 'selected' : ''}`}></span>
+                                                                            <span className='ml-2'>{label}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                        )
+                                    }
+
 
                                     {/* enamel option */}
 
@@ -878,9 +1104,35 @@ function ProductDetails({ data }) {
                                                         />
                                                         <label htmlFor='withChain' className='pl-2 cursor-pointer'>
                                                             With 1 gm Chain
-                                                            <span>( 13 inches) (+₹ 7,200)</span>
+                                                            <div className={`chain-options ${showWithChain ? 'visible' : 'hidden'}`}>
+                                                                <label className={`chain-size-label cursor-pointer`}>
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="chainSize"
+                                                                        value="13inch"
+                                                                        onChange={handleChainSizeChange}
+                                                                        checked={selectedChainSize === '13inch'}
+                                                                    />
+                                                                    <span className={`chain-size-text ${selectedChainSize === '13inch' ? '!font-[600]' : ''}`}>
+                                                                    {selectedChainSize === '13inch' ? '✔' : ''} (13 inches) (+₹ 7,200)
+                                                                    </span>
+                                                                </label>
+                                                                <label className={`chain-size-label cursor-pointer`}>
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="chainSize"
+                                                                        value="18inch"
+                                                                        onChange={handleChainSizeChange}
+                                                                        checked={selectedChainSize === '18inch'}
+                                                                    />
+                                                                    <span className={`chain-size-text ${selectedChainSize === '18inch' ? '!font-[600]' : ''}`}>
+                                                                    {selectedChainSize === '18inch' ? '✔' : ''}  (18 inches) (+₹ 14,400)
+                                                                    </span>
+                                                                </label>
+                                                            </div>
 
-                                                            <div className='withchainimgcon'>
+
+                                                            <div className={`withchainimgcon  ${showWithChain ? 'mt-[2px]' : 'mt-[22px]'} `}>
                                                                 <img src={withchainimg} alt="" />
                                                             </div>
                                                         </label>

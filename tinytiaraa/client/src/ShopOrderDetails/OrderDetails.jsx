@@ -28,6 +28,7 @@ function OrderDetails() {
     }, [dispatch])
 
     const data = orders && orders.find((item) => item._id === id)
+    console.log(data,"data of orders")
 
 
 
@@ -119,11 +120,11 @@ function OrderDetails() {
                                 <div className='mt-2'>
                                     {item.showWithChain !== undefined && (
                                         <h5 className='pl-3 text-[14px] text-[#0000008c]'>
-                                            <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'}
+                                            <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} ({item.selectedChainSize})
                                         </h5>
                                     )}
 
-                                    {item.selectedColor !== undefined && (
+                                    {item.selectedColor !== null && (
                                         <h5 className='pl-3 text-[14px] text-[#0000008c]'>
                                             <span className='font-[600]'>Metal Color :</span> {metalColors[item.selectedColor]}
                                         </h5>
@@ -147,7 +148,7 @@ function OrderDetails() {
 
 
 
-                                <h5 className='pl-3 text-[16px] mt-2 text-[#0000008c]'>₹{item.discountPrice} x {item.qty}</h5>
+                                <h5 className='pl-3 text-[16px] mt-2 text-[#0000008c]'>₹{item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice} x {item.qty}</h5>
 
                             </div>
                         </div>

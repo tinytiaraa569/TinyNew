@@ -94,20 +94,20 @@ function ProductCard({ data }) {
     <div className='parentsinglecrd'>
 
 
-      <div className="parentproductcard w-full h-[375px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
+      <div className="parentproductcard w-full h-[330px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
         <div className="flex justify-end "></div>
 
-        <div className='w-full h-[170px] overflow-hidden'>
+        <div className='w-full h-[150px] overflow-hidden'>
           <Link to={`/product/${product_name}`}>
 
-            <img src={`${data.images && data.images[1]?.url}`} alt="" className='parentproductimg w-full h-[170px] object-contain' />
+            <img src={`${data.images && data.images[1]?.url}`} alt="" className='parentproductimg w-full h-[150px] object-contain' />
 
           </Link>
         </div>
         <div className='w-full h-[auto] overflow-hidden '>
 
           <Link to={`/product/${product_name}`}>
-            <h4 className='pb-1 font-[500] text-[16px] text-center'>{data.name.length > 70 ? data.name.slice(0, 70) + "..." : data.name}</h4>
+            <h4 className='pb-1 font-[500] text-[14px] text-center'>{data.name.length > 70 ? data.name.slice(0, 70) + "..." : data.name}</h4>
           </Link>
           <p className={`${styles.skuid}`}>{data.skuid}</p>
 

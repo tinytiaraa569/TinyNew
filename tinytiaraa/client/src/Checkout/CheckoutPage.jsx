@@ -20,7 +20,7 @@ function CheckoutPage() {
     const { user } = useSelector((state) => state.user)
     const [userInfo, setUserInfo] = useState(false)
     const [orderData, setOrderData] = useState([])
-    console.log(orderData, "see what is in checkout age")
+    console.log(orderData.cart, "see what is in checkout age")
 
     const navigate = useNavigate()
 
@@ -55,7 +55,7 @@ function CheckoutPage() {
     const [referralBalance, setReferralBalance] = useState(0);
     const [appliedReferral, setAppliedReferral] = useState(0);
 
-    const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * item.discountPrice, 0)
+    const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * (item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice), 0)
 
     const shipping = "Free Shipping"
 
@@ -98,6 +98,8 @@ function CheckoutPage() {
             setAppliedReferral(fetchedOrderData.appliedReferral || 0); // Set applied referral
         }
     }, [])
+
+
 
     const handleback = () => {
         navigate("/cart")
@@ -145,6 +147,7 @@ function CheckoutPage() {
         1: "Rose Gold",
         2: "White Gold",
     };
+   
     const calculateDateRange = () => {
         const today = new Date();
         const startDate = new Date(today);
@@ -162,6 +165,7 @@ function CheckoutPage() {
         return { start, end };
     };
     const { start, end } = calculateDateRange();
+
     return (
 
         <div className='w-full bg-[#fafafa;] pb-8'>
@@ -438,8 +442,8 @@ function CheckoutPage() {
                                                         <div className="text-[#161618] text-[13px] ">QTY : <span>{val.qty}</span>
                                                         </div>
                                                         <div className="">
-                                                            <span className="text-[#6f6f79] text-[13px] line-through">₹{val.originalPrice}</span>
-                                                            <span className=" text-[13px] pl-2" >₹{val.discountPrice}</span>
+                                                            <span className="text-[#6f6f79] text-[13px] line-through">₹{val.chainPrice > 0 ? val.originalPrice + val.chainPrice : val.originalPrice}</span>
+                                                            <span className=" text-[13px] pl-2" >₹{val.chainPrice > 0 ? val.discountPrice + val.chainPrice : val.discountPrice}</span>
                                                         </div>
 
 
@@ -452,10 +456,16 @@ function CheckoutPage() {
 
                                                     )}
 
-                                                    <div className="">
-                                                        <span className="text-[#161618] font-[500] text-[13px]">Metal Color :</span>
-                                                        <span className=" text-[#161618]  text-[13px] pl-2" >{metalColors[val.selectedColor]}</span>
-                                                    </div>
+                                                    {
+                                                        val.selectedColor !== null && (
+                                                            <div className="">
+                                                                <span className="text-[#161618] font-[500] text-[13px]">Metal Color :</span>
+                                                                <span className=" text-[#161618]  text-[13px] pl-2" >{metalColors[val.selectedColor]}</span>
+                                                            </div>
+                                                         )
+                                                    } 
+
+
                                                     {val?.selectedEnamelColor && (
                                                         <div className="">
                                                             <span className="text-[#161618] font-[500] text-[13px]">Enamel Color :</span>

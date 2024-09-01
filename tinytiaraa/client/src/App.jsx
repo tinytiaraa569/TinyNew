@@ -78,13 +78,19 @@ import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
 import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 
-
+import ReactGA from 'react-ga';
+// ReactGA.initialize('G-DQ8YVWKBTB');
+// ReactGA.pageview(window.location.pathname + window.location.search);
 
 
 function App() {
 
 
-
+ // Initialize Google Analytics
+ useEffect(() => {
+  ReactGA.initialize('G-DQ8YVWKBTB'); // Replace with your actual GA4 Measurement ID
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}, []);
 
 
   const dispatch = useDispatch();

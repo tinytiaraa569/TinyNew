@@ -127,14 +127,14 @@ function Navbar1() {
         setsearchTerm("");
         setsearchData(null);
     };
-   
+
     const submitHandleagegroup = (ageGroupKey) => {
         if (!products || !ageGroupKey) return;
-    
-        const filteredProducts = products.filter(product => 
+
+        const filteredProducts = products.filter(product =>
             product.ageGroup && product.ageGroup[ageGroupKey] === true
         );
-        console.log("age group",filteredProducts)
+        console.log("age group", filteredProducts)
         navigate(`/products?ageGroup=${ageGroupKey}`, { state: { filteredProducts } });
         setShopDropdownOpen(false);
     };
@@ -146,11 +146,11 @@ function Navbar1() {
                 <div className='nav1banner '>
                     <div className='customerinfo'>
                         <span className='flex items-center'>
-                        <Link to="tel:+91 8657062511" className='ml-[2px] flex items-center font-[450]'><MdSupportAgent size={26} className='mr-[2px]' /> +91 86570 62511 | </Link>
-                            </span>
-                        <span className='ml-[3px] flex items-center'> 
+                            <Link to="tel:+91 8657062511" className='ml-[2px] flex items-center font-[450]'><MdSupportAgent size={26} className='mr-[2px]' /> +91 86570 62511 | </Link>
+                        </span>
+                        <span className='ml-[3px] flex items-center'>
                             <Link to="mailto:care@tinytiaraa.com" className='ml-[2px] flex items-center font-[450]'><IoMdMail size={24} className='mr-[2px]' />care@tinytiaraa.com </Link>
-                        </span> 
+                        </span>
 
                         {/* <span onClick={()=>{navigate('/shop-login')}}>Shop</span> */}
 
@@ -232,7 +232,7 @@ function Navbar1() {
                                                     </div>
 
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => {submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[red]'> | New</span></h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization</h6>
@@ -493,7 +493,7 @@ function Navbar1() {
             <div
                 className={`mobile-nav  ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
                     }
-      w-full h-[70px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
+      w-full h-[70px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden overflow-y-auto`}
             >
                 <div className="w-full flex items-center justify-between">
                     <div>
@@ -529,7 +529,7 @@ function Navbar1() {
                 {
                     open && (
                         <div className='fixed w-full bg-[#0000005f] z-[20] h-full top-0 left-0'>
-                            <div className='mobajustnavsall fixed w-[60%]  bg-[white] h-screen top-0 left-0 z-10'>
+                            <div className='mobajustnavsall fixed w-[75%]  bg-[white] h-screen top-0 left-0 z-10 overflow-x-hidden overflow-y-auto'>
                                 <div className="w-full justify-between flex pr-3">
                                     <div>
 
@@ -601,7 +601,7 @@ function Navbar1() {
                                                 <FaAngleRight className='ml-3' />
 
                                             </NavLink>
-                                            <div className="absolute top-[50%] left-0 w-[300px] mt-2 bg-white rounded-md shadow-lg hidden group-hover:block">
+                                            <div className="absolute top-[50%] left-0 w-[300px] mt-2 bg-white rounded-md shadow-lg hidden group-hover:block ">
                                                 <div className="p-4">
                                                     <div className="mb-4">
                                                         <h3 className="font-semibold text-lg text-center">Shop Now

@@ -86,7 +86,7 @@
 }
 
 .chainotionproduct .withchainoption .withchainoptioncon {
-    width: 140px;
+    width: 160px;
     height: auto;
     font-size: 14px;
     font-weight: 400;
@@ -95,6 +95,10 @@
 
 }
 
+.chain-options label input{
+    display: none;
+
+}
 .chainotionproduct .withchainoption .withchainoptioncon label {
     font-size: 14px;
     font-weight: 400;

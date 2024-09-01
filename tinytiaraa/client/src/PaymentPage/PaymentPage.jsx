@@ -15,7 +15,7 @@ function PaymentPage() {
     const [fullCountryName, setFullCountryName] = useState('');
     const [fullStateName, setFullStateName] = useState('');
 
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const { user } = useSelector((state) => state.user)
     const navigate = useNavigate()
@@ -638,6 +638,7 @@ function PaymentPage() {
 
     const handlecashondel = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const referralCode = sessionStorage.getItem('referralCode'); // Retrieve the referral code from session storage
         console.log('Captured referral code:', referralCode);
 
@@ -700,6 +701,7 @@ function PaymentPage() {
             localStorage.setItem("cartItems", JSON.stringify([]));
             localStorage.setItem("latestOrder", JSON.stringify([]));
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
+            setIsLoading(false);
             navigate("/order/success");
             window.location.reload()
 
@@ -707,6 +709,7 @@ function PaymentPage() {
             // Handle actions upon successful payment
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
             toast.error(error.response.data.message);
         }
     };
@@ -873,7 +876,7 @@ function PaymentPage() {
                 <input type="hidden" name="udf5" value={"details5"} />
                 <input type="hidden" name="hash" value={hash} />
                 <div className='button-wrapperdiv'>
-                <input type="submit" value="Pay With PayU" className='payu-button px-[5px] py-[8px]' />
+                    <input type="submit" value="Pay With PayU" className='payu-button px-[5px] py-[8px]' />
 
                 </div>
             </form>
@@ -881,6 +884,11 @@ function PaymentPage() {
     };
     return (
         <div className='w-full bg-[#fafafa;] pb-8'>
+             {isLoading && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="text-white text-xl">Loading...</div>
+                </div>
+            )}
             <div >
 
                 <div className='w-full flex pt-3 mb-7'>
@@ -970,24 +978,24 @@ function PaymentPage() {
                                 </div>
 
                                 <div className='flex items-center gap-8'>
-                                <div className='flex items-center gap-2'>
-                                    <input
-                                        id="payu"
-                                        type="radio"
-                                        name="paymentMethod"
-                                        value="payu"
-                                        checked={selectedPaymentMethod === 'payu'}
-                                        onChange={handlePaymentMethodChange}
-                                        className="int-emailcheck !w-[15px] !h-[15px] cursor-pointer"
-                                    />
-                                    <label htmlFor="payu" className='cursor-pointer block ml-[-9px]'>
-                                    <img src={payuimg} alt="" className=' !w-[100px] !h-[36px] object-contain ' />
+                                    <div className='flex items-center gap-2'>
+                                        <input
+                                            id="payu"
+                                            type="radio"
+                                            name="paymentMethod"
+                                            value="payu"
+                                            checked={selectedPaymentMethod === 'payu'}
+                                            onChange={handlePaymentMethodChange}
+                                            className="int-emailcheck !w-[15px] !h-[15px] cursor-pointer"
+                                        />
+                                        <label htmlFor="payu" className='cursor-pointer block ml-[-9px]'>
+                                            <img src={payuimg} alt="" className=' !w-[100px] !h-[36px] object-contain ' />
 
-                                    </label>
+                                        </label>
 
                                     </div>
 
-                                    
+
                                 </div>
 
                                 <div className='flex items-center gap-8 mt-3'>
@@ -1056,8 +1064,8 @@ function PaymentPage() {
                                                         <div className="text-[#161618] text-[13px] ">QTY : <span>{val.qty}</span>
                                                         </div>
                                                         <div className="">
-                                                            <span className="text-[#6f6f79] text-[13px] line-through">₹{val.originalPrice}</span>
-                                                            <span className=" text-[13px] pl-2" >₹{val.discountPrice}</span>
+                                                            <span className="text-[#6f6f79] text-[13px] line-through">₹{val.chainPrice > 0 ? val.originalPrice + val.chainPrice : val.originalPrice}</span>
+                                                            <span className=" text-[13px] pl-2" >₹{val.chainPrice > 0 ? val.discountPrice + val.chainPrice : val.discountPrice}</span>
                                                         </div>
 
 
@@ -1075,10 +1083,15 @@ function PaymentPage() {
                                                             <span className="text-[#161618] text-[13px] pl-2">{val.selectedEnamelColor}</span>
                                                         </div>
                                                     )}
-                                                    <div className="">
-                                                        <span className="text-[#161618] font-[500] text-[13px]">Metal Color :</span>
-                                                        <span className=" text-[#161618]  text-[13px] pl-2" >{metalColors[val.selectedColor]}</span>
-                                                    </div>
+                                                    {val?.selectedColor !== null && (
+                                                        <div className="">
+                                                            <span className="text-[#161618] font-[500] text-[13px]">Metal Color :</span>
+                                                            <span className=" text-[#161618]  text-[13px] pl-2" >{metalColors[val.selectedColor]}</span>
+                                                        </div>
+
+                                                    )}
+
+
                                                 </div>
 
 

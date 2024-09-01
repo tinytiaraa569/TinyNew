@@ -54,26 +54,7 @@ const message = require("./controller/message")
 const customised = require("./controller/Customised")
 const contactus = require("./controller/contactus")
 
-
-
-
-
-
-
-
 const referralRoutes = require('./controller/referralRoutes');
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.use("/api/v2/user", user)
 app.use("/api/v2/shop", shop)
@@ -87,16 +68,6 @@ app.use("/api/v2/message", message)
 app.use('/api/v2/referral', referralRoutes);
 app.use('/api/v2/customised', customised);
 app.use('/api/v2/contactus', contactus);
-
-
-
-
-
-
-
-
-
-
 
 
 

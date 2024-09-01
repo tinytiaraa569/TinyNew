@@ -1,0 +1,30 @@
+.custom-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+}
+
+@media (max-width: 1250px) {
+    .custom-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+@media (max-width: 1080px) {
+    .customheadingnewarrivals{
+        width: 95% !important;
+    }
+    .custom-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+@media (max-width: 650px) {
+    .customheadingnewarrivals{
+        width: 93% !important;
+    }
+    .custom-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+@media (max-width: 460px) {
+    .custom-grid {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+}
