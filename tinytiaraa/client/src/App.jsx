@@ -88,9 +88,11 @@ function App() {
 
  // Initialize Google Analytics
  useEffect(() => {
-  ReactGA.initialize('G-DQ8YVWKBTB'); // Replace with your actual GA4 Measurement ID
-  ReactGA.pageview(window.location.pathname + window.location.search);
-}, []);
+  // Trigger a page view on route change
+  window.gtag('config', 'G-DQ8YVWKBTB', {
+    page_path: location.pathname + location.search,
+  });
+}, [location]);
 
 
   const dispatch = useDispatch();
