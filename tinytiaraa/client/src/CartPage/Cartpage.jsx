@@ -36,7 +36,7 @@ function Cartpage() {
   // const toatalPrice = data.discountPrice * value
   const { cart } = useSelector((state) => state.cart)
 
-  console.log(cart,"see the details of cart page")
+  console.log(cart[0].shopId,"see the details of cart page")
   const { user } = useSelector((state) => state.user)
   const { seller ,isLoading } = useSelector((state) => state.seller);
   const [couponCode, setCouponCode] = useState("");
@@ -49,15 +49,16 @@ function Cartpage() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const shopId = cart[0].shopId
     axios
-      .get(`${server}/coupon/get-coupons/${seller?._id}`)
+      .get(`${server}/coupon/get-coupons/${shopId}`)
       .then((res) => {
         setAvailableCoupons(res.data.couponCodes); // Assuming your API returns an array of coupons
       })
       .catch((error) => {
         console.error('Error fetching coupons:', error);
       });
-  }, [seller]);
+  }, [cart]);
 
   console.log(availableCoupons,"avaiable coupon")
 
