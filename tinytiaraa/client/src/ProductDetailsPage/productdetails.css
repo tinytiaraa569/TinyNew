@@ -86,8 +86,8 @@
 }
 
 .chainotionproduct .withchainoption .withchainoptioncon {
-    width: 160px;
-    height: auto;
+    /* width: 160px;
+    height: auto; */
     font-size: 14px;
     font-weight: 400;
     line-height: 26px;
@@ -260,7 +260,17 @@
     text-overflow: ellipsis;
   }
 
-
+  .tagwithchain{
+    padding: 4px 8px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+  }
+.chainboxtsec{
+    margin-top: 6px;
+    padding: 4px 12px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
 @media (max-width:850px) {
     .productpageproname {
         font-size: 16px !important;
@@ -331,11 +341,39 @@
 }
 
 @media (max-width:500px) {
-    
+   
     .productdetailspageresp{
         padding: 2px 10px  !important;
     }
     .productdetailresptable{
         width: 90% !important;
+    }
+    .featurestsec{
+        width: 100% !important;
+    }
+    .featurestsec p{
+        font-size: 11px !important;
+    }
+}
+
+@media (max-width:400px) {
+    .withchainoptioncon{
+        font-size: 12px !important;
+    }
+    .chainopiontitle h3{
+        font-size: 11px !important;
+    }
+    .chainotionproduct {
+      
+        gap: 10px !important;
+    }
+    .suggestheadingadjust{
+        font-size: 16px !important;
+        padding-bottom: 10px !important;
+
+    }
+    .recentlyheadingtext{
+        font-size: 16px !important;
+        padding-bottom: 10px !important;
     }
 }

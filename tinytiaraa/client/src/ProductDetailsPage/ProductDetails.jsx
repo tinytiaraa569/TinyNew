@@ -1128,6 +1128,7 @@ function ProductDetails({ data }) {
                                                 <div className='withchainoption'>
                                                     <div className='withchainoptioncon text-[14px] font-Poppins py-1'>
                                                         <input
+                                                        className='hidden'
                                                             type='radio'
                                                             id='withChain'
                                                             name='chainOption'
@@ -1135,9 +1136,12 @@ function ProductDetails({ data }) {
                                                             onChange={() => toggleChainOption('with')}
                                                             checked={showWithChain}
                                                         />
-                                                        <label htmlFor='withChain' className='pl-2 cursor-pointer'>
+                                                        <label htmlFor='withChain' className=' cursor-pointer'>
+                                                            <div className={`tagwithchain ${showWithChain ? 'border border-[#006039]' : 'border-none'}`}>
+
                                                             With Chain
-                                                            <div className={`chain-options ${showWithChain ? 'visible' : 'hidden'}`}>
+                                                            </div>
+                                                            <div className={`chain-options mt-2 flex gap-2 ${showWithChain ? 'visible' : 'hidden'}`}>
                                                                 <label className={`chain-size-label cursor-pointer flex `}>
                                                                     <input
                                                                         type="radio"
@@ -1146,9 +1150,9 @@ function ProductDetails({ data }) {
                                                                         onChange={handleChainSizeChange}
                                                                         checked={selectedChainSize === '13inch'}
                                                                     />
-                                                                    <span className={`chain-size-text ${selectedChainSize === '13inch' ? '!font-[600]' : ''}`}>
-                                                                        {selectedChainSize === '13inch' ? '✔' : ''}
-                                                                        (13 inches) (+₹ 7,200)
+                                                                    <span className={`chainboxtsec chain-size-text ${selectedChainSize === '13inch' ? '!font-[600] !bg-[#a8eeb6] border border-[#006039]' : ''}`}>
+                                                                        {selectedChainSize === '13inch' ? '' : ''}
+                                                                        13 inches
                                                                     </span>
                                                                 </label>
                                                                 <label className={`chain-size-label cursor-pointer flex `}>
@@ -1159,17 +1163,17 @@ function ProductDetails({ data }) {
                                                                         onChange={handleChainSizeChange}
                                                                         checked={selectedChainSize === '18inch'}
                                                                     />
-                                                                    <span className={`chain-size-text ${selectedChainSize === '18inch' ? '!font-[600]' : ''}`}>
-                                                                        {selectedChainSize === '18inch' ? '✔' : ''}
-                                                                        (18 inches) (+₹ 14,400)
+                                                                    <span className={`chainboxtsec chain-size-text ${selectedChainSize === '18inch' ? '!font-[600] !bg-[#a8eeb6] border border-[#006039]' : ''}`}>
+                                                                        {selectedChainSize === '18inch' ? '' : ''}
+                                                                        18 inches
                                                                     </span>
                                                                 </label>
                                                             </div>
 
 
-                                                            <div className={`withchainimgcon  ${showWithChain ? 'mt-[2px]' : 'mt-[22px]'} `}>
+                                                            {/* <div className={`withchainimgcon  ${showWithChain ? 'mt-[2px]' : 'mt-[22px]'} `}>
                                                                 <img src={withchainimg} alt="" />
-                                                            </div>
+                                                            </div> */}
                                                         </label>
                                                     </div>
 
@@ -1177,6 +1181,7 @@ function ProductDetails({ data }) {
                                                 <div className='withchainoption'>
                                                     <div className='withchainoptioncon text-[14px] font-Poppins py-1'>
                                                         <input
+                                                            className='hidden'
                                                             type='radio'
                                                             id='withoutChain'
                                                             name='chainOption'
@@ -1184,11 +1189,15 @@ function ProductDetails({ data }) {
                                                             onChange={() => toggleChainOption('without')}
                                                             checked={!showWithChain}
                                                         />
-                                                        <label htmlFor='withoutChain' className='pl-2 cursor-pointer'>
+                                                        <label htmlFor='withoutChain' className=' cursor-pointer'>
+                                                            <div className={`tagwithchain ${!showWithChain ? 'border border-[#006039]' : 'border-none'}`}>
+
+                                                            
                                                             Without Chain
-                                                            <div className='withchainimgcon mt-[22px]'>
-                                                                <img src={withoutchainimg} alt="" />
                                                             </div>
+                                                            {/* <div className='withchainimgcon mt-[22px]'>
+                                                                <img src={withoutchainimg} alt="" />
+                                                            </div> */}
                                                         </label>
                                                     </div>
 
@@ -1471,31 +1480,31 @@ const ProductDetailsInfo = ({ data }) => {
                                 </AccordionSummary>
                                 <AccordionDetails className="bg-[#d1fbf3]">
                                     <div className="tsec2 flex flex-col font-Poppins">
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center '>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><GiMaterialsScience /></div>
                                             <p className='text-[#4f3267] text-[15px]'> Hypoallergenic Material</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><MdHealthAndSafety /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Quality and Safety First</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><FaChild /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Age-Appropriate Styles</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><GiHeartNecklace /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Everyday Use Jewellery</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><TbBrandMinecraft /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Crafted with Love</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><TbCertificate /></div>
                                             <p className='text-[#4f3267] text-[14px]'>Natural Diamonds with SGL Certificate</p>
                                         </div>
-                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center'>
+                                        <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><MdOutlineAppRegistration /></div>
                                             <p className='text-[#4f3267] text-[15px]'>Design Registration No. {data.designno}</p>
                                         </div>

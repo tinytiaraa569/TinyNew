@@ -30,7 +30,7 @@ function SuggestedProduct({ data }) {
     <div className="bg-[#f5f4f4]">
       {data && (
         <div className={`p-4 ${styles.section}`}>
-          <h2 className={`${styles.heading} text-[22px] font-[500] border-b mb-5 font-Poppins`}>
+          <h2 className={`${styles.heading} text-[22px] font-[500] border-b mb-5 font-Poppins suggestheadingadjust`}>
             You may also like
           </h2>
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
