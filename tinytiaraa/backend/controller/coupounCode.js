@@ -86,6 +86,24 @@ router.get("/get-coupon/:id", isSeller, catchAsyncErrors(async (req, res, next) 
   }
 }))
 
+//get all coupon codes
+
+router.get("/get-coupons/:id", catchAsyncErrors(async (req, res, next) => {
+  try {
+
+    const couponCodes = await CoupounCode.find({ shop: req.params.id });
+
+
+    res.status(201).json({
+      success: true,
+      couponCodes
+    })
+
+  } catch (error) {
+    return next(new ErrorHandler(error, 400));
+  }
+}))
+
 
 // delete coupoun code
 

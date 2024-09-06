@@ -556,7 +556,7 @@ const Welcome = require("@react-email/components").default;
 router.post(
     "/create-order",
     catchAsyncErrors(async (req, res, next) => {
-        const { cart, user, shippingAddress, totalPrice, paymentInfo, couponDiscount, referralCode } = req.body;
+        const { cart, user, shippingAddress, billingAddress , totalPrice, paymentInfo, couponDiscount, referralCode } = req.body;
         const metalColors = {
             0: "Yellow Gold",
             1: "Rose Gold",
@@ -816,6 +816,7 @@ router.post(
             const orderData = {
                 cart,
                 shippingAddress,
+                billingAddress,
                 user: userId,
                 totalPrice,
                 paymentInfo,

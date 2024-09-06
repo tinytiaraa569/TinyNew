@@ -9,13 +9,16 @@
 
 .nav1banner {
     padding: 10px 10px;
-    background-color: #5DC2B0;
-    color: rgb(0, 0, 0);
+    /* background-color: #5DC2B0; */
+    background: #006039;
+    /* color: rgb(0, 0, 0); */
+
+    color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
-    font-weight: 600;
+    font-weight: 500;
 
 }
 
@@ -28,8 +31,9 @@
 }
 
 .nav1banner .couponscetion {
-    font-size: 14px;
-    max-width: 60%;
+   
+    font-size: 13px;
+    /* max-width: 60%; */
     overflow: hidden;
     text-overflow: ellipsis;
     /* Adds ellipsis if the text overflows */
@@ -46,7 +50,9 @@
 .nav1banner .social-icons i {
     font-size: 18px;
     /* Adjust the icon size */
-    color: #000;
+    /* color: #000; */
+    color: #ffffff;
+
     transition: all 0.3s ease;
 }
 
@@ -58,7 +64,7 @@
 .navbar1 {
     padding: 5px 18px;
     color: black;
-    background-color: #fff;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     position: relative;
@@ -74,7 +80,7 @@
     width: 200px;
     height: 60px;
     object-fit: contain;
-    transform: scale(1.8);
+    transform: scale(2);
     transition: transform 0.3s ease;
 }
 
@@ -92,9 +98,11 @@
 .navbar1 .menu a {
     text-decoration: none;
     color: black;
+    /* font-family: ro; */
     font-family: "Poppins", sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 15px;
+    /* font-family: "Roboto", sans-serif !important; */
 }
 
 .navbar1 .menu a::after {
@@ -145,14 +153,16 @@
     display: none;
     /* Hide by default */
     border-top: 1px solid rgb(192, 192, 192);
-    padding: 10px 20px;
+    padding: 10px 20px 30px 20px;
     border-radius: 0 0 8px 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: opacity 0.3s ease, visibility 0.3s ease;
     opacity: 0;
     visibility: hidden;
 }
-
+.collectionnav1{
+    font-size: 14px !important;
+}
 .parenthover:hover .shopdrop {
     display: block;
     opacity: 1;
@@ -161,14 +171,14 @@
 
 .navshopimg {
     width: 250px;
-    height: 30vh;
+    height: 320px;
 }
 
 .navshopimg img {
     width: 90%;
     height: 100%;
-    object-fit: fill;
     border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .shopdrop .borderright {

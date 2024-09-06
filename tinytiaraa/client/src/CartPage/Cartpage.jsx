@@ -38,13 +38,30 @@ function Cartpage() {
 
   console.log(cart,"see the details of cart page")
   const { user } = useSelector((state) => state.user)
+  const { seller ,isLoading } = useSelector((state) => state.seller);
   const [couponCode, setCouponCode] = useState("");
   const [couponCodeData, setCouponCodeData] = useState(null)
   const [gstAmount, setGstAmount] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(null)
+  const [availableCoupons, setAvailableCoupons] = useState([]);
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    axios
+      .get(`${server}/coupon/get-coupons/${seller?._id}`)
+      .then((res) => {
+        setAvailableCoupons(res.data.couponCodes); // Assuming your API returns an array of coupons
+      })
+      .catch((error) => {
+        console.error('Error fetching coupons:', error);
+      });
+  }, [seller]);
+
+  console.log(availableCoupons,"avaiable coupon")
+
+  
 
   const removeFromCartHandler = (data) => {
     dispatch(removeFromCart(data))
@@ -154,7 +171,7 @@ function Cartpage() {
       }
     } catch (err) {
       console.error('API Error:', err);
-      toast.error('An error occurred while fetching referral balance');
+      // toast.error('An error occurred while fetching referral balance');
     }
   };
 
@@ -210,70 +227,13 @@ function Cartpage() {
   }
 
 
-
+  const handleCouponClick = (name) => {
+    setCouponCode(name); // Set the clicked coupon as the coupon code
+    handleSubmit(); // Automatically trigger the coupon application logic
+  };
 
   return (
-    // <div>
-
-    // // <div className='w-full h-screen checkoutsection mt-2'>
-    // //   <h1 className='text-center font-[500] text-[25px]'>Checkout Page</h1>
-    // //   {
-    // //     cart && cart.length === 0 ?
-    // //       <div>
-    // //         <div className='w-full h-screen flex justify-center items-center'>
-    // //           <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
-    // //             <RxCross1 className='cursor-pointer' />
-
-    // //           </div>
-    // //           <h5>Your Cart Is Empty ! </h5>
-
-    // //         </div>
-
-    // //       </div>
-    // //       :
-    // //       <div className='flex justify-evenly'>
-    // //         <div className='leftcheckoutscetion'>
-    // //           <div className={`${styles.noramlFlex} justify-center p-4`}>
-    // //             <IoBagHandleOutline size={25} />
-    // //             <h5 className='pl-2 text-[20px] font-[500]'>{cart.length} Items</h5>
-    // //           </div>
-    // //           <div>
-    // //             {
-    // //               cart && cart.map((val, index) => {
-    // //                 console.log(val)
-    // //                 return (
-    // //                   <div className="leftcheckoutcard mb-5" key={index}>
-
-    // //                     <CartSingle data={val} quantityChangeHandler={quantityChangeHandler} removeFromCartHandler={removeFromCartHandler} />
-
-
-    // //                     <div className='self px-6 py-10 cursor-pointer' style={{ alignSelf: "flex-start" }} onClick={() => removeFromCartHandler(val)}>
-    // //                       <MdDeleteForever size={30} color='#e44343' />
-
-    // //                     </div>
-
-    // //                   </div>
-    // //                 )
-    // //               })
-    // //             }
-    // //           </div>
-    // //           <div className='mt-2'>
-    // //             <h2 className='text-[22px] font-[600]'>Total : - ₹ {totalPrice}</h2>
-
-    // //           </div>
-
-    // //         </div>
-
-    // //         <div className='rightcheckoutscetion' >
-    // //           <button className={`border p-2 ${styles.cart_button}`}>CheckOut Page</button>
-
-    // //         </div>
-
-    // //       </div>
-    // //   }
-
-    // // </div>
-    // </div>
+    
 
     <div className='w-full  bg-[#fafafa;] pb-8'>
       <div class="text-center font-[500] text-[22px] py-5">
@@ -330,19 +290,19 @@ function Cartpage() {
                   <div className="contactus">
                     <div className="phonecontact">
                       <span className="phoneicon" width={24} height={24}>
-                        <i className="fa-solid fa-phone" />
+                        <i className="fa-solid fa-phone text-[#006039]" />
                       </span>
-                      <span className="phonenumber spantext">Call US :- +91 86570 62511</span>
+                      <span className="phonenumber spantext !text-[12px]">Call US :- +91 86570 62511</span>
                     </div>
                     <div className="phonecontact">
                       <span className="emailicon" width={24} height={24}>
-                        <i className="fa-solid fa-envelope" />
+                        <i className="fa-solid fa-envelope text-[#006039]" />
                       </span>
                       <span className="phonenumber spantext">Email US</span>
                     </div>
                     <div className="phonecontact">
                       <span className="chaticon" width={24} height={24}>
-                        <i className="fa-solid fa-message" />
+                        <i className="fa-solid fa-message text-[#006039]" />
                       </span>
                       <span className="phonenumber spantext">Chat With US </span>
                     </div>
@@ -392,7 +352,30 @@ function Cartpage() {
                       <button type='submit'>Apply</button>
                     </div>
                   </div>
-                </form>
+
+                  <div className="available-coupons mt-2">
+  <h3 className="!text-[12px] mt-2 mb-1 ">Available Coupons</h3>
+  {isLoading ? (
+    <p className="text-gray-500">Loading coupons...</p>
+  ) : availableCoupons.length > 0 ? (
+    <div className="flex flex-wrap gap-3">
+      {availableCoupons.map((coupon) => (
+        <div 
+          key={coupon._id} 
+          className="bg-green-200 text-green-800 px-3 py-2 rounded-full text-[14px]  shadow-sm hover:bg-green-300 transition cursor-pointer"
+          onClick={() => handleCouponClick(coupon.name)} // Added onClick handler
+        >
+          <strong className='!text-[12px]'>{coupon.name}</strong>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-gray-500">No coupons available</p>
+  )}
+</div>
+
+</form>
+
               </div>
               <div className="summarysection">
                 <h3>Order Summary</h3>

@@ -82,7 +82,11 @@ function ProductDetails({ data }) {
 
     const productSlug = createSlug(data.name);
     const productUrl = `https://tiny-tiaraanew.vercel.app/product/${productSlug}`;
+    const [isExpanded, setIsExpanded] = useState(false);
 
+    const toggleExpansion = () => {
+      setIsExpanded(!isExpanded);
+    };
 
     // // console.log(data.withchainimages)
     // const addToCartHandler = (id) => {
@@ -281,7 +285,7 @@ function ProductDetails({ data }) {
             }
 
             const chainPrice = selectedChainSize === '13inch' ? 7200 : (selectedChainSize === '18inch' ? 14400 : 0);
-       
+
             // Proceed with adding to cart
             const cartData = {
                 ...data,
@@ -290,7 +294,7 @@ function ProductDetails({ data }) {
                 showWithChain: showWithChain,
                 selectedEnamelColor: selectedEnamelColor,
                 selectedChainSize: selectedChainSize, // Add selected chain size,
-                chainPrice:chainPrice
+                chainPrice: chainPrice
             };
             dispatch(addToCart(cartData));
             toast.success("Product added to cart");
@@ -735,6 +739,12 @@ function ProductDetails({ data }) {
 
     console.log(selectedChainSize, "chain size")
 
+    // const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleReadMore = () => {
+        setIsExpanded(!isExpanded);
+    };
+
 
     return (
         <div className='bg-white'>
@@ -853,9 +863,32 @@ function ProductDetails({ data }) {
 
                                 <div className='w-full 800px:w-[50%] pt-2'>
 
-                                    <h1 className={`${styles.productTitle} !font-[450]`}>{data.name}</h1>
-                                    <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-2`}>{data.skuid}</h3>
-                                    <p className="font-Poppins pt-1 text-[14px]">{data.description}</p>
+                                    <h1 className={`${styles.productTitle} !font-[450] productpageproname`}>{data.name}</h1>
+                                    <h3 className={`text-[#727386] text-left  text-[14px] font-Poppins pt-2 productpageproskuid`}>{data.skuid}</h3>
+                                    <p 
+                                     className={`font-Poppins pt-1 text-[14px] productpageprodesc ${isExpanded ? '' : 'line-clamp'}`} 
+                                      onClick={toggleReadMore}
+                                     >
+                                      {data.description}
+                                    </p>
+
+                                           {/* Conditionally render "View More" or "View Less" */}
+                                     {!isExpanded && data.description.length > 100 && (
+                                    <span 
+                                        className='text-[14px] text-blue-400 cursor-pointer'
+                                         onClick={toggleReadMore}
+                                      >
+                                       View More
+                                    </span>
+                                     )}
+                                     {isExpanded && (
+                                      <span 
+                                         className='text-[14px] text-blue-400 cursor-pointer'
+                                          onClick={toggleReadMore}
+                                        >
+                                     View Less
+                                      </span>
+                                    )}
 
 
                                     <div className="flex items-center pt-3">
@@ -1093,7 +1126,7 @@ function ProductDetails({ data }) {
 
                                             <div className='chainotionproductflex'>
                                                 <div className='withchainoption'>
-                                                    <div className='withchainoptioncon text-[16px] font-Poppins py-1'>
+                                                    <div className='withchainoptioncon text-[14px] font-Poppins py-1'>
                                                         <input
                                                             type='radio'
                                                             id='withChain'
@@ -1103,9 +1136,9 @@ function ProductDetails({ data }) {
                                                             checked={showWithChain}
                                                         />
                                                         <label htmlFor='withChain' className='pl-2 cursor-pointer'>
-                                                            With 1 gm Chain
+                                                            With Chain
                                                             <div className={`chain-options ${showWithChain ? 'visible' : 'hidden'}`}>
-                                                                <label className={`chain-size-label cursor-pointer`}>
+                                                                <label className={`chain-size-label cursor-pointer flex `}>
                                                                     <input
                                                                         type="radio"
                                                                         name="chainSize"
@@ -1114,10 +1147,11 @@ function ProductDetails({ data }) {
                                                                         checked={selectedChainSize === '13inch'}
                                                                     />
                                                                     <span className={`chain-size-text ${selectedChainSize === '13inch' ? '!font-[600]' : ''}`}>
-                                                                    {selectedChainSize === '13inch' ? '✔' : ''} (13 inches) (+₹ 7,200)
+                                                                        {selectedChainSize === '13inch' ? '✔' : ''}
+                                                                        (13 inches) (+₹ 7,200)
                                                                     </span>
                                                                 </label>
-                                                                <label className={`chain-size-label cursor-pointer`}>
+                                                                <label className={`chain-size-label cursor-pointer flex `}>
                                                                     <input
                                                                         type="radio"
                                                                         name="chainSize"
@@ -1126,7 +1160,8 @@ function ProductDetails({ data }) {
                                                                         checked={selectedChainSize === '18inch'}
                                                                     />
                                                                     <span className={`chain-size-text ${selectedChainSize === '18inch' ? '!font-[600]' : ''}`}>
-                                                                    {selectedChainSize === '18inch' ? '✔' : ''}  (18 inches) (+₹ 14,400)
+                                                                        {selectedChainSize === '18inch' ? '✔' : ''}
+                                                                        (18 inches) (+₹ 14,400)
                                                                     </span>
                                                                 </label>
                                                             </div>
@@ -1140,7 +1175,7 @@ function ProductDetails({ data }) {
 
                                                 </div>
                                                 <div className='withchainoption'>
-                                                    <div className='withchainoptioncon text-[16px] font-Poppins py-1'>
+                                                    <div className='withchainoptioncon text-[14px] font-Poppins py-1'>
                                                         <input
                                                             type='radio'
                                                             id='withoutChain'
@@ -1313,10 +1348,10 @@ const ProductDetailsInfo = ({ data }) => {
 
 
     return (
-        <div className='bg-[#fcfcfc] shadow-lg  border-[0.1px] border-[#f8f8f8] mb-5 px-10 800px:px-2 py-2 rounded pb-5'>
+        <div className='bg-[#fcfcfc] shadow-lg  border-[0.1px] border-[#f8f8f8] mb-5 px-10 800px:px-2 py-2 rounded pb-5 productdetailspageresp'>
             <div className="w-full flex justify-between border-b pt-10 pb-2">
                 <div className="relative">
-                    <h5 className={`${active === 1 ? "text-[#1BB8E5] font-[700]" : "text-[#000]"} text-[18px]  px-1 leading-5 cursor-pointer 800px:text-[20px] font-Poppins `} onClick={() => setActive(1)} >Product Details</h5>
+                    <h5 className={`${active === 1 ? "text-[#1BB8E5] font-[700]" : "text-[#000]"} text-[16px]  px-1 leading-5 cursor-pointer 800px:text-[20px] font-Poppins `} onClick={() => setActive(1)} >Product Details</h5>
                     {/* {
                     active === 1 ?
                      (
@@ -1324,7 +1359,7 @@ const ProductDetailsInfo = ({ data }) => {
                     ) : null} */}
                 </div>
                 <div className="relative">
-                    <h5 className={`${active === 2 ? "text-[#1BB8E5] font-[700]" : "text-[#000]"} text-[18px] px-1 leading-5 cursor-pointer 800px:text-[20px] font-Poppins`} onClick={() => setActive(2)}>Product Reviews</h5>
+                    <h5 className={`${active === 2 ? "text-[#1BB8E5] font-[700]" : "text-[#000]"} text-[16px] px-1 leading-5 cursor-pointer 800px:text-[20px] font-Poppins`} onClick={() => setActive(2)}>Product Reviews</h5>
 
                 </div>
 
@@ -1332,10 +1367,10 @@ const ProductDetailsInfo = ({ data }) => {
             {
                 active === 1 ?
                     <>
-                        <div className='mb-3'>
-                            <h1 className={`text-[20px] font-[600] font-Poppins text-[#333] pt-1`}>{data.name}</h1>
+                        <div className='mb-3 productdetailspagerespcon'>
+                            <h1 className={`text-[18px] font-[600] font-Poppins text-[#333] pt-1`}>{data.name}</h1>
                             <p className="font-Poppins pt-1">{data.description}</p>
-                            <h3 className={`text-[#727386] text-left  text-[16px] font-Poppins pt-1`}>{data.skuid}</h3>
+                            <h3 className={`text-[#727386] text-left  text-[15px] font-Poppins pt-1`}>{data.skuid}</h3>
 
                         </div>
 
@@ -1343,7 +1378,7 @@ const ProductDetailsInfo = ({ data }) => {
 
                         <div className='flex flex-wrap  gap-5'>
 
-                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
+                            <div className="bg-[#5DC2B0] w-[300px] font-Poppins mb-3 rounded-[4px] productdetailresptable">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><AiOutlineGold /></span>
                                     <span className='font-[500]'>Gold</span>
@@ -1351,16 +1386,16 @@ const ProductDetailsInfo = ({ data }) => {
                                 <div className="tsec2 flex font-Poppins">
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Weight</div>
-                                        <p className='text-[#4f3267] text-[14px]'> {data?.goldWeight ? data.goldWeight.weight : "Not Updated"} </p>
+                                        <p className='text-[#4f3267] text-[13px]'> {data?.goldWeight ? data.goldWeight.weight : "Not Updated"} </p>
                                     </div>
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Purity</div>
-                                        <p className='text-[#4f3267] text-[14px]'>{data?.goldWeight ? data.goldWeight.purity : "18 kt"}</p>
+                                        <p className='text-[#4f3267] text-[13px]'>{data?.goldWeight ? data.goldWeight.purity : "18 kt"}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
+                            <div className="bg-[#5DC2B0] w-[300px] font-Poppins mb-3 rounded-[4px] productdetailresptable">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><IoDiamondOutline /></span>
                                     <span className='font-[500]'>Diamond</span>
@@ -1368,16 +1403,16 @@ const ProductDetailsInfo = ({ data }) => {
                                 <div className="tsec2 flex font-Poppins">
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Weight</div>
-                                        <p className='text-[#4f3267] text-[14px]'>{data?.diamondWeight ? data.diamondWeight.weight : "Not Updated"} </p>
+                                        <p className='text-[#4f3267] text-[13px]'>{data?.diamondWeight ? data.diamondWeight.weight : "Not Updated"} </p>
                                     </div>
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Quality</div>
-                                        <p className='text-[#4f3267] text-[14px]'>{data?.diamondWeight ? data.diamondWeight.quality : " GH-VS"}</p>
+                                        <p className='text-[#4f3267] text-[13px]'>{data?.diamondWeight ? data.diamondWeight.quality : " GH-VS"}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
+                            <div className="bg-[#5DC2B0] w-[300px] font-Poppins mb-3 rounded-[4px] productdetailresptable">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><RxDimensions /></span>
                                     <span className='font-[500]'>Dimension</span>
@@ -1385,28 +1420,32 @@ const ProductDetailsInfo = ({ data }) => {
                                 <div className="tsec2 flex font-Poppins">
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Height</div>
-                                        <p className='text-[#4f3267] text-[14px]'> {data?.dimension ? data.dimension.height : "Not Updated"}</p>
+                                        <p className='text-[#4f3267] text-[13px]'> {data?.dimension ? data.dimension.height : "Not Updated"}</p>
                                     </div>
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
                                         <div className='pb-[8px] font-[600] '>Width</div>
-                                        <p className='text-[#4f3267] text-[14px]'>{data?.dimension ? data.dimension.width : "Not Updated"} </p>
+                                        <p className='text-[#4f3267] text-[13px]'>{data?.dimension ? data.dimension.width : "Not Updated"} </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-[#5DC2B0] w-[320px] font-Poppins mb-3 rounded-[4px]">
+                            <div className="bg-[#5DC2B0] w-[300px] font-Poppins mb-3 rounded-[4px] productdetailresptable">
                                 <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
                                     <span><GiHeartNecklace /></span>
                                     <span className='font-[500]'>Chain </span>
                                 </div>
                                 <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
-                                        <div className='pb-[8px] font-[600] '>Length</div>
-                                        <p className='text-[#4f3267] text-[14px]'>13 inch</p>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
+                                        <div className='pb-[2px] font-[600] '>Length</div>
+                                        <p className='text-[#4f3267] text-[13px]'>13 inch</p>
+                                        <p className='text-[#4f3267] text-[13px]'>18 inch</p>
+
                                     </div>
-                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[10px]'>
-                                        <div className='pb-[8px] font-[600] '>Weight</div>
-                                        <p className='text-[#4f3267] text-[14px]'> 1gm </p>
+                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
+                                        <div className='pb-[2px] font-[600] '>Weight</div>
+                                        <p className='text-[#4f3267] text-[13px]'> 1gm </p>
+                                        <p className='text-[#4f3267] text-[13px]'> 2gm </p>
+
                                     </div>
                                 </div>
                             </div>

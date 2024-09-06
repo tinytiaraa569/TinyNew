@@ -13,7 +13,7 @@ function Categories() {
       };
     return (
         <div className='Categories pb-5'  >
-            <h1 className='text-[32px] font-[600]'>Explore by Category</h1>
+            <h1 className='Categoriesexplore text-[30px] font-[450]'>Explore By Category</h1>
 
             <div className="categoriessection">
                 {categoriesData.map((category) => (

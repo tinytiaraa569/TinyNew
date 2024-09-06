@@ -1,304 +1,222 @@
-/* .safetbg{
-  background-image:  url(referbg.jpg);
-  background-size: 100% 50vh;
-} */
-.refbtn {
-  margin-top: 10px;
+/* Hide slider for screens larger than 569px */
+.slider-steps {
+  display: none;
 }
 
-.referbanner {
-  padding: 20px 0;
-}
 
-.referbanner h1 {
-  font-size: 35px;
-  font-weight: 400;
-  line-height: 52px;
-  letter-spacing: 3px;
-  text-align: center;
-  color: #01463A;
-}
-
-.referbanner p {
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  color: #818181;
-  text-align: center;
-}
-
-.referbannerimg {
+.refermain {
   width: 100%;
-  height: 60vh;
-  position: relative;
+  height: 90vh;
+  display: flex;
+  gap: 30px;
 }
 
-.referbannerimg img {
+.refermainimg {
+  width: 50%;
+  height: 80vh;
+  margin: auto;
+}
+
+.refermainimg img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  /* or 'contain' depending on your preference */
+  /* object-fit: contain; */
 }
 
-.referbanner .refrbannercontenttext {
-  position: absolute;
-  top: 45%;
-  left: 23%;
-  max-width: 470px;
-  text-align: center;
-
+.refermaincontent {
+  padding: 30px 25px !important;
 }
 
-.referbanner .refrbannercontenttext p {
-
-  font-weight: 400;
-  line-height: 36px;
-  letter-spacing: 2px;
-  text-align: center;
-  color: #02231D;
-  margin-bottom: 15px;
+.referheading h1 {
+  font-size: 30px;
 }
 
-.referbanner .refrbannercontenttext button {
-  width: 231px;
-  height: 56px;
-  padding: 12px;
-  border-radius: 8px;
-  background: #5DC2B0;
-  box-shadow: 0px 2px 8px 0px #00000040;
-  color: #000000;
-  font-size: 24px;
-  font-weight: 450;
-  line-height: 24px;
-  letter-spacing: 0.05em;
-  transition: all 0.5s;
-
+.referheading p {
+  font-size: 14px;
+  margin: 10px 0;
 }
 
-.referbanner .refrbannercontenttext button:hover {
-  background: #45ae9b;
-  box-shadow: 0px 5px 10px 0px #0000006e;
-  transform: scale(1.1);
-
+.referstepno {
+  /* display: flex;
+  align-items: center; */
 }
-.refermainbox{
+
+.refersteps {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 30px;
+}
+
+.refersteps .referstep {
+  padding: 20px 15px;
+  width: 350px;
+  height: auto;
+  display: flex;
+  gap: 40px;
+  box-shadow: 2px 2px 10px #00000040;
+  border-radius: 10px;
   cursor: pointer;
 }
+.refersteps .referstep:hover {
+  transform: scale(1.03);
+  box-shadow: 2px 2px 10px #00000088;
 
-.refergreen {
-  padding: 40px 0 0 0;
-  width: 256px;
-  height: 330px;
-  border-radius: 60px;
-  opacity: 0px;
-  background: #FFFFFF;
-
-  box-shadow: 2px 2px 10px 0px #00000040;
-  overflow: hidden;
-
-
+  
+}
+.referstep .referstepno h1 {
+  font-size: 40px;
+  font-weight: 600;
+  color: #006039;
 }
 
-.referround {
-  padding: 14px 3px;
-  border-radius: 45px;
-  background: #5DC2B0;
-
+.referstep .refersteptext h3 {
+  font-size: 18px;
+  font-weight: 500;
 }
 
-.referround p {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 30px;
-  letter-spacing: 1px;
-  text-align: center;
-
+.referstep .refersteptext p {
+  font-size: 14px;
+  margin-top: 5px;
 }
 
-@media (max-width:1600px) {
-  .referbanner .refrbannercontenttext {
-    left: 18%;
+@media (max-width: 1080px) {
+  .refermain {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
   }
 
-}
-
-@media (max-width:1400px) {
-  .referbanner .refrbannercontenttext {
-    left: 15%;
+  .refermainimg {
+    width: 50%;
+    height: auto;
   }
 
-}
-
-@media (max-width:1200px) {
-  .referbanner .refrbannercontenttext {
-    left: 8%;
-  }
-
-}
-
-@media (max-width:1080px) {
-  .referbanner .refrbannercontenttext {
-    left: 4%;
-  }
-
-}
-
-
-
-
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .referbanner h1 {
-    font-size: 28px;
-    line-height: 40px;
-  }
-
-  .referbanner p {
-    font-size: 14px;
-    line-height: 24px;
-  }
-
-  .referbannerimg {
-    height: 500px;
-  }
-
-}
-
-@media (max-width:1080px) {
-  .referbanner .refrbannercontenttext {
-    left: 2%;
-  }
-
-}
-
-@media (max-width:900px) {
-
-
-  .referbanner .refrbannercontenttext {
-    max-width: 400px;
-    left: 2%;
-
-
-  }
-
-}
-
-@media (max-width: 768px) {
-  .referbanner h1 {
-    font-size: 24px;
-    line-height: 36px;
-  }
-
-  .referbanner p {
-    font-size: 12px;
-    line-height: 20px;
-  }
-
-  .referbannerimg {
-    height: 300px;
-  }
-
-  .referbanner .refrbannercontenttext {
-    max-width: 290px;
-    left: 10%;
-  }
-
-  .referbanner .refrbannercontenttext p {
-    line-height: 26px;
-    letter-spacing: 2px;
-    text-align: center;
-    color: #02231D;
-    margin-bottom: 15px;
-  }
-
-  .referbanner .refrbannercontenttext button {
-
-    width: 151px;
-    height: 40px;
-    padding: 8px;
-    line-height: 24px;
-    font-size: 18px;
-
+  .refermainimg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 
-@media (max-width:600px) {
-  .referbanner .refrbannercontenttext {
-    max-width: 250px;
-    left: 5%;
+@media (max-width: 800px) {
+  .refersteps {
+    justify-content: center;
+    grid-template-columns: 43% 43%;
+    gap: 30px;
   }
 
-  .referbanner .refrbannercontenttext p {
-    line-height: 22px;
-    letter-spacing: 2px;
-    text-align: center;
-    color: #02231D;
-    margin-bottom: 15px;
+  .refersteps .referstep {
+    width: 100%;
   }
-
-  .referbanner .refrbannercontenttext button {
-
-    width: 131px;
-    height: 40px;
-    padding: 8px;
-    line-height: 24px;
-    font-size: 16px;
-
-  }
-
 }
 
-@media (max-width: 480px) {
-  .referbanner h1 {
-    font-size: 20px;
-    line-height: 30px;
+@media (max-width: 650px) {
+  .refersteps {
+    justify-content: center;
+    grid-template-columns: 48% 48%;
+    gap: 15px;
   }
 
-  .referbanner p {
-    font-size: 10px;
-    line-height: 18px;
+  .refersteps .referstep {
+    width: 100%;
   }
+}
 
-  .referbannerimg {
-    height: 200px;
-  }
+@media (max-width: 600px) {
 
-  .referbanner .refrbannercontenttext p {
+  /* Hide regular steps and show slider for small screens */
+  .regular-steps {
     display: none;
   }
 
-  .referbanner .refrbannercontenttext {
-    width: 45%;
-
+  .slider-steps {
+    display: block;
+  }
+  .referstep {
+    margin: auto !important;
+    padding: 10px 15px;
+    width: 350px;
+    height: auto;
+    display: flex;
+    gap: 25px;
+    box-shadow: 2px 2px 10px #00000040;
+    border-radius: 10px;
+    cursor: pointer;
   }
 
-  .referbanner .refrbannercontenttext button {
-    margin-top: 20px;
-    width: 81px;
-    height: 40px;
-    padding: 8px;
-    line-height: 24px;
-    font-size: 14px;
+  .slidersafteryadjust {
+    padding: 10px;
+  }
 
+  /* Target only the slider in the custom-slider class */
+  .custom-slider .slick-prev {
+    position: absolute;
+    left: -25px !important;
+    width: 20px;
+    height: 20px;
+    background-color: #006039;
+    color: white;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .custom-slider .slick-next {
+    right: -15px;
+    width: 20px;
+    height: 20px;
+    background-color: #006039;
+    color: white;
+    border-radius: 50%;
+    z-index: 1;
   }
 }
 
-.refbtn button {
-  color: white;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  padding: 14px 25px;
-  background-color: #7b7df3;
-  border: none;
-  border-radius: 30px;
-  font-size: 20px;
-  cursor: pointer;
+@media (max-width: 400px) {
+
+  /* Hide regular steps and show slider for small screens */
+  .regular-steps {
+    display: none;
+  }
+
+  .slider-steps {
+    display: block;
+  }
+  .referstep {
+    margin: auto !important;
+    padding: 10px 15px;
+    width: 95%;
+    height: auto;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 10px #00000040;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .slidersafteryadjust {
+    padding: 10px;
+  }
+  .custom-slider .slick-prev {
+    position: absolute;
+    left: -25px !important;
+    width: 20px;
+    height: 20px;
+    background-color: #006039;
+    color: white;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .custom-slider .slick-next {
+    right: -15px;
+    width: 20px;
+    height: 20px;
+    background-color: #006039;
+    color: white;
+    border-radius: 50%;
+    z-index: 1;
+  }
 }
 
-.refbtn button:hover {
-
-  background-color: rgb(72, 126, 206);
-
-
-}
+  

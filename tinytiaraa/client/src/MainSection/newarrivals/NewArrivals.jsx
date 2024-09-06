@@ -2,20 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../../Styles/styles';
 import ProductCard from '../Productcard/ProductCard';
-import './newarrivals.css'
+import './newarrivals.css';
 
 function NewArrivals() {
   const { products } = useSelector((state) => state.products);
-  const [visibleCount, setVisibleCount] = useState(10); // Start with 10 products
+  const [visibleCount, setVisibleCount] = useState(10); // Default to 10 for larger screens
+
+  const updateVisibleCount = () => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 768) {
+      setVisibleCount(6); // Show 6 products on smaller screens (mobile/tablet)
+    } else {
+      setVisibleCount(10); // Show 10 products on larger screens (desktop)
+    }
+  };
 
   const handleViewMore = () => {
-    // Preserve the scroll position
     const scrollPosition = window.scrollY;
-
-    // Increase the visible count to show more products
-    setVisibleCount((prevCount) => prevCount + 10);
-
-    // Restore the scroll position after the update
+    setVisibleCount((prevCount) => prevCount + 10); // Load 10 more products
     window.requestAnimationFrame(() => {
       window.scrollTo(0, scrollPosition);
     });
@@ -23,16 +28,24 @@ function NewArrivals() {
 
   useEffect(() => {
     if (Array.isArray(products)) {
-      setVisibleCount(10); // Reset to show only the first 10 products initially
+      updateVisibleCount(); // Set visibleCount based on screen size initially
     }
+
+    // Listen for window resize events to update the product count
+    window.addEventListener('resize', updateVisibleCount);
+    
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('resize', updateVisibleCount);
+    };
   }, [products]);
 
   return (
     <div className='bg-[#fff] py-5'>
       <div className={`customheadingnewarrivals ${styles.section}`}>
-        <div className={`${styles.heading}`}>
-          <h1 className='text-[#01463A] text-[35px] font-[400] text-center'>Featured product</h1>
-          <p className='text-[#3A3A3A] text-[22px] text-center font-[300]'>Shop by our top-selling categories, bought frequently by most customers</p>
+        <div className={`${styles.heading} customheadingnewarrivalsheading`}>
+          <h1 className='text-[#01463A] text-[30px] font-[400] text-center'>Featured product</h1>
+          <p className='text-[#3A3A3A] text-[20px] text-center font-[300]'>Shop by our top-selling categories, bought frequently by most customers</p>
         </div>
         <div className="grid custom-grid gap-[20px]">
           {
@@ -44,13 +57,13 @@ function NewArrivals() {
       </div>
       {
         Array.isArray(products) && visibleCount < products.length && (
-          <div className="text-center">
-            <h4
-              className='text-[17px] font-[600] font-Poppins cursor-pointer'
+          <div className="text-center mt-[15px]">
+            <button 
+              className='productviewmore text-[17px] font-[600] font-Poppins cursor-pointer'
               onClick={handleViewMore}
             >
               View More
-            </h4>
+            </button>
           </div>
         )
       }

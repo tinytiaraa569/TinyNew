@@ -24,7 +24,7 @@
 .button-wrapperdiv {
     max-width: 300px;
 
-    background: rgb(22, 22, 24);
+    background: #006039;
     font-weight: 400;
     font-size: 16px;
     line-height: 30px;
@@ -40,7 +40,10 @@
     width: 100%;
     padding: 10px 5px;
 }
-
+.button-wrapperdiv:hover{
+    
+    background: #098d58;
+}
 .checkoutright {
     padding: 8px;
     border: 1px solid rgb(231, 231, 233);

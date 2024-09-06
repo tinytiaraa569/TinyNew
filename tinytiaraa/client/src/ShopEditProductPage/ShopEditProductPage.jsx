@@ -511,12 +511,12 @@ function ShopEditProductPage() {
     const pinkhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetYellowGoldclr([]);
+        // pinksetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    pinksetYellowGoldclr((old) => [...old, reader.result]);
+                    pinksetYellowGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -536,12 +536,12 @@ function ShopEditProductPage() {
     const pinkhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetRoseGoldclr([]);
+        // pinksetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    pinksetRoseGoldclr((old) => [...old, reader.result]);
+                    pinksetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -561,12 +561,12 @@ function ShopEditProductPage() {
     const pinkhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        pinksetWhiteGoldclr([]);
+        // pinksetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    pinksetWhiteGoldclr((old) => [...old, reader.result]);
+                    pinksetWhiteGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -593,12 +593,12 @@ function ShopEditProductPage() {
     const turquoisehandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetYellowGoldclr([]);
+        // turquoisesetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    turquoisesetYellowGoldclr((old) => [...old, reader.result]);
+                    turquoisesetYellowGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -618,12 +618,12 @@ function ShopEditProductPage() {
     const turquoisehandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetRoseGoldclr([]);
+        // turquoisesetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    turquoisesetRoseGoldclr((old) => [...old, reader.result]);
+                    turquoisesetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -643,12 +643,12 @@ function ShopEditProductPage() {
     const turquoisehandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        turquoisesetWhiteGoldclr([]);
+        // turquoisesetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    turquoisesetWhiteGoldclr((old) => [...old, reader.result]);
+                    turquoisesetWhiteGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -672,12 +672,12 @@ function ShopEditProductPage() {
     const redhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetYellowGoldclr([]);
+        // redsetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    redsetYellowGoldclr((old) => [...old, reader.result]);
+                    redsetYellowGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -697,12 +697,12 @@ function ShopEditProductPage() {
     const redhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetRoseGoldclr([]);
+        // redsetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    redsetRoseGoldclr((old) => [...old, reader.result]);
+                    redsetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -722,12 +722,12 @@ function ShopEditProductPage() {
     const redhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        redsetWhiteGoldclr([]);
+        // redsetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    redsetWhiteGoldclr((old) => [...old, reader.result]);
+                    redsetWhiteGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -753,12 +753,12 @@ function ShopEditProductPage() {
     const blackhandlewithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetYellowGoldclr([]);
+        // blacksetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    blacksetYellowGoldclr((old) => [...old, reader.result]);
+                    blacksetYellowGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -779,12 +779,12 @@ function ShopEditProductPage() {
     const blackhandlewithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetRoseGoldclr([]);
+        // blacksetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    blacksetRoseGoldclr((old) => [...old, reader.result]);
+                    blacksetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -805,12 +805,12 @@ function ShopEditProductPage() {
     const blackhandlewithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        blacksetWhiteGoldclr([]);
+        // blacksetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    blacksetWhiteGoldclr((old) => [...old, reader.result]);
+                    blacksetWhiteGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -838,12 +838,12 @@ function ShopEditProductPage() {
     const deepgreenHandleWithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetYellowGoldclr([]);
+        // deepgreenSetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    deepgreenSetYellowGoldclr((old) => [...old, reader.result]);
+                    deepgreenSetYellowGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -865,12 +865,12 @@ function ShopEditProductPage() {
     const deepgreenHandleWithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetRoseGoldclr([]);
+        // deepgreenSetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    deepgreenSetRoseGoldclr((old) => [...old, reader.result]);
+                    deepgreenSetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -890,12 +890,12 @@ function ShopEditProductPage() {
     const deepgreenHandleWithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        deepgreenSetWhiteGoldclr([]);
+        // deepgreenSetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    deepgreenSetWhiteGoldclr((old) => [...old, reader.result]);
+                    deepgreenSetWhiteGoldclr((old) => [...old,{ url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -918,12 +918,12 @@ function ShopEditProductPage() {
     const lotusgreenHandleWithYellowclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetYellowGoldclr([]);
+        // lotusgreenSetYellowGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    lotusgreenSetYellowGoldclr((old) => [...old, reader.result]);
+                    lotusgreenSetYellowGoldclr((old) => [...old,{ url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -944,12 +944,12 @@ function ShopEditProductPage() {
     const lotusgreenHandleWithRoseclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetRoseGoldclr([]);
+        // lotusgreenSetRoseGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    lotusgreenSetRoseGoldclr((old) => [...old, reader.result]);
+                    lotusgreenSetRoseGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -969,12 +969,12 @@ function ShopEditProductPage() {
     const lotusgreenHandleWithWhiteclr = (e) => {
         e.preventDefault();
         const files = Array.from(e.target.files);
-        lotusgreenSetWhiteGoldclr([]);
+        // lotusgreenSetWhiteGoldclr([]);
         files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    lotusgreenSetWhiteGoldclr((old) => [...old, reader.result]);
+                    lotusgreenSetWhiteGoldclr((old) => [...old, { url: reader.result, isNew: true }]);
                 }
             };
             reader.readAsDataURL(file);
@@ -3295,7 +3295,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3351,7 +3351,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3407,7 +3407,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3496,7 +3496,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3551,7 +3551,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => turquoisehandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3606,7 +3606,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => turquoisehandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3697,7 +3697,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3752,7 +3752,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => redhandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3807,7 +3807,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => redhandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3896,7 +3896,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithYellowclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`Yellow Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3951,7 +3951,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={ i.url || i}
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4006,7 +4006,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4095,7 +4095,7 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`deepgreen_withchain_image_${i}`}
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4150,7 +4150,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepgreenHandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4205,7 +4205,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepgreenHandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4293,7 +4293,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithYellowclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4348,7 +4348,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={ i.url || i}
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4403,7 +4403,7 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i}
+                                                                        src={i.url || i}
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />

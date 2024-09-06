@@ -61,9 +61,16 @@
 
 .signupforfeield .signupbtnnew button{
     border: none !important;
-    background: linear-gradient(90deg, #04372E 0%, #14B699 100%),linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) !important;
+    background: linear-gradient(90deg, #098d58 0%, #006039 100%),linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) !important;
+    letter-spacing: 2px;
+    transition: all 1s !important;
+}
+.signupforfeield .signupbtnnew button:hover{
+    border: none !important;
+    background: linear-gradient(90deg, #006039 0%,  #098d58 100%),linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) !important;
     letter-spacing: 2px;
 }
+
 
 .signuppagemaincon .singupcon .singupconright {
     padding: 40px 0;

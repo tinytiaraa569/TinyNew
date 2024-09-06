@@ -392,6 +392,7 @@
 .coupounsection h3 {
     font-size: 16px;
     line-height: 30px;
+    
 }
 
 .coupon {
@@ -423,7 +424,7 @@
     font-size: 13px;
     line-height: 24px;
     letter-spacing: 0.55px;
-    background-color: #000;
+    background-color: #006039;
     color: white;
     height: 40px;
     border: none;
@@ -467,10 +468,14 @@
 
 .checkout {
     margin-top: 20px;
-    background-color: #000;
+    background-color: #006039;
     color: white;
 }
-
+.checkout:hover {
+    
+    background-color: #098d58;
+    
+}
 .secure-checkout {
     display: flex;
     justify-content: center;

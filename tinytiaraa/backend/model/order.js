@@ -10,6 +10,12 @@ const orderSchema = new mongoose.Schema({
         type: Object,
         required: true,
     },
+    billingAddress: {
+        type: Object,
+        // required: true,
+    },
+
+    
     user: {
         // type: Object,
         // required: true,

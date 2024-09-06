@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProductCard from "../MainSection/Productcard/ProductCard";
-import './productpage.css'
+import "./productpage.css";
 import { RiCloseFill } from "react-icons/ri"; // Import the cross icon
 import { IoSearchOutline } from "react-icons/io5";
 import { categoriesData } from "@/static/data";
-import bannerimg from './banner.jpg'
+import bannerimg from "./banner.jpg";
+import allproductbanner from "./allproductbanner.jpg";
+
+
+
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 function ProductsPage() {
@@ -23,16 +27,48 @@ function ProductsPage() {
 
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  console.log(products, "products")
+  console.log(products, "products");
 
   const categoryData = searchParams.get("category");
+  const subcategoryData = searchParams.get("subcategory");
+  console.log(categoryData, "see what is category data");
+  console.log(subcategoryData, "see what is subcategory data");
+
+  useEffect(() => {
+    // Extract the category from the URL
+    const searchParams = new URLSearchParams(location.search);
+    const categoryData = searchParams.get("category");
+
+    console.log(categoryData, "see what is category data");
+
+    // Find the category that matches the categoryData
+    if (categoryData) {
+      const matchedCategory = categoriesData.find(
+        (category) => category.title === categoryData
+      );
+      setSelectedCategory(matchedCategory);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const subcategoryData = searchParams.get("subcategory");
+    console.log(categoryData, "see what is category data");
+    if (subcategoryData) {
+      const productsInSubcategory = filteredData.filter(
+        (product) => product.subcategory === subcategoryData
+      );
+      setFilteredData(productsInSubcategory);
+    }
+  }, []);
+  console.log(filteredData, "filtered products checking");
 
   // Handle loading and error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const toggleFilterVisibility = () => {
-    setIsFilterVisible(prev => !prev);
+    setIsFilterVisible((prev) => !prev);
   };
 
   useEffect(() => {
@@ -63,9 +99,18 @@ function ProductsPage() {
   }, [searchParams]);
   useEffect(() => {
     filterProducts();
-  }, [priceRange, selectedAgeGroup])
+  }, [priceRange, selectedAgeGroup]);
 
-  console.log("slected", selectedAgeGroup)
+  console.log("slected", selectedAgeGroup);
+  const getCategoryProductCount = (categoryTitle) => {
+    // Ensure that products are defined and is an array
+    if (!products || !Array.isArray(products)) {
+      return 0; // Return 0 if products is undefined or not an array
+    }
+
+    return products.filter((product) => product.category === categoryTitle)
+      .length;
+  };
   const filterProducts = () => {
     try {
       if (!products || !Array.isArray(products)) {
@@ -90,14 +135,12 @@ function ProductsPage() {
 
       // Filter by price range only if priceRange is set
       if (priceRange.length === 2) {
-
         filteredProducts = filteredProducts.filter(
           (product) =>
             product.discountPrice >= priceRange[0] &&
             product.discountPrice <= priceRange[1]
         );
       }
-
 
       // Filter by metal color
       if (selectedMetalColor) {
@@ -110,7 +153,11 @@ function ProductsPage() {
       if (selectedEnamelColor === "Pink") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -118,10 +165,16 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Pink);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Pink
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Pink?.pinkYellowGoldclr?.length > 0 || product.enamelColors?.Pink?.pinkRoseGoldclr?.length > 0 || product.enamelColors?.Pink?.pinkWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Pink?.pinkYellowGoldclr?.length > 0 ||
+              product.enamelColors?.Pink?.pinkRoseGoldclr?.length > 0 ||
+              product.enamelColors?.Pink?.pinkWhiteGoldclr?.length > 0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -134,7 +187,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Black") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -142,10 +199,16 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Black);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Black
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Black?.blackYellowGoldclr?.length > 0 || product.enamelColors?.Black?.blackRoseGoldclr?.length > 0 || product.enamelColors?.Black?.blackWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Black?.blackYellowGoldclr?.length > 0 ||
+              product.enamelColors?.Black?.blackRoseGoldclr?.length > 0 ||
+              product.enamelColors?.Black?.blackWhiteGoldclr?.length > 0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -158,7 +221,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Red") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -166,10 +233,14 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Red);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Red
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Red?.redYellowGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Red?.redYellowGoldclr?.length > 0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -182,7 +253,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Deep_Blue") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -190,10 +265,18 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Deep_Blue);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Deep_Blue
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Deep_Blue?.deepblueYellowGoldclr?.length > 0 || product.enamelColors?.Deep_Blue?.deepblueRoseGoldclr?.length > 0 || product.enamelColors?.Deep_Blue?.deepblueWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Deep_Blue?.deepblueYellowGoldclr?.length >
+                0 ||
+              product.enamelColors?.Deep_Blue?.deepblueRoseGoldclr?.length >
+                0 ||
+              product.enamelColors?.Deep_Blue?.deepblueWhiteGoldclr?.length > 0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -206,7 +289,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Lotus_Green") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -214,10 +301,19 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Lotus_Green);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Lotus_Green
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Lotus_Green?.lotusgreenYellowGoldclr?.length > 0 || product.enamelColors?.Lotus_Green?.lotusgreenRoseGoldclr?.length > 0 || product.enamelColors?.Lotus_Green?.lotusgreenWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Lotus_Green?.lotusgreenYellowGoldclr
+                ?.length > 0 ||
+              product.enamelColors?.Lotus_Green?.lotusgreenRoseGoldclr?.length >
+                0 ||
+              product.enamelColors?.Lotus_Green?.lotusgreenWhiteGoldclr
+                ?.length > 0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -230,7 +326,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Deep_Green") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -238,10 +338,19 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Deep_Green);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Deep_Green
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Deep_Green?.deepgreenYellowGoldclr?.length > 0 || product.enamelColors?.Deep_Green?.deepgreenRoseGoldclr?.length > 0 || product.enamelColors?.Deep_Green?.deepgreenWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Deep_Green?.deepgreenYellowGoldclr?.length >
+                0 ||
+              product.enamelColors?.Deep_Green?.deepgreenRoseGoldclr?.length >
+                0 ||
+              product.enamelColors?.Deep_Green?.deepgreenWhiteGoldclr?.length >
+                0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -254,7 +363,11 @@ function ProductsPage() {
       } else if (selectedEnamelColor === "Turquoise") {
         console.log(`${selectedEnamelColor} selected color`);
         const normalizedSelectedColor = selectedEnamelColor.toLowerCase(); // Convert the selected color to lowercase
-        const requiredMetalColors = ['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'];
+        const requiredMetalColors = [
+          "YellowGoldclr",
+          "RoseGoldclr",
+          "WhiteGoldclr",
+        ];
         filteredProducts = filteredProducts.filter((product) => {
           console.log("Checking product:", product); // Log the product being checked
 
@@ -262,10 +375,19 @@ function ProductsPage() {
           const hasAllColors = requiredMetalColors.every((metalColor) => {
             // Construct the dynamic key for the enamel color
             const key = `${normalizedSelectedColor}${metalColor}`;
-            console.log(`Checking key: ${key} in enamelColors:`, product.enamelColors?.Turquoise);
+            console.log(
+              `Checking key: ${key} in enamelColors:`,
+              product.enamelColors?.Turquoise
+            );
 
             // Check if the product has enamel colors for this key
-            const hasColor = product.enamelColors?.Turquoise?.turquoiseYellowGoldclr?.length > 0 || product.enamelColors?.Turquoise?.turquoiseRoseGoldclr?.length > 0 || product.enamelColors?.Turquoise?.turquoiseWhiteGoldclr?.length > 0;
+            const hasColor =
+              product.enamelColors?.Turquoise?.turquoiseYellowGoldclr?.length >
+                0 ||
+              product.enamelColors?.Turquoise?.turquoiseRoseGoldclr?.length >
+                0 ||
+              product.enamelColors?.Turquoise?.turquoiseWhiteGoldclr?.length >
+                0;
             console.log(`Product has ${key}:`, hasColor);
 
             return hasColor;
@@ -283,11 +405,10 @@ function ProductsPage() {
         );
       }
 
-
       if (selectedAgeGroup) {
         filteredProducts = filteredProducts.filter((product) => {
           // Check if `ageGroup` is defined and is an object
-          if (product.ageGroup && typeof product.ageGroup === 'object') {
+          if (product.ageGroup && typeof product.ageGroup === "object") {
             // Check if `selectedAgeGroup` exists in `ageGroup`
             return product.ageGroup[selectedAgeGroup] === true;
           }
@@ -309,8 +430,13 @@ function ProductsPage() {
           filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
           break;
         case "bestseller":
-          filteredProducts.sort((a, b) => (b.sold_out || 0) - (a.sold_out || 0)); // Sort by highest sold_out first
-          console.log("Sorted by bestseller:", filteredProducts.map(p => p.sold_out)); // Debug
+          filteredProducts.sort(
+            (a, b) => (b.sold_out || 0) - (a.sold_out || 0)
+          ); // Sort by highest sold_out first
+          console.log(
+            "Sorted by bestseller:",
+            filteredProducts.map((p) => p.sold_out)
+          ); // Debug
           break;
         default:
           break;
@@ -368,7 +494,7 @@ function ProductsPage() {
     updateURLParams({ ageGroup: e.target.value });
   };
   const handleTagClick = (tag) => {
-    console.log(tag.toLowerCase(), "product tagselcted")
+    console.log(tag.toLowerCase(), "product tagselcted");
     setSelectedTag(tag.toLowerCase());
     updateURLParams({ tag });
   };
@@ -376,32 +502,32 @@ function ProductsPage() {
     switch (type) {
       case "price":
         setPriceRange([]);
-        updateURLParams({ priceMin: '', priceMax: '' });
+        updateURLParams({ priceMin: "", priceMax: "" });
         break;
       case "metalColor":
         setSelectedMetalColor("");
-        updateURLParams({ metalColor: '' });
+        updateURLParams({ metalColor: "" });
         break;
       case "search":
         setSearchQuery("");
-        updateURLParams({ search: '' });
+        updateURLParams({ search: "" });
         break;
       case "sort":
         setSortOption("");
-        updateURLParams({ sort: '' });
+        updateURLParams({ sort: "" });
         break;
 
       case "enamelColor":
         setSelectedEnamelColor("");
-        updateURLParams({ enamelColor: '' });
+        updateURLParams({ enamelColor: "" });
         break;
       case "tag":
         setSelectedTag("");
-        updateURLParams({ tag: '' });
+        updateURLParams({ tag: "" });
         break;
       case "ageGroup":
         setSelectedAgeGroup("");
-        updateURLParams({ ageGroup: '' });
+        updateURLParams({ ageGroup: "" });
         break;
 
       default:
@@ -422,15 +548,35 @@ function ProductsPage() {
   };
   return (
     <>
-      <div className="productbanner">
-        <img src={bannerimg} alt="" />
+      {/* <div className="productbanner">
+        <img src={allproductbanner} alt="" />
+      </div> */}
+
+      <div>
+        {/* Render the banner of the selected category */}
+        {selectedCategory ? (
+          <div className="productbanner">
+            <img
+              src={selectedCategory.productbanner}
+              alt={selectedCategory.title}
+            />
+          </div>
+        ) : (
+          <div className="productbanner">
+             <img
+              src={allproductbanner}
+              
+            />
+          </div>
+          
+        )}
       </div>
       <button
         onClick={toggleFilterVisibility}
         className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 p-2 rounded-md border border-gray-300 shadow-sm transition-all duration-150 ease-in-out"
       >
         <span className="font-medium">
-          {isFilterVisible ? 'Hide filter' : 'Show filter'}
+          {isFilterVisible ? "Hide filter" : "Show filter"}
         </span>
         {isFilterVisible ? (
           <FiChevronUp size={20} className="ml-2 text-gray-600" />
@@ -438,14 +584,20 @@ function ProductsPage() {
           <FiChevronDown size={20} className="ml-2 text-gray-600" />
         )}
       </button>
-      <div className={`productpagemain flex  ${isFilterVisible ? '' : 'justify-center'}`} >
+      <div
+        className={`productpagemain flex  ${
+          isFilterVisible ? "" : "justify-center"
+        }`}
+      >
         {/* Sidebar Filter Section */}
 
         {isFilterVisible && (
-          <div className={`filtersection ${isFilterVisible ? 'visible' : 'hidden'}  `}>
-
+          <div
+            className={`filtersection ${
+              isFilterVisible ? "visible" : "hidden"
+            }  `}
+          >
             <div className="filtersechead">
-
               {/* Applied Filters */}
               <div className="mb-4">
                 <h3 className="font-semibold mb-2">Applied Filters</h3>
@@ -462,7 +614,9 @@ function ProductsPage() {
                   )}
                   {priceRange.length === 2 && (
                     <div className="flex items-center bg-blue-200 px-2 py-1 rounded-md">
-                      <span>Price: {priceRange[0]} - {priceRange[1]}</span>
+                      <span>
+                        Price: {priceRange[0]} - {priceRange[1]}
+                      </span>
                       <RiCloseFill
                         className="ml-2 cursor-pointer"
                         onClick={() => removeFilter("price")}
@@ -518,16 +672,16 @@ function ProductsPage() {
                 </div>
               </div>
 
-
-
               <div className="searchfilter">
-                <input type="text" placeholder="Search product..."
+                <input
+                  type="text"
+                  placeholder="Search product..."
                   value={searchQuery}
                   onChange={handleSearch}
-                  className="searchfilterinp" />
+                  className="searchfilterinp"
+                />
 
                 <IoSearchOutline className="serachiconfilter" />
-
               </div>
             </div>
 
@@ -556,7 +710,6 @@ function ProductsPage() {
                     />
                   </div>
                 </div>
-
               </div>
               <span>Price: ₹{priceRange[0] || 0}</span>
               <span className="pl-1 pr-1">-</span>
@@ -568,10 +721,14 @@ function ProductsPage() {
               <h5>Product Categories</h5>
               <div className="filtercategorylist">
                 {categoriesData.map((category) => (
-                  <div key={category.id} onClick={() => handleViewProducts(category.title)}>
+                  <div
+                    key={category.id}
+                    onClick={() => handleViewProducts(category.title)}
+                  >
                     <ul>
                       <li>
-                        {category.title}
+                        {category.title} (
+                        {getCategoryProductCount(category.title)})
                       </li>
                     </ul>
                   </div>
@@ -583,13 +740,34 @@ function ProductsPage() {
             <div className="Enamelcolours">
               <h5>Enamel Colors</h5>
               <div className="enamelscolorlist">
-                <div className="enamelclrbox deepblue" onClick={() => handleEnamelColorChange('Deep_Blue')}></div>
-                <div className="enamelclrbox pink" onClick={() => handleEnamelColorChange('Pink')}></div>
-                <div className="enamelclrbox turquoise" onClick={() => handleEnamelColorChange('Turquoise')}></div>
-                <div className="enamelclrbox red" onClick={() => handleEnamelColorChange('Red')}></div>
-                <div className="enamelclrbox black" onClick={() => handleEnamelColorChange('Black')}></div>
-                <div className="enamelclrbox deepgreen" onClick={() => handleEnamelColorChange('Deep_Green')}></div>
-                <div className="enamelclrbox lotusgreen" onClick={() => handleEnamelColorChange('Lotus_Green')}></div>
+                <div
+                  className="enamelclrbox deepblue"
+                  onClick={() => handleEnamelColorChange("Deep_Blue")}
+                ></div>
+                <div
+                  className="enamelclrbox pink"
+                  onClick={() => handleEnamelColorChange("Pink")}
+                ></div>
+                <div
+                  className="enamelclrbox turquoise"
+                  onClick={() => handleEnamelColorChange("Turquoise")}
+                ></div>
+                <div
+                  className="enamelclrbox red"
+                  onClick={() => handleEnamelColorChange("Red")}
+                ></div>
+                <div
+                  className="enamelclrbox black"
+                  onClick={() => handleEnamelColorChange("Black")}
+                ></div>
+                <div
+                  className="enamelclrbox deepgreen"
+                  onClick={() => handleEnamelColorChange("Deep_Green")}
+                ></div>
+                <div
+                  className="enamelclrbox lotusgreen"
+                  onClick={() => handleEnamelColorChange("Lotus_Green")}
+                ></div>
               </div>
               <div className="marginbottom"> </div>
             </div>
@@ -598,31 +776,45 @@ function ProductsPage() {
               <h5>Product Tags</h5>
 
               <div className="producttagflex">
-                <div className="producttagsingle" onClick={() => handleTagClick("Pendant")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Pendant")}
+                >
                   Pendant
                 </div>
-                <div className="producttagsingle" onClick={() => handleTagClick("Earrings")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Earrings")}
+                >
                   Earrings
                 </div>
-                <div className="producttagsingle" onClick={() => handleTagClick("Bracelets")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Bracelets")}
+                >
                   Bracelets
                 </div>
 
-                <div className="producttagsingle" onClick={() => handleTagClick("Nazariya")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Nazariya")}
+                >
                   Nazariya
                 </div>
-                <div className="producttagsingle" onClick={() => handleTagClick("Mom & me")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Mom & me")}
+                >
                   Mom & me
                 </div>
-                <div className="producttagsingle" onClick={() => handleTagClick("Gifts")}>
+                <div
+                  className="producttagsingle"
+                  onClick={() => handleTagClick("Gift")}
+                >
                   Gifts
                 </div>
-
               </div>
             </div>
-
-
-
 
             {/* Price Range Filter */}
             {/* <div className="mb-4">
@@ -646,13 +838,14 @@ function ProductsPage() {
             />
           </div>
         </div> */}
-
-
           </div>
-        )
-        }
+        )}
         {/* Products Display Section */}
-        <div className={`parentfilteradjustlast transition-all duration-300 ${isFilterVisible ? 'w-3/4' : 'w-[95%]'}`}>
+        <div
+          className={`parentfilteradjustlast transition-all duration-300 ${
+            isFilterVisible ? "w-3/4" : "w-[95%]"
+          }`}
+        >
           <div className="sortfilter">
             <div className="mb-4 flex items-center justify-end gap-3">
               <h3 className="font-semibold mb-2">Sort By</h3>
@@ -666,12 +859,11 @@ function ProductsPage() {
                 <option value="priceHighToLow">Price: High to Low</option>
                 <option value="nameAToZ">Name: A to Z</option>
                 <option value="nameZToA">Name: Z to A</option>
-                <option value="bestseller">Bestseller</option> {/* Add bestseller option */}
+                <option value="bestseller">Bestseller</option>{" "}
+                {/* Add bestseller option */}
               </select>
-
             </div>
             <div className="sortline"></div>
-
           </div>
           <div className="section filtsecbig">
             <h1 className="text-center text-2xl font-semibold mb-8">
@@ -685,7 +877,11 @@ function ProductsPage() {
             ) : filteredData.length === 0 ? (
               <h1 className="text-center text-lg">No product found</h1>
             ) : (
-              <div className={`adjustgridfilter grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ${isFilterVisible ? 'xl:grid-cols-4' : 'xl:grid-cols-5'} mb-12`}>
+              <div
+                className={`adjustgridfilter grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ${
+                  isFilterVisible ? "xl:grid-cols-4" : "xl:grid-cols-5"
+                } mb-12`}
+              >
                 {filteredData.map((product, index) => (
                   <ProductCard data={product} key={index} />
                 ))}

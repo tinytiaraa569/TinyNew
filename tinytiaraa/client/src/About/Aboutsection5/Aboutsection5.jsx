@@ -3,6 +3,8 @@ import './Aboutsection5.css'
 import img1 from './images/first.svg'
 import img2 from './images/second.png'
 import img3 from './images/third.svg'
+import img4 from './images/fourth.svg'
+
 
 
 function Aboutsection5() {
@@ -23,6 +25,9 @@ function Aboutsection5() {
         </div>
         <div className="associmgs">
             <img src={img3} alt="" />
+        </div>
+        <div className="associmgs">
+            <img src={img4} alt="" />
         </div>
         </div>
 

@@ -74,10 +74,10 @@ function Footer() {
                     <h4 className='footerheading'>POLICY</h4>
                     <ul>
                         <li><Link onClick={scrollToTop} to="/affiliate-program-commission-policy">AFFILIATE PROGRAM COMMISSION POLICY </Link></li>
-                        <li><Link onClick={scrollToTop} to="/gold-jewellery-insurance-policy">GOLD JEWELLERY INSURANCE POLICY</Link></li>
+                        {/* <li><Link onClick={scrollToTop} to="/gold-jewellery-insurance-policy">GOLD JEWELLERY INSURANCE POLICY</Link></li> */}
                         <li><Link onClick={scrollToTop} to="/children-safety-jewellery-policy">CHILDREN SAFETY JEWELLERY POLICY</Link></li>
                         <li><Link onClick={scrollToTop} to="/customised-jewellery-policy">CUSTOMISED JEWELLERY POLICY</Link></li>
-                        <li><Link onClick={scrollToTop} to="/gold-coin-promotion-with-personalised-horoscope-engraving-policy">GOLD COIN PROMOTION WITH PERSONALISED HOROSCOPE ENGRAVING POLICY</Link></li>
+                        {/* <li><Link onClick={scrollToTop} to="/gold-coin-promotion-with-personalised-horoscope-engraving-policy">GOLD COIN PROMOTION WITH PERSONALISED HOROSCOPE ENGRAVING POLICY</Link></li> */}
                         <li><Link onClick={scrollToTop} to="/gold-and-diamond-jewellery-certification-policy">GOLD AND DIAMOND JEWELLERY CERTIFICATION POLICY</Link></li>
                     </ul>
                 </div>

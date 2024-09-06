@@ -14,6 +14,18 @@ import slider7 from './sliderimages/slider7.png';
 import firstimg from './sliderimages/first.png';
 import secondimg from './sliderimages/second.png';
 import thirdimg from './sliderimages/third.png';
+import newbanner1 from './sliderimages/newbanner1.jpg';
+
+import newbanner6 from './sliderimages/newbanner6.jpg';
+import newbanner3 from './sliderimages/newbanner3.jpg';
+import newbanner4 from './sliderimages/newbanner4.jpg';
+
+
+
+
+
+
+
 
 function SliderSection() {
   const settings = {
@@ -63,24 +75,23 @@ function SliderSection() {
         <div className="slidersec">
           <img src={firstimg} alt="First Slide" />
         </div>
-
         <div className="slidersec">
-          <img src={thirdimg} alt="Third Slide" />
-        </div>
-        <div className="slidersec">
-          <img src={secondimg} alt="Second Slide" />
+          <img src={newbanner4} alt="Slider Six" />
         </div>
 
         <div className="slidersec">
-          <img src={slider6} alt="Slider Six" />
+          <img src={newbanner6} alt="Third Slide" />
         </div>
+       
 
-        <div className="slidersec">
+        
+
+        {/* <div className="slidersec">
           <img src={slider7} alt="Slider Seven" />
         </div>
         <div className="slidersec">
           <img src={slider4} alt="Slider Four" />
-        </div>
+        </div> */}
       </Slider>
     </>
   );

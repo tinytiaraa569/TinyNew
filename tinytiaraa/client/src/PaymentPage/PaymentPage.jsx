@@ -65,6 +65,9 @@ function PaymentPage() {
     const order = {
         cart: orderData?.cart,
         shippingAddress: orderData?.shippingAddress,
+        billingAddress: orderData?.finalBillingAddress,
+
+        
         user: user && user,
         totalPrice: orderData?.totalPrice,
         couponDiscount: orderData?.discountPrice,
@@ -924,7 +927,7 @@ function PaymentPage() {
 
                         <div className="contact-information bg-[#ffffff] mb-[16px] shadow-lg">
                             <div className=' mb-[12px]'>
-                                <h2 className='text-[16px] font-[600] text-[#161618] '>Delivery & Billing Details</h2>
+                                <h2 className='text-[16px] font-[600] text-[#161618] '>Delivery Details</h2>
 
                             </div>
 
@@ -950,6 +953,25 @@ function PaymentPage() {
 
 
                         </div>
+                        <div className="contact-information bg-[#ffffff] mb-[16px] shadow-lg">
+                <div className='mb-[12px]'>
+                    <h2 className='text-[16px] font-[600] text-[#161618]'>Billing Details</h2>
+                </div>
+                <div>
+                    <div className='mb-2'>
+                        <p className='text-[14px] font-[400] mb-[4px] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.name}</p>
+                        <p className='text-[14px] font-[400] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.address1}</p>
+                        <p className='text-[14px] font-[400] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.address2}</p>
+                        <p className='text-[14px] font-[400] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.city}</p>
+                        <p className='text-[14px] font-[400] mb-[4px] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.Country}</p>
+                    </div>
+                    <div>
+                        <p className='text-[14px] font-[400] mb-[4px] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.email}</p>
+                        <p className='text-[14px] font-[400] mb-[4px] tracking-[0.55px] block'>{orderData?.finalBillingAddress?.phoneNumber}</p>
+                    </div>
+                </div>
+            </div>
+
 
                         <div className="contact-information bg-[#ffffff] mb-[16px] shadow-lg">
                             <div className=' mb-[12px]'>

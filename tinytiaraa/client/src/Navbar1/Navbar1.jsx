@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Navbar1.css'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Slider from "react-slick";
@@ -27,7 +27,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 
 
 function Navbar1() {
-    const [isShopDropdownOpen, setShopDropdownOpen] = useState(false);
+
     const { wishlist } = useSelector((state) => state.wishlist)
     const { isAuthenticated, user, loading } = useSelector((state) => state.user)
     const { products } = useSelector((state) => state.products)
@@ -52,6 +52,31 @@ function Navbar1() {
     const [searchTerm, setsearchTerm] = useState("")
     const [searchData, setsearchData] = useState(null)
 
+    const [isShopOpen, setIsShopOpen] = useState(false);
+    const shopRef = useRef(null);
+
+    // const toggleShopDropdown = () => {
+    //     setIsShopOpen(prevState => !prevState);
+    // };
+
+    const closeShopDropdown = () => {
+        setIsShopOpen(false);
+    };
+
+    // Handle click outside the dropdown to close it
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (shopRef.current && !shopRef.current.contains(event.target)) {
+                closeShopDropdown();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
 
     const { setPriceRange } = usePriceRange();
     const handlePriceFilter = (min, max) => {
@@ -62,12 +87,12 @@ function Navbar1() {
         return `?priceMin=${min}&priceMax=${max}`;
     };
     const navigate = useNavigate()
-    const submitHandle = (i) => {
-        navigate(`/products?category=${i.title}`)
-        // window.location.reload()
-        setShopDropdownOpen(false);
+    const submitHandle = (category, subcategory = null) => {
+        const subcategoryParam = subcategory ? `&subcategory=${subcategory.name}` : '';
+        navigate(`/products?category=${category.title}${subcategoryParam}`);
+       
 
-    }
+    };
     const toggleShopDropdown = () => {
         setShopDropdownOpen((prevState) => !prevState);
     };
@@ -144,19 +169,19 @@ function Navbar1() {
             <div className="navbar1mian">
                 {           /* //top nav */}
                 <div className='nav1banner '>
-                    <div className='customerinfo'>
+                    <div className='customerinfo !text-[13px]'>
                         <span className='flex items-center'>
-                            <Link to="tel:+91 8657062511" className='ml-[2px] flex items-center font-[450]'><MdSupportAgent size={26} className='mr-[2px]' /> +91 86570 62511 | </Link>
+                            <Link to="tel:+91 8657062511" className='cursor-pointer ml-[2px] flex items-center font-[450]'><MdSupportAgent size={23} className='!font-[400] mr-[2px]' /> +91 86570 62511 | </Link>
                         </span>
                         <span className='ml-[3px] flex items-center'>
-                            <Link to="mailto:care@tinytiaraa.com" className='ml-[2px] flex items-center font-[450]'><IoMdMail size={24} className='mr-[2px]' />care@tinytiaraa.com </Link>
+                            <Link to="mailto:care@tinytiaraa.com" className='cursor-pointer ml-[2px] flex items-center font-[450]'><IoMdMail size={23} className='!font-[400] mr-[2px]' />care@tinytiaraa.com </Link>
                         </span>
 
                         {/* <span onClick={()=>{navigate('/shop-login')}}>Shop</span> */}
 
                     </div>
 
-                    <div className='couponscetion w-[70%]'>
+                    <div className='couponscetion !text-[13px]'>
                         <Slider {...settings} >
                             <div className='text-center'>
                                 <span>Get ₹500 Off On Your First Order Of ₹5000 Or More! :- Welcome500</span>
@@ -198,12 +223,12 @@ function Navbar1() {
                                 <i className="fa-solid fa-bars"></i>
                         }
                     </div>
-                    <div className='w-[45%] '>
+                    <div className='w-[45%]'>
                         <ul className='menu'>
                             <li><NavLink to="/" activeClassName="active">Home</NavLink></li>
                             <li><NavLink to="/about" activeClassName="active">Our Story</NavLink></li>
-                            <span className=' parenthover' >
-                                <li ><NavLink to="/products" activeClassName="active">Shop</NavLink>
+                            <span className='parenthover'  ref={shopRef}>
+                                <li onClick={toggleShopDropdown}><NavLink to="/products" activeClassName="active">Shop</NavLink>
 
                                     <div className='shopdrop shadow-sm`'>
                                         <div className='flex gap-5'>
@@ -233,7 +258,7 @@ function Navbar1() {
 
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens <span className='text-[#a8a8a8]'> (coming soon)</span></h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[red]'> | New</span></h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gifts</h6>
@@ -248,7 +273,7 @@ function Navbar1() {
                                             </div>
 
 
-                                            <div className='mt-5 ml-7'>
+                                            {/* <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>
                                                     <h3 className='font-[500]'>By Category</h3>
                                                 </div>
@@ -286,7 +311,32 @@ function Navbar1() {
                                                 </div>
 
 
+                                            </div> */}
+
+
+                                            <div className='mt-5 ml-7'>
+                                                <div className='mb-2 '>
+                                                    <h3 className='font-[500]'>By Category</h3>
+                                                </div>
+                                                <div>
+                                                    {categoriesData && categoriesData.map((i, index) => (
+                                                        <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
+                                                            <img src={i.image_Url} alt="" style={{ width: "30px", height: "35px", objectFit: "contain", userSelect: "none" }} />
+                                                            <h3 className='text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{i.title}</h3>
+
+                                                            {/* Display subcategories */}
+                                                            {/* <div className={`subcatchild top-3 left-[100%]  pb-4 w-[250px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm`}>
+                                                                {i.subcategories.map((val, subIndex) => (
+                                                                    <div key={subIndex} onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}>
+                                                                        <h3 className='m-3 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{val.name}</h3>
+                                                                    </div>
+                                                                ))}
+                                                            </div> */}
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
+
 
 
                                             <div className='pricenav mt-5 ml-7'>
@@ -295,42 +345,50 @@ function Navbar1() {
                                                 </div>
 
                                                 <Link
-                                                    to={`/products${buildQueryString(0, 5000)}`}
-                                                    className='pb-2 collectionnav1 text-white text-[15px]'
+                                                    to={`/products${buildQueryString(1000, 5000)}`}
+                                                    className='pb-2 collectionnav1 text-white '
                                                 >
-                                                    <h6 className='mb-1'>Jewelry Under ₹ 5000</h6>
+                                                    <h6 className='mb-1 text-[14px]'>₹ 1000 - ₹ 5000</h6>
 
                                                 </Link>
                                                 <Link
-                                                    to={`/products${buildQueryString(0, 10000)}`}
+                                                    to={`/products${buildQueryString(5000, 10000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    <h6 className='mb-1'>Jewelry Under ₹ 10000</h6>
-
-
-                                                </Link>
-                                                <Link
-                                                    to={`/products${buildQueryString(0, 20000)}`}
-                                                    className='pb-2 collectionnav1 text-white'
-                                                >
-                                                    <h6 className='mb-1'>Jewelry Under ₹ 20000</h6>
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 5000 - ₹ 10000</h6>
 
 
                                                 </Link>
                                                 <Link
-                                                    to={`/products${buildQueryString(0, 30000)}`}
+                                                    to={`/products${buildQueryString(10000, 20000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    <h6 className='mb-1'>Jewelry Under ₹ 30000</h6>
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 10000 - ₹ 25000</h6>
+
+
+                                                </Link>
+                                                <Link
+                                                    to={`/products${buildQueryString(25000, 50000)}`}
+                                                    className='pb-2 collectionnav1 text-white'
+                                                >
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 25000 - ₹ 50000</h6>
 
 
                                                 </Link>
 
                                                 <Link
-                                                    to={`/products${buildQueryString(0, 40000)}`}
+                                                    to={`/products${buildQueryString(50000, 75000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    <h6 className='mb-1'>Jewelry Under ₹ 40000</h6>
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 50000 - ₹ 75000</h6>
+
+
+                                                </Link>
+                                                <Link
+                                                    to={`/products${buildQueryString(75000, 100000)}`}
+                                                    className='pb-2 collectionnav1 text-white'
+                                                >
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 75000 - ₹ 100000</h6>
 
 
                                                 </Link>
@@ -420,7 +478,7 @@ function Navbar1() {
 
                                 >
                                     <Badge badgeContent={wishlist && wishlist.length} color="primary">
-                                        <AiOutlineHeart size={28} />
+                                        <AiOutlineHeart size={24} />
                                     </Badge>
 
                                 </div>
@@ -445,7 +503,7 @@ function Navbar1() {
                                             (
                                                 <Link to="/profile">
                                                     {/* <CgProfile size={30} /> */}
-                                                    <LuUserCircle2 size={28} />
+                                                    <LuUserCircle2 size={24} />
 
                                                     {/* <img className='w-[35px] h-[35px] rounded-full' src={`${backend_url}${user.avatar}`} alt="" /> */}
                                                 </Link>
@@ -453,7 +511,7 @@ function Navbar1() {
                                             :
                                             (
                                                 <Link to="/login">
-                                                    <LuUserCircle2 size={28} />
+                                                    <LuUserCircle2 size={24} />
 
                                                     {/* <CgProfile size={30} /> */}
                                                 </Link>)
@@ -493,7 +551,7 @@ function Navbar1() {
             <div
                 className={`mobile-nav  ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
                     }
-      w-full h-[70px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden overflow-y-auto`}
+      w-full h-[70px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden `}
             >
                 <div className="w-full flex items-center justify-between">
                     <div>
@@ -604,29 +662,52 @@ function Navbar1() {
                                             <div className="absolute top-[50%] left-0 w-[300px] mt-2 bg-white rounded-md shadow-lg hidden group-hover:block ">
                                                 <div className="p-4">
                                                     <div className="mb-4">
-                                                        <h3 className="font-semibold text-lg text-center">Shop Now
+                                                        <h3 className="font-semibold text-[16px] text-center">Shop Now
 
                                                         </h3>
-                                                        <h6 className="pb-2 collectionnav1" onClick={() => {
+                                                        <h6 className="pb-2 collectionnav1 text-[14px]" onClick={() => {
                                                             navigate("/products")
                                                             closenavbar()
                                                         }}>Gold</h6>
-                                                        <h6 className="pb-2 collectionnav1">Silver</h6>
+                                                        <h6 className="pb-2 collectionnav1 text-[14px]">Silver</h6>
                                                     </div>
                                                     <div className="mb-4">
-                                                        <h3 className="font-semibold text-lg text-center">By Category</h3>
-                                                        <div>
+                                                        <h3 className="font-semibold text-[16px] text-center">By Category</h3>
+                                                        <div className='text-[13px]'>
                                                             {categoriesData && categoriesData.map((i, index) => (
-                                                                <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} >
-                                                                    <img src={i.image_Url} alt="" style={{ width: "35px", height: "45px", objectFit: "contain", userSelect: "none" }} />
+                                                                <div
+                                                                    key={index}
+                                                                    className={`subcatmain ${styles.noramlFlex} relative`}
+                                                                    onClick={() => {
+                                                                        submitHandle(i)
+                                                                        closenavbar()
+
+                                                                            ;
+                                                                    }} // Handle click on category
+                                                                >
+                                                                    <img
+                                                                        src={i.image_Url}
+                                                                        alt=""
+                                                                        style={{ width: "35px", height: "40px", objectFit: "contain", userSelect: "none" }}
+                                                                    />
                                                                     <h3 className="m-1 cursor-pointer select-none font-Poppins hover:text-blue-500">{i.title}</h3>
-                                                                    <div className={`subcatchild top-3 left-[70%] pb-4 w-64 bg-white absolute z-30 rounded-b-md shadow-sm`}>
+
+                                                                    {/* Display subcategories */}
+                                                                    {/* <div
+                                                                        className={`subcatchild top-3 left-[70%] pb-4 w-64 bg-white absolute z-30 rounded-b-md shadow-sm`}
+                                                                    >
                                                                         {i.subcategories.map((val, subIndex) => (
-                                                                            <div key={subIndex}>
+                                                                            <div
+                                                                                key={subIndex}
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation();
+                                                                                    submitHandle(i, val); // Handle click on subcategory
+                                                                                }}
+                                                                            >
                                                                                 <h3 className="m-3 cursor-pointer select-none font-Poppins hover:text-blue-500">{val.name}</h3>
                                                                             </div>
                                                                         ))}
-                                                                    </div>
+                                                                    </div> */}
                                                                 </div>
                                                             ))}
                                                         </div>

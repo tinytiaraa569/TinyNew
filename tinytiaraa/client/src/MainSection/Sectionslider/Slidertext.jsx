@@ -14,7 +14,7 @@ function Slidertext() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 1000,
+        autoplaySpeed: 3000,
         swipeToSlide: true,
     };
     return (
@@ -30,7 +30,7 @@ function Slidertext() {
             <div className="slidertextright">
                 <Slider {...settings}>
                     <div className='sliderrightimg'>
-                        <img src="https://lirp.cdn-website.com/48f148a6/dms3rep/multi/opt/CMC-TPN-1153-T-R-1495w.png" alt="" />
+                        <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1724654413/products/jwkffiul1iuwvxuyskcy.png" alt="" />
                     </div>
                     <div className='sliderrightimg'>
                         <img src="https://lirp.cdn-website.com/48f148a6/dms3rep/multi/opt/TPN+1143+3D+Y-1495w.png" alt="" />

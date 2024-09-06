@@ -15,7 +15,7 @@ function WhyPage() {
   return (
     <div className='whypage'>
       <div className='whypagecon'>
-        <h5>Why TinyTiaraa ?</h5>
+        <h5>Why Tiny Tiaraa ?</h5>
         <span>Delight your little ones with our enchanting collection of kids' jewelry</span>
       </div>
 

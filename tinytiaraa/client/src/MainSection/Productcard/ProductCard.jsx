@@ -126,8 +126,8 @@ function ProductCard({ data }) {
         </div>
 
         <div>
-          <div className='flex justify-center mt-1' onClick={() => { navigate(`/product/${product_name}`) }}>
-            <button className={`${styles.cart_button} ${styles.cart_button_text}`}>Buy Now</button>
+          <div className=' flex justify-center mt-1' onClick={() => { navigate(`/product/${product_name}`) }}>
+            <button className={`buynowtbn ${styles.cart_button} ${styles.cart_button_text}`}>Buy Now</button>
 
           </div>
         </div>
