@@ -1,7 +1,7 @@
 .contactsec1section {
     width: 100%;
     height: 700px;
-    background-image: url(exper.jpg);
+    background-image: url(contactbanner.png);
     background-size: 100% 700px; /* Cover the container while maintaining aspect ratio */
     background-position: center; /* Center the image within the container */
     font-family: "Poppins", sans-serif;
@@ -31,7 +31,7 @@
     }
     .contactsec1section {
         height: 500px;
-        background-image: url(exper.jpg);
+        background-image: url(contactbanner.png);
         background-size: cover; /* Cover the container while maintaining aspect ratio */
         background-position: center; /* Center the image within the container */
         font-family: "Poppins", sans-serif;

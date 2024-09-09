@@ -12,7 +12,7 @@ const router = express.Router()
 router.post("/request", catchAsyncErrors(async (req, res, next) => {
     try {
         // Extract fields from the request body
-        const { name, email, message, phonenumber, images } = req.body;
+        const { name, email, message, phonenumber, images , budget ,address} = req.body;
 
         // Validate required fields
         if (!name || !email || !phonenumber || !message) {
@@ -40,6 +40,8 @@ router.post("/request", catchAsyncErrors(async (req, res, next) => {
             email,
             message,
             phonenumber,
+            budget,
+            address,
             images: imagesLinks.map(img => img.url), // Store only the image URLs
         });
 

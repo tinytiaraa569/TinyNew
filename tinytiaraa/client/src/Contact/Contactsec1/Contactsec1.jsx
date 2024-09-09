@@ -1,15 +1,13 @@
-import React from 'react'
-import './Conatctsec1.css'
+import React from "react";
+import "./Conatctsec1.css";
+import contactbanner from './contactbanner.png'
 
 function Contactsec1() {
   return (
-    <div className='contactsec1section'>
-        {/* <div className="contactsec1con">
-            <h1>Stop By Our Experience Center</h1>
-        </div> */}
-      
+    <div className="slidersec">
+      <img src={contactbanner} alt="Third Slide" />
     </div>
-  )
+  );
 }
 
-export default Contactsec1
+export default Contactsec1;

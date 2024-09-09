@@ -18,6 +18,14 @@ const CustomisedSchema = new mongoose.Schema({
         type:String,
         required:[true ,'Please Enter Your Message']
     },
+    budget:{
+        type:String,
+        // required:[true ,'Please Enter Your budget']
+    },
+    address:{
+        type:String,
+        // required:[true ,'Please Enter Your address']
+    },
     images:[
         {
             type:String
