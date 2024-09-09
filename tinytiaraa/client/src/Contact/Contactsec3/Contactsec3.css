@@ -36,13 +36,13 @@
   }
   
   .contactsec3container .contact-form {
-    background-color: #1aaed5;
+    background-color: #057347;
     position: relative;
   }
   
   .contactsec3container .circle {
     border-radius: 50%;
-    background: linear-gradient(135deg, transparent 20%, #82d2eb);
+    background: linear-gradient(135deg, transparent 20%, #18a96f);
     position: absolute;
   }
   
@@ -65,7 +65,7 @@
     position: absolute;
     width: 26px;
     height: 26px;
-    background-color: #1aaed5;
+    background-color: #057347;
     transform: rotate(45deg);
     top: 50px;
     left: -13px;
@@ -137,7 +137,7 @@
     background-color: #fff;
     border: 2px solid #fafafa;
     font-size: 0.95rem;
-    color: #1aaed5;
+    color: #006039;
     line-height: 1;
     border-radius: 25px;
     outline: none;
@@ -171,7 +171,7 @@
     opacity: 0;
     transition: 0.3s;
     height: 5px;
-    background-color: #1aaed5;
+    background-color: #006039;
     top: 50%;
     transform: translateY(-50%);
   }
@@ -203,7 +203,8 @@
   }
   
   .contactsec3container .contact-info .title {
-    color: #1aaed5;
+    color: #006039;
+    text-transform: capitalize;
   }
   
   .contactsec3container .text {
@@ -241,7 +242,7 @@
     width: 35px;
     height: 35px;
     border-radius: 5px;
-    background: linear-gradient(45deg, #5ebbd4, #1aaed5);
+    background: linear-gradient(45deg, #006039, #0b925c);
     color: #fff;
     text-align: center;
     line-height: 35px;
@@ -258,11 +259,11 @@
     position: absolute;
     width: 110px;
     height: 100px;
-    border: 22px solid #1aaed5;
+    border: 22px solid #006039;
     border-radius: 50%;
     bottom: -77px;
     right: 50px;
-    opacity: 0.3;
+    opacity: 0.5;
   }
   
    .contactsec3container .big-circle {
@@ -270,7 +271,7 @@
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background: linear-gradient(to bottom, #66c5df, #1aacd5a8);
+    background: linear-gradient(to bottom, #19ce86, #006039);
     bottom: 50%;
     right: 50%;
     transform: translate(-40%, 38%);

@@ -71,15 +71,15 @@ function Contactsec3() {
                         </p>
                         <div className="info">
                             <div className="information">
-                                <MdOutlineLocationOn size={75} className='mr-2' />
+                                <MdOutlineLocationOn size={75} className='mr-2 text-[#006039]' />
                                 <p>Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai-400093.</p>
                             </div>
                             <div className="information">
-                                <MdOutlineMailOutline size={30} className='mr-2' />
+                                <MdOutlineMailOutline size={30} className='mr-2 text-[#006039]' />
                                 <p>care@tinytiaraa.com</p>
                             </div>
                             <div className="information">
-                                <MdOutlinePhoneInTalk size={30} className='mr-2' />
+                                <MdOutlinePhoneInTalk size={30} className='mr-2 text-[#006039]' />
                                 <p>+91 86570 62511</p>
                             </div>
                         </div>

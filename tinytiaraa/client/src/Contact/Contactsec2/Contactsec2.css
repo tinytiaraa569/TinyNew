@@ -3,7 +3,7 @@
     width: 100%;
     min-height: 80vh;
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(to right, #e0f7fa, #ffffff);
+    background-color: #F3FFFD;
     color: #333;
 }
 
@@ -45,8 +45,8 @@
 .constcattsec2left img {
     margin-left: 50px;
     width: 100%;
-    max-width: 700px;
-    height: 70vh;
+    max-width: 500px;
+    height: 500px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px, rgba(0, 0, 0, 0.1) 0px 2px 4px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -73,7 +73,8 @@
 .contactsec2rightcon h3 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #1995dd;
+    color: #006039;
+
 }
 
 .contactsec2rightcon p {
@@ -83,7 +84,7 @@
 }
 
 .contactsec2rightcon iframe {
-    width: 100%;
+    width: 70%;
     height: 300px;
     margin-top: 1rem;
     border-radius: 10px;
@@ -94,7 +95,8 @@
 .contactsec2rightcon button {
     margin-top: 20px;
     padding: 15px 30px;
-    background: linear-gradient(135deg, #016aa7, #1f8ed8);
+    background-color: #006039;
+
     color: white;
     border: none;
     border-radius: 25px;
@@ -106,7 +108,8 @@
 }
 
 .contactsec2rightcon button:hover {
-    background: linear-gradient(135deg, #06b2be, #49a3d8);
+    background-color: #098d58;
+
     transform: translateY(-3px);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
@@ -142,8 +145,8 @@
     }
 
     .constcattsec2left img {
-        max-width: 80%;
-        height: 50vh;
+        max-width: 400px;
+        height: 400px;
         margin-left: 0px;
 
     }
