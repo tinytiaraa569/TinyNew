@@ -231,6 +231,8 @@ function CheckoutPage() {
 //         calculateEDD();
 //       }, [originPincode, destinationPincode, pickupDate, token]);
 
+//       console.log(estimatedDelivery,"from sequel")
+
     
 
     return (
