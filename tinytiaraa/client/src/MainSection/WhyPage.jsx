@@ -32,7 +32,7 @@ function WhyPage() {
           <img src={img2} alt="" />
 
           <div>
-            <h6>SGL Certified Jewellery</h6>
+            <h6>SGL Certified Jewelry</h6>
           </div>
         </div>
 

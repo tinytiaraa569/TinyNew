@@ -194,6 +194,43 @@ function CheckoutPage() {
     };
     const { start, end } = calculateDateRange();
 
+
+
+//     const [estimatedDelivery, setEstimatedDelivery] = useState("");
+//     const [isLoading, setIsLoading] = useState(true);
+//     const originPincode = "590001"; // You can set this dynamically if needed
+//     const destinationPincode = "560078"; // This can be dynamic, depending on user input
+//     const pickupDate = new Date().toISOString().split("T")[0]; // Current date
+//    const token = "b525f7a40e4a5ed99fdfc95897925641"
+//     useEffect(() => {
+//         const calculateEDD = async () => {
+//           try {
+//             const response = await axios.post(
+//               "https://test.sequel247.com/api/shipment/calculateEDD", // Replace with your backend endpoint
+//               {
+//                 origin_pincode: originPincode,
+//                 destination_pincode: destinationPincode,
+//                 pickup_date: pickupDate,
+//                 token: token, // Include token in the request body
+//               },
+//               {
+//                 headers: {
+//                   "Content-Type": "application/json",
+//                 },
+//               }
+//             );
+//             setEstimatedDelivery(response.data.message); // Assuming 'message' contains EDD info
+//           } catch (error) {
+//             console.error("Error fetching estimated delivery date:", error);
+//             setEstimatedDelivery("Unable to calculate EDD");
+//           } finally {
+//             setIsLoading(false);
+//           }
+//         };
+    
+//         calculateEDD();
+//       }, [originPincode, destinationPincode, pickupDate, token]);
+
     
 
     return (

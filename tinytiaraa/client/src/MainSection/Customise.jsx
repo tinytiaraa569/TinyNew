@@ -1,55 +1,61 @@
 import React, { useState, useEffect } from "react";
 import "./Morepage.css";
 import { useNavigate } from "react-router-dom";
+import custom1img from './custom1.png'
+import custom2img from './custom2.png'
+import custom3img from './custom3.png'
+import custom4img from './custom4.png'
+
 
 function Customise() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Content and images for each step
   const steps = [
     {
-      image:
-        "https://www.jewellerskart.com/_next/image/?url=https%3A%2F%2Fs3.ap-south-1.amazonaws.com%2Fmanicad.in%2FcustomizeJewellery%2F62035994c68b661de68385e4%2Fimage2_1669094666.jpg&w=640&q=75",
-      title: "Design Your Own",
+      image:custom1img,
+        
+      title: "Upload Your Design",
       description:
-        "To build a customized jewelry piece, upload the design along with the exact specifications asked. After filling in all the details, move on to the next step",
+        "Share your unique design ideas with us! Simply upload your sketches, images, or inspirations, and our expert team will work with you to bring your vision to life.",
     },
     {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP1QhxKwpuOeFIcDyH-J5phUi7DXwjboiG4g&s",
-      title: "Review Your Design",
+      image:custom2img,
+      title: "Get the Costing",
       description:
-        "We'll create a digital format of your jewelry piece for you to review and verify the specifications. We'll also provide an estimated cost at this stage.",
+        "Once we have your design, we’ll provide a clear and transparent estimate based on your preferences. You’ll know the full cost upfront, so you can plan with confidence.",
     },
     {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-b5Ishj3DOynopdTEBxADxuA1RiAKxyjlAA&s",
-      title: "Confirm & Pay",
+      image:custom3img,
+      title: "Jewelry Manufacturing",
       description:
-        "Once you confirm the design and specifications, we’ll await the token amount. After receiving it, we’ll begin the jewelry-making process and keep you updated.",
+        "Our expert artisans will handcraft your design with the finest materials, ensuring it’s safe, hypoallergenic, and perfect for your little one’s daily wear. Watch your creation come to life!",
     },
     {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-1oGIvYAfU-8kia7XRpQ2Vu-kC7a1fRpSWQ&s",
-      title: "Receive Your Jewellery",
+      image:custom4img,
+      title: "Receive Your Jewelry",
       description:
         "Once your jewelry is ready and any outstanding issues are resolved, we’ll complete quality checks and deliver it to your address.",
     },
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStep((prevStep) => (prevStep + 1) % steps.length);
-    }, 6000); // Change step every 3 seconds
-    return () => clearInterval(interval);
-  }, [steps.length]);
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setCurrentStep((prevStep) => (prevStep + 1) % steps.length);
+      }, 4000); // Change step every 6 seconds
+
+      return () => clearInterval(interval); // Cleanup interval
+    }
+  }, [isPaused, steps.length]);
 
   return (
-    <div className=" bgcustomize" >
+    <div className=" bgcustomize">
       <div className="customenew">
         <div className="customenewheading">
-          <h1>Customize Your Jewellery</h1>
+          <h1>Customize Your Jewelry</h1>
         </div>
 
         <div className="customenewflex">
@@ -70,6 +76,8 @@ function Customise() {
                   index === currentStep ? "active" : ""
                 }`}
                 onClick={() => setCurrentStep(index)}
+                onMouseEnter={() => setIsPaused(true)} // Pause on hover
+                onMouseLeave={() => setIsPaused(false)} // Resume on hover leave
               >
                 <div className="circle">{index + 1}</div>
                 {index < steps.length - 1}
@@ -82,11 +90,13 @@ function Customise() {
             <h1>{steps[currentStep].title}</h1>
             <p>{steps[currentStep].description}</p>
             <button
+              onMouseEnter={() => setIsPaused(true)} // Pause on hover
+              onMouseLeave={() => setIsPaused(false)} // Resume on hover leave
               onClick={() => {
                 navigate("/personalised-prosperity");
               }}
             >
-              Customize Your Jewellery
+              Customize Your Jewelry
             </button>
           </div>
         </div>

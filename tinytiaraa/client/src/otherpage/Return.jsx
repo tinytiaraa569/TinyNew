@@ -7,7 +7,7 @@ function ReturnPolicy() {
 
     <div className="TermsConsection">
         <h3>Return Policy</h3>
-        <p>At Tiny Tiaraa, we are committed to providing the best quality products and ensuring your satisfaction with our kids' jewellery. We understand that there may be instances where you may need to return a purchase. This Return Policy outlines the guidelines for returning Tiny Tiaraa Kids Jewellery products.</p>
+        <p>At Tiny Tiaraa, we are committed to providing the best quality products and ensuring your satisfaction with our kids' Jewelry. We understand that there may be instances where you may need to return a purchase. This Return Policy outlines the guidelines for returning Tiny Tiaraa Kids Jewelry products.</p>
     </div>
     <div className="conditions">
         <ol>
@@ -15,7 +15,7 @@ function ReturnPolicy() {
             <h3>Eligible Products for Return:</h3>
             <ul>
             <li>
-            <p>Tiny Tiaraa Kids Jewellery products purchased from our authorised stores or website are eligible for return.</p>     
+            <p>Tiny Tiaraa Kids Jewelry products purchased from our authorised stores or website are eligible for return.</p>     
             </li>
             <li>
             <p>The product must be in its original condition, unused, and with all the original packaging and tags intact.</p>     
@@ -61,7 +61,7 @@ function ReturnPolicy() {
             <h3>Non-Eligible Products for Return:</h3>
             <p>The following products are not eligible for return:</p>
             <ul>
-                    <p>Customized or personalized jewellery with specific engravings or alterations made at the customer's request.</p>
+                    <p>Customized or personalized Jewelry with specific engravings or alterations made at the customer's request.</p>
                 <li>
                     <p>Products without the original packaging and tags.</p>
                 </li>
@@ -117,7 +117,7 @@ function ReturnPolicy() {
         </ol>
 
     </div>
-    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' jewellery. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
+    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' Jewelry. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
     </div>
   
 </div>

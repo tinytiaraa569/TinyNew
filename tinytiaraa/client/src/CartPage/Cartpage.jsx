@@ -36,7 +36,7 @@ function Cartpage() {
   // const toatalPrice = data.discountPrice * value
   const { cart } = useSelector((state) => state.cart)
 
-  console.log(cart[0].shopId,"see the details of cart page")
+  // console.log(cart[0].shopId,"see the details of cart page")
   const { user } = useSelector((state) => state.user)
   const { seller ,isLoading } = useSelector((state) => state.seller);
   const [couponCode, setCouponCode] = useState("");
@@ -49,20 +49,20 @@ function Cartpage() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const shopId = cart[0].shopId
-    axios
-      .get(`${server}/coupon/get-coupons/${shopId}`)
-      .then((res) => {
-        setAvailableCoupons(res.data.couponCodes); // Assuming your API returns an array of coupons
-      })
-      .catch((error) => {
-        console.error('Error fetching coupons:', error);
-      });
+    if (cart.length > 0 && cart[0]?.shopId) {  // Check if cart is not empty and shopId exists
+      const shopId = cart[0].shopId;
+      axios
+        .get(`${server}/coupon/get-coupons/${shopId}`)
+        .then((res) => {
+          setAvailableCoupons(res.data.couponCodes); // Assuming your API returns an array of coupons
+        })
+        .catch((error) => {
+          console.error('Error fetching coupons:', error);
+        });
+    } else {
+      setAvailableCoupons([]);  // Reset available coupons if cart is empty
+    }
   }, [cart]);
-
-  console.log(availableCoupons,"avaiable coupon")
-
-  
 
   const removeFromCartHandler = (data) => {
     dispatch(removeFromCart(data))
@@ -684,7 +684,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
               {/* Render chain option only if showWithChain is true */}
               {shouldShowChainOptions && (
-                <h3 className='text-[0.6rem]'><span className='font-[500]'>Chain:</span> {data.showWithChain ? 'With Chain' : 'Without Chain'}</h3>
+                <h3 className='text-[0.6rem]'><span className='font-[500]'>Chain:</span> {data.showWithChain ? 'With Chain' : 'Without Chain'} ({data.showWithChain ?  data.selectedChainSize: ''})</h3>
               )}
 
             </div>

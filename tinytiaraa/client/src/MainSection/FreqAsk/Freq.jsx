@@ -94,12 +94,12 @@ function CustomizedAccordions() {
             >
               <img src={freq1} alt="" />
               <Typography>
-                What materials are used in Tiny Tiaraa jewellery?
+                What materials are used in Tiny Tiaraa Jewelry?
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Our jewellery is made from hypoallergenic and non-toxic
+                Our Jewelry is made from hypoallergenic and non-toxic
                 materials, ensuring safety and comfort for kids and infants.
               </Typography>
             </AccordionDetails>
@@ -115,7 +115,7 @@ function CustomizedAccordions() {
               <img src={freq2} alt="" />
 
               <Typography>
-                Can I find jewellery for special occasions?
+                Can I find jewelry for special occasions?
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -253,7 +253,7 @@ function CustomizedAccordions() {
             >
               <img src={freq9} alt="" />
               <Typography>
-                Can I get jewellery customized for my child?
+                Can I get jewelry customized for my child?
               </Typography>
             </AccordionSummary>
             <AccordionDetails>

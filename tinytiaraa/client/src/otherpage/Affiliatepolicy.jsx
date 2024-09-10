@@ -7,13 +7,13 @@ function Affiliatepolicy() {
 
     <div className="TermsConsection">
         <h3>Affiliate Program Commission Policy</h3>
-        <p>Thank you for joining the Tiny Tiaraa Kids Jewellery Affiliate Program! We are thrilled to have you as an affiliate and appreciate your efforts in promoting and referring customers to purchase our products. This policy outlines the commission structure for affiliates who successfully refer sales of Tiny Tiaraa Kids Jewellery products.</p>
+        <p>Thank you for joining the Tiny Tiaraa Kids Jewelry Affiliate Program! We are thrilled to have you as an affiliate and appreciate your efforts in promoting and referring customers to purchase our products. This policy outlines the commission structure for affiliates who successfully refer sales of Tiny Tiaraa Kids Jewelry products.</p>
     </div>
     <div className="conditions">
         <ol>
         <li className='conditonssubsection'>
             <h3>Commission Percentage:</h3>
-            <p>As an affiliate, you will receive a commission of 5% on the net sales value of Tiny Tiaraa Kids Jewellery products sold through your unique referral link. The net sales value is calculated after deducting any applicable taxes, discounts, and returns.</p>     
+            <p>As an affiliate, you will receive a commission of 5% on the net sales value of Tiny Tiaraa Kids Jewelry products sold through your unique referral link. The net sales value is calculated after deducting any applicable taxes, discounts, and returns.</p>     
             </li>
 
             <li className='conditonssubsection'>
@@ -69,7 +69,7 @@ function Affiliatepolicy() {
         </ol>
 
     </div>
-    <p>Thank you for your enthusiasm in promoting Tiny Tiaraa Kids Jewellery products through our Affiliate Program. We believe that your efforts will help our brand reach more customers and grow further. If you have any questions or need further clarification on this commission policy, please don't hesitate to contact us. Happy promoting!</p>
+    <p>Thank you for your enthusiasm in promoting Tiny Tiaraa Kids Jewelry products through our Affiliate Program. We believe that your efforts will help our brand reach more customers and grow further. If you have any questions or need further clarification on this commission policy, please don't hesitate to contact us. Happy promoting!</p>
     </div>
   
 </div>

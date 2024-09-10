@@ -7,18 +7,18 @@ function Exchange() {
 
     <div className="TermsConsection">
         <h3>Product Warranty Extension Policy</h3>
-        <p>Thank you for choosing Tiny Tiaraa! We are delighted to offer you a warranty extension policy to ensure your complete satisfaction and confidence in our products. This policy is applicable to customers in India who purchase kids' jewellery from our online store / Partner store.</p>
+        <p>Thank you for choosing Tiny Tiaraa! We are delighted to offer you a warranty extension policy to ensure your complete satisfaction and confidence in our products. This policy is applicable to customers in India who purchase kids' Jewelry from our online store / Partner store.</p>
     </div>
     <div className="conditions">
         <ol>
         <li className='conditonssubsection'>
             <h3>Standard Warranty Period:</h3>
-                    <p>Our jewellery comes with a standard warranty of 3 months from the date of purchase. During this period, we will repair or replace any product that is found to have manufacturing defects or faulty workmanship, free of charge.</p>
+                    <p>Our Jewelry comes with a standard warranty of 3 months from the date of purchase. During this period, we will repair or replace any product that is found to have manufacturing defects or faulty workmanship, free of charge.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Warranty Extension:</h3>
-            <p>We understand the importance of long-lasting, reliable jewellery for your children. To provide you with extra peace of mind, we offer a warranty extension option.</p>
+            <p>We understand the importance of long-lasting, reliable Jewelry for your children. To provide you with extra peace of mind, we offer a warranty extension option.</p>
             </li>
 
             <li className='conditonssubsection'>
@@ -71,7 +71,7 @@ function Exchange() {
             <li className='conditonssubsection'>
             <h3>Cancellation and Refunds:</h3>
             <p>Once the warranty extension is purchased, it cannot be canceled or refunded.</p>
-            <p>Please feel free to reach out to our customer support team if you have any questions or require further assistance regarding the kids' jewellery product warranty extension.</p>
+            <p>Please feel free to reach out to our customer support team if you have any questions or require further assistance regarding the kids' Jewelry product warranty extension.</p>
             </li>
 
            
@@ -81,7 +81,7 @@ function Exchange() {
     </div>
     <p>Please note that this policy is subject to change, and any updates will be communicated through our website or other official channels.</p>
 
-    <p>Thank you for choosing Tiny Tiaraa. We value your trust in our brand and look forward to serving you and your little ones with beautiful and durable jewellery pieces.</p>
+    <p>Thank you for choosing Tiny Tiaraa. We value your trust in our brand and look forward to serving you and your little ones with beautiful and durable Jewelry pieces.</p>
     </div>
   
 </div>

@@ -107,7 +107,7 @@ function Privacy() {
         </ol>
 
     </div>
-    <p>Thank you for choosing Tiny Tiaraa Kids Jewellery. Your trust is of utmost importance to us, and we are dedicated to protecting your privacy and ensuring a secure online experience.</p>
+    <p>Thank you for choosing Tiny Tiaraa Kids Jewelry. Your trust is of utmost importance to us, and we are dedicated to protecting your privacy and ensuring a secure online experience.</p>
     </div>
   
 </div>

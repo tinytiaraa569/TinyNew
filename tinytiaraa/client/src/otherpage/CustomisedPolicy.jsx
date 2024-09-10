@@ -6,7 +6,7 @@ function CustomisedPolicy() {
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">
-        <h3>Tiny Tiaraa Customized Jewellery Policy</h3>
+        <h3>Tiny Tiaraa Customized Jewelry Policy</h3>
     </div>
     <div className="conditions">
         <ol>
@@ -14,7 +14,7 @@ function CustomisedPolicy() {
             <h3>Customization Approval and Advance Payment:</h3>
             <ul>
                 <li>
-                    <p>All customized jewellery orders with specific design requests are subject to approval by Tiny Tiaraa.</p>
+                    <p>All customized Jewelry orders with specific design requests are subject to approval by Tiny Tiaraa.</p>
                 </li>
                 <li>
                     <p>A non-refundable advance payment of 50% is required to initiate the customization process. The amount will be communicated based on the complexity of the design and materials used.</p>
@@ -42,7 +42,7 @@ function CustomisedPolicy() {
             <h3>Manufacturing Process:</h3>
             <ul>
                 <li>
-                <p>Customized jewellery will begin production only after the receipt of the advance payment.</p>
+                <p>Customized Jewelry will begin production only after the receipt of the advance payment.</p>
 
                 </li>
                 <li>
@@ -56,7 +56,7 @@ function CustomisedPolicy() {
             <h3> Delivery:</h3>
             <ul>
                 <li>
-            <p>Tiny Tiaraa is committed to delivering the customized jewellery within 14 days from the initiation of the manufacturing process.</p>
+            <p>Tiny Tiaraa is committed to delivering the customized Jewelry within 14 days from the initiation of the manufacturing process.</p>
 
                 </li>
                 <li>
@@ -71,7 +71,7 @@ function CustomisedPolicy() {
             <h3>Return Policy:</h3>
             <ul>
                 <li>
-                    <p>Due to the personalized nature of customized jewellery, returns will only be accepted in the case of manufacturing defects.</p>            
+                    <p>Due to the personalized nature of customized Jewelry, returns will only be accepted in the case of manufacturing defects.</p>            
 
                 </li>
                 <li>
@@ -103,7 +103,7 @@ function CustomisedPolicy() {
             <h3>Communication:</h3>
             <ul>
                 <li>
-            <p>Customers can reach out to Tiny Tiaraa for any queries related to their customized jewellery order through the provided communication channels.</p>
+            <p>Customers can reach out to Tiny Tiaraa for any queries related to their customized Jewelry order through the provided communication channels.</p>
 
                 </li>
                 <li>
@@ -130,7 +130,7 @@ function CustomisedPolicy() {
             <li className='conditonssubsection'>
             <h3>Miscellaneous:</h3>
             <p>Tiny Tiaraa reserves the right to refuse any customization request at its discretion.</p>   
-            <p>Prices for customized jewellery may vary based on design complexity, materials used, and market conditions.</p>
+            <p>Prices for customized Jewelry may vary based on design complexity, materials used, and market conditions.</p>
             </li>
             
 
@@ -139,7 +139,7 @@ function CustomisedPolicy() {
         </ol>
 
     </div>
-    <p>By placing a customized jewellery order with Tiny Tiaraa, the customer acknowledges and agrees to comply with the terms and conditions outlined in this policy.</p>
+    <p>By placing a customized Jewelry order with Tiny Tiaraa, the customer acknowledges and agrees to comply with the terms and conditions outlined in this policy.</p>
     <p>Note: This policy is subject to change at the discretion of Tiny Tiaraa. Customers will be notified of any updates.</p>
     </div>
   

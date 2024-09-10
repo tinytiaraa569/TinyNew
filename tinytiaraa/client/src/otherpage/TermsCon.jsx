@@ -90,7 +90,7 @@ function TermsCon() {
                         <p>Shipping fees and delivery timelines are indicated on the website and may vary based on your location and the chosen shipping method.</p>
                     </li>
                     <li>
-                        <p>Tiny Tiaraa Kids Jewellery is not responsible for any delays caused by the shipping carrier or any customs-related issues.</p>
+                        <p>Tiny Tiaraa Kids Jewelry is not responsible for any delays caused by the shipping carrier or any customs-related issues.</p>
                     </li>
                 </ul>
                 </li>

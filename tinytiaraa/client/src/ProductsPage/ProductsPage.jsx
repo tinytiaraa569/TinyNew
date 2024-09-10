@@ -35,7 +35,32 @@ function ProductsPage() {
   const subcategoryData = searchParams.get("subcategory");
   console.log(categoryData, "see what is category data");
   console.log(subcategoryData, "see what is subcategory data");
+  const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Adjust breakpoint as needed
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+  
+    return isMobile;
+  };
+  const isMobile = useIsMobile();
 
+  useEffect(() => {
+    if (isMobile) {
+      setIsFilterVisible(false);
+    } else {
+      setIsFilterVisible(true);
+    }
+  }, [isMobile]);
   useEffect(() => {
     // Extract the category from the URL
     const searchParams = new URLSearchParams(location.search);

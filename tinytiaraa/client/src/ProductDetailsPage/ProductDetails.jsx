@@ -1452,8 +1452,8 @@ const ProductDetailsInfo = ({ data }) => {
                                     </div>
                                     <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
                                         <div className='pb-[2px] font-[600] '>Weight</div>
-                                        <p className='text-[#4f3267] text-[13px]'> 1gm </p>
-                                        <p className='text-[#4f3267] text-[13px]'> 2gm </p>
+                                        <p className='text-[#4f3267] text-[13px]'> 1gms </p>
+                                        <p className='text-[#4f3267] text-[13px]'> 2gms </p>
 
                                     </div>
                                 </div>
@@ -1494,7 +1494,7 @@ const ProductDetailsInfo = ({ data }) => {
                                         </div>
                                         <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><GiHeartNecklace /></div>
-                                            <p className='text-[#4f3267] text-[15px]'>Everyday Use Jewellery</p>
+                                            <p className='text-[#4f3267] text-[15px]'>Everyday Use Jewelry</p>
                                         </div>
                                         <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><TbBrandMinecraft /></div>

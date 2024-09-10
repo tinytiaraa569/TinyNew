@@ -7,7 +7,7 @@ function ExchangePolicy() {
 
     <div className="TermsConsection">
         <h3>Exhange Policy</h3>
-        <p>At Tiny Tiaraa, we strive to ensure your complete satisfaction with our kids' jewellery products. We understand that sometimes preferences or circumstances may change, and we are here to facilitate hassle-free exchanges. This Exchange Policy outlines the guidelines for exchanging Tiny Tiaraa Kids Jewellery products.</p>
+        <p>At Tiny Tiaraa, we strive to ensure your complete satisfaction with our kids' Jewelry products. We understand that sometimes preferences or circumstances may change, and we are here to facilitate hassle-free exchanges. This Exchange Policy outlines the guidelines for exchanging Tiny Tiaraa Kids Jewelry products.</p>
     </div>
     <div className="conditions">
         <ol>
@@ -15,7 +15,7 @@ function ExchangePolicy() {
             <h3>Eligible Products for Exchange:</h3>
             <ul>
             <li>
-            <p>Tiny Tiaraa Kids Jewellery products purchased from our authorised stores or website are eligible for exchange.</p>     
+            <p>Tiny Tiaraa Kids Jewelry products purchased from our authorised stores or website are eligible for exchange.</p>     
             </li>
             <li>
             <p>The product must be in its original condition, unused, and with all the original packaging and tags intact.
@@ -34,7 +34,7 @@ function ExchangePolicy() {
             <p>Exchanges will be processed for the following valid reasons:</p>
             <ul>
                 <li>
-                <p><span className='boldspan'>Size:</span>If the jewellery does not fit the child properly, we are happy to exchange it for the correct size.</p>
+                <p><span className='boldspan'>Size:</span>If the Jewelry does not fit the child properly, we are happy to exchange it for the correct size.</p>
                 </li>
                 <li>
                 <p><span className='boldspan'>Style Preference:</span> If the customer prefers a different style from our collection, we will facilitate the exchange, only in case of availability</p>
@@ -65,7 +65,7 @@ function ExchangePolicy() {
             <h3>Non-Eligible Products for Exchange:</h3>
             <p>The following products are not eligible for exchange:</p>
             <ul>
-                    <p>Customized or personalized jewellery with specific engravings or alterations made at the customer's request.</p>
+                    <p>Customized or personalized Jewelry with specific engravings or alterations made at the customer's request.</p>
                 <li>
                     <p>Products without the original packaging and tags.</p>
                 </li>
@@ -123,7 +123,7 @@ function ExchangePolicy() {
         </ol>
 
     </div>
-    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' jewellery. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
+    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' Jewelry. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
     </div>
   
 </div>

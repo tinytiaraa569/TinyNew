@@ -67,7 +67,7 @@ function Contactsec3() {
                         <p>Tiny Tiaraa</p>
                         <p>A Brand By Ru-Brama Retail Pvt Ltd.</p>
                         <p className="text">
-                            Tiny Tiaraa, where we craft enchanting jewellery for kids and infants.
+                            Tiny Tiaraa, where we craft enchanting jewelry for kids and infants.
                         </p>
                         <div className="info">
                             <div className="information">
