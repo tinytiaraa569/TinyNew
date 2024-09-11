@@ -24,7 +24,7 @@ function Slidertext() {
 
                     <h1>Kid-Safe and Playful</h1>
                     <p>Our Proudly Designed Children's Jewelry Collection</p>
-                    <button onClick={()=>{navigate("/shop")}}>Checkit-Out</button>
+                    <button onClick={()=>{navigate("/products")}}>Check it-Out</button>
                 </div>
             </div>
             <div className="slidertextright">

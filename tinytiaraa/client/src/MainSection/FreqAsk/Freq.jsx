@@ -294,7 +294,7 @@ function CustomizedAccordions() {
         <button
           className="freqbtn"
           onClick={() => {
-            navigate("/shop");
+            navigate("/products");
           }}
         >
           Shop Now
