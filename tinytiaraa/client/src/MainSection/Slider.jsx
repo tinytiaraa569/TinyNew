@@ -92,13 +92,13 @@ function SliderSection() {
           <img src={newbanner5} alt="Third Slide" />
         </div>
 
-        <div className="slidersec cursor-pointer">
+        <div className="slidersec cursor-pointer" onClick={()=>{navigate("/products?category=Diamond%20Bracelets")}}>
           <img src={newbanner7} alt="Third Slide" />
         </div>
-        <div className="slidersec cursor-pointer" onClick={()=>{navigate("/products?category=Diamond%20Bracelets")}}>
+        {/* <div className="slidersec cursor-pointer" onClick={()=>{navigate("/products?category=Diamond%20Bracelets")}}>
           <img src={newbanner6} alt="Third Slide" />
         </div>
-       
+        */}
 
         
 
