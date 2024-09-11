@@ -30,6 +30,7 @@ function Login() {
         }, { withCredentials: true }).then((res) => {
             toast.success("Login success!")
             navigate("/")
+            window.location.reload()
 
         }).catch((error) => {
             console.log(error)

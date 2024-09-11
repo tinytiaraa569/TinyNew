@@ -548,6 +548,26 @@ function Navbar1() {
 
 
             {/* Mobile Navbar */}
+            <div className='nav1bannermobile '>
+                    
+
+                    <div className='couponscetion !text-[12px]'>
+                        <Slider {...settings} >
+                            <div className='text-center couponsectionadjustslider'>
+                                <span>Get ₹500 Off On Your First Order Of ₹5000 Or More! :- Welcome500</span>
+
+                            </div>
+                            <div className='text-center couponsectionadjustslider'>
+
+                                <span>Get 10% Off On Your Order above ₹5000 Or More! :- Tiny10</span>
+                            </div>
+
+                        </Slider>
+
+                    </div>
+
+                    
+                </div>
             <div
                 className={`mobile-nav  ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
                     }
@@ -572,7 +592,10 @@ function Navbar1() {
 
                         }} className='mr-[20px]'>
 
+<Badge badgeContent={cart && cart.length} color="primary" badgeContentClassName="custom-badge-content">
+
                             <i className="fa-solid fa-cart-shopping text-[25px]" ></i>
+</Badge>
 
 
                         </div>

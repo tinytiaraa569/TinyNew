@@ -6,7 +6,7 @@
 
 .refermain {
   width: 100%;
-  height: 90vh;
+  height: 95vh;
   display: flex;
   gap: 30px;
 }
@@ -79,7 +79,15 @@
   font-size: 14px;
   margin-top: 5px;
 }
-
+.referbtnnew{
+  background-color: #006039;
+  padding: 6px 14px;
+  color: white;
+  border-radius: 7px;
+}
+.referbtnnew:hover{
+  background-color: #098d58;
+}
 @media (max-width: 1080px) {
   .refermain {
     flex-direction: column;

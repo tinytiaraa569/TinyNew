@@ -124,6 +124,10 @@ const Safety = () => {
               ))}
             </Slider>
           </div>
+
+          <div className="text-center mt-5" >
+            <button className="referbtnnew" onClick={()=>{navigate("/sign-up")}}>Join us</button>
+          </div>
         </div>
       </div>
     </>

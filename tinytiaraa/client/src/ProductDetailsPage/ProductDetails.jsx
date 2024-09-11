@@ -745,6 +745,65 @@ function ProductDetails({ data }) {
         setIsExpanded(!isExpanded);
     };
 
+    const [pincode, setpincode] = useState("");
+    const [estimatedDeliveryRange, setEstimatedDeliveryRange] = useState("Enter your zip code");
+    const [isLoading, setIsLoading] = useState(false);
+    const originPincode = "400093"; // You can set this dynamically if needed
+    const pickupDate = new Date().toISOString().split("T")[0]; // Current date
+    const [showResult, setShowResult] = useState(false); // State to control visibility
+
+    // Function to format date as "13 Sept"
+    const formatDate = (date) => {
+        const day = date.getDate();
+        const month = date.toLocaleString("default", { month: "short" });
+        return `${day} ${month}`;
+    };
+
+    const calculateEDD = async () => {
+        if (!pincode) {
+            setEstimatedDeliveryRange("Please enter a pincode");
+            setShowResult(true); // Show result even if there's an error
+            return;
+        }
+
+        setIsLoading(true);
+        setShowResult(false); // Hide result until calculation is done
+
+        try {
+            const response = await axios.post(
+                `${server}/calculateEDD`, // Adjust your server URL here
+                {
+                    origin_pincode: originPincode,
+                    destination_pincode: pincode,
+                    pickup_date: pickupDate,
+                }
+            );
+    
+            if (response.data.status) {
+                const deliveryDateStr = response.data.data.estimated_delivery;
+                const deliveryDate = new Date(deliveryDateStr.split("-").reverse().join("-"));
+    
+                const startDate = formatDate(deliveryDate);
+    
+                // Add 2 days to the delivery date
+                const endDate = new Date(deliveryDate);
+                endDate.setDate(deliveryDate.getDate() + 2);
+    
+                const endDateFormatted = formatDate(endDate);
+    
+                // Set the delivery range in the format "13 Sept - 16 Sept"
+                setEstimatedDeliveryRange(`${startDate} - ${endDateFormatted}`);
+            } else {
+                setEstimatedDeliveryRange("Could not calculate EDD");
+            }
+        } catch (error) {
+            console.error("Error fetching EDD:", error);
+            setEstimatedDeliveryRange("Error calculating EDD");
+        } finally {
+            setIsLoading(false);
+            setShowResult(true); // Show result after calculation
+        }
+    };
 
     return (
         <div className='bg-white'>
@@ -1218,6 +1277,8 @@ function ProductDetails({ data }) {
                                         <p className='text-red-500 text-sm mt-2'>{validationError}</p>
                                     )}
 
+                                    
+
 
 
 
@@ -1324,11 +1385,23 @@ function ProductDetails({ data }) {
 
                                     </div>
 
+
+
+
                                     {/* <div className={`${styles.button} mt-6 !w-[190px] p-4 !rounded !h-[40px]`} onClick={handleMessageSubmit}>
                                         <span className='text-white flex items-center'> Send Message <AiOutlineMessage className='ml-2' /></span>
                                     </div> */}
 
+                                        <div className='checkdel mt-3'>
+                                        <input type="text" placeholder='enter your pincode' value={pincode} onChange={(e)=>setpincode(e.target.value)}/>
 
+                                        <button className='checkdelbtn' onClick={()=>{calculateEDD()}}>Check </button>
+                                        {isLoading ? (
+                                            <p>Loading...</p>
+                                         ) : (
+                                         showResult && <p className='text-[14px]'>Estimated Delivery: {estimatedDeliveryRange}</p>
+                                         )}
+                                         </div>
 
                                 </div>
 

@@ -52,7 +52,7 @@ function Customise() {
   }, [isPaused, steps.length]);
 
   return (
-    <div className=" bgcustomize">
+    <div className="bgcustomize">
       <div className="customenew">
         <div className="customenewheading">
           <h1>Customize Your Jewelry</h1>

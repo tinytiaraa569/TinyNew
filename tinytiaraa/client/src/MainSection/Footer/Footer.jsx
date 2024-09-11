@@ -60,8 +60,8 @@ function Footer() {
                     <h4 className='footerheading'>INFORMATION</h4>
                     <div className='footermenu'>
                         <ul>
-                            <li><Link onClick={scrollToTop} to="/about">About</Link></li>
-                            <li><Link onClick={scrollToTop} to="/contacts">ContactUs</Link></li>
+                            <li><Link onClick={scrollToTop} to="/about">Our Story</Link></li>
+                            <li><Link onClick={scrollToTop} to="/contacts">Contact Us</Link></li>
                             <li><Link onClick={scrollToTop} to="/terms-and-conditions">TERMS & CONDITIONS</Link></li>
                             <li><Link onClick={scrollToTop} to="/privacy-policy">PRIVACY POLICY</Link></li>
                             <li><Link onClick={scrollToTop} to="/warranty-extension">WARRANTY EXTENSION</Link></li>

@@ -20,6 +20,12 @@ import newbanner6 from './sliderimages/newbanner6.jpg';
 import newbanner3 from './sliderimages/newbanner3.jpg';
 import newbanner4 from './sliderimages/newbanner4.jpg';
 
+import newbanner5 from './sliderimages/newbanner5.png';
+import newbanner7 from './sliderimages/newbanner7.png';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 
@@ -68,18 +74,28 @@ function SliderSection() {
       },
     ],
   };
+  const navigate = useNavigate()
 
   return (
     <>
       <Slider {...settings}>
-        <div className="slidersec">
+        <div className="slidersec cursor-pointer" >
           <img src={firstimg} alt="First Slide" />
         </div>
-        <div className="slidersec">
+        <div className="slidersec cursor-pointer">
           <img src={newbanner4} alt="Slider Six" />
         </div>
 
-        <div className="slidersec">
+     
+
+        <div className="slidersec cursor-pointer">
+          <img src={newbanner5} alt="Third Slide" />
+        </div>
+
+        <div className="slidersec cursor-pointer">
+          <img src={newbanner7} alt="Third Slide" />
+        </div>
+        <div className="slidersec cursor-pointer" onClick={()=>{navigate("/products?category=Diamond%20Bracelets")}}>
           <img src={newbanner6} alt="Third Slide" />
         </div>
        

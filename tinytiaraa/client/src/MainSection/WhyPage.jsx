@@ -16,7 +16,7 @@ function WhyPage() {
     <div className='whypage'>
       <div className='whypagecon'>
         <h5>Why Tiny Tiaraa ?</h5>
-        <span>Delight your little ones with our enchanting collection of kids' jewelry</span>
+        <span>Delight your little ones with our enchanting collection of  Infants & kids jewelry</span>
       </div>
 
       <div className='whypiconcon'>

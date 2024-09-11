@@ -27,7 +27,7 @@ import religiousbanner from './productpage/religiousbanner.jpg'
 export const categoriesData = [
   {
     id: 1,
-    title: "Diamond Earings",
+    title: "Diamond Earrings",
     subTitle: "",
     bannerimg: earringimg,
     productbanner: earringbanner,

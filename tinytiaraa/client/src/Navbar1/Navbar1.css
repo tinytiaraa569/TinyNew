@@ -276,6 +276,21 @@
 .pricenav a{
     font-size: 16px !important;
 }
+.nav1bannermobile{
+    padding: 10px 10px;
+    /* background-color: #5DC2B0; */
+    background: #006039;
+    /* color: rgb(0, 0, 0); */
+
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    font-weight: 500;
+    display: none;
+
+}
 @media (max-width:1300px) {
     .navbar1 .logo img {
         width: 150px;
@@ -292,7 +307,9 @@
     .navbar1mian {
         display: none;
     }
-
+    .nav1bannermobile{
+        display: block;
+    }
     .mobile-nav {
         display: block;
     }
@@ -383,8 +400,11 @@
 }
 
 @media (max-width: 480px) {
+    .couponscetion{
+        font-size: 10px !important;
+    }
     .nav1banner {
-        flex-direction: column;
+        /* flex-direction: column; */
         text-align: center;
         gap: 10px;
     }
@@ -411,3 +431,17 @@
     }
 
 }
+
+@media (max-width:400px) {
+ 
+     .couponscetion span{
+         font-size: 8px !important;
+     }
+ }
+
+ @media (max-width:350px) {
+   
+     .couponscetion span{
+         font-size: 6px !important;
+     }
+ }

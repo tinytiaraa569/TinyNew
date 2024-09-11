@@ -55,6 +55,7 @@ const customised = require("./controller/Customised")
 const contactus = require("./controller/contactus")
 
 const referralRoutes = require('./controller/referralRoutes');
+const calculateEDDRoutes = require("./controller/sequel");
 
 app.use("/api/v2/user", user)
 app.use("/api/v2/shop", shop)
@@ -68,6 +69,7 @@ app.use("/api/v2/message", message)
 app.use('/api/v2/referral', referralRoutes);
 app.use('/api/v2/customised', customised);
 app.use('/api/v2/contactus', contactus);
+app.use("/api/v2", calculateEDDRoutes);
 
 
 
@@ -175,6 +177,38 @@ app.post("/payu/failure", (req, res) => {
     return res.redirect(`http://localhost:5173/order/failure?txnid=${txnid}&status=${status}`);
 });
 
+
+
+// app.post("/calculateEDD", async (req, res) => {
+//     const { origin_pincode, destination_pincode, pickup_date } = req.body;
+//     const token = "b525f7a40e4a5ed99fdfc95897925641"; // Use the token from Sequel API
+
+//     try {
+//         const response = await axios.post(
+//             "https://test.sequel247.com/api/shipment/calculateEDD",
+//             {
+//                 origin_pincode,
+//                 destination_pincode,
+//                 pickup_date,
+//                 token,
+//             },
+//             {
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+        
+//         // Return the calculated EDD to the frontend
+//         res.json(response.data);
+//     } catch (error) {
+//         console.error("Error calculating EDD:", error.response?.data || error.message);
+//         res.status(500).json({
+//             message: "Error calculating EDD",
+//             error: error.response?.data || error.message,
+//         });
+//     }
+// });
 //error handling
 
 app.use(ErrorHandler)

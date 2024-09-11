@@ -42,7 +42,7 @@ function FollowUS() {
 
                 <div className="socailcardfollow socialpintrest">
                     <FaPinterest className='socialiconfollow' />
-                    <span>Pintrest</span>
+                    <span>Pinterest</span>
 
                 </div>
                 </Link>

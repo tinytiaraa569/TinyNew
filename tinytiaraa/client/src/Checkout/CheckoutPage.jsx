@@ -155,12 +155,13 @@ function CheckoutPage() {
 
         } else {
             const shippingAddress = {
-                email, name, phoneNumber, address1, address2, zipCode, country, city
+                email, name, phoneNumber, address1, address2, zipCode, country, city ,estimatedDeliveryRange
             }
             const finalBillingAddress = isSameAddress ? shippingAddress : billingAddress;
             const orderData = {
                 cart,
                 totalPrice: (subTotalPrice - discountPrice - appliedReferral).toFixed(2),
+                
                 subTotalPrice, shipping, discountPrice, user, shippingAddress, finalBillingAddress, gstAmount,
                 referralBalance,
                 appliedReferral,
@@ -196,44 +197,70 @@ function CheckoutPage() {
 
 
 
-//     const [estimatedDelivery, setEstimatedDelivery] = useState("");
-//     const [isLoading, setIsLoading] = useState(true);
-//     const originPincode = "590001"; // You can set this dynamically if needed
-//     const destinationPincode = "560078"; // This can be dynamic, depending on user input
-//     const pickupDate = new Date().toISOString().split("T")[0]; // Current date
-//    const token = "b525f7a40e4a5ed99fdfc95897925641"
-//     useEffect(() => {
-//         const calculateEDD = async () => {
-//           try {
-//             const response = await axios.post(
-//               "https://test.sequel247.com/api/shipment/calculateEDD", // Replace with your backend endpoint
-//               {
-//                 origin_pincode: originPincode,
-//                 destination_pincode: destinationPincode,
-//                 pickup_date: pickupDate,
-//                 token: token, // Include token in the request body
-//               },
-//               {
-//                 headers: {
-//                   "Content-Type": "application/json",
-//                 },
-//               }
-//             );
-//             setEstimatedDelivery(response.data.message); // Assuming 'message' contains EDD info
-//           } catch (error) {
-//             console.error("Error fetching estimated delivery date:", error);
-//             setEstimatedDelivery("Unable to calculate EDD");
-//           } finally {
-//             setIsLoading(false);
-//           }
-//         };
-    
-//         calculateEDD();
-//       }, [originPincode, destinationPincode, pickupDate, token]);
+    const [estimatedDelivery, setEstimatedDelivery] = useState("");
+    const [estimatedDeliveryRange, setEstimatedDeliveryRange] = useState("Enter your zip code");
+    const [isLoading, setIsLoading] = useState(true);
+    const originPincode = "400093"; // You can set this dynamically if needed
+    const destinationPincode = "400001"; // This can be dynamic, depending on user input
+    const pickupDate =  new Date().toISOString().split("T")[0];; // Current date
+   const token = "b525f7a40e4a5ed99fdfc95897925641"
 
-//       console.log(estimatedDelivery,"from sequel")
 
-    
+//    useEffect(() => {
+   
+
+//     calculateEDD();
+// }, [originPincode, destinationPincode, pickupDate]);
+
+const calculateEDD = async () => {
+    try {
+        const response = await axios.post(
+            `${server}/calculateEDD`, // Adjust your server URL here
+            {
+                origin_pincode: originPincode,
+                destination_pincode: zipCode.length === 6 ? zipCode : destinationPincode,
+                pickup_date: pickupDate,
+            }
+        );
+
+        if (response.data.status) {
+            const deliveryDateStr = response.data.data.estimated_delivery;
+            const deliveryDate = new Date(deliveryDateStr.split("-").reverse().join("-"));
+
+            // Function to format date as "13 Sept"
+            const formatDate = (date) => {
+                const day = date.getDate();
+                const month = date.toLocaleString("default", { month: "short" });
+                return `${day} ${month}`;
+            };
+
+            const startDate = formatDate(deliveryDate);
+
+            // Add 2 days to the delivery date
+            const endDate = new Date(deliveryDate);
+            endDate.setDate(deliveryDate.getDate() + 2);
+
+            const endDateFormatted = formatDate(endDate);
+
+            // Set the delivery range in the format "13 Sept - 16 Sept"
+            setEstimatedDeliveryRange(`${startDate} - ${endDateFormatted}`);
+        } else {
+            setEstimatedDeliveryRange("Could not calculate EDD");
+        }
+    } catch (error) {
+        console.error("Error fetching EDD:", error);
+        setEstimatedDeliveryRange("Error calculating EDD");
+    } finally {
+        setIsLoading(false);
+    }
+};
+    //   console.log(estimatedDelivery,"from sequel")
+
+    useEffect(() => {
+        if (zipCode.length === 6) {
+            calculateEDD();
+        }
+    }, [zipCode ,originPincode, destinationPincode, pickupDate]);
 
     return (
 
@@ -571,8 +598,8 @@ function CheckoutPage() {
                                             <input id="shipping-method" type='radio' required className='int-emailcheck !w-[20px] !h-[20px]' />
                                             <div>
 
-                                                <label className='text-[14px] font-[500] mb-[4px] tracking-[0.55px] block' for="shipping-method">Standard Delivery - FREE</label>
-                                                <span className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block'>(Delivery By Jul 19 - Jul 22)</span>
+                                                <label className='text-[14px] font-[500] mb-[4px] tracking-[0.55px] block' for="shipping-method">Standard Delivery - FREE (Sequel247)</label>
+                                                <span className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block'>(Delivery By  {estimatedDeliveryRange})</span>
                                             </div>
                                         </div>
                                     </div>
@@ -674,7 +701,7 @@ function CheckoutPage() {
                                     </div>
                                     <div className="sub-total ">
                                         <span className="label">
-                                            Delivery By <span className="deltext">({start} - {end})</span>
+                                            Delivery By <span className="deltext">({estimatedDeliveryRange})</span>
                                         </span>
                                         <span className="value">Free</span>
                                     </div>

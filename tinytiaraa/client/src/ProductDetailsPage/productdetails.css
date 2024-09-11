@@ -271,6 +271,29 @@
     background-color: #f4f4f4;
     border-radius: 8px;
 }
+.checkdel input{
+    padding: 4px 8px;
+    border: 1px solid grey;
+    font-size: 14px !important;
+    margin-right: 4px;
+    outline: none;
+    
+}
+.checkdel input:focus{ 
+    border: 1px solid #006039;
+    font-size: 14px !important;
+}
+.checkdelbtn{
+    padding: 4px 14px;
+    background-color: #006039;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.checkdelbtn:hover{
+    background-color :#0B8D08;
+    
+}
 @media (max-width:850px) {
     .productpageproname {
         font-size: 16px !important;
