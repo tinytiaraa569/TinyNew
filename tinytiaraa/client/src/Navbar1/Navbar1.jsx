@@ -163,6 +163,8 @@ function Navbar1() {
         navigate(`/products?ageGroup=${ageGroupKey}`, { state: { filteredProducts } });
         setShopDropdownOpen(false);
     };
+
+    console.log(user,"user details")
     return (
         <>
 
@@ -763,7 +765,7 @@ function Navbar1() {
                                         isAuthenticated ?
                                             <>
                                                 <div className='flex flex-col items-center mt-6 font-Poppins'>
-                                                    <img className='w-[50px] h-[50px] rounded-full' src={`${backend_url}${user.avatar}`} alt="" />
+                                                    <img className='w-[50px] h-[50px] rounded-full' src={`${user?.avatar}`} alt="" />
                                                     <h3 className='capitalize font-[500]'>{user.name}</h3>
                                                 </div>
 

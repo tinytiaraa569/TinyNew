@@ -477,10 +477,10 @@ function Cartpage() {
                 </div>
 
               </div>
-              <div className="paymentsection">
+              {/* <div className="paymentsection">
                 <p>OR</p>
 
-              </div>
+              </div> */}
               <div className="paymentaccept">
                 <h3>We Accept Payment</h3>
                 <div className="payemntacceptimagaes">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProductCard from "../MainSection/Productcard/ProductCard";
 import "./productpage.css";
@@ -481,9 +481,10 @@ function ProductsPage() {
 
   const handlePriceChange = (e, index) => {
     const newValue = Number(e.target.value);
+    console.log(newValue,"new value of range")
     setPriceRange((prevRange) => {
       const updatedRange = [...prevRange];
-      updatedRange[index] = newValue;
+      updatedRange[index] = newValue ;
 
       // updateURLParams({ priceMin: updatedRange[0], priceMax: updatedRange[1] });
       return updatedRange;
@@ -571,6 +572,11 @@ function ProductsPage() {
     // Navigate to the products page with the category as a query parameter
     navigate(`/products?category=${categoryTitle}`);
   };
+
+  const query = new URLSearchParams(location.search);
+  const selectedEnamelColorimg = query.get('enamelColor') || ''; // Default to empty string if no color is selected
+
+ 
   return (
     <>
       {/* <div className="productbanner">
@@ -717,7 +723,7 @@ function ProductsPage() {
                   <div className="rangeslider mb-2">
                     <input
                       className="min input-ranges"
-                      name="range_1"
+                      name="range_0"
                       type="range"
                       min={0}
                       max={priceRange[1]}
@@ -908,7 +914,7 @@ function ProductsPage() {
                 } mb-12`}
               >
                 {filteredData.map((product, index) => (
-                  <ProductCard data={product} key={index} />
+                  <ProductCard data={product} key={index} selectedEnamelColorimg={selectedEnamelColorimg} />
                 ))}
               </div>
             )}

@@ -11,7 +11,7 @@ import { EmailIcon, FacebookIcon, WhatsappIcon } from "react-share"
 import { EmailShareButton, FacebookShareButton } from "react-share"
 import { FaInstagram } from 'react-icons/fa'
 
-function ProductCard({ data }) {
+function ProductCard({ data ,selectedEnamelColorimg}) {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -74,6 +74,10 @@ function ProductCard({ data }) {
     }, 1000)
   }
 
+  const enamelColorImages = data.enamelColors[selectedEnamelColorimg]
+    ? Object.values(data.enamelColors[selectedEnamelColorimg]).flat()
+    : [];
+
   return (
     <div className='parentsinglecrd'>
       <div className="parentproductcard w-full h-[330px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
@@ -81,7 +85,11 @@ function ProductCard({ data }) {
 
         <div className='w-full h-[150px] overflow-hidden'>
           <Link to={`/product/${product_name}`}>
-            <img src={`${data.images && data.images[1]?.url}`} alt="" className='parentproductimg w-full h-[150px] object-contain' />
+          <img
+              src={enamelColorImages.length > 0 ? enamelColorImages[0]?.url : data.images && data.images[1]?.url}
+              alt=""
+              className='parentproductimg w-full h-[150px] object-contain'
+            />
           </Link>
         </div>
         <div className='w-full h-[auto] overflow-hidden '>

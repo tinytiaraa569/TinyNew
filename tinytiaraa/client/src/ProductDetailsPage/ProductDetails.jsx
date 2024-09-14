@@ -308,7 +308,7 @@ function ProductDetails({ data }) {
                 navigate('/cart');
             }
         } else {
-            toast.error("Please select color and chain options.");
+            // toast.error("Please select color and chain options.");
         }
     };
 

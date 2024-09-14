@@ -12,17 +12,20 @@ import { RiLockPasswordFill } from "react-icons/ri";
 
 function ProfileSidebar({active,setActive}) {
    const navigate =  useNavigate()
-   const logoutHandler = () =>{
-    axios.get(`${server}/user/logout`,{withCredentials:true}).then((res)=>{
-        toast.success(res.data.message)
-        window.location.reload(true)
-        navigate("/login")
+   const logoutHandler = () => {
+    axios.get(`${server}/user/logout`, { withCredentials: true })
+        .then((res) => {
+            toast.success(res.data.message); // Show success message
+            window.location.reload(true)
 
-    }).catch((error)=>{
-        console.log(error.response.data.message)
-
-    })
-   }
+            // Instead of reloading and navigating, pick one. 
+            // Let's use navigate to move to the login page directly.
+            navigate("/login", { replace: true });  // Replacing history to avoid going back to the logged-in page
+        })
+        .catch((error) => {
+            console.error(error.response?.data?.message || "Error during logout");
+        });
+    };
   return (
     <div className='w-full bg-white shadow-sm p-4 pt-8 font-Poppins'>
         <div className="flex items-center cursor-pointer w-full mb-8" onClick={()=>setActive(1)}>
