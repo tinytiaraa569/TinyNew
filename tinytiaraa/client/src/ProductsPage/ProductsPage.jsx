@@ -568,14 +568,34 @@ function ProductsPage() {
   };
   const navigate = useNavigate();
 
+  
+
   const handleViewProducts = (categoryTitle) => {
+
+    
     // Navigate to the products page with the category as a query parameter
     navigate(`/products?category=${categoryTitle}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Optional: smooth scrolling
+    });
+    if (isMobile) {
+      // Scroll to the top of the page
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: smooth scrolling
+      });
+
+      // Hide the filter section
+      setIsFilterVisible(false);
+    }
   };
 
   const query = new URLSearchParams(location.search);
   const selectedEnamelColorimg = query.get('enamelColor') || ''; // Default to empty string if no color is selected
 
+
+ 
  
   return (
     <>
@@ -754,7 +774,8 @@ function ProductsPage() {
                 {categoriesData.map((category) => (
                   <div
                     key={category.id}
-                    onClick={() => handleViewProducts(category.title)}
+                    onClick={() => 
+                      handleViewProducts(category.title)}
                   >
                     <ul>
                       <li>

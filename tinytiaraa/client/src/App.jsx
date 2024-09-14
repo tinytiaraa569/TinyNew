@@ -77,6 +77,7 @@ import { PriceRangeProvider } from './pricerange/PriceRangeContext';
 import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
 import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
+import ScrollToTopButton from './scrollto/ScrollToTopButton';
 
 // import ReactGA from 'react-ga';
 // ReactGA.initialize('G-DQ8YVWKBTB');
@@ -217,7 +218,7 @@ useEffect(() => {
         {!shouldHideNavbar && <Navbar1 />}
 
 
-
+        <ScrollToTopButton />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
