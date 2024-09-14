@@ -564,6 +564,8 @@ router.post(
         };
         const backend_url = "https://tinytiaraa.vercel.app/"
 
+        console.log(user,"user details from backend ")
+
         try {
             const userId = req.user ? req.user._id : null;
             const guestEmail = shippingAddress.email;
@@ -573,7 +575,7 @@ router.post(
                 cart,
                 shippingAddress,
                 billingAddress,
-                user: userId,
+                user,
                 totalPrice,
                 paymentInfo,
                 couponDiscount,
@@ -906,7 +908,7 @@ router.post(
 
 router.get("/get-all-orders/:userId", catchAsyncErrors(async (req, res, next) => {
     try {
-        const orders = await Order.find({ "user._id": req.params.userId }).sort({
+        const orders = await Order.find({ "user": req.params.userId }).sort({
             createdAt: -1,
         })
         res.status(200).json({
@@ -989,6 +991,98 @@ router.get(
 //     }
 // }))
 
+// router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
+//     try {
+//         const order = await Order.findById(req.params.id);
+
+//         if (!order) {
+//             return next(new ErrorHandler("Order not found with this id", 400));
+//         }
+
+//         if (req.body.status === "Shipping") {
+//             for (const o of order.cart) {
+//                 await updateOrder(o);
+//             }
+//         }
+
+//         order.status = req.body.status;
+
+//         if (req.body.status === "Delivered") {
+//             order.deliveredAt = Date.now();
+//             order.paymentInfo.status = "Succeeded";
+//         }
+
+//         await order.save({ validateBeforeSave: false });
+
+//         res.status(200).json({
+//             success: true,
+//             order,
+//         });
+
+//         async function updateOrder(cartItem) {
+//             const product = await Product.findById(cartItem._id);
+
+//             // Log the cart item being processed
+//             console.log("Processing cart item:", cartItem);
+//             const metalColors = {
+//                 0: "YellowGold",
+//                 1: "RoseGold",
+//                 2: "WhiteGold",
+//             };
+
+//             // Check if the product has enamel and metal color options
+//             const selectedMetalColor = metalColors[cartItem.selectedColor];
+//             const selectedEnamelColor = cartItem.selectedEnamelColor;
+
+//             if (selectedEnamelColor) {
+//                 // Clean the selectedEnamelColor key to match the data format
+//                 const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+
+//                 // Construct the key to access the specific enamel color stock
+//                 const enamelKey = `${cleanedEnamelColor}${selectedMetalColor.replace(/ /g, '')}clrStock`;
+
+//                 // Decrement stock for the specific enamel color and metal color
+//                 product.Enamelcolorstock[cleanedEnamelColor][enamelKey] -= cartItem.qty;
+
+//                 // Log which stocks are being updated
+//                 // console.log(`Decrementing stock for ${selectedEnamelColor} with ${selectedMetalColor}: -${cartItem.qty}`);
+//             } else if (selectedMetalColor) {
+//                 // Construct the key to access the specific metal color stock
+//                 const metalKey = `${selectedMetalColor}clrStock`;
+
+//                 // Decrement stock for the specific metal color
+//                 product.Metalcolorstock[metalKey] -= cartItem.qty;
+
+//                 // Log which metal color stock is being updated
+//                 // console.log(`Decrementing stock for ${selectedMetalColor}: -${cartItem.qty}`);
+
+//                 // console.log(`Decrementing stock for ${ product.Metalcolorstock[metalKey]}: -${cartItem.qty}`);
+
+//             } else {
+//                 // Decrement general stock
+//                 product.stock -= cartItem.qty;
+
+//                 // Log which general stock is being updated
+//                 // console.log(`Decrementing general stock: -${cartItem.qty}`);
+//             }
+
+
+//             // Increment sold_out based on the quantity ordered
+//             product.sold_out += cartItem.qty;
+
+//             // Log the updated product state
+//             // console.log("Updated product state:", product);
+
+//             await product.save({ validateBeforeSave: false });
+//         }
+
+//     } catch (error) {
+//         return next(new ErrorHandler(error.message, 500));
+//     }
+// }));
+
+//new code 
+
 router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
@@ -997,19 +1091,30 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
             return next(new ErrorHandler("Order not found with this id", 400));
         }
 
+        // Update the docket number if the status is "Shipping"
         if (req.body.status === "Shipping") {
+            // Make sure the docket number is provided in the request body
+            if (!req.body.docketNumber) {
+                return next(new ErrorHandler("Docket number is required for shipping", 400));
+            }
+            order.docketno = req.body.docketNumber;
+
+            // Update cart items
             for (const o of order.cart) {
                 await updateOrder(o);
             }
         }
 
+        // Update the status of the order
         order.status = req.body.status;
 
+        // Set deliveredAt and paymentInfo status if the status is "Delivered"
         if (req.body.status === "Delivered") {
             order.deliveredAt = Date.now();
             order.paymentInfo.status = "Succeeded";
         }
 
+        // Save the order with the new status and docket number
         await order.save({ validateBeforeSave: false });
 
         res.status(200).json({
@@ -1063,7 +1168,6 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
                 // Log which general stock is being updated
                 // console.log(`Decrementing general stock: -${cartItem.qty}`);
             }
-
 
             // Increment sold_out based on the quantity ordered
             product.sold_out += cartItem.qty;

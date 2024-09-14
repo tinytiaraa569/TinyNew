@@ -398,6 +398,7 @@ const TrackOrder = () => {
     useEffect(() => {
         dispatch(getAllOrdersOfUser(user._id))
     }, [])
+    console.log(orders,"from my orders")
     const columns = [
         { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
         {

@@ -6,22 +6,36 @@ import { server } from "@/server";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 
-
 function Ttclub() {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false); // State to track email errors
+
+  const validateEmail = (email) => {
+    // Regular expression to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate email before submitting
+    if (!validateEmail(email)) {
+      setEmailError(true); // Set email error to true if invalid
+      return; // Prevent form submission if email is invalid
+    }
+
+    setEmailError(false); // Reset email error if valid
+
+    // Proceed with API call if validation passes
     axios
       .post(`${server}/ttclub/ttclub`, { email })
       .then((res) => {
         swal({
-            title: "Thank you !",
-            text: "You're Subscribe to TT Member's Club!",
-            icon: "success",
-          });
-        // toast.success(res.data.message);
+          title: "Thank you!",
+          text: "You're Subscribed to TT Member's Club!",
+          icon: "success",
+        });
         setEmail("");
       })
       .catch((error) => {
@@ -39,8 +53,14 @@ function Ttclub() {
           <h1>Join the TT Club</h1>
           <p>Enter your email address here</p>
 
-          <form action="" onSubmit={handleSubmit}>
-            <input type="text" placeholder="Enter Your Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {emailError && <p style={{ color: 'red' }}>Invalid email address</p>} {/* Error message */}
             <button type="submit">Join Now</button>
           </form>
         </div>

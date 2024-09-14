@@ -358,7 +358,7 @@ function CustomizedAccordions() {
                   <p>Your message has been received </p>
 
                   <div className="mt-5 flex justify-center">
-                    <button>Submit</button>
+                    <button onClick={() => setOpenDone(false)}>Ok</button>
                   </div>
                 </div>
               </div>

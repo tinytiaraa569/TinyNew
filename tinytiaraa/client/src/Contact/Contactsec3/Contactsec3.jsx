@@ -5,16 +5,12 @@ import { MdOutlineLocationOn, MdOutlineMailOutline, MdOutlinePhoneInTalk } from 
 import { Link } from 'react-router-dom';
 import { server } from '@/server';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 function Contactsec3() {
-
-
-    const [name, setName] = useState("")
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [phonenumber, setPhonenumber] = useState("");
-    // State to track which inputs are focused
     const [focusedInputs, setFocusedInputs] = useState({
         name: false,
         email: false,
@@ -22,7 +18,13 @@ function Contactsec3() {
         message: false,
     });
 
-    // Function to handle focus and blur
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    });
+
     const handleFocus = (inputName) => {
         setFocusedInputs((prevState) => ({
             ...prevState,
@@ -39,22 +41,61 @@ function Contactsec3() {
         }
     };
 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePhoneNumber = (phoneNumber) => {
+        const phoneRegex = /^\d{10}$/;
+        return phoneRegex.test(phoneNumber);
+    };
+
     const handleSubmit = async (e) => {
-        e.preventDefault()
-       
+        e.preventDefault();
+        
+        let hasError = false;
+        const newErrors = { name: "", email: "", phone: "", message: "" };
+
+        // Validate fields and set errors
+        if (!name) {
+            newErrors.name = "Name is required.";
+            hasError = true;
+        }
+
+        if (!validateEmail(email)) {
+            newErrors.email = "Invalid email address.";
+            hasError = true;
+        }
+
+        if (!validatePhoneNumber(phonenumber)) {
+            newErrors.phone = "Phone number must be exactly 10 digits.";
+            hasError = true;
+        }
+
+        if (!message) {
+            newErrors.message = "Message is required.";
+            hasError = true;
+        }
+
+        if (hasError) {
+            setErrors(newErrors);
+            return;
+        }
+
         axios
           .post(`${server}/contactus/contactus`, { name, email, message, phonenumber })
           .then((res) => {
-            toast.success(res.data.message);
+            setErrors({ name: "", email: "", phone: "", message: "" });
             setName("");
             setEmail("");
             setMessage("");
             setPhonenumber("");
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            console.error("There was an error submitting the form!", error);
           });
-    }
+    };
 
     return (
         <div>
@@ -86,16 +127,16 @@ function Contactsec3() {
                         <div className="social-media">
                             <p>Connect with us :</p>
                             <div className="social-icons">
-                                <Link to="https://www.facebook.com/profile.php?id=61552003617016">
+                                <Link to="https://www.facebook.com/profile.php?id=61552003617016" target="_blank">
                                     <i className="fab fa-facebook-f" />
                                 </Link>
-                                <Link to="https://web.whatsapp.com/send?phone=+91%208657062511">
+                                <Link to="https://web.whatsapp.com/send?phone=+91%208657062511" target="_blank">
                                     <i className="fab fa-whatsapp" />
                                 </Link>
-                                <Link to="https://www.instagram.com/tiny_tiaraa/">
+                                <Link to="https://www.instagram.com/tiny_tiaraa/" target="_blank">
                                     <i className="fab fa-instagram" />
                                 </Link>
-                                <Link to="mailto:care@tinytiaraa.com">
+                                <Link to="mailto:care@tinytiaraa.com" target="_blank">
                                 <i className="fa-regular fa-envelope"></i>
                                 </Link>
                             </div>
@@ -104,7 +145,7 @@ function Contactsec3() {
                     <div className="contact-form">
                         <span className="circle one" />
                         <span className="circle two" />
-                        <form  autoComplete="off" onSubmit={handleSubmit} >
+                        <form autoComplete="off" onSubmit={handleSubmit}>
                             <h3 className="title">Contact us</h3>
                             <div className={`input-container ${focusedInputs.name ? 'focus' : ''}`}>
                                 <input
@@ -112,14 +153,13 @@ function Contactsec3() {
                                     name="name"
                                     className="input"
                                     value={name}
-                                    onChange={(e) => {
-                                        setName(e.target.value);
-                                    }}
+                                    onChange={(e) => setName(e.target.value)}
                                     onFocus={() => handleFocus('name')}
                                     onBlur={(event) => handleBlur('name', event)}
                                 />
                                 <label htmlFor="">Name</label>
                                 <span>Name</span>
+                                {errors.name && <p className="error-message">{errors.name}</p>}
                             </div>
                             <div className={`input-container ${focusedInputs.email ? 'focus' : ''}`}>
                                 <input
@@ -127,14 +167,13 @@ function Contactsec3() {
                                     name="email"
                                     className="input"
                                     value={email}
-                                    onChange={(e) => {
-                                        setEmail(e.target.value);
-                                    }}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     onFocus={() => handleFocus('email')}
                                     onBlur={(event) => handleBlur('email', event)}
                                 />
                                 <label htmlFor="">Email</label>
                                 <span>Email</span>
+                                {errors.email && <p className="error-message">{errors.email}</p>}
                             </div>
                             <div className={`input-container ${focusedInputs.phone ? 'focus' : ''}`}>
                                 <input
@@ -142,28 +181,26 @@ function Contactsec3() {
                                     name="phone"
                                     className="input"
                                     value={phonenumber}
-                                    onChange={(e) => {
-                                        setPhonenumber(e.target.value);
-                                    }}
+                                    onChange={(e) => setPhonenumber(e.target.value)}
                                     onFocus={() => handleFocus('phone')}
                                     onBlur={(event) => handleBlur('phone', event)}
                                 />
                                 <label htmlFor="">Phone</label>
                                 <span>Phone</span>
+                                {errors.phone && <p className="error-message">{errors.phone}</p>}
                             </div>
                             <div className={`input-container textarea ${focusedInputs.message ? 'focus' : ''}`}>
                                 <textarea
                                     name="message"
                                     className="input"
                                     value={message}
-                                    onChange={(e) => {
-                                        setMessage(e.target.value);
-                                    }}
+                                    onChange={(e) => setMessage(e.target.value)}
                                     onFocus={() => handleFocus('message')}
                                     onBlur={(event) => handleBlur('message', event)}
                                 />
                                 <label htmlFor="">Message</label>
                                 <span>Message</span>
+                                {errors.message && <p className="error-message">{errors.message}</p>}
                             </div>
                             <input type="submit" defaultValue="Send" className="btn" />
                         </form>

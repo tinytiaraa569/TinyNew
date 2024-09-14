@@ -222,6 +222,8 @@ function Cartpage() {
 
     }
 
+    console.log(orderData,"fromcartpage ")
+
     //updating local storage 
     localStorage.setItem("latestOrder", JSON.stringify(orderData))
     navigate("/checkout-page")

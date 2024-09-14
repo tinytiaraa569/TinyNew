@@ -75,6 +75,10 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    docketno:{
+        type: String,
+        trim: true,
+    },
     deliveredAt: {
         type: Date
 

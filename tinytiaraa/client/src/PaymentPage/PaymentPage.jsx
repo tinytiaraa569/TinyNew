@@ -68,14 +68,14 @@ function PaymentPage() {
         billingAddress: orderData?.finalBillingAddress,
 
         
-        user: user && user,
+        user: user && orderData?.user,
         totalPrice: orderData?.totalPrice,
         couponDiscount: orderData?.discountPrice,
         paymentInfo: {},
         appliedReferral: orderData?.appliedReferral || 0
     }
 
-    console.log(order, "orderdata")
+    console.log(order, "orderdata from paymbt page")
 
 
 
@@ -665,7 +665,7 @@ function PaymentPage() {
             }
         };
 
-        console.log(updatedOrder, "order");
+        console.log(updatedOrder, "order in cod");
 
         try {
             const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
@@ -673,7 +673,7 @@ function PaymentPage() {
                     'Content-Type': 'application/json',
                 }
             });
-            console.log('Server response:', response.data);
+            console.log('Server response:', response);
             console.log('Server response:', response.data.order._id);
 
             const orderId = response.data.order._id; // Extract orderId
@@ -706,7 +706,7 @@ function PaymentPage() {
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             setIsLoading(false);
             navigate("/order/success");
-            window.location.reload()
+            // window.location.reload()
 
 
             // Handle actions upon successful payment

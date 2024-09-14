@@ -197,13 +197,27 @@ function Navbar1() {
                     </div>
 
                     <div className="social-icons ">
-                        <Link to="https://www.facebook.com/profile.php?id=61552003617016">
+                        <Link to="https://www.facebook.com/profile.php?id=61552003617016" target="_blank">
                             <i className="fab fa-facebook" />
                         </Link>
-                        <Link to="https://www.instagram.com/tiny_tiaraa/">
+                        <Link to="https://www.instagram.com/tiny_tiaraa/" target="_blank">
                             <i className="fab fa-instagram" />
                         </Link>
-                        <Link to="https://web.whatsapp.com/send?phone=+91%208657062511">
+                        <Link
+                            to="#"
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent default link behavior
+                                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+                                if (isMobile) {
+                                // Open WhatsApp app on mobile devices
+                                window.location.href = "whatsapp://send?phone=+918657062511";
+                                } else {
+                                // Open WhatsApp Web on desktops/laptops
+                                window.open("https://web.whatsapp.com/send?phone=+918657062511", "_blank");
+                                }
+                            }}
+                            >
                             <i className="fab fa-whatsapp" />
                         </Link>
 

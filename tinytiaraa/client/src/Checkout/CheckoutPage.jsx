@@ -167,6 +167,8 @@ function CheckoutPage() {
                 appliedReferral,
             }
 
+            console.log(orderData,"see from checkout page")
+
             localStorage.setItem("latestOrder", JSON.stringify(orderData))
             navigate("/payment")
         }

@@ -10,7 +10,12 @@
   textarea {
     font-family: "Poppins", sans-serif;
   }
-  
+  .error-message {
+    color: rgb(237, 177, 177);
+    font-size: 0.875rem; /* Adjust size as needed */
+    margin-top: 0.25rem; /* Adjust spacing as needed */
+    margin-left: 10px;
+}
   .contactsec3container {
     position: relative;
     width: 100%;
@@ -171,7 +176,7 @@
     opacity: 0;
     transition: 0.3s;
     height: 5px;
-    background-color: #006039;
+    background-color: #057347;
     top: 50%;
     transform: translateY(-50%);
   }

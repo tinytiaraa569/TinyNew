@@ -54,6 +54,8 @@ const message = require("./controller/message")
 const customised = require("./controller/Customised")
 const contactus = require("./controller/contactus")
 const ttclub = require("./controller/ttclub")
+const subscribe = require("./controller/subscribe")
+
 
 
 
@@ -74,6 +76,8 @@ app.use('/api/v2/referral', referralRoutes);
 app.use('/api/v2/customised', customised);
 app.use('/api/v2/contactus', contactus);
 app.use('/api/v2/ttclub', ttclub);
+app.use('/api/v2/subscribe', subscribe);
+
 
 app.use("/api/v2", calculateEDDRoutes);
 

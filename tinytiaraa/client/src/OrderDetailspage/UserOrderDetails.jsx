@@ -93,7 +93,7 @@ function UserOrderDetails() {
             </div>
 
             <div className='w-full flex items-center justify-between pt-6'>
-                <h5 className='text-[#000b]'>Order Id : - #<span>{data?._id?.slice(0, 8)}</span></h5>
+                <h5 className='text-[#000b]'>Order Id : - #<span>{data?._id}</span></h5>
 
                 <h5 className='text-[#000b]'>Placed on :- <span>{data?.createdAt?.slice(0, 10)}</span> </h5>
             </div>
@@ -102,7 +102,7 @@ function UserOrderDetails() {
                 data && data?.cart.map((item, index) => {
                     return (
                         <div key={index} className='w-full flex items-start mt-5 mb-5'>
-                            <img src={`${backend_url}/${item.images[0]}`} alt="" className='w-[80px] h-[80px]' />
+                            <img src={`${item.images && item.images[1]?.url}`} alt="" className='w-[80px] h-[80px]' />
                             <div className="w-full">
                                 <h5 className='pl-3 text-[20px]'>{item.name}</h5>
                                 <h5 className='pl-3 text-[20px] text-[#0000008c]'>₹{item.discountPrice} x {item.qty}</h5>
