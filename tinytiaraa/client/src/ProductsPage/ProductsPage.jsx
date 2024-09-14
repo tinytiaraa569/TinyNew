@@ -523,6 +523,17 @@ function ProductsPage() {
     console.log(tag.toLowerCase(), "product tagselcted");
     setSelectedTag(tag.toLowerCase());
     updateURLParams({ tag });
+    
+    if (isMobile) {
+      // Scroll to the top of the page
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: smooth scrolling
+      });
+
+      // Hide the filter section
+      setIsFilterVisible(false);
+    }
   };
   const removeFilter = (type) => {
     switch (type) {
@@ -565,6 +576,17 @@ function ProductsPage() {
   const handleEnamelColorChange = (color) => {
     setSelectedEnamelColor(color);
     updateURLParams({ enamelColor: color });
+
+    if (isMobile) {
+      // Scroll to the top of the page
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: smooth scrolling
+      });
+
+      // Hide the filter section
+      setIsFilterVisible(false);
+    }
   };
   const navigate = useNavigate();
 
