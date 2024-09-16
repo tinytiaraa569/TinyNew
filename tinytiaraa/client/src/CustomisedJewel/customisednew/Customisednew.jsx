@@ -5,6 +5,9 @@ import axios from "axios";
 import { server } from "@/server";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { AiFillCloseCircle } from "react-icons/ai";
+
 
 function Customisednew() {
   const [name, setName] = useState("");
@@ -16,11 +19,42 @@ function Customisednew() {
   const navigate = useNavigate();
 
   const [images, setImages] = useState([]);
+  const [errors, setErrors] = useState({});
+
 
   // Handle drag events
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Phone number validation
+    if (!/^\d{10}$/.test(phonenumber)) {
+      newErrors.phonenumber = 'Phone number must be 10 digits long and contain only numbers.';
+    }
+
+    // Email validation
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Please enter a valid email address.';
+    }
+
+    // Check for empty fields
+    if (!name) newErrors.name = 'Name is required.';
+    if (!email) newErrors.email = 'Email is required.';
+    if (!phonenumber) newErrors.phonenumber = 'Phone number is required.';
+    if (!budget) newErrors.budget = 'Budget is required.';
+    if (!address) newErrors.address = 'Address is required.';
+    if (images.length === 0) {
+      newErrors.images = 'At least one image must be uploaded.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  const handleImageRemove = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   // Handle file drop event
@@ -57,7 +91,8 @@ function Customisednew() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
+    if(validateForm()){
+      axios
       .post(`${server}/customised/request`, {
         name,
         email,
@@ -68,7 +103,11 @@ function Customisednew() {
         address,
       })
       .then((res) => {
-        toast.success(res.data.message);
+        swal({
+          title: "Thank you!",
+          text: "We'll get back to you for customization",
+          icon: "success",
+        });
         setName("");
         setEmail("");
         setMessage("");
@@ -76,11 +115,15 @@ function Customisednew() {
         setImages();
         setBudget("");
         setAddress("");
-        navigate("/personalised-prosperity");
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.response.data.message);
       });
+
+    }
+
+  
   };
   const handleBrowseClick = () => {
     document.getElementById("uploadbt").click();
@@ -124,25 +167,34 @@ function Customisednew() {
                     id="uploadbt"
                     onChange={handleFileChange}
                     multiple
+                    
                   />
                 </div>
 
                 {images.length > 0 && (
-                  <div className="file-details">
-                    <h5>Uploaded Files:</h5>
-                    <ul className="flex">
-                      {images.map((file, index) => (
-                        <li key={index} className="cursor-pointer">
-                          <img
-                            src={file}
-                            alt={`Uploaded ${index}`}
-                            width="100"
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+      <div className="file-details">
+        <h5>Uploaded Files:</h5>
+        <ul className="flex flex-wrap">
+          {images.map((file, index) => (
+            <li key={index} className="relative cursor-pointer">
+              <img
+                src={file}
+                alt={`Uploaded ${index}`}
+                width="100"
+              />
+              <button
+                type="button"
+                className="absolute top-0 right-0 p-1 text-white bg-red-500 rounded-full"
+                onClick={() => handleImageRemove(index)}
+              >
+                <AiFillCloseCircle size={20} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+                 {errors.images && <p className="text-red-500">{errors.images}</p>}
               </div>
             </div>
 
@@ -161,6 +213,7 @@ function Customisednew() {
                       }}
                       required
                     />
+                    {errors.name && <p className="text-red-500">{errors.name}</p>}
                   </div>
                 </div>
 
@@ -173,10 +226,15 @@ function Customisednew() {
                       id="customcontact"
                       value={phonenumber}
                       onChange={(e) => {
-                        setPhonenumber(e.target.value);
+                        // Ensure only numeric values are entered
+                        const value = e.target.value.replace(/[^0-9]/g, '');
+                        setPhonenumber(value);
                       }}
                       required
-                    />
+                      pattern="\d{10}" // This ensures exactly 10 digits
+                      maxLength="10"
+                      />
+                      {errors.phonenumber && <p className="text-red-500">{errors.phonenumber}</p>}
                   </div>
                 </div>
               </div>
@@ -194,6 +252,7 @@ function Customisednew() {
                       }}
                       required
                     />
+                    {errors.email && <p className="text-red-500">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -230,6 +289,7 @@ function Customisednew() {
                 required
               ></textarea>
             </div>
+            {errors.address && <p className="text-red-500">{errors.address}</p>}
           </div>
 
           <div className="customnewfield mt-4">
@@ -248,7 +308,7 @@ function Customisednew() {
           </div>
 
           <div className="text-center">
-            <input type="submit" className="subbtncustomjewlenew" />
+            <input type="submit" className="subbtncustomjewlenew cursor-pointer" />
           </div>
         </form>
       </div>

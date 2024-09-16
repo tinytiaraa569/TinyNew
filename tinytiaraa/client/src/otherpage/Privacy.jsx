@@ -7,7 +7,7 @@ function Privacy() {
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">
-        <h3>Privacy Policy</h3>
+        <h3 className='text-[18px] font-[700]'>Privacy Policy</h3>
         <p>At Tiny Tiaraa, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you visit our website. By accessing and using our website, you agree to the practices described in this policy. Please read this Privacy Policy carefully to understand how we handle your information.</p>
     </div>
     <div className="conditions">
@@ -16,10 +16,13 @@ function Privacy() {
             <h3> Information We Collect:</h3>
             <ul>
                 <li>
-                    <p><span className='boldspan'>Personal Information:</span>We may collect personal information such as your name, email address, contact number, and shipping address when you create an account, place an order, or subscribe to our newsletter.</p>
+                    <p><span className='boldspan'>Personal Information:</span>
+                    We may collect personal information that you provide to us voluntarily, including but not limited to your name, email address, contact number, and shipping address when you: - Create an account, place an order, Subscribe to our newsletter.</p>
                 </li>
                 <li>
-                    <p><span className='boldspan'>Non-Personal Information:</span>We may gather non-personal information, including browser type, operating system, IP address, and website usage data. This information is collected through cookies and other tracking technologies to improve our website and user experience. </p>
+                    <p><span className='boldspan'>Non-Personal Information:</span>
+                    We may collect personal information that you provide to us voluntarily, including but not limited to your name, email address, contact number, and shipping address when you: - Create an account, place an order, Subscribe to our newsletter. </p>
+                    <p>This information is collected through cookies and similar tracking technologies to enhance your experience and improve our website</p>
                 </li>
             </ul>
             </li>
@@ -28,13 +31,16 @@ function Privacy() {
             <h3>Use of Information:</h3>
             <ul>
                 <li>
-                    <p><span className='boldspan'>Personal Information:</span> We use your personal information to process and fulfil your orders, provide customer support, and send you important communications, such as order confirmations and shipping updates.</p>
+                    <p><span className='boldspan'>Personal Information:</span>
+                    We use your personal information to: - Process and fulfil your orders, provide customer support, send you important communications, including order confirmations and shipping updates.</p>
                 </li>
                 <li>
-                    <p><span className='boldspan'>Marketing Communication:</span> With your consent, we may send you promotional emails and newsletters to keep you informed about our latest products, offers, and events. You can opt-out of marketing communications at any time.</p>
+                    <p><span className='boldspan'>Marketing Communication:</span>
+                    with your consent, we may use your personal information to send you promotional emails and newsletters about our products, offers, and events. You may opt out of receiving marketing communications at any time by following the unsubscribe instructions provided in those communications.</p>
                 </li>
                 <li>
-                    <p><span className='boldspan'>Non-Personal Information:</span> Non-personal information is used to analyze website performance, track user behavior, and make improvements to our website and marketing strategies.</p>
+                    <p><span className='boldspan'>Non-Personal Information:</span>
+                    We use non-personal information to: - Analyse website performance, Track user behaviour, Enhance our website and marketing strategies.</p>
                 </li>
             </ul>
             </li>
@@ -43,13 +49,13 @@ function Privacy() {
             <h3>Data Security:</h3>
             <ul>
                 <li>
-                    <p>Tiny Tiaraa employs industry-standard security measures to protect your personal information from unauthorised access, disclosure, alteration, or destruction.</p>
+                    <p>Tiny Tiaraa employs industry-standard security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. </p>
                 </li>
                 <li>
-                    <p>We use encryption technology for secure transmission of sensitive data during online transactions.</p>
+                    <p>We use encryption technology to secure the transmission of sensitive data during online transactions. </p>
                 </li>
                 <li>
-                    <p>While we take reasonable precautions, no data transmission over the internet or electronic storage is 100% secure. We cannot guarantee the absolute security of your information.</p>
+                    <p>However, please be aware that no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee the absolute security of your information</p>
                 </li>
             </ul>
             </li>
@@ -58,13 +64,13 @@ function Privacy() {
             <h3> Sharing of Information:</h3>
             <ul>
                 <li>
-                    <p>We may share your personal information with third-party service providers who assist us in website operations, order processing, and customer support.</p>
+                    <p>We may share your personal information with third-party service providers who assist us with website operations, order processing, and customer support. These third parties are bound by contractual obligations to maintain the confidentiality and security of your information.</p>
                 </li>
                 <li>
-                    <p>We do not sell, rent, or trade your personal information to third parties for marketing purposes without your explicit consent.</p>
+                    <p>We may share non-personal information with third parties for the purpose of analyzing website traffic and improving user experience.</p>
                 </li>
                 <li>
-                    <p>We may share non-personal information with third parties to analyse website traffic and improve user experience.</p>
+                    <p>We do not sell rent, or trade your personal information to third parties for marketing purposes without your explicit consent</p>
                 </li>
             </ul>
             </li>
@@ -73,10 +79,10 @@ function Privacy() {
             <h3> Cookies and Tracking Technologies:</h3>
             <ul>
                 <li>
-                    <p>Tiny Tiaraa uses cookies and similar technologies to enhance your website experience. Cookies are small text files that are stored on your device to remember your preferences and provide personalized content.</p>
+                    <p>Tiny Tiaraa uses cookies and similar technologies to improve your website experience Cookies are small text files stored on your device to remember your preferences and provide personalized content. </p>
                 </li>
                 <li>
-                    <p>You can manage your cookie preferences through your browser settings. However, disabling cookies may affect certain website features and functionality.</p>
+                    <p>You can manage your cookie preferences through your browser settings. Please note that disabling cookies may impact the functionality of certain features on our website</p>
                 </li>
                 
             </ul>
@@ -84,22 +90,22 @@ function Privacy() {
 
             <li className='conditonssubsection'>
             <h3>Third-Party Links:</h3>
-                <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these websites. Please review the privacy policies of third-party websites before providing any personal information.</p>
+                <p>Our website may contain links to third-party websites We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party websites before providing them with personal information.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Children's Privacy:</h3>
-            <p>Tiny Tiaraa website is not intended for children under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child, we will take appropriate steps to delete the information from our database.</p>
+            <p>Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child, we will take appropriate measures to delete such information from our records.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Changes to Privacy Policy:</h3>
-                    <p>Tiny Tiaraa reserves the right to modify or update this Privacy Policy at any time. Any changes will be effective immediately upon posting on the website.</p>   
+                    <p>Tiny Tiaraa reserves the right to modify or update this Privacy Policy at any time. Any changes will be effective immediately upon posting on our website. We encourage you to periodically review this Privacy Policy to stay informed about how we are protecting your information.</p>   
             </li>
 
             <li className='conditonssubsection'>
             <h3>Contact Us:</h3>
-            <p>If you have any questions or concerns regarding our Privacy Policy, please contact our customer support team.</p>
+            <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact our customer support team at: Care@tinytiaraa.com</p>
             </li>
 
            
@@ -107,7 +113,7 @@ function Privacy() {
         </ol>
 
     </div>
-    <p>Thank you for choosing Tiny Tiaraa Kids Jewelry. Your trust is of utmost importance to us, and we are dedicated to protecting your privacy and ensuring a secure online experience.</p>
+    <p>Thank you for choosing Tiny Tiaraa. We value your trust and are committed to protecting your privacy and ensuring a secure online experience</p>
     </div>
   
 </div>

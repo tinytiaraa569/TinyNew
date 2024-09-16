@@ -6,48 +6,48 @@ function Exchange() {
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">
-        <h3>Product Warranty Extension Policy</h3>
-        <p>Thank you for choosing Tiny Tiaraa! We are delighted to offer you a warranty extension policy to ensure your complete satisfaction and confidence in our products. This policy is applicable to customers in India who purchase kids' Jewelry from our online store / Partner store.</p>
+        <h3 className='text-[18px] font-[700]'>Product Warranty Extension Policy</h3>
+        <p>Thank you for choosing Tiny Tiaraa. We are pleased to offer a warranty extension policy to enhance your confidence and satisfaction with our products This policy applies to customers in India who purchase kids' jewellery from our online store or authorised partner stores.</p>
     </div>
     <div className="conditions">
         <ol>
         <li className='conditonssubsection'>
             <h3>Standard Warranty Period:</h3>
-                    <p>Our Jewelry comes with a standard warranty of 3 months from the date of purchase. During this period, we will repair or replace any product that is found to have manufacturing defects or faulty workmanship, free of charge.</p>
+                    <p>Our jewellery comes with a standard warranty period of 7 Days from the date of purchase During this period, we will repair or replace any product that exhibits manufacturing defects or faulty workmanship at no cost.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Warranty Extension:</h3>
-            <p>We understand the importance of long-lasting, reliable Jewelry for your children. To provide you with extra peace of mind, we offer a warranty extension option.</p>
+            <p>Our jewellery comes with a standard warranty period of 7 Days from the date of purchase During this period, we will repair or replace any product that exhibits manufacturing defects or faulty workmanship at no cost.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3> Eligibility for Warranty Extension:</h3>
-                    <p>Customers who wish to avail the warranty extension must meet the following criteria:</p>
-                    <p>The product must be purchased from our authorised store or website in India.</p>
-                    <p>The standard warranty period (3 months) must not have expired at the time of purchasing the extension.</p>
+                    <p>To be eligible for the warranty extension, the following criteria must be met:</p>
+                    <p>The product must be purchased from an authorised Tiny Tiaraa store or our official website in India 7 days.</p>
+                    <p>The product must be purchased from an authorised Tiny Tiaraa store or our official website in India 7 days.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Extended Warranty Period:</h3>
-            <p>The extended warranty period will be for an additional 36 months beyond the standard warranty. This means a total warranty coverage of 39 months from the original date of purchase.</p>
+            <p>The warranty extension provides an additional 36 months of coverage beyond the standard 7 days warranty, resulting in a total warranty period of 39 months from the original date of purchase.</p>
             </li>
 
             <li className='conditonssubsection'>
-            <h3>How to Avail Warranty Extension:</h3>
+            <h3>Procedure to Avail Warranty Extension</h3>
             <ul>
-                    <p>To avail of the warranty extension, follow these steps:</p>
+                    <p>To obtain the warranty extension, follow these steps:</p>
                 <li>
-                    <p>Keep the original purchase receipt or invoice safe.</p>
+                    <p>Retain the original purchase receipt or invoice.</p>
                 </li>
                 <li>
-                    <p>Visit our website and locate the "Warranty Extension" section.</p>
+                    <p>Visit our website and navigate to the "Warranty Extension" section.</p>
                 </li>
                 <li>
-                    <p>Enter the required details, including the product's serial number, purchase date, and your contact information.</p>
+                    <p>Enter the required information, including the product's serial number, purchase date, and your contact details.</p>
                 </li>
                 <li>
-                    <p>Complete the payment process for the warranty extension</p>
+                    <p>Complete the payment process for the warranty extension.</p>
                 </li>
                 
             </ul>
@@ -55,22 +55,30 @@ function Exchange() {
 
             <li className='conditonssubsection'>
             <h3>Warranty Coverage:</h3>
-                <p>During the extended warranty period, we will continue to repair or replace the product free of charge if it is found to have manufacturing defects or faulty workmanship. Please note that the warranty extension does not cover damages caused by misuse, accidents, improper handling, or normal wear and tear.</p>
+                <p>During the extended warranty period, we will repair or replace the product free of charge if it is found to have manufacturing defects or faulty workmanship Please note that the warranty extension does not cover damages resulting from misuse, accidents improper handling or normal wear and tear.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Transferability:</h3>
-            <p>The warranty extension is transferable to another individual, provided they have the original purchase receipt or invoice and the product's serial number matches the records in our system.</p>
+            <p>During the extended warranty period, we will repair or replace the product free of charge if it is found to have manufacturing defects or faulty workmanship Please note that the warranty extension does not cover damages resulting from misuse, accidents improper handling or normal wear and tear.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Claims and Support:</h3>
-                    <p>In case of any issues or claims under the warranty extension, please contact our customer support team through the contact information provided on our website. Our team will guide you through the process and assist you with the necessary steps.</p>   
+                    <p>For any issues or claims under the warranty extension, please contact our customer support team via the contact details provided on our website. Our team will assist you through the claims process.</p>   
+            </li>
+            <li className='conditonssubsection'>
+            <h3>Policy Updates:</h3>
+            <p>This policy is subject to change. Any updates will be communicated via our website or other official channels.</p>   
+            </li>
+            <li className='conditonssubsection'>
+            <h3>Contact Information:</h3>
+            <p>For any questions or further assistance regarding the warranty extension for kids’ jewellery, please reach out to our customer support team.</p>   
             </li>
 
             <li className='conditonssubsection'>
             <h3>Cancellation and Refunds:</h3>
-            <p>Once the warranty extension is purchased, it cannot be canceled or refunded.</p>
+            <p>Once purchased, the warranty extension cannot be cancelled or refunded</p>
             <p>Please feel free to reach out to our customer support team if you have any questions or require further assistance regarding the kids' Jewelry product warranty extension.</p>
             </li>
 
@@ -79,9 +87,11 @@ function Exchange() {
         </ol>
 
     </div>
-    <p>Please note that this policy is subject to change, and any updates will be communicated through our website or other official channels.</p>
+    <p>Thank you for choosing Tiny Tiaraa. We appreciate your trust in our brand and look forward to providing you and your little ones with exceptional and durable jewellery.
 
-    <p>Thank you for choosing Tiny Tiaraa. We value your trust in our brand and look forward to serving you and your little ones with beautiful and durable Jewelry pieces.</p>
+</p>
+
+    <p className='mt-2'>This legal language draft outlines the terms and conditions for the warranty extension policy and ensures clarity and comprehensiveness for both customers and the company.</p>
     </div>
   
 </div>

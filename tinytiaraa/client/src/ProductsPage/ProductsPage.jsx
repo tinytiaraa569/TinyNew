@@ -547,9 +547,12 @@ function ProductsPage() {
     updateURLParams({ ageGroup: e.target.value });
   };
   const handleTagClick = (tag) => {
+   
+    
     console.log(tag.toLowerCase(), "product tagselcted");
     setSelectedTag(tag.toLowerCase());
     updateURLParams({ tag });
+   
     
     if (isMobile) {
       // Scroll to the top of the page
@@ -838,8 +841,12 @@ function ProductsPage() {
                 {categoriesData.map((category) => (
                   <div
                     key={category.id}
-                    onClick={() => 
-                      handleViewProducts(category.title)}
+                    onClick={() => {
+                      handleViewProducts(category.title)
+                      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top
+                    }
+
+                    }
                   >
                     <ul>
                       <li>
@@ -858,31 +865,64 @@ function ProductsPage() {
               <div className="enamelscolorlist">
                 <div
                   className="enamelclrbox deepblue"
-                  onClick={() => handleEnamelColorChange("Deep_Blue")}
+                  onClick={
+                    () => {
+                      handleEnamelColorChange("Deep_Blue")
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+
+                  }
                 ></div>
                 <div
                   className="enamelclrbox pink"
-                  onClick={() => handleEnamelColorChange("Pink")}
+                  onClick={() => {
+                    handleEnamelColorChange("Pink")
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  }
                 ></div>
                 <div
                   className="enamelclrbox turquoise"
-                  onClick={() => handleEnamelColorChange("Turquoise")}
+                  onClick={() =>{
+                    handleEnamelColorChange("Turquoise")
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  } 
+                  }
                 ></div>
                 <div
                   className="enamelclrbox red"
-                  onClick={() => handleEnamelColorChange("Red")}
+                  onClick={() => 
+                    {
+                      handleEnamelColorChange("Red")
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                  }
                 ></div>
                 <div
                   className="enamelclrbox black"
-                  onClick={() => handleEnamelColorChange("Black")}
+                  onClick={() => {
+
+                    handleEnamelColorChange("Black")
+                    window.scrollTo({ top: 0, behavior: "smooth" })  
+                  }
+                  }
                 ></div>
                 <div
                   className="enamelclrbox deepgreen"
-                  onClick={() => handleEnamelColorChange("Deep_Green")}
+                  onClick={() => {
+                    handleEnamelColorChange("Deep_Green")
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                    
+                  }
                 ></div>
                 <div
                   className="enamelclrbox lotusgreen"
-                  onClick={() => handleEnamelColorChange("Lotus_Green")}
+                  onClick={() =>{
+                    handleEnamelColorChange("Lotus_Green")
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  }
                 ></div>
               </div>
               <div className="marginbottom"> </div>
@@ -894,38 +934,69 @@ function ProductsPage() {
               <div className="producttagflex">
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Pendant")}
+                  onClick={() => {
+                    handleTagClick("Pendant")
+                    window.scrollTo({ top: 0, behavior: "smooth" }); 
+                  }
+
+                  }
                 >
                   Pendant
                 </div>
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Earrings")}
+                  onClick={() =>{
+                    handleTagClick("Earrings")
+                    window.scrollTo({ top: 0, behavior: "smooth" }); 
+                  }
+
+                  }
                 >
                   Earrings
                 </div>
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Bracelets")}
+                  onClick={() => {
+                    handleTagClick("Bracelets")
+                    window.scrollTo({ top: 0, behavior: "smooth" }); 
+                  }
+
+                  }
                 >
                   Bracelets
                 </div>
 
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Nazariya")}
+                  onClick={() => {
+                    handleTagClick("Nazariya")
+                    window.scrollTo({ top: 0, behavior: "smooth" }); 
+                  }
+                  }
                 >
                   Nazariya
                 </div>
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Mom & me")}
+                  onClick={() => 
+                    {
+                      handleTagClick("Mom & me")
+                      window.scrollTo({ top: 0, behavior: "smooth" }); 
+                    }
+
+                  }
                 >
                   Mom & me
                 </div>
                 <div
                   className="producttagsingle"
-                  onClick={() => handleTagClick("Gift")}
+                  onClick={() => 
+                    {
+                      handleTagClick("Gift")
+                      window.scrollTo({ top: 0, behavior: "smooth" }); 
+                    }
+
+                  }
                 >
                   Gifts
                 </div>

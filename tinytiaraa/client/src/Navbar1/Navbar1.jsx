@@ -407,7 +407,7 @@ function Navbar1() {
                                             {
                                                 searchData && searchData.length !== 0 ?
                                                     (
-                                                        <div className="absolute left-0  min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+                                                        <div className="absolute left-0  min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4 custom-scrollbar" style={{ maxHeight: "100vh", overflowY: "auto" }} >
                                                             {
                                                                 searchData && searchData.map((i, index) => {
                                                                     const d = i.name;
@@ -422,7 +422,7 @@ function Navbar1() {
                                                                             }}>
                                                                             <div className="w-full flex items-center pb-3 overflow-hidden">
                                                                                 <img src={`${i.images[1]?.url}`} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
-                                                                                <p className='font-Poppins text-[15px]'>{i.name}</p>
+                                                                                <p className='font-Poppins text-[12px]'>{i.name}</p>
                                                                             </div>
                                                                         </div>
 

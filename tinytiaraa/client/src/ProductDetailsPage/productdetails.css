@@ -399,4 +399,12 @@
         font-size: 16px !important;
         padding-bottom: 10px !important;
     }
+    .checkdel{
+        margin-left: 10px !important;
+
+    }
+    .checkdelbtn{
+        margin-left: 0px !important;
+        margin-top: 10px !important;
+    }
 }

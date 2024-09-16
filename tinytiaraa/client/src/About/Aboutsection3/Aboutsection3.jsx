@@ -1,6 +1,6 @@
 import React from 'react';
 import './Aboutsection3.css';
-import founderimg from './images/founderimg.jpg';
+import founder from './images/founder.jpg';
 
 function Aboutsection3() {
     return (
@@ -33,8 +33,8 @@ function Aboutsection3() {
                         <p className='infotext1 mt-8'>With love and gratitude</p>
                     </div>
 
-                    <div className="founderimg">
-                        <img src={founderimg} alt="Rashmi Jain - Founder" />
+                    <div className="founderimg" onContextMenu={(e) => e.preventDefault()} >
+                        <img src={founder} alt="Rashmi Jain - Founder" />
                     </div>
                 </div>
             </div>
