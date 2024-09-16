@@ -9,7 +9,9 @@ function OrderSuccessPage() {
     const [gstAmount, setGstAmount] = useState(0);
     const [couponDiscount, setCouponDiscount] = useState(0);
 
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
     const navigate = useNavigate()
     const metalColors = {
         0: "Yellow Gold",

@@ -484,13 +484,40 @@ function ProductsPage() {
     console.log(newValue,"new value of range")
     setPriceRange((prevRange) => {
       const updatedRange = [...prevRange];
-      updatedRange[index] = newValue ;
+      
+      if (index === 0) {
+        // Moving the minimum slider
+        updatedRange[0] = newValue;
+        // Ensure min is less than or equal to max
+        if (updatedRange[0] > updatedRange[1]) {
+          updatedRange[1] = updatedRange[0]; // Adjust max if min exceeds max
+        }
+      } else if (index === 1) {
+        // Moving the maximum slider
+        updatedRange[1] = newValue;
+        // Ensure max is greater than or equal to min
+        if (updatedRange[1] < updatedRange[0]) {
+          updatedRange[0] = updatedRange[1]; // Adjust min if max is less than min
+        }
+      }
+  
+      // Automatically set min to 0 if max is moved
+      if (index === 1) {
+        updatedRange[0] = 0;
+      }
 
+      
+  
+      // Update URL parameters with new price range
       // updateURLParams({ priceMin: updatedRange[0], priceMax: updatedRange[1] });
+  
       return updatedRange;
     });
   };
 
+
+ 
+  
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
     updateURLParams({ sort: e.target.value });
@@ -566,6 +593,11 @@ function ProductsPage() {
         setSelectedAgeGroup("");
         updateURLParams({ ageGroup: "" });
         break;
+      case "category":
+        setSelectedCategory(null);
+        updateURLParams({ category: "" });
+        break;
+      
 
       default:
         break;
@@ -742,6 +774,16 @@ function ProductsPage() {
                       />
                     </div>
                   )}
+
+                {selectedCategory && (
+                        <div className="flex items-center bg-blue-200 px-2 py-1 rounded-md">
+                            <span className="text-[12px]">Category: {selectedCategory.title}</span>
+                            <RiCloseFill
+                                className="ml-2 cursor-pointer"
+                                onClick={() => removeFilter("category")}
+                            />
+                        </div>
+                    )}
                 </div>
               </div>
 
@@ -768,7 +810,7 @@ function ProductsPage() {
                       name="range_0"
                       type="range"
                       min={0}
-                      max={priceRange[1]}
+                      max={priceRange[1] }
                       value={priceRange[0] || 0}
                       onChange={(e) => handlePriceChange(e, 0)}
                     />
@@ -776,7 +818,7 @@ function ProductsPage() {
                       className="max input-ranges"
                       name="range_1"
                       type="range"
-                      min={priceRange[0]}
+                      min={priceRange[0] }
                       max={60000}
                       value={priceRange[1] || 60000}
                       onChange={(e) => handlePriceChange(e, 1)}
