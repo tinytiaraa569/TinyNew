@@ -706,7 +706,7 @@ function PaymentPage() {
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             setIsLoading(false);
             navigate("/order/success");
-            // window.location.reload()
+            window.location.reload()
 
 
             // Handle actions upon successful payment

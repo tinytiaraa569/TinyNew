@@ -289,46 +289,6 @@ function Navbar1() {
                                             </div>
 
 
-                                            {/* <div className='mt-5 ml-7'>
-                                                <div className='mb-2 '>
-                                                    <h3 className='font-[500]'>By Category</h3>
-                                                </div>
-                                                <div>
-                                                    {
-                                                        categoriesData && categoriesData.map((i, index) => {
-                                                            // console.log(i.subcategories)
-                                                            return (
-                                                                <>
-                                                                    <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
-                                                                        <img src={i.image_Url} alt="" style={{ width: "35px", height: "45px", objectFit: "contain", userSelect: "none" }} />
-                                                                        <h3 className='m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{i.title}</h3>
-
-
-                                                                        <div className={`subcatchild top-3 left-[100%]  pb-4 w-[250px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm`}>
-                                                                            {
-                                                                                i.subcategories.map((val) => {
-                                                                                    return (
-                                                                                        <div>
-                                                                                            <h3 className='m-3 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{val.name}</h3>
-                                                                                        </div>
-                                                                                    )
-
-                                                                                })
-                                                                            }
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                </>
-                                                            )
-
-                                                        })
-                                                    }
-                                                </div>
-
-
-                                            </div> */}
-
 
                                             <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>

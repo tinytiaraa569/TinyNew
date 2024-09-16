@@ -240,6 +240,81 @@ function ProfileContent({ active, setActive }) {
 
 
 // AllOrders
+// const AllOrders = () => {
+
+//     const { orders } = useSelector((state) => state.order)
+//     const { user } = useSelector((state) => state.user)
+//     const dispatch = useDispatch()
+
+//     useEffect(() => {
+//         dispatch(getAllOrdersOfUser(user._id))
+//     }, [])
+
+//     console.log(user,'allordercomp')
+//     const columns = [
+//         { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+//         {
+//             field: "status",
+//             headerName: "Status",
+//             minWidth: 130,
+//             flex: 0.7,
+//             cellClassName: (params) => {
+//                 return params.value === "Delivered" ? "greenColor" : "redColor";
+//             },
+//         },
+//         {
+//             field: "itemsQty",
+//             headerName: "Items Qty",
+//             type: "number",
+//             minWidth: 130,
+//             flex: 0.7,
+//         },
+//         {
+//             field: "total",
+//             headerName: "Total",
+//             type: "number",
+//             minWidth: 130,
+//             flex: 0.8,
+//         },
+//         {
+//             field: "action",
+//             flex: 1,
+//             minWidth: 150,
+//             headerName: "",
+//             sortable: false,
+//             renderCell: (params) => (
+//                 <Link to={`/user/order/${params.id}`}>
+//                     <div className='flex justify-end items-center'>
+//                         <span className='font-Poppins'>Order Details</span>
+//                         <AiOutlineArrowRight size={20} />
+//                     </div>
+//                 </Link>
+//             ),
+//         },
+//     ];
+//     const row = [];
+
+//     orders && orders.forEach((item) => {
+//         row.push({
+//             id: item._id,
+//             itemsQty: item.cart.length,
+//             total: "Inr ₹" + item.totalPrice,
+//             status: item.status
+//         })
+
+//     })
+
+
+
+
+//     return (
+//         <div className='pl-8 pt-1 font-Poppins'>
+//             <DataGrid rows={row} columns={columns} pageSize={10} disableSelectionOnClick autoHeight />
+
+//         </div>
+//     )
+
+// }
 const AllOrders = () => {
 
     const { orders } = useSelector((state) => state.order)
@@ -247,8 +322,10 @@ const AllOrders = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getAllOrdersOfUser(user._id))
+        dispatch(getAllOrdersOfUser(user.email))
     }, [])
+
+    console.log(user,'allordercomp')
     const columns = [
         { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
         {
@@ -313,7 +390,6 @@ const AllOrders = () => {
     )
 
 }
-
 
 const AllRefundOrders = () => {
     const { orders } = useSelector((state) => state.order)

@@ -906,21 +906,41 @@ router.post(
 
 // get all orders of users
 
-router.get("/get-all-orders/:userId", catchAsyncErrors(async (req, res, next) => {
+// router.get("/get-all-orders/:userId", catchAsyncErrors(async (req, res, next) => {
+//     try {
+//         const orders = await Order.find({ "user": req.params.userId }).sort({
+//             createdAt: -1,
+//         })
+//         res.status(200).json({
+//             success: true,
+//             orders
+//         })
+//     } catch (error) {
+//         return next(new ErrorHandler(error.message, 500));
+
+//     }
+// }))
+
+router.get("/get-all-orders", catchAsyncErrors(async (req, res, next) => {
+    const { email } = req.query;
+
     try {
-        const orders = await Order.find({ "user": req.params.userId }).sort({
+        const orders = await Order.find({ "shippingAddress.email": email }).sort({
             createdAt: -1,
-        })
+        });
+
+        if (orders.length === 0) {
+            return next(new ErrorHandler('No orders found for this email', 404));
+        }
+
         res.status(200).json({
             success: true,
-            orders
-        })
+            orders,
+        });
     } catch (error) {
         return next(new ErrorHandler(error.message, 500));
-
     }
-}))
-
+}));
 
 // get all orders of seller
 

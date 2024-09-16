@@ -433,4 +433,21 @@ range */
         grid-template-columns: repeat(1, 70%) !important;
     }
   }
-  
+  @media (max-width: 420px) {
+    .productpagemain{
+        flex-direction: column;
+        align-items: center;
+    }
+    .filtersection{
+        width: 100%;
+    }
+    .filtsecbig{
+        justify-content: center;
+        width: 100% !important;
+
+    }
+    .adjustgridfilter{
+        justify-content: center;
+        grid-template-columns: repeat(1, 80%) !important;
+    }
+  }

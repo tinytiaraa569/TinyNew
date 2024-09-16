@@ -4,27 +4,50 @@ import { server } from "../../server"
 
 // get all orders of user
 
-export const getAllOrdersOfUser = (userId) => async (dispatch) => {
-    try {
-      dispatch({
-        type: "getAllOrderUserRequest",
-      });
+// export const getAllOrdersOfUser = (userId) => async (dispatch) => {
+//     try {
+//       dispatch({
+//         type: "getAllOrderUserRequest",
+//       });
   
-      const { data } = await axios.get(
-        `${server}/order/get-all-orders/${userId}`
-      );
+//       const { data } = await axios.get(
+//         `${server}/order/get-all-orders/${userId}`
+//       );
   
-      dispatch({
-        type: "getAllOrderUserSuccess",
-        payload: data.orders,
-      });
-    } catch (error) {
-      dispatch({
-        type: "getAllOrderUserFailed",
-        payload: error.response.data.message,
-      });
-    }
-  };
+//       dispatch({
+//         type: "getAllOrderUserSuccess",
+//         payload: data.orders,
+//       });
+//     } catch (error) {
+//       dispatch({
+//         type: "getAllOrderUserFailed",
+//         payload: error.response.data.message,
+//       });
+//     }
+//   };
+
+export const getAllOrdersOfUser = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllOrderUserRequest",
+    });
+
+    const { data } = await axios.get(
+      `${server}/order/get-all-orders?email=${email}`
+    );
+
+    dispatch({
+      type: "getAllOrderUserSuccess",
+      payload: data.orders,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllOrderUserFailed",
+      payload: error.response.data.message,
+    });
+  }
+};
+
 
   // get all orders of user
 
