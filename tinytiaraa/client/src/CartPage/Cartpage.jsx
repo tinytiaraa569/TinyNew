@@ -239,11 +239,11 @@ function Cartpage() {
     
 
     <div className='w-full  bg-[#fafafa;] pb-8'>
-      <div class="text-center font-[500] text-[22px] py-5">
+      <div class="secureshoppingbaghead text-center font-[500] text-[22px] py-5">
         <h2>Secure Shopping Bag</h2>
         <div className={`text-center flex justify-center items-center`}>
-          <LuShoppingBag size={18} />
-          <h5 className='pl-2 text-[18px] font-[400]'>{cart && cart.length} Items</h5>
+          <LuShoppingBag size={18} className='secureshoppingbagitems' />
+          <h5 className='pl-2 text-[18px] font-[400] secureshoppingbagitems'>{cart && cart.length} Items</h5>
         </div>
       </div>
       {
@@ -405,11 +405,11 @@ function Cartpage() {
                   </span>
                   <span className="value">Free</span>
                 </div>
-                <div className="sub-total ">
+                {/* <div className="sub-total ">
                   <span className="label">
                     *Other shipping methods available on checkout
                   </span>
-                </div>
+                </div> */}
 
                 <div className="sub-total ">
                   <span className="label">Applied Referral :</span>

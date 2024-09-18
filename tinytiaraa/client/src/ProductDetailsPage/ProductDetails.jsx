@@ -318,13 +318,7 @@ function ProductDetails({ data }) {
 
 
 
-    const calculateDiscountPercentage = (originalPrice, discountPrice) => {
-        if (originalPrice > 0 && discountPrice > 0 && originalPrice > discountPrice) {
-            return Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
-        }
-        return 0;
-    };
-    const discountPercentage = calculateDiscountPercentage(data.originalPrice, data.discountPrice);
+    
 
 
 
@@ -646,6 +640,8 @@ function ProductDetails({ data }) {
         data.enamelColors || {},
         selectedColor !== null ? ["YellowGold", "RoseGold", "WhiteGold"][selectedColor] : null
     );
+
+    console.log(availableEnamelColors,"see the vaiablae color")
     const shouldShowEnamel = availableEnamelColors.length > 0;
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -737,6 +733,18 @@ function ProductDetails({ data }) {
         setFinalOriginalPrice(data.originalPrice + additionalPrice);
     };
 
+    const calculateDiscountPercentage = (originalPrice, discountPrice) => {
+
+        // let chainwithoriginalPrice = 
+
+
+        if (originalPrice > 0 && discountPrice > 0 && originalPrice > discountPrice) {
+            return Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+        }
+        return 0;
+    };
+    const discountPercentage = calculateDiscountPercentage(finalOriginalPrice, finalPrice);
+
     console.log(selectedChainSize, "chain size")
 
     // const [isExpanded, setIsExpanded] = useState(false);
@@ -804,6 +812,10 @@ function ProductDetails({ data }) {
             setShowResult(true); // Show result after calculation
         }
     };
+
+    console.log(data,"see product detail")
+
+   
 
     return (
         <div className='bg-white'>
@@ -972,10 +984,47 @@ function ProductDetails({ data }) {
                                                 <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
                                             </svg>
                                             <span>
-                                                In Stock
+                                                {(() => {
+                                                    if (selectedEnamelColor !== null ) {
+                                                        // Both enamel color and metal color selected
+                                                        const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                                        const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
+
+                                                        // Construct the stock key
+                                                        const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+
+                                                        console.log(cleanedEnamelColor, "cleanedEnamelColor");
+                                                        console.log(metalColor, "metalColor");
+                                                        console.log(enamelMetalStockKey, "enamelMetalStockKey");
+
+                                                        // Retrieve the stock data
+                                                        const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                                        console.log(enamelMetalStock, "enamelMetalStock");
+
+                                                        return enamelMetalStock > 0 ? "In Stock" : "Out of Stock";
+                                                    } 
+                                                    if (selectedColor &&  data.Enamelcolorstock === null) {
+                                                        // Only metal color selected
+                                                        const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
+
+                                                        console.log(metalStockKey, "metalStockKey");
+
+                                                        // Retrieve the stock data
+                                                        const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
+
+                                                        return metalStock > 0 ? "In Stock" : "Out of Stock";
+                                                    }  if (data?.stock !== null) {
+                                                        // No specific color selected, use general stock
+                                                        return data?.stock > 0 ? "In Stock" : "Out of Stock";
+                                                    }
+
+                                                    return "In Stock"; // Default fallback
+                                                })()}
                                             </span>
                                         </div>
                                     </div>
+
 
                                     {/* metal options */}
 

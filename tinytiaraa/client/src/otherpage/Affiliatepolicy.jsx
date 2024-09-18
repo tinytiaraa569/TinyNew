@@ -6,62 +6,73 @@ function Affiliatepolicy() {
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">
-        <h3>Affiliate Program Commission Policy</h3>
+        <h3 className='text-[18px] font-[700]'>Affiliate Program Commission Policy</h3>
         <p>Thank you for joining the Tiny Tiaraa Kids Jewelry Affiliate Program! We are thrilled to have you as an affiliate and appreciate your efforts in promoting and referring customers to purchase our products. This policy outlines the commission structure for affiliates who successfully refer sales of Tiny Tiaraa Kids Jewelry products.</p>
     </div>
     <div className="conditions">
         <ol>
+
+        <li className='conditonssubsection'>
+            <h3>Introduction</h3>
+            <p>Thank you for participating in the Tiny Tiaraa Kids Jewelry Affiliate Program. This Commission Policy governs the terms and conditions related to the commission structure for affiliates who successfully refer sales of Tiny Tiaraa Kids Jewelry products. By participating in the Program, you agree to adhere to the terms set forth herein.</p>     
+            </li>
         <li className='conditonssubsection'>
             <h3>Commission Percentage:</h3>
-            <p>As an affiliate, you will receive a commission of 5% on the net sales value of Tiny Tiaraa Kids Jewelry products sold through your unique referral link. The net sales value is calculated after deducting any applicable taxes, discounts, and returns.</p>     
+            <p>Affiliates will earn a commission of 5% on the net sales value of Products sold through their unique referral link. The "Net Sales Value" is defined as the sale price of the Products less applicable taxes. discounts, and returns.</p>     
             </li>
 
             <li className='conditonssubsection'>
             <h3>Eligibility for Commission:</h3>
-            <p>To be eligible for commission, the following conditions must be met:</p>
+            <p>To be eligible to receive commissions, the following criteria must be met:</p>
             <ul>
                 <li>
-                    <p>Customers must make their purchases using your unique referral link provided by the Tiny Tiaraa Affiliate Program.</p>
+                    <p>Purchases must be made using the affiliate's unique referral link provided by the Tiny Tiaraa affiliate Program.</p>
                 </li>
                 <li>
-                   <p>The sale must be genuine and not involve any fraudulent or deceptive practices.</p>
+                   <p>The sale must be legitimate and free from fraudulent or deceptive practices.</p>
                 </li>
             </ul>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Sales Tracking:</h3>
-            <p>The Tiny Tiaraa Affiliate Program utilizes advanced tracking systems to monitor the sales generated through your referral link. This ensures accurate commission calculations for each successful referral.</p>
+            <p>Tiny Tiaraa utilizes sophisticated tracking systems to monitor sales generated through affiliate referral links. These systems ensure accurate calculation of commissions for each successful referral.</p>
             </li>
 
             <li className='conditonssubsection'>
-            <h3>Commission Payment Schedule:</h3>                <p>Commission payments will be processed on a monthly basis. Payments for commissions earned in a particular month will be issued within the first ten (10) business days of the following month. For example, commissions earned in July will be paid by the 10th of August.</p>
+            <h3>Commission Payment Schedule:</h3>
+            <p>Commissions will be processed on a monthly basis Payments for commissions earned within a calendar month will be issued within the first ten (10) business days of the subsequent month for instance, commissions earned in July will be disbursed by August 10th.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3> Payment Method:</h3>
-            <p>Commission payments will be made via electronic fund transfer (NEFT or similar payment methods) to the bank account provided by the affiliate. It is the affiliate's responsibility to ensure that the bank account information is accurate and up to date.</p>
+            <p>Commissions will be paid via electronic fund transfer (NEFT or other equivalent payment methods) to the bank account details provided by the affiliate. It is the affiliate's responsibility to ensure that bank account information is accurate and current.</p>
             </li>
 
             <li className='conditonssubsection'>
             <h3>Minimum Payout Threshold:</h3>
-                <p>A minimum payout threshold will apply to commission payments. The minimum payout amount will be communicated to you upon joining the affiliate program. Commissions will be paid only after the accumulated amount exceeds the specified threshold.</p>
+                <p>A minimum pay-out threshold will apply to commission payments Rs.500/- Commissions will be paid only when the accumulated amount meets or exceeds the minimum pay-out threshold.</p>
             </li>
 
             
 
             <li className='conditonssubsection'>
             <h3> Taxation and Deductions:</h3>
-                    <p>All commission payments are subject to applicable tax deductions as per Indian tax regulations. The affiliate is responsible for complying with tax laws and providing any required tax-related information to Tiny Tiaraa for smooth processing of payments.</p>   
+                    <p>Commission payments are subject to applicable tax deductions in accordance with Indian tax regulations. The affiliate is responsible for compliance with all tax obligations and must provide any necessary tax-related documentation to Tiny Tiaraa to facilitate the processing of payments.</p>   
             </li>
             <li className='conditonssubsection'>
             <h3>Termination of Affiliate Partnership:</h3>
-                    <p>If the affiliate partnership is terminated, any pending commission payments will be settled as per the terms outlined in the affiliate agreement. The affiliate will not be entitled to any commission on sales made after the termination date.</p>   
+                    <p>Upon termination of the affiliate partnership, any pending commission payments will be settled as per the terms outlined in the affiliate agreement. No commission will be due for sales made after the termination date.</p>   
             </li>
 
             <li className='conditonssubsection'>
             <h3>Changes to Commission Policy:</h3>
-            <p>Tiny Tiaraa reserves the right to modify the commission policy at any time. If there are any changes to the commission structure, you will be notified in writing, and the updated policy will be made available to you.</p>
+            <p>Tiny Tiaraa reserves the right to amend this Commission Policy at any time. Affiliates will be notified in writing of any changes, and the revised policy will be made available.</p>
+            </li>
+
+            <li className='conditonssubsection'>
+            <h3>Contact Information</h3>
+            <p>For any questions or further clarification regarding this Policy, affiliates may contact Tiny Tiaraa directly.</p>
             </li>
 
            
@@ -69,7 +80,7 @@ function Affiliatepolicy() {
         </ol>
 
     </div>
-    <p>Thank you for your enthusiasm in promoting Tiny Tiaraa Kids Jewelry products through our Affiliate Program. We believe that your efforts will help our brand reach more customers and grow further. If you have any questions or need further clarification on this commission policy, please don't hesitate to contact us. Happy promoting!</p>
+    <p>We appreciate your participation in the Tiny Tiaraa Kids Jewelry Affiliate Program and look forward to your continued success in promoting our Products.</p>
     </div>
   
 </div>

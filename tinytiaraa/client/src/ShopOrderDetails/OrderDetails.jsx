@@ -284,6 +284,11 @@ function OrderDetails() {
     useEffect(() => {
         dispatch(getAllOrdersOfShop(seller._id))
     }, [dispatch])
+    const metalColors = {
+        0: "Yellow Gold",
+        1: "Rose Gold",
+        2: "White Gold",
+      };
 
     const orderUpdateHandler = async (e) => {
         e.preventDefault()

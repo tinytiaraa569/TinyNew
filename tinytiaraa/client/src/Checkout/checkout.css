@@ -105,3 +105,42 @@
     }
     
 }
+
+@media (max-width:550px) {
+    .ordercardsec {
+       flex-direction: column;
+        height: auto;
+    }
+    .image-section {
+        margin: auto;
+        min-width: 154px;
+        width: 154px;
+        height: auto;
+    }
+    
+    .detail-section {
+        padding: 10px 15px !important;
+        width: 100%;
+        height: auto;
+    
+    }
+    .securehecoutsize{
+        font-size: 14px !important;
+    }
+    .detail-section h3{
+        font-size: 12px !important;
+    }
+    .detail-section span{
+        font-size: 11px !important;
+    }
+    .checkoutleft {
+        width: 88% !important;
+    }
+    .checkoutright {
+        width: 88% !important;
+    }
+    .securehecoutsizehead{
+        margin-left: -7px;
+        font-size: 16px !important;
+    }
+}

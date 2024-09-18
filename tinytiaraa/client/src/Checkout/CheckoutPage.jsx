@@ -271,12 +271,12 @@ const calculateEDD = async () => {
 
                 <div className='w-full flex pt-3 mb-7'>
 
-                    <div className='w-[10%] flex !text-[black] items-center gap-2 pl-2 cursor-pointer' onClick={handleback}>
-                        <IoIosArrowBack />
-                        <span className='text-[18px]'>Bag</span>
+                    <div className='w-[15%] flex !text-[black] items-center gap-2 pl-2 cursor-pointer' onClick={handleback}>
+                        <IoIosArrowBack size={18} className='secureshoppingbagitems' />
+                        <span className='text-[18px] securehecoutsize'>Bag</span>
                     </div>
                     <div className='w-[80%]'>
-                        <h2 className='text-center text-[20px] font-[600]'>Secure Checkout</h2>
+                        <h2 className='securehecoutsizehead text-center text-[20px] font-[600]'>Secure Checkout</h2>
                     </div>
                 </div>
 
@@ -507,8 +507,8 @@ const calculateEDD = async () => {
                 </div>
                 {!isSameAddress && (
                     <>
-                        <div className='flex gap-5 items-center mb-4'>
-                            <div className='w-[45%]'>
+                        <div className='flex gap-5 items-center mb-4 sercol' >
+                            <div className='w-[45%] adjustinpser'>
                                 <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">Apartment, Floor *</label>
                                 <input
                                     id="billing-address1"
@@ -519,7 +519,7 @@ const calculateEDD = async () => {
                                     placeholder="Enter Your address"
                                 />
                             </div>
-                            <div className='w-[45%]'>
+                            <div className='w-[45%] adjustinpser'>
                                 <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address2">Street, Town / City *</label>
                                 <input
                                     id="billing-address2"
@@ -531,8 +531,8 @@ const calculateEDD = async () => {
                                 />
                             </div>
                         </div>
-                        <div className='flex gap-5 items-center mb-4'>
-                            <div className='w-[45%]'>
+                        <div className='flex gap-5 items-center mb-4 sercol' >
+                            <div className='w-[45%] adjustinpser'>
                                 <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-country">Country *</label>
                                 <select
                                     id='billing-country'
@@ -551,7 +551,7 @@ const calculateEDD = async () => {
                                         ))}
                                 </select>
                             </div>
-                            <div className='w-[45%]'>
+                            <div className='w-[45%] adjustinpser'>
                                 <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-state">State *</label>
                                 <select
                                     id='billing-state'
@@ -571,8 +571,8 @@ const calculateEDD = async () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='flex gap-5 items-center mb-4'>
-                            <div className='w-[45%]'>
+                        <div className='flex gap-5 items-center mb-4 sercol' >
+                            <div className='w-[45%] adjustinpser'>
                                 <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-zipcode">Zip Code *</label>
                                 <input
                                     id="billing-zipcode"

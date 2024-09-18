@@ -28,6 +28,12 @@ function UserOrderDetails() {
 
     const { id } = useParams()
 
+    const metalColors = {
+        0: "Yellow Gold",
+        1: "Rose Gold",
+        2: "White Gold",
+      };
+
     useEffect(() => {
         dispatch(getAllOrdersOfUser(user._id))
     }, [dispatch])
@@ -104,8 +110,30 @@ function UserOrderDetails() {
                         <div key={index} className='w-full flex items-start mt-5 mb-5'>
                             <img src={`${item.images && item.images[1]?.url}`} alt="" className='w-[80px] h-[80px]' />
                             <div className="w-full">
-                                <h5 className='pl-3 text-[20px]'>{item.name}</h5>
-                                <h5 className='pl-3 text-[20px] text-[#0000008c]'>₹{item.discountPrice} x {item.qty}</h5>
+                                <h5 className='pl-3 text-[18px]'>{item.name}</h5>
+                                <p className='pl-3 text-[12px] text-[#0000008c]'>{item.skuid}</p>
+
+                                <span className="pl-3 text-[14px] text-[#0000008c] line-through">₹{item.chainPrice > 0 ? item.originalPrice + item.chainPrice : item.originalPrice} </span>
+                                <span className="pl-2 text-[14px] text-[#0000008c]">₹{item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice} x {item.qty}</span>
+
+                                <div className='mt-2'>
+                                {item.showWithChain !== undefined && (
+                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                        <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} ({item.selectedChainSize})
+                                    </h5>
+                                )}
+                                {item.selectedColor !== null && (
+                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                        <span className='font-[600]'>Metal Color :</span> {metalColors[item.selectedColor]}
+                                    </h5>
+                                )}
+                                {item.selectedEnamelColor !== null && (
+                                    <h5 className='pl-3 text-[14px] text-[#0000008c]'>
+                                        <span className='font-[600]'>Enamel :</span> {item.selectedEnamelColor}
+                                    </h5>
+                                )}
+                            </div>
+
 
                             </div>
 

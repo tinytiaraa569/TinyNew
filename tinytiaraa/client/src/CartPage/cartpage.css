@@ -608,3 +608,36 @@
     }
 
 }
+
+@media (max-width:550px) {
+    .leftcardsec1 {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .leftcardsec1 .leftcardimg {
+        margin: auto;
+        max-width: 184px;
+    }
+    .leftcarddetail {
+        width: 100%;
+    }
+    .leftcarddeatilhead {
+       
+        gap: 10px;
+    
+    }
+    
+    .leftcarddeatilhead h2 {
+        max-width: 384px;
+        font-size: 13px;
+        line-height: 20px;
+        font-weight: 400;
+    }
+    .secureshoppingbaghead h2{
+        font-size: 18px !important;
+    }
+    .secureshoppingbagitems{
+        font-size: 14px !important;
+    }
+    
+}
