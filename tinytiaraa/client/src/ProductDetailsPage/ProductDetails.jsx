@@ -1567,9 +1567,9 @@ function ProductDetails({ data }) {
 
 
 
-                                    {/* <div className={`${styles.button} mt-6 !w-[190px] p-4 !rounded !h-[40px]`} onClick={handleMessageSubmit}>
+                                    <div className={`${styles.button} mt-6 !w-[190px] p-4 !rounded !h-[40px]`} onClick={handleMessageSubmit}>
                                         <span className='text-white flex items-center'> Send Message <AiOutlineMessage className='ml-2' /></span>
-                                    </div> */}
+                                    </div>
 
                                         <div className='checkdel mt-3'>
                                         <input type="text" placeholder='enter your pincode' value={pincode} onChange={(e)=>setpincode(e.target.value)}/>
