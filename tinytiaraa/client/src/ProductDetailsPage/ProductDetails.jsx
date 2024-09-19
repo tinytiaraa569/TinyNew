@@ -977,45 +977,113 @@ function ProductDetails({ data }) {
                                         )}
 
                                     </div>
-
+                                        
                                     <div className="instockcon">
-                                        <div className='instockconflex'>
-                                            <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
-                                            </svg>
-                                            <span>
+                                        <div className="instockconflex">
+                                            {(() => {
+                                                if (selectedEnamelColor !== null) {
+                                                    const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                                    const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
+
+                                                    const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+                                                    const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                                    return enamelMetalStock > 0 ? (
+                                                        // Green tick icon for in-stock
+                                                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                                        </svg>
+                                                    ) : (
+                                                        // Red cross icon for out-of-stock
+                                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L12 12" stroke="#FF0000" strokeWidth="2"/>
+                                                            <path d="M12 1L1 12" stroke="#FF0000" strokeWidth="2"/>
+                                                        </svg>
+                                                    );
+                                                }
+                                                if (selectedColor && data.Enamelcolorstock === null) {
+                                                    const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
+                                                    const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
+
+                                                    return metalStock > 0 ? (
+                                                        // Green tick icon for in-stock
+                                                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                                        </svg>
+                                                    ) : (
+                                                        // Red cross icon for out-of-stock
+                                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L12 12" stroke="#FF0000" strokeWidth="2"/>
+                                                            <path d="M12 1L1 12" stroke="#FF0000" strokeWidth="2"/>
+                                                        </svg>
+                                                    );
+                                                }
+                                                if (data?.stock !== null) {
+                                                    return data?.stock > 0 ? (
+                                                        // Green tick icon for in-stock
+                                                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                                        </svg>
+                                                    ) : (
+                                                        // Red cross icon for out-of-stock
+                                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L12 12" stroke="#FF0000" strokeWidth="2"/>
+                                                            <path d="M12 1L1 12" stroke="#FF0000" strokeWidth="2"/>
+                                                        </svg>
+                                                    );
+                                                }
+
+                                                // Default fallback: green tick
+                                                return (
+                                                    <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                                    </svg>
+                                                );
+                                            })()}
+                                            <span
+                                                style={{
+                                                    color: (() => {
+                                                        if (selectedEnamelColor !== null) {
+                                                            const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                                            const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
+
+                                                            const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+                                                            const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                                            return enamelMetalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+                                                        if (selectedColor && data.Enamelcolorstock === null) {
+                                                            const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
+                                                            const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
+
+                                                            return metalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+                                                        if (data?.stock !== null) {
+                                                            return data?.stock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+
+                                                        return '#0B8D08'; // Default fallback color
+                                                    })()
+                                                }}
+                                                className="text-[14px] font-medium leading-[24px]"
+                                            >
                                                 {(() => {
-                                                    if (selectedEnamelColor !== null ) {
-                                                        // Both enamel color and metal color selected
+                                                    if (selectedEnamelColor !== null) {
                                                         const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
                                                         const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
 
-                                                        // Construct the stock key
                                                         const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
-
-                                                        console.log(cleanedEnamelColor, "cleanedEnamelColor");
-                                                        console.log(metalColor, "metalColor");
-                                                        console.log(enamelMetalStockKey, "enamelMetalStockKey");
-
-                                                        // Retrieve the stock data
                                                         const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
 
-                                                        console.log(enamelMetalStock, "enamelMetalStock");
-
                                                         return enamelMetalStock > 0 ? "In Stock" : "Out of Stock";
-                                                    } 
-                                                    if (selectedColor &&  data.Enamelcolorstock === null) {
-                                                        // Only metal color selected
+                                                    }
+                                                    if (selectedColor && data.Enamelcolorstock === null) {
                                                         const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
-
-                                                        console.log(metalStockKey, "metalStockKey");
-
-                                                        // Retrieve the stock data
                                                         const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
 
                                                         return metalStock > 0 ? "In Stock" : "Out of Stock";
-                                                    }  if (data?.stock !== null) {
-                                                        // No specific color selected, use general stock
+                                                    }
+                                                    if (data?.stock !== null) {
                                                         return data?.stock > 0 ? "In Stock" : "Out of Stock";
                                                     }
 
@@ -1024,6 +1092,68 @@ function ProductDetails({ data }) {
                                             </span>
                                         </div>
                                     </div>
+
+                                    
+
+
+                                    {/* <div className="instockcon">
+                                        <div className="instockconflex">
+                                            <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                            </svg>
+                                            <span
+                                                style={{
+                                                    color: (() => {
+                                                        if (selectedEnamelColor !== null) {
+                                                            const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                                            const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
+
+                                                            const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+                                                            const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                                            return enamelMetalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+                                                        if (selectedColor && data.Enamelcolorstock === null) {
+                                                            const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
+                                                            const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
+
+                                                            return metalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+                                                        if (data?.stock !== null) {
+                                                            return data?.stock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                                                        }
+
+                                                        return '#0B8D08'; // Default fallback color
+                                                    })()
+                                                }}
+                                                className="text-[14px] font-medium leading-[24px]"
+                                            >
+                                                {(() => {
+                                                    if (selectedEnamelColor !== null) {
+                                                        const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                                        const metalColor = metalColors[selectedColor].replace(/\s+/g, '');
+
+                                                        const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+                                                        const enamelMetalStock = data?.Enamelcolorstock[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                                        return enamelMetalStock > 0 ? "In Stock" : "Out of Stock";
+                                                    }
+                                                    if (selectedColor && data.Enamelcolorstock === null) {
+                                                        const metalStockKey = `${metalColors[selectedColor].replace(/\s+/g, '')}clrStock`;
+                                                        const metalStock = data?.Metalcolorstock[metalStockKey] || 0;
+
+                                                        return metalStock > 0 ? "In Stock" : "Out of Stock";
+                                                    }
+                                                    if (data?.stock !== null) {
+                                                        return data?.stock > 0 ? "In Stock" : "Out of Stock";
+                                                    }
+
+                                                    return "In Stock"; // Default fallback
+                                                })()}
+                                            </span>
+                                        </div>
+                                    </div> */}
+
 
 
                                     {/* metal options */}

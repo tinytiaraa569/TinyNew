@@ -802,9 +802,9 @@ router.post(
     
                     </div>
                     <div style="text-align: center; padding: 15px 0;">
-                        <button
-                            style="padding: 10px 22px;background-color: black;color: white;border: none;font-size: 17px;border-radius: 2px;cursor: pointer;">View
-                            Order Details</button>
+                         <a href="http://localhost:5173/user/order/${order._id}"
+                        style="padding: 10px 22px;background-color: black;color: white;text-decoration: none;font-size: 17px;border-radius: 2px;cursor: pointer;">View
+                        Order Details</a>
                     </div>
     
     

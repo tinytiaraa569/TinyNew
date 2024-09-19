@@ -26,7 +26,7 @@ function UserOrderDetails() {
 
 
 
-    const { id } = useParams()
+    const { email } = useParams()
 
     const metalColors = {
         0: "Yellow Gold",
@@ -35,10 +35,10 @@ function UserOrderDetails() {
       };
 
     useEffect(() => {
-        dispatch(getAllOrdersOfUser(user._id))
+        dispatch(getAllOrdersOfUser(user.email))
     }, [dispatch])
 
-    const data = orders && orders.find((item) => item._id === id)
+    const data = orders && orders?.find((item) => item?.email === email)
 
     // console.log(data)
 
@@ -108,8 +108,8 @@ function UserOrderDetails() {
                 data && data?.cart.map((item, index) => {
                     return (
                         <div key={index} className='w-full flex items-start mt-5 mb-5'>
-                            <img src={`${item.images && item.images[1]?.url}`} alt="" className='w-[80px] h-[80px]' />
-                            <div className="w-full">
+                            <img src={`${item.images && item.images[1]?.url}`} alt="" className='w-[180px] h-[180px] border border-gray-200' />
+                            <div className="w-full pl-2">
                                 <h5 className='pl-3 text-[18px]'>{item.name}</h5>
                                 <p className='pl-3 text-[12px] text-[#0000008c]'>{item.skuid}</p>
 

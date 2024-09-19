@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { productData } from '../static/data'
-import ProductDetails from './ProductDetails'
-import SuggestedProduct from '../SuggestedProduct/SuggestedProduct'
-import { useSelector } from 'react-redux'
-import RecentlyViewedProducts from '@/RecentlyViewedProducts/RecentlyViewedProducts'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { productData } from '../static/data';
+import ProductDetails from './ProductDetails';
+import SuggestedProduct from '../SuggestedProduct/SuggestedProduct';
+import { useSelector } from 'react-redux';
+import RecentlyViewedProducts from '@/RecentlyViewedProducts/RecentlyViewedProducts';
 
 function ProductDetailsPage() {
+    const { products } = useSelector((state) => state.products);
+    console.log(products);
 
-    const { products } = useSelector((state) => state.products)
-    console.log(products)
-
-    const { name } = useParams()
-    const [data, setData] = useState(null)
-    const productName = name.replace(/-/g, " ")
+    const { name } = useParams();
+    const [data, setData] = useState(null);
+    const productName = name.replace(/-/g, " ");
 
     const [recentlyViewed, setRecentlyViewed] = useState([]);
+
     useEffect(() => {
         if (products && products.length > 0) {
             const product = products.find(
                 (product) => product.name === productName || product.name.replace(/ /g, "-") === name
             );
             if (product) {
-                setData(product);
+                setData(null); // Reset data to avoid showing the previous product's details temporarily.
+                
+                // Delay setting the new product data slightly to ensure reset occurs.
+                setTimeout(() => {
+                    setData(product);
+                }, 0); 
 
                 const viewedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
 
@@ -40,19 +45,19 @@ function ProductDetailsPage() {
         } else {
             console.log('Products array is not available yet');
         }
-    }, [productName, products]);
+    }, [productName, name, products]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [productName]);
+
     return (
         <div>
             {data && <ProductDetails data={data} />}
             {data && <SuggestedProduct data={data} />}
             {data && <RecentlyViewedProducts recentlyViewed={recentlyViewed} />}
-
-
         </div>
-    )
+    );
 }
 
-export default ProductDetailsPage
+export default ProductDetailsPage;
