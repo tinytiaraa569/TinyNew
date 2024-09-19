@@ -11,7 +11,7 @@ import slider4 from './sliderimages/slider4.png';
 import slider5 from './sliderimages/slider5.jpg';
 import slider6 from './sliderimages/slider6.png';
 import slider7 from './sliderimages/slider7.png';
-import firstimg from './sliderimages/first.png';
+import firstimg1 from './sliderimages/first1.png';
 import secondimg from './sliderimages/second.png';
 import thirdimg from './sliderimages/third.png';
 import newbanner1 from './sliderimages/newbanner1.jpg';
@@ -80,7 +80,7 @@ function SliderSection() {
     <>
       <Slider {...settings}>
         <div className="slidersec cursor-pointer" >
-          <img src={firstimg} alt="First Slide" />
+          <img src={firstimg1} alt="First Slide" />
         </div>
         <div className="slidersec cursor-pointer">
           <img src={newbanner4} alt="Slider Six" />

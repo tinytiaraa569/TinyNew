@@ -207,8 +207,8 @@ router.get("/logout", isAuthenticated, catchAsyncErrors(async (req, res, next) =
         res.cookie("token", null, {
             expires: new Date(Date.now()),
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  // Secure cookie in production
-            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Adjust for production
+            sameSite: "None",  // Ensure consistency with login cookie
+            secure: true, 
         });
 
         res.status(201).json({

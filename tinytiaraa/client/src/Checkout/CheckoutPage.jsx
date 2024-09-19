@@ -66,9 +66,29 @@ function CheckoutPage() {
     const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * (item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice), 0)
 
     const shipping = "Free Shipping"
+    const [error, setError] = useState('');
 
 
+    const handlePhoneNumberChange = (e) => {
+        // Only allow digits and ensure the length does not exceed 10 digits
+        const value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+        setphoneNumber(value);
 
+        // Clear error if valid length, otherwise set error
+        if (value.length < 10) {
+            setError('Phone number must be exactly 10 digits.');
+        } else {
+            setError('');
+        }
+    };
+
+    // const validatePhoneNumber = () => {
+    //     if (phoneNumber.length < 10) {
+    //         setError("Phone number must be exactly 10 digits.");
+    //         return false;
+    //     }
+    //     return true;
+    // };
 
     const totalPrice = (subTotalPrice - discountPrice).toFixed(2);
 
@@ -150,6 +170,12 @@ function CheckoutPage() {
 
     const paymentSubmit = (e) => {
         e.preventDefault()
+        if (validatePhoneNumber()) {
+            // Proceed with form submission
+            console.log("Phone number is valid:", phoneNumber);
+            // For example, you can proceed with other actions here
+        }
+
         if (name === "" || email === "" || phoneNumber === "" || address1 === "" || address2 === "" || zipCode === null || country === "" || city === "") {
             toast.error("Please Fill  Your Delivery Address")
 
@@ -384,16 +410,20 @@ const calculateEDD = async () => {
                                     </div>
 
                                     <div className='flex gap-5 items-center mb-4 sercol'>
-                                        <div className='w-[45%] adjustinpser'>
-                                            <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-cnumber">Phone Number (for delivery updates) *</label>
-                                            <input
-                                                value={phoneNumber}
-                                                id="shipping-cnumber"
-                                                onChange={(e) => { setphoneNumber(e.target.value) }}
-                                                type='tel'
-                                                className='int-emailcheck'
-                                                placeholder="Enter Your Contact Number" />
-                                        </div>
+                                    <div className='w-[45%] adjustinpser'>
+                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="shipping-cnumber">Phone Number (for delivery updates) *</label>
+                                        <input
+                                            value={phoneNumber}
+                                            id="shipping-cnumber"
+                                            onChange={handlePhoneNumberChange}
+                                            type='tel'
+                                            className='int-emailcheck'
+                                            placeholder="Enter Your Contact Number"
+                                            maxLength={10}
+                                            required
+                                        />
+                                        {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
+                                    </div>
                                         <div className='w-[45%] adjustinpser'>
                                             <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-counry">Country *</label>
                                             <select
