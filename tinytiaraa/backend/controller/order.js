@@ -557,332 +557,332 @@ const Welcome = require("@react-email/components").default;
 
 
 // HTML Template for Invoice
-const generateInvoiceTemplate = (order) => {
-    console.log(order,"order for email ")
-    return `
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+// const generateInvoiceTemplate = (order) => {
+//     console.log(order,"order for email ")
+//     return `
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Document</title>
 
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Arial", sans-serif; 
+//     <style>
+//         *{
+//             margin: 0;
+//             padding: 0;
+//             box-sizing: border-box;
+//             font-family: "Arial", sans-serif; 
            
-        }
-        .invoice { 
-            border: 1px solid #ccc; 
-            padding: 20px 30px;
-            margin: 20px;
-         }
-         .invoicehead{
-            text-align: center;
-         }
-         .invoicehead h4{
-            padding-top: 4px;
-         }
-         .companydetail{
-            margin-top: 15px;
-            padding: 10px 50px;
-            width: 100%;
-            border: 1px solid #ccc; 
-            font-size: 13px;
+//         }
+//         .invoice { 
+//             border: 1px solid #ccc; 
+//             padding: 20px 30px;
+//             margin: 20px;
+//          }
+//          .invoicehead{
+//             text-align: center;
+//          }
+//          .invoicehead h4{
+//             padding-top: 4px;
+//          }
+//          .companydetail{
+//             margin-top: 15px;
+//             padding: 10px 50px;
+//             width: 100%;
+//             border: 1px solid #ccc; 
+//             font-size: 13px;
 
 
-         }
-         .companydetail p{
-            padding: 2px 0;
-         }
-         .companydetailleft{
-            width: 60%;
-            display: inline-block;
-         }
-         .companydetailright{
-            width: 35%;
-            display: inline-block;
-         }
+//          }
+//          .companydetail p{
+//             padding: 2px 0;
+//          }
+//          .companydetailleft{
+//             width: 60%;
+//             display: inline-block;
+//          }
+//          .companydetailright{
+//             width: 35%;
+//             display: inline-block;
+//          }
 
-         .receiverdetail{
-            margin-top: 20px;
-            padding: 10px 50px;
-            width: 100%;
-            border: 1px solid #ccc;
-            font-size: 13px;
+//          .receiverdetail{
+//             margin-top: 20px;
+//             padding: 10px 50px;
+//             width: 100%;
+//             border: 1px solid #ccc;
+//             font-size: 13px;
 
 
-         }
-         .receiverdetail p{
-            padding: 2px 0;
-         }
-         .bankdetails{
-            margin-top: 20px;
-            padding: 15px 50px;
-            width: 100%;
-            border: 1px solid #ccc;
-            font-size: 13px;
-         }
-         .bankdetails p{
-            padding: 2px 0;
-         }
-         .sign{
-            margin-top: 20px;
-            padding: 10px 50px;
-            width: 100%;
-            border: 1px solid #ccc;
-            font-size: 14px;
-         }
-         .receiverdetailleft{
-            width: 60%;
-            display: inline-block;
-         }
-         .receiverdetailright{
-            width: 35%;
-            display: inline-block;
-         }
-         .ordersumtable{
-            margin-top: 20px;
-            padding: 10px 0px;
-            width: 100%;
-            font-size: 11px;
-         }
-         table{
-            width: 100%;
-            border: 1px solid #ccc;
-            border-collapse: collapse;
+//          }
+//          .receiverdetail p{
+//             padding: 2px 0;
+//          }
+//          .bankdetails{
+//             margin-top: 20px;
+//             padding: 15px 50px;
+//             width: 100%;
+//             border: 1px solid #ccc;
+//             font-size: 13px;
+//          }
+//          .bankdetails p{
+//             padding: 2px 0;
+//          }
+//          .sign{
+//             margin-top: 20px;
+//             padding: 10px 50px;
+//             width: 100%;
+//             border: 1px solid #ccc;
+//             font-size: 14px;
+//          }
+//          .receiverdetailleft{
+//             width: 60%;
+//             display: inline-block;
+//          }
+//          .receiverdetailright{
+//             width: 35%;
+//             display: inline-block;
+//          }
+//          .ordersumtable{
+//             margin-top: 20px;
+//             padding: 10px 0px;
+//             width: 100%;
+//             font-size: 11px;
+//          }
+//          table{
+//             width: 100%;
+//             border: 1px solid #ccc;
+//             border-collapse: collapse;
 
-         }
-         th{
-            border: 1px solid #ccc;
-            padding: 5px;
-         }
-         td{
-            border: 1px solid #ccc;
-            padding: 5px;
+//          }
+//          th{
+//             border: 1px solid #ccc;
+//             padding: 5px;
+//          }
+//          td{
+//             border: 1px solid #ccc;
+//             padding: 5px;
 
-         }
-         .signing{
-            height: 100px;
-         }
+//          }
+//          .signing{
+//             height: 100px;
+//          }
          
-    </style>
-</head>
-<body>
+//     </style>
+// </head>
+// <body>
 
-    <div class="invoice">
-        <div class="invoicehead">
-            <p>SUBJECT TO MUMBAI JURISDICTION</p>
-            <h4>TAX  INVOICE</h4>
-        </div>
-
-
-        <div class="companydetail">
-            <div class="companydetailleft">
-                <p>GSTIN : 27AAKCR3049R1ZL</p>
-                <p>RU-BRAMA RETAIL PVT. LTD.</p>
-                <p>WICEL ADMINSTRATION BUILDING 2ND FLOOR,</p>
-                <p>PLOT NO.2, F - 11 & 12, MIDC CENTRAL ROAD,</p>
-                <p>MAROL, ANDHERI (EAST),</p>
-                <p>MUMBAI 400093</p>
-                <p>Email : care@tinytiaraa.com </p>
+//     <div class="invoice">
+//         <div class="invoicehead">
+//             <p>SUBJECT TO MUMBAI JURISDICTION</p>
+//             <h4>TAX  INVOICE</h4>
+//         </div>
 
 
-                <p style="margin-top: 15px;">PAN : AAKCR3049R</p>
+//         <div class="companydetail">
+//             <div class="companydetailleft">
+//                 <p>GSTIN : 27AAKCR3049R1ZL</p>
+//                 <p>RU-BRAMA RETAIL PVT. LTD.</p>
+//                 <p>WICEL ADMINSTRATION BUILDING 2ND FLOOR,</p>
+//                 <p>PLOT NO.2, F - 11 & 12, MIDC CENTRAL ROAD,</p>
+//                 <p>MAROL, ANDHERI (EAST),</p>
+//                 <p>MUMBAI 400093</p>
+//                 <p>Email : care@tinytiaraa.com </p>
 
-            </div>
 
-            <div class="companydetailright">
-                <p>Invoice No : RU - 01</p>
-                <p>Invoice Date : 13/06/2000</p>
+//                 <p style="margin-top: 15px;">PAN : AAKCR3049R</p>
+
+//             </div>
+
+//             <div class="companydetailright">
+//                 <p>Invoice No : RU - 01</p>
+//                 <p>Invoice Date : 13/06/2000</p>
 
 
-                <p>M.O.T : Sequel</p>
-                <p>SENT : HAND CARRY</p>
+//                 <p>M.O.T : Sequel</p>
+//                 <p>SENT : HAND CARRY</p>
 
                 
-                <p>Place of Supply :</p>
-                <p>Tax is Payable on Reverse charges : No</p>
+//                 <p>Place of Supply :</p>
+//                 <p>Tax is Payable on Reverse charges : No</p>
 
-            </div>
+//             </div>
 
-        </div>
+//         </div>
 
-        <div class="receiverdetail">
+//         <div class="receiverdetail">
 
-            <div class="receiverdetailleft">
-                <p style="font-weight: 600;">Detail of Receiverdetail (Billed To)</p>
-
-
-                <div class="receiverdetailadddresss">
-                    <p>To,</p>
-                    <p>Dear. ${order.shippingAddress.name}</p>
-                    <p>${order.shippingAddress.email},</p>
-                    <p>${order.shippingAddress.address1} </p>
-                    <p>${order.shippingAddress.address2}</p>
-                    <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
-                    <p>GSTIN: </p>
-
-                </div>
-
-            </div>
-
-            <div class="receiverdetailright">
-                <p style="font-weight: 600;">Detail of Consignee (Shipped To)</p>
+//             <div class="receiverdetailleft">
+//                 <p style="font-weight: 600;">Detail of Receiverdetail (Billed To)</p>
 
 
-                <div class="receiverdetailadddresss">
-                    <p>To,</p>
-                    <p>DR. SHIKSHA PATEL</p>
-                    <p>205, VINI ELEGANCE, L.T. ROAD,</p>
-                    <p>ABOVE TANISHQ SHOWROOM, </p>
-                    <p>BORIVALI (WEST), MUMBAI 400092</p>
-                    <p>State: MAHARASHTRA</p>
-                    <p>GSTIN: </p>
+//                 <div class="receiverdetailadddresss">
+//                     <p>To,</p>
+//                     <p>Dear. ${order.shippingAddress.name}</p>
+//                     <p>${order.shippingAddress.email},</p>
+//                     <p>${order.shippingAddress.address1} </p>
+//                     <p>${order.shippingAddress.address2}</p>
+//                     <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+//                     <p>GSTIN: </p>
 
-                    <p>Pan :</p>
+//                 </div>
 
-                </div>
+//             </div>
 
-            </div>
+//             <div class="receiverdetailright">
+//                 <p style="font-weight: 600;">Detail of Consignee (Shipped To)</p>
+
+
+//                 <div class="receiverdetailadddresss">
+//                     <p>To,</p>
+//                     <p>DR. SHIKSHA PATEL</p>
+//                     <p>205, VINI ELEGANCE, L.T. ROAD,</p>
+//                     <p>ABOVE TANISHQ SHOWROOM, </p>
+//                     <p>BORIVALI (WEST), MUMBAI 400092</p>
+//                     <p>State: MAHARASHTRA</p>
+//                     <p>GSTIN: </p>
+
+//                     <p>Pan :</p>
+
+//                 </div>
+
+//             </div>
             
 
-        </div>
+//         </div>
 
-        <div class="ordersumtable">
-            <table cellpadding="10px" style="font-size: 11px !important;">
-                <tr style="background-color: rgb(238, 238, 238) ; " >
-                    <th>Sr <br> nos</th>
-                    <th>Product Name <br>HSN / SAC Code</th>
-                    <th>Carat</th>
-                    <th>Gross <br>Wt.</th>
-                    <th>Net <br>Wt.</th>
-                    <th>Rate <br>Per Unit</th>
-                    <th>Taxable <br>Value</th>
-                    <th>CGST (1.5%) <br>Amt & Rate</th>
-                    <th>SGST (1.5%) <br>Amt & Rate</th>
-                    <th>IGST (3%) <br>Amt & Rate</th>
-                    <th>Amount <br>(Rs)</th>
+//         <div class="ordersumtable">
+//             <table cellpadding="10px" style="font-size: 11px !important;">
+//                 <tr style="background-color: rgb(238, 238, 238) ; " >
+//                     <th>Sr <br> nos</th>
+//                     <th>Product Name <br>HSN / SAC Code</th>
+//                     <th>Carat</th>
+//                     <th>Gross <br>Wt.</th>
+//                     <th>Net <br>Wt.</th>
+//                     <th>Rate <br>Per Unit</th>
+//                     <th>Taxable <br>Value</th>
+//                     <th>CGST (1.5%) <br>Amt & Rate</th>
+//                     <th>SGST (1.5%) <br>Amt & Rate</th>
+//                     <th>IGST (3%) <br>Amt & Rate</th>
+//                     <th>Amount <br>(Rs)</th>
 
 
-                </tr>
+//                 </tr>
     
 
-                <tr style="text-align: center;">
-                    <td rowspan="4">1</td>
-                    <td>GOLD PENDANT </td>
-                    <td rowspan="2"></td>
-                    <td rowspan="4">0.36</td>
-                    <td rowspan="4">0.36</td>
-                    <td rowspan="4"></td>
-                    <td rowspan="4">6553.00</td>
-                    <td rowspan="4">98.29</td>
-                    <td rowspan="4">98.29</td>
-                    <td rowspan="4">Amt & Rate</td>
+//                 <tr style="text-align: center;">
+//                     <td rowspan="4">1</td>
+//                     <td>GOLD PENDANT </td>
+//                     <td rowspan="2"></td>
+//                     <td rowspan="4">0.36</td>
+//                     <td rowspan="4">0.36</td>
+//                     <td rowspan="4"></td>
+//                     <td rowspan="4">6553.00</td>
+//                     <td rowspan="4">98.29</td>
+//                     <td rowspan="4">98.29</td>
+//                     <td rowspan="4">Amt & Rate</td>
 
-                    <td rowspan="4">6749.58</td>
+//                     <td rowspan="4">6749.58</td>
                     
 
-                </tr>
+//                 </tr>
 
-                <tr style="text-align: center;">       
-                    <td>Enamel </td>
-                </tr>
-                <tr style="text-align: center;">       
-                    <td>Diamond </td>
-                    <td>0.02</td>
-                </tr>
-                <tr style="text-align: center;">       
-                    <td>HSN CODE : 71081300 </td>
-                </tr>
+//                 <tr style="text-align: center;">       
+//                     <td>Enamel </td>
+//                 </tr>
+//                 <tr style="text-align: center;">       
+//                     <td>Diamond </td>
+//                     <td>0.02</td>
+//                 </tr>
+//                 <tr style="text-align: center;">       
+//                     <td>HSN CODE : 71081300 </td>
+//                 </tr>
 
-                <tr style="text-align: center;">
-                    <td  style="text-align: center;">Total</td>
-                    <td style="text-align: center;"> </td>
-                    <td  style="text-align: center;">0.02</td>
-                    <td  style="text-align: center;">0.36</td>
-                    <td  style="text-align: center;">0.36</td>
-                    <td  style="text-align: center;"></td>
-                    <td  style="text-align: center;">6553.00</td>
-                    <td  style="text-align: center;">98.29</td>
-                    <td  style="text-align: center;">98.29</td>
-                    <td  style="text-align: center;"></td>
+//                 <tr style="text-align: center;">
+//                     <td  style="text-align: center;">Total</td>
+//                     <td style="text-align: center;"> </td>
+//                     <td  style="text-align: center;">0.02</td>
+//                     <td  style="text-align: center;">0.36</td>
+//                     <td  style="text-align: center;">0.36</td>
+//                     <td  style="text-align: center;"></td>
+//                     <td  style="text-align: center;">6553.00</td>
+//                     <td  style="text-align: center;">98.29</td>
+//                     <td  style="text-align: center;">98.29</td>
+//                     <td  style="text-align: center;"></td>
 
-                    <td >6749.58</td>
+//                     <td >6749.58</td>
 
-                </tr>
+//                 </tr>
 
-                <tr>
-                    <td colspan="8" rowspan="2">Rupees in Words : SIX THOUSAND SEVEN HUNDRED FIFTY ONLY.</td>
-                    <td style="text-align: center;" colspan="2">Total Invoice Value </td>
-                    <td style="text-align: center;">Rs. 6750 </td>
+//                 <tr>
+//                     <td colspan="8" rowspan="2">Rupees in Words : SIX THOUSAND SEVEN HUNDRED FIFTY ONLY.</td>
+//                     <td style="text-align: center;" colspan="2">Total Invoice Value </td>
+//                     <td style="text-align: center;">Rs. 6750 </td>
                     
 
 
-                </tr>
-                <tr style="text-align: center;">
-                    <td colspan="2">Total Amount Payable  </td>
-                    <td>Rs. 6750</td>
-                </tr>
+//                 </tr>
+//                 <tr style="text-align: center;">
+//                     <td colspan="2">Total Amount Payable  </td>
+//                     <td>Rs. 6750</td>
+//                 </tr>
 
-            </table>
+//             </table>
 
-        </div>
+//         </div>
 
-        <div class="bankdetails">
-            <p>BANK DETAIL</p>
-            <p>HDFC BANK LIMITED</p>
-            <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
-            <p>A/C. NO. 50200097298019</p>
-            <p>IFSC : HDFC0000086</p>
+//         <div class="bankdetails">
+//             <p>BANK DETAIL</p>
+//             <p>HDFC BANK LIMITED</p>
+//             <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
+//             <p>A/C. NO. 50200097298019</p>
+//             <p>IFSC : HDFC0000086</p>
 
 
-            <p style="margin-top: 6px;">Remark : PAYMENT MODE - CASH / ADVANCE</p>
+//             <p style="margin-top: 6px;">Remark : PAYMENT MODE - CASH / ADVANCE</p>
 
-        </div>
+//         </div>
 
-        <div class="sign">
-            <div style="text-align: end;">
-                <p style="font-weight: 500;">For RU-BRAMA RETAIL PRIVATE LIMITED</p>
-            </div>
+//         <div class="sign">
+//             <div style="text-align: end;">
+//                 <p style="font-weight: 500;">For RU-BRAMA RETAIL PRIVATE LIMITED</p>
+//             </div>
 
-            <div class="signing">
-                <div style="display: inline-block;width: 35%;vertical-align: sub;">
-                    <p style="padding-top: 70px;">Receiver's Sign</p>
-                </div>
-                <div style="display: inline-block;width: 30%;vertical-align: sub;">
-                    <p style="padding-top: 70px;">E&OE.</p>
-                </div>
-                <div style="display: inline-block;width: 30%;vertical-align: sub;">
-                    <p style="padding-top: 70px;">Authorised Signatory</p>
-                </div>
+//             <div class="signing">
+//                 <div style="display: inline-block;width: 35%;vertical-align: sub;">
+//                     <p style="padding-top: 70px;">Receiver's Sign</p>
+//                 </div>
+//                 <div style="display: inline-block;width: 30%;vertical-align: sub;">
+//                     <p style="padding-top: 70px;">E&OE.</p>
+//                 </div>
+//                 <div style="display: inline-block;width: 30%;vertical-align: sub;">
+//                     <p style="padding-top: 70px;">Authorised Signatory</p>
+//                 </div>
 
-            </div>
+//             </div>
 
-        </div>
+//         </div>
 
-    </div>
+//     </div>
 
     
-</body>
-</html>
-    `;
-};
+// </body>
+// </html>
+//     `;
+// };
 
 
 
-// Generate PDF Invoice
-const generateInvoicePDF = async (order) => {
-    const invoiceHTML = generateInvoiceTemplate(order);
-    return new Promise((resolve, reject) => {
-        pdf.create(invoiceHTML).toFile(`./invoices/${order._id}.pdf`, (err, res) => {
-            if (err) return reject(err);
-            resolve(res.filename); // Returns the path to the saved PDF
-        });
-    });
-};
+// // Generate PDF Invoice
+// const generateInvoicePDF = async (order) => {
+//     const invoiceHTML = generateInvoiceTemplate(order);
+//     return new Promise((resolve, reject) => {
+//         pdf.create(invoiceHTML).toFile(`./invoices/${order._id}.pdf`, (err, res) => {
+//             if (err) return reject(err);
+//             resolve(res.filename); // Returns the path to the saved PDF
+//         });
+//     });
+// };
 
 
 
@@ -919,7 +919,7 @@ router.post(
             };
 
             const order = await Order.create(orderData);
-            const invoicePath = await generateInvoicePDF(order);
+            // const invoicePath = await generateInvoicePDF(order);
 
             const htmlContent = `
             <html>
@@ -1134,7 +1134,7 @@ router.post(
             <a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
         </div>
 
-        <a href="http://localhost:8000/invoices/${order._id}.pdf" class="view-order-btn" style="margin-left: 10px;">Download Invoice</a>
+        
 
         <div style="padding: 20px 0;">
             <h4>Thanks for shopping with us!</h4>

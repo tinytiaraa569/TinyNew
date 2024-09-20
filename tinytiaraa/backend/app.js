@@ -188,7 +188,7 @@ app.post("/payu/failure", (req, res) => {
 });
 
 
-app.use('/invoices', express.static(path.join(__dirname, 'invoices')));
+// app.use('/invoices', express.static(path.join(__dirname, 'invoices')));
 
 
 
