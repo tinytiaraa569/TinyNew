@@ -10,8 +10,10 @@ const sendOrder = require('../utils/sendOrder');
 const Referral = require('../model/referralModel');
 const User = require('../model/user');
 
-
+const pdf = require('html-pdf');
+const path = require('path');
 const { render } = require("@react-email/components")
+const shippingMail = require('../utils/shippingMail')
 
 
 
@@ -553,6 +555,337 @@ const Welcome = require("@react-email/components").default;
 //     })
 // );
 
+
+// HTML Template for Invoice
+const generateInvoiceTemplate = (order) => {
+    console.log(order,"order for email ")
+    return `
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif; 
+           
+        }
+        .invoice { 
+            border: 1px solid #ccc; 
+            padding: 20px 30px;
+            margin: 20px;
+         }
+         .invoicehead{
+            text-align: center;
+         }
+         .invoicehead h4{
+            padding-top: 4px;
+         }
+         .companydetail{
+            margin-top: 15px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc; 
+            font-size: 13px;
+
+
+         }
+         .companydetail p{
+            padding: 2px 0;
+         }
+         .companydetailleft{
+            width: 60%;
+            display: inline-block;
+         }
+         .companydetailright{
+            width: 35%;
+            display: inline-block;
+         }
+
+         .receiverdetail{
+            margin-top: 20px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 13px;
+
+
+         }
+         .receiverdetail p{
+            padding: 2px 0;
+         }
+         .bankdetails{
+            margin-top: 20px;
+            padding: 15px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 13px;
+         }
+         .bankdetails p{
+            padding: 2px 0;
+         }
+         .sign{
+            margin-top: 20px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 14px;
+         }
+         .receiverdetailleft{
+            width: 60%;
+            display: inline-block;
+         }
+         .receiverdetailright{
+            width: 35%;
+            display: inline-block;
+         }
+         .ordersumtable{
+            margin-top: 20px;
+            padding: 10px 0px;
+            width: 100%;
+            font-size: 11px;
+         }
+         table{
+            width: 100%;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+
+         }
+         th{
+            border: 1px solid #ccc;
+            padding: 5px;
+         }
+         td{
+            border: 1px solid #ccc;
+            padding: 5px;
+
+         }
+         .signing{
+            height: 100px;
+         }
+         
+    </style>
+</head>
+<body>
+
+    <div class="invoice">
+        <div class="invoicehead">
+            <p>SUBJECT TO MUMBAI JURISDICTION</p>
+            <h4>TAX  INVOICE</h4>
+        </div>
+
+
+        <div class="companydetail">
+            <div class="companydetailleft">
+                <p>GSTIN : 27AAKCR3049R1ZL</p>
+                <p>RU-BRAMA RETAIL PVT. LTD.</p>
+                <p>WICEL ADMINSTRATION BUILDING 2ND FLOOR,</p>
+                <p>PLOT NO.2, F - 11 & 12, MIDC CENTRAL ROAD,</p>
+                <p>MAROL, ANDHERI (EAST),</p>
+                <p>MUMBAI 400093</p>
+                <p>Email : care@tinytiaraa.com </p>
+
+
+                <p style="margin-top: 15px;">PAN : AAKCR3049R</p>
+
+            </div>
+
+            <div class="companydetailright">
+                <p>Invoice No : RU - 01</p>
+                <p>Invoice Date : 13/06/2000</p>
+
+
+                <p>M.O.T : Sequel</p>
+                <p>SENT : HAND CARRY</p>
+
+                
+                <p>Place of Supply :</p>
+                <p>Tax is Payable on Reverse charges : No</p>
+
+            </div>
+
+        </div>
+
+        <div class="receiverdetail">
+
+            <div class="receiverdetailleft">
+                <p style="font-weight: 600;">Detail of Receiverdetail (Billed To)</p>
+
+
+                <div class="receiverdetailadddresss">
+                    <p>To,</p>
+                    <p>Dear. ${order.shippingAddress.name}</p>
+                    <p>${order.shippingAddress.email},</p>
+                    <p>${order.shippingAddress.address1} </p>
+                    <p>${order.shippingAddress.address2}</p>
+                    <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+                    <p>GSTIN: </p>
+
+                </div>
+
+            </div>
+
+            <div class="receiverdetailright">
+                <p style="font-weight: 600;">Detail of Consignee (Shipped To)</p>
+
+
+                <div class="receiverdetailadddresss">
+                    <p>To,</p>
+                    <p>DR. SHIKSHA PATEL</p>
+                    <p>205, VINI ELEGANCE, L.T. ROAD,</p>
+                    <p>ABOVE TANISHQ SHOWROOM, </p>
+                    <p>BORIVALI (WEST), MUMBAI 400092</p>
+                    <p>State: MAHARASHTRA</p>
+                    <p>GSTIN: </p>
+
+                    <p>Pan :</p>
+
+                </div>
+
+            </div>
+            
+
+        </div>
+
+        <div class="ordersumtable">
+            <table cellpadding="10px" style="font-size: 11px !important;">
+                <tr style="background-color: rgb(238, 238, 238) ; " >
+                    <th>Sr <br> nos</th>
+                    <th>Product Name <br>HSN / SAC Code</th>
+                    <th>Carat</th>
+                    <th>Gross <br>Wt.</th>
+                    <th>Net <br>Wt.</th>
+                    <th>Rate <br>Per Unit</th>
+                    <th>Taxable <br>Value</th>
+                    <th>CGST (1.5%) <br>Amt & Rate</th>
+                    <th>SGST (1.5%) <br>Amt & Rate</th>
+                    <th>IGST (3%) <br>Amt & Rate</th>
+                    <th>Amount <br>(Rs)</th>
+
+
+                </tr>
+    
+
+                <tr style="text-align: center;">
+                    <td rowspan="4">1</td>
+                    <td>GOLD PENDANT </td>
+                    <td rowspan="2"></td>
+                    <td rowspan="4">0.36</td>
+                    <td rowspan="4">0.36</td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4">6553.00</td>
+                    <td rowspan="4">98.29</td>
+                    <td rowspan="4">98.29</td>
+                    <td rowspan="4">Amt & Rate</td>
+
+                    <td rowspan="4">6749.58</td>
+                    
+
+                </tr>
+
+                <tr style="text-align: center;">       
+                    <td>Enamel </td>
+                </tr>
+                <tr style="text-align: center;">       
+                    <td>Diamond </td>
+                    <td>0.02</td>
+                </tr>
+                <tr style="text-align: center;">       
+                    <td>HSN CODE : 71081300 </td>
+                </tr>
+
+                <tr style="text-align: center;">
+                    <td  style="text-align: center;">Total</td>
+                    <td style="text-align: center;"> </td>
+                    <td  style="text-align: center;">0.02</td>
+                    <td  style="text-align: center;">0.36</td>
+                    <td  style="text-align: center;">0.36</td>
+                    <td  style="text-align: center;"></td>
+                    <td  style="text-align: center;">6553.00</td>
+                    <td  style="text-align: center;">98.29</td>
+                    <td  style="text-align: center;">98.29</td>
+                    <td  style="text-align: center;"></td>
+
+                    <td >6749.58</td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="8" rowspan="2">Rupees in Words : SIX THOUSAND SEVEN HUNDRED FIFTY ONLY.</td>
+                    <td style="text-align: center;" colspan="2">Total Invoice Value </td>
+                    <td style="text-align: center;">Rs. 6750 </td>
+                    
+
+
+                </tr>
+                <tr style="text-align: center;">
+                    <td colspan="2">Total Amount Payable  </td>
+                    <td>Rs. 6750</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="bankdetails">
+            <p>BANK DETAIL</p>
+            <p>HDFC BANK LIMITED</p>
+            <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
+            <p>A/C. NO. 50200097298019</p>
+            <p>IFSC : HDFC0000086</p>
+
+
+            <p style="margin-top: 6px;">Remark : PAYMENT MODE - CASH / ADVANCE</p>
+
+        </div>
+
+        <div class="sign">
+            <div style="text-align: end;">
+                <p style="font-weight: 500;">For RU-BRAMA RETAIL PRIVATE LIMITED</p>
+            </div>
+
+            <div class="signing">
+                <div style="display: inline-block;width: 35%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">Receiver's Sign</p>
+                </div>
+                <div style="display: inline-block;width: 30%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">E&OE.</p>
+                </div>
+                <div style="display: inline-block;width: 30%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">Authorised Signatory</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
+</body>
+</html>
+    `;
+};
+
+
+
+// Generate PDF Invoice
+const generateInvoicePDF = async (order) => {
+    const invoiceHTML = generateInvoiceTemplate(order);
+    return new Promise((resolve, reject) => {
+        pdf.create(invoiceHTML).toFile(`./invoices/${order._id}.pdf`, (err, res) => {
+            if (err) return reject(err);
+            resolve(res.filename); // Returns the path to the saved PDF
+        });
+    });
+};
+
+
+
 router.post(
     "/create-order",
     catchAsyncErrors(async (req, res, next) => {
@@ -586,260 +919,242 @@ router.post(
             };
 
             const order = await Order.create(orderData);
+            const invoicePath = await generateInvoicePDF(order);
 
             const htmlContent = `
             <html>
-    
-    <head>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-            rel="stylesheet">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                font-family: "Poppins", sans-serif;
-                box-sizing: border-box;
-            }
-    
-            .headeremail {
-                padding-bottom: 10px;
-            }
-    
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
+        }
+
+        .emailconfirm {
+            padding-top: 30px;
+            width: 60%;
+            margin: auto;
+        }
+
+        .headeremail {
+            padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .orderdetails {
+            padding: 20px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .totalcost {
+            text-align: right;
+            padding: 15px 0;
+            
+        }
+
+        .shippingaddress {
+            padding: 20px 0;
+        }
+
+        .adj {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .adjustw {
+            width: 25%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .adjustw img{
+            width: 150px !important;
+             height: 130px !important;
+                object-fit: contain !important;
+            border: 1px solid #eee !important;
+        }
+
+        .adjustw1 {
+            width: 70%;
+            display: inline-block;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .view-order-btn {
+            padding: 10px 22px;
+            background-color: black;
+            color: white !important;
+            text-decoration: none;
+            font-size: 17px;
+            border-radius: 2px;
+            display: inline-block;
+            text-align: center;
+        }
+        .ordersum{
+        margin-top:10px !important;
+        }
+
+        @media (max-width: 1100px) {
             .emailconfirm {
-                padding-top: 50px;
-                width: 50%;
-                margin: auto;
-    
+                width: 75%;
             }
-    
-            .yourorder {
-                padding: 30px 0;
+        }
+
+        @media (max-width: 800px) {
+            .emailconfirm {
+                width: 85%;
             }
-    
-            .orderdetails {
-                height: 230px;
-                padding: 20px;
-    
+        }
+
+        @media (max-width: 650px) {
+            .emailconfirm {
+                width: 90%;
             }
-    
-            .totalcost {
-                margin-top: 10px !important;
-                padding: 15px 0;
-                border-top: 1px solid grey;
+
+            .adjustw, .adjustw1 {
+                width: 100%;
+                display: block;
             }
-    
-            .totalcost {
-                text-align: end;
+            .adjustw img{
+            width: 170px !important;
+             height: 150px !important;
+                object-fit: contain !important;
+            border: 1px solid #eee !important;
             }
-    
-            .shippingaddress {
-                padding: 10px 0;
+
+            img {
+                width: 100px;
+                height: auto;
             }
-    
-            .adjustw {
-                width: 30% !important;
-                float: left !important;
-            }
-    
-            .adjustw1 {
-                width: 65% !important;
-                float: left !important;
-            }
-    
-            @media (max-width:1100px) {
-                .emailconfirm {
-                    width: 65%;
-    
+            .adjusttnview{
+                margin-top:10px !important;
                 }
-            }
-    
-            @media (max-width:800px) {
-                .emailconfirm {
-                    width: 80%;
-    
-                }
-            }
-    
-            @media (max-width:650px) {
-                .emailconfirm {
-                    width: 80%;
-                }
-    
-                .orderdetails {
-                        height: auto;
-                        padding: 0px;
-    
-                }
-    
-                .headeremail {
-                    align-items: center;
-                }
-    
-                .adj {
-                    font-size: 25px;
-                }
-    
-                .a1adjust {
-                    width: 75% !important;
-                }
-    
-                .a2adjust {
-                    width: 25% !important;
-    
-                }
-    
-                .adjustw {
-                    width: 100% !important;
-                }
-    
-                .adjustw1 {
-                    width: 100% !important;
-                }
-    
-    
-            }
-        </style>
-    </head>
-    
-    <body>
-        <div class="emailconfirm">
-            <div>
-    
-    
-                <div class="headeremail">
-                    <div style="width: 90%;float: left;" class="a1adjust">
-                        <h1 class="adj" style="font-weight: 600;">Order Confirmation</h1>
-                        <p style="font-size: 14px;color: #000000c0;">OrderId :- ${order._id}</p>
-                    </div>
-                    <div style="width: 10%;float: left;" class="a2adjust">
-                        <img style="width: 100px; height: 100px; object-fit: contain;"
-                            src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="">
-                    </div>
-                </div>
-    
-                <div style="clear: both;">
-                    <p>Dear <span style="text-transform: capitalize;font-weight: 400;">${shippingAddress.name},</span></p>
-                    <p>We have received your Tiny Tiaraa order! Thank you for your purchase.</p>
-                </div>
-    
-    
-                <div class="yourorder">
-                    <div>
-                        <!-- <div style="width: 75%;float: left;" class="adjust4">
-                        </div> -->
-                        <h3>Order Summary </h3>
-    
-    
-                    </div>
-    
-                    ${cart.map(item => `
-                        <div class="orderdetails" style="clear: both;">
-                            <div style="width: 200px; height: 180px; margin-top: 8px; margin-right: 7px;" class="adjustw">
-                                <img style="width: 100%; height: 160px; object-fit: contain; transform: scale(1.2); border: 1px solid #80808036;"
-                                    src="${item.images && item.images[1]?.url}" alt="">
-                            </div>
-                            <div style="padding-left: 20px; padding-bottom: 20px;" class="adjustw1">
-                                <h4 style="font-size: 14px;">${item.name}</h4>
-                                <p style="font-size: 11px; color: #0000008b;"><span>${item.skuid}</span></p>
-                    
-                                ${
-                                    item.selectedColor !== null ? 
-                                    `<p style="font-size: 13px;">Metal Color :- ${metalColors[item.selectedColor]}</p>` 
-                                    : ''
-                                }
-                                ${
-                                    item?.showWithChain !== null ? 
-                                    `<p style="font-size: 13px;">Chain :- ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` 
-                                    : ''
-                                }
-                                ${
-                                    item?.selectedEnamelColor ? 
-                                    `<p style="font-size: 13px;">Enamel Color :- ${item.selectedEnamelColor}</p>` 
-                                    : ''
-                                }
-                    
-                                <div style="padding-top: 5px;">
-                                    <p>${item.qty} x ${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                    
-    
-    
-                    <div class="totalcost" style="clear: both;">
-                        <div>
-                            <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5x;">SubTotal :</span>
-                                ₹${totalPrice}</p>
-                            <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5x;"> shipping :
-                                </span>Free </p>
-                            <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5x;">Coupon :</span> ₹${couponDiscount ? couponDiscount : 'No coupon applied'} </p>
-                            <p style="text-align: end;"> <span style="font-weight: 600;padding-right: 5x;">Total :</span> ₹${totalPrice}</p>
-    
-                        </div>
-                    </div>
-                    <div class="shippingaddress">
-                        <h3>Shiping Address </h3>
-                        <div style="padding-top: 10px;">
-                            <p>${shippingAddress.name}</p>
-                            <p>Email: ${shippingAddress.email}</p>
-                            <p>${shippingAddress.address1}</p>
-                            <p>${shippingAddress.address2}</p>
-                            <p>${shippingAddress.city} ${shippingAddress.country} ${shippingAddress.zipCode}</p>
-                            <p>${shippingAddress.phoneNumber}</p>
-                        </div>
-    
-    
-    
-                    </div>
-                    <div style="padding-top: 15px;">
-                        <h3>Payment Method </h3>
-                        <div style="padding-top: 5px;">
-                            <p>Status : <span>${paymentInfo.status ? paymentInfo.status : "Not Paid"}</span></p>
-                            <p>Payment Type :- ${paymentInfo.type}</p>
-                        </div>
-    
-                    </div>
-                    <div style="text-align: center; padding: 15px 0;">
-                         <a href="http://localhost:5173/user/order/${order._id}"
-                        style="padding: 10px 22px;background-color: black;color: white;text-decoration: none;font-size: 17px;border-radius: 2px;cursor: pointer;">View
-                        Order Details</a>
-                    </div>
-    
-    
-                    <div style="padding: 10px 4px;">
-                        <h4 style="padding: 6px 0;font-size: 18px; font-weight: 500;">Thanks for shopping with us!</h4>
-                        <p style="padding-top: 7px;">You can check the status of your orders at any time on our Orders
-                            History Page.</p>
-                        <p style="padding-top: 7px;">We welcome you to our store anytime. If you need assistance or have any
-                            questions, please email us at <span><a style="color: rgb(42, 42, 226);"
-                                    href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a></span> or call +91 86570
-                            62511. We are happy to help!</p>
-    
-                        <p style="padding-top: 10px;">Sincerely,</p>
-                        <p>Tiny Tiaraa</p>
-    
-                    </div>
-    
-                </div>
-    
-    
-                <div style="color: #3535358b;font-size: 12px;padding-bottom: 20px;">
-                    <p>© Tiny Tiaraa</p>
-                    <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central
-                        Road, Opp. Seepz Main Gate,, WICEL,Andheri(East),, Mumbai, 400093, Maharashtra, India</p>
-                    <p>GST registration number: 27AAKCR3049R1ZL</p>
-                </div>
-    
+
+            .adj {
+            font-size: 20px ;
+            
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="emailconfirm">
+        <div class="headeremail">
+            <div class="a1adjust" style="width: 90%; float: left;">
+                <h1 class="adj">Order Confirmation</h1>
+                <p>OrderId: ${order._id}</p>
+            </div>
+            <div class="a2adjust" style="width: 10%; float: left;">
+                <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+                    alt="Logo">
             </div>
         </div>
-    </body>
-    
-    </html>
-    
-            `
 
+        <div style="clear: both;">
+            <p>Dear <span style="text-transform: capitalize;">${shippingAddress.name}</span>,</p>
+            <p>We have received your Tiny Tiaraa order! Thank you for your purchase.</p>
+        </div>
+
+        <div class="yourorder">
+            <h3 class="ordersum">Order Summary</h3>
+
+            ${cart.map(item => `
+            <div class="orderdetails">
+                <div class="adjustw">
+                    <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+                </div>
+                <div class="adjustw1">
+                    <h4>${item.name}</h4>
+                    <p>${item.skuid}</p>
+
+                    ${item.selectedColor !== null ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+                    ${item?.showWithChain !== null ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+                    ${item?.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+
+                    <p>${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+                </div>
+            </div>`).join('')}
+        </div>
+
+        <div class="totalcost">
+            <p>Subtotal: ₹${totalPrice}</p>
+            <p>Shipping: Free</p>
+            <p>Coupon: ₹${couponDiscount ? couponDiscount : 'No coupon applied'}</p>
+            <p>Total: ₹${totalPrice}</p>
+        </div>
+
+        <div class="shippingaddress">
+            <h3>Shipping Address</h3>
+            <p>${shippingAddress.name}</p>
+            <p>Email: ${shippingAddress.email}</p>
+            <p>${shippingAddress.address1}</p>
+            <p>${shippingAddress.address2}</p>
+            <p>${shippingAddress.city}, ${shippingAddress.country} ${shippingAddress.zipCode}</p>
+            <p>${shippingAddress.phoneNumber}</p>
+        </div>
+
+        <div>
+            <h3>Payment Method</h3>
+            <p>Status: ${paymentInfo.status ? paymentInfo.status : 'Not Paid'}</p>
+            <p>Payment Type: ${paymentInfo.type}</p>
+        </div>
+
+        <div class="adjusttnview" style="text-align: center;">
+            <a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+        </div>
+
+        <a href="http://localhost:8000/invoices/${order._id}.pdf" class="view-order-btn" style="margin-left: 10px;">Download Invoice</a>
+
+        <div style="padding: 20px 0;">
+            <h4>Thanks for shopping with us!</h4>
+            <p>You can check the status of your orders at any time on our Orders History Page.</p>
+            <p>If you need assistance, please email us at <a href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a> or call +91 86570 62511.</p>
+            <p>Sincerely, Tiny Tiaraa</p>
+        </div>
+
+        <div style="color: #888; font-size: 12px; text-align: center; padding-top: 20px;">
+            <p>© Tiny Tiaraa</p>
+            <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+            <p>GST registration number: 27AAKCR3049R1ZL</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+            
+            `
 
 
 
@@ -1106,6 +1421,7 @@ router.get(
 router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
+        console.log(order,"order from backend")
 
         if (!order) {
             return next(new ErrorHandler("Order not found with this id", 400));
@@ -1123,6 +1439,695 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
             for (const o of order.cart) {
                 await updateOrder(o);
             }
+//             const htmlContent = `
+//             <html>
+    
+//     <head>
+//         <link
+//             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+//             rel="stylesheet">
+//         <style>
+//             * {
+//                 margin: 0;
+//                 padding: 0;
+//                 font-family: "Poppins", sans-serif;
+//                 box-sizing: border-box;
+//             }
+    
+//             .headeremail {
+//                 padding-bottom: 10px;
+//             }
+    
+//             .emailconfirm {
+//                 padding-top: 50px;
+//                 width: 50%;
+//                 margin: auto;
+    
+//             }
+    
+//             .yourorder {
+//                 padding: 30px 0;
+//             }
+    
+//             .orderdetails {
+//                 height: 230px;
+//                 padding: 20px;
+    
+//             }
+    
+//             .totalcost {
+//                 margin-top: 10px !important;
+//                 padding: 15px 0;
+//                 border-top: 1px solid grey;
+//             }
+    
+//             .totalcost {
+//                 text-align: end;
+//             }
+    
+//             .shippingaddress {
+//                 padding: 10px 0;
+//             }
+    
+//             .adjustw {
+//                 width: 30% !important;
+//                 float: left !important;
+//             }
+    
+//             .adjustw1 {
+//                 width: 65% !important;
+//                 float: left !important;
+//             }
+    
+//             @media (max-width:1100px) {
+//                 .emailconfirm {
+//                     width: 65%;
+    
+//                 }
+//             }
+    
+//             @media (max-width:800px) {
+//                 .emailconfirm {
+//                     width: 80%;
+    
+//                 }
+//             }
+    
+//             @media (max-width:650px) {
+//                 .emailconfirm {
+//                     width: 80%;
+//                 }
+    
+//                 .orderdetails {
+//                         height: auto;
+//                         padding: 0px;
+    
+//                 }
+    
+//                 .headeremail {
+//                     align-items: center;
+//                 }
+    
+//                 .adj {
+//                     font-size: 25px;
+//                 }
+    
+//                 .a1adjust {
+//                     width: 75% !important;
+//                 }
+    
+//                 .a2adjust {
+//                     width: 25% !important;
+    
+//                 }
+    
+//                 .adjustw {
+//                     width: 100% !important;
+//                 }
+    
+//                 .adjustw1 {
+//                     width: 100% !important;
+//                 }
+    
+    
+//             }
+//         </style>
+//     </head>
+    
+//     <body>
+//     <div class="emailconfirm">
+//         <div>
+//             <div class="headeremail">
+//                 <div style="width: 90%;float: left;" class="a1adjust">
+//                     <h1 class="adj" style="font-weight: 600;">Order Shipped</h1>
+//                     <p style="font-size: 14px;color: #000000c0;">OrderId :- ${order._id}</p>
+//                 </div>
+//                 <div style="width: 10%;float: left;" class="a2adjust">
+//                     <img style="width: 100px; height: 100px; object-fit: contain;"
+//                         src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="">
+//                 </div>
+//             </div>
+
+//             <div style="clear: both;">
+//                 <p>Dear <span style="text-transform: capitalize;font-weight: 400;">${order.shippingAddress.name},</span></p>
+//                 <p>Your order has been shipped!</p>
+//                 <p>We are excited to let you know that your Tiny Tiaraa order has been shipped!</p>
+//                 <p>Your docket number is: <strong>${order.docketno}</strong>. Your order is being shipped through Sequel, our shipping partner.</p>
+//             </div>
+
+//             <div class="yourorder">
+//                 <div>
+//                     <h3>Order Summary</h3>
+//                 </div>
+
+//                 ${order.cart.map(item => `
+//                     <div class="orderdetails" style="clear: both;">
+//                         <div style="width: 200px; height: 180px; margin-top: 8px; margin-right: 7px;" class="adjustw">
+//                             <img style="width: 100%; height: 160px; object-fit: contain; transform: scale(1.2); border: 1px solid #80808036;"
+//                                 src="${item.images && item.images[1]?.url}" alt="">
+//                         </div>
+//                         <div style="padding-left: 20px; padding-bottom: 20px;" class="adjustw1">
+//                             <h4 style="font-size: 14px;">${item.name}</h4>
+//                             <p style="font-size: 11px; color: #0000008b;"><span>${item.skuid}</span></p>
+                
+//                             ${item.selectedColor !== null ? `<p style="font-size: 13px;">Metal Color :- ${metalColors[item.selectedColor]}</p>` : ''}
+//                             ${item?.showWithChain !== null ? `<p style="font-size: 13px;">Chain :- ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+//                             ${item?.selectedEnamelColor ? `<p style="font-size: 13px;">Enamel Color :- ${item.selectedEnamelColor}</p>` : ''}
+                
+//                             <div style="padding-top: 5px;">
+//                                 <p>${item.qty} x ${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 `).join('')}
+
+//                 <div class="totalcost" style="clear: both;">
+//                     <div>
+//                         <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5px;">SubTotal :</span> ₹${order.totalPrice}</p>
+//                         <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5px;"> Shipping : </span>Free</p>
+//                         <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5px;">Coupon :</span> ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+//                         <p style="text-align: end;"><span style="font-weight: 600;padding-right: 5px;">Total :</span> ₹${order.totalPrice}</p>
+//                     </div>
+//                 </div>
+
+//                 <div class="shippingaddress">
+//                     <h3>Shipping Address</h3>
+//                     <div style="padding-top: 10px;">
+//                         <p>${order.shippingAddress.name}</p>
+//                         <p>Email: ${order.shippingAddress.email}</p>
+//                         <p>${order.shippingAddress.address1}</p>
+//                         <p>${order.shippingAddress.address2}</p>
+//                         <p>${order.shippingAddress.city} ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+//                         <p>${order.shippingAddress.phoneNumber}</p>
+//                     </div>
+//                 </div>
+
+//                 <div style="padding-top: 15px;">
+//                     <h3>Payment Method</h3>
+//                     <div style="padding-top: 5px;">
+//                         <p>Status : <span>${order.paymentInfo.status ? order.paymentInfo.status : "Not Paid"}</span></p>
+//                         <p>Payment Type :- ${order.paymentInfo.type}</p>
+//                     </div>
+//                 </div>
+
+//                 <div style="text-align: center; padding: 15px 0;">
+//                     <a href="http://localhost:5173/user/order/${order._id}"
+//                         style="padding: 10px 22px;background-color: black;color: white;text-decoration: none;font-size: 17px;border-radius: 2px;cursor: pointer;">
+//                         View Order Details
+//                     </a>
+//                 </div>
+
+//                 <div style="padding: 10px 4px;">
+//                     <h4 style="padding: 6px 0;font-size: 18px; font-weight: 500;">Thanks for shopping with us!</h4>
+//                     <p style="padding-top: 7px;">If you need assistance or have any questions, please email us at <span><a style="color: rgb(42, 42, 226);" href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a></span> or call +91 86570 62511. We are happy to help!</p>
+//                 </div>
+//             </div>
+
+//             <div style="color: #3535358b;font-size: 12px;padding-bottom: 20px;">
+//                 <p>© Tiny Tiaraa</p>
+//                 <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+//                 <p>GST registration number: 27AAKCR3049R1ZL</p>
+//             </div>
+//         </div>
+//     </div>
+// </body>
+
+    
+//     </html>
+    
+//             `
+
+// const htmlContent = `
+// <html lang="en">
+
+// <head>
+//     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+//     <style>
+//         body {
+//             margin: 0;
+//             padding: 0;
+//             font-family: 'Poppins', sans-serif;
+//             background-color: #f4f4f4;
+//         }
+
+//         .container {
+//             max-width: 700px;
+//             margin: 30px auto;
+//             background-color: #ffffff;
+//             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+//             border-radius: 10px;
+//             overflow: hidden;
+//         }
+
+//         .header {
+//             background-color: #1f1f1f;
+//             padding: 20px;
+//             color: white;
+//             text-align: center;
+//         }
+
+//         .header h1 {
+//             margin: 0;
+//             font-weight: 600;
+//             font-size: 28px;
+//         }
+
+//         .content {
+//             padding: 30px;
+//         }
+
+//         .content h2 {
+//             font-size: 24px;
+//             font-weight: 600;
+//             color: #333;
+//             margin-bottom: 15px;
+//         }
+
+//         .content p {
+//             font-size: 16px;
+//             color: #666;
+//             margin-bottom: 20px;
+//         }
+
+//         .order-summary {
+//             border-top: 2px solid #eeeeee;
+//             padding-top: 20px;
+//             margin-top: 20px;
+//         }
+
+//         .order-summary h3 {
+//             font-size: 20px;
+//             font-weight: 600;
+//             color: #444;
+//             margin-bottom: 10px;
+//         }
+
+//         .order-details {
+//             margin-top: 20px;
+//         }
+
+//         .order-details img {
+//             width: 120px;
+//             height: auto;
+//             border-radius: 8px;
+//             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//         }
+
+//         .order-details .item {
+//             display: flex;
+//             align-items: center;
+//             margin-bottom: 15px;
+//         }
+
+//         .order-details .info {
+//             margin-left: 20px;
+//         }
+
+//         .order-details .info h4 {
+//             margin: 0;
+//             font-size: 18px;
+//             font-weight: 500;
+//             color: #444;
+//         }
+
+//         .order-details .info p {
+//             margin: 5px 0;
+//             font-size: 14px;
+//             color: #888;
+//         }
+
+//         .total {
+//             margin-top: 30px;
+//             text-align: right;
+//             font-size: 18px;
+//             font-weight: 600;
+//         }
+
+//         .shipping-info, .payment-info {
+//             margin-top: 40px;
+//         }
+
+//         .shipping-info h3, .payment-info h3 {
+//             font-size: 20px;
+//             color: #333;
+//             margin-bottom: 15px;
+//         }
+
+//         .shipping-info p, .payment-info p {
+//             font-size: 16px;
+//             color: #666;
+//             margin-bottom: 5px;
+//         }
+
+//         .footer {
+//             background-color: #f8f8f8;
+//             padding: 15px;
+//             text-align: center;
+//             font-size: 12px;
+//             color: #999;
+//             border-top: 1px solid #eeeeee;
+//         }
+
+//         .footer p {
+//             margin: 5px 0;
+//         }
+
+//         .footer a {
+//             color: #444;
+//             text-decoration: none;
+//         }
+
+//         .footer .social-icons img {
+//             width: 24px;
+//             margin: 0 5px;
+//         }
+//     </style>
+// </head>
+
+// <body>
+//     <div class="container">
+//         <!-- Header Section -->
+//         <div class="header">
+//             <h1>Order Shipped!</h1>
+//         </div>
+
+//         <!-- Main Content Section -->
+//         <div class="content">
+//             <h2>Hi ${order.shippingAddress.name},</h2>
+//             <p>Your order has been shipped! We are thrilled to let you know that your Tiny Tiaraa order is on its way.</p>
+//             <p>Tracking Number: <strong>${order.docketno}</strong></p>
+//             <p>Your order is being shipped via <strong>Sequel</strong>. You can expect to receive it soon!</p>
+
+//             <!-- Order Summary Section -->
+//             <div class="order-summary">
+//                 <h3>Order Summary</h3>
+//                 <div class="order-details">
+//                     ${order.cart.map(item => `
+//                         <div class="item">
+//                             <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+//                             <div class="info">
+//                                 <h4>${item.name}</h4>
+//                                 <p>SKU: ${item.skuid}</p>
+//                                 ${item.selectedColor ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+//                                 ${item.showWithChain ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+//                                 ${item.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+//                                 <p>Quantity: ${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+//                             </div>
+//                         </div>
+//                     `).join('')}
+//                 </div>
+
+//                 <div class="total">
+//                     <p>Subtotal: ₹${order.totalPrice}</p>
+//                     <p>Shipping: Free</p>
+//                     <p>Coupon Discount: ₹${order.couponDiscount || 'No coupon applied'}</p>
+//                     <p>Total: ₹${order.totalPrice}</p>
+//                 </div>
+//             </div>
+
+//             <!-- Shipping Info Section -->
+//             <div class="shipping-info">
+//                 <h3>Shipping Address</h3>
+//                 <p>${order.shippingAddress.name}</p>
+//                 <p>${order.shippingAddress.address1}, ${order.shippingAddress.address2}</p>
+//                 <p>${order.shippingAddress.city}, ${order.shippingAddress.country} - ${order.shippingAddress.zipCode}</p>
+//                 <p>Email: ${order.shippingAddress.email}</p>
+//                 <p>Phone: ${order.shippingAddress.phoneNumber}</p>
+//             </div>
+
+//             <!-- Payment Info Section -->
+//             <div class="payment-info">
+//                 <h3>Payment Method</h3>
+//                 <p>Status: <strong>${order.paymentInfo.status || "Not Paid"}</strong></p>
+//                 <p>Payment Type: ${order.paymentInfo.type}</p>
+//             </div>
+
+//             <!-- Call to Action -->
+//             <div style="text-align: center; margin-top: 40px;">
+//                 <a href="http://localhost:5173/user/order/${order._id}" style="padding: 12px 24px; background-color: #1f1f1f; color: white; text-decoration: none; font-size: 16px; border-radius: 5px;">View Order Details</a>
+//             </div>
+//         </div>
+
+//         <!-- Footer Section -->
+//         <div class="footer">
+//             <p>Thanks for shopping with Tiny Tiaraa!</p>
+//             <p>If you have any questions, feel free to <a href="mailto:care@tinytiaraa.com">email us</a> or call us at +91 86570 62511.</p>
+//             <p>Follow us on social media:</p>
+//             <div class="social-icons">
+//                 <a href="#"><img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/social-icons/facebook.png" alt="Facebook"></a>
+//                 <a href="#"><img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/social-icons/instagram.png" alt="Instagram"></a>
+//                 <a href="#"><img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/social-icons/twitter.png" alt="Twitter"></a>
+//             </div>
+//             <p>© 2024 Tiny Tiaraa. All rights reserved.</p>
+//         </div>
+//     </div>
+// </body>
+
+// </html>
+// `
+
+
+const htmlContent = `
+<html>
+
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+rel="stylesheet">
+<style>
+* {
+margin: 0;
+padding: 0;
+font-family: "Poppins", sans-serif;
+box-sizing: border-box;
+}
+
+.emailconfirm {
+padding-top: 30px;
+width: 60%;
+margin: auto;
+}
+
+.headeremail {
+padding-bottom: 10px;
+display: inline-block;
+width: 100%;
+}
+
+.orderdetails {
+padding: 20px 0;
+border-top: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+.totalcost {
+text-align: right;
+padding: 15px 0;
+
+}
+
+.shippingaddress {
+padding: 20px 0;
+}
+
+.adj {
+font-size: 24px;
+font-weight: 600;
+color: #333;
+}
+
+h3 {
+font-size: 18px;
+font-weight: 500;
+color: #444;
+margin-bottom: 10px;
+}
+
+p {
+font-size: 14px;
+color: #666;
+}
+
+.adjustw {
+width: 25%;
+display: inline-block;
+vertical-align: top;
+}
+.adjustw img{
+width: 150px !important;
+ height: 130px !important;
+    object-fit: contain !important;
+border: 1px solid #eee !important;
+}
+
+.adjustw1 {
+width: 70%;
+display: inline-block;
+}
+
+img {
+width: 100px;
+height: 100px;
+object-fit: contain;
+}
+
+a {
+color: #000;
+text-decoration: none;
+font-size: 14px;
+}
+
+.view-order-btn {
+padding: 10px 22px;
+background-color: black;
+color: white !important;
+text-decoration: none;
+font-size: 17px;
+border-radius: 2px;
+display: inline-block;
+text-align: center;
+}
+.ordersum{
+margin-top:10px !important;
+}
+
+@media (max-width: 1100px) {
+.emailconfirm {
+    width: 75%;
+}
+}
+
+@media (max-width: 800px) {
+.emailconfirm {
+    width: 85%;
+}
+}
+
+@media (max-width: 650px) {
+.emailconfirm {
+    width: 90%;
+}
+
+.adjustw, .adjustw1 {
+    width: 100%;
+    display: block;
+}
+.adjustw img{
+width: 170px !important;
+ height: 150px !important;
+    object-fit: contain !important;
+border: 1px solid #eee !important;
+}
+
+img {
+    width: 100px;
+    height: auto;
+}
+.adjusttnview{
+    margin-top:10px !important;
+    }
+
+.adj {
+font-size: 20px ;
+
+}
+}
+</style>
+</head>
+
+<body>
+<div class="emailconfirm">
+<div class="headeremail">
+<div class="a1adjust" style="width: 90%; float: left;">
+    <h1 class="adj">Order Shipped!</h1>
+    <p>OrderId: ${order._id}</p>
+</div>
+<div class="a2adjust" style="width: 10%; float: left;">
+    <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+        alt="Logo">
+</div>
+</div>
+
+<div style="clear: both;">
+<h2>Hi ${order.shippingAddress.name},</h2>
+ <p>Your order has been shipped! We are thrilled to let you know that your Tiny Tiaraa order is on its way.</p>
+<p>Tracking Number: <strong>${order.docketno}</strong></p>
+<p>Your order is being shipped via <strong>Sequel</strong>. You can expect to receive it soon!</p>
+</div>
+
+<div class="yourorder">
+<h3 class="ordersum">Order Summary</h3>
+
+${order.cart.map(item => `
+<div class="orderdetails">
+    <div class="adjustw">
+        <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+    </div>
+    <div class="adjustw1">
+        <h4>${item.name}</h4>
+        <p>${item.skuid}</p>
+
+        ${item.selectedColor !== null ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+        ${item?.showWithChain !== null ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+        ${item?.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+
+        <p>${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+    </div>
+</div>`).join('')}
+</div>
+
+<div class="totalcost">
+<p>Subtotal: ₹${order.totalPrice}</p>
+<p>Shipping: Free</p>
+<p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+<p>Total: ₹${order.totalPrice}</p>
+</div>
+
+<div class="shippingaddress">
+<h3>Shipping Address</h3>
+<p>${order.shippingAddress.name}</p>
+<p>Email: ${order.shippingAddress.email}</p>
+<p>${order.shippingAddress.address1}</p>
+<p>${order.shippingAddress.address2}</p>
+<p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+<p>${order.shippingAddress.phoneNumber}</p>
+</div>
+
+<div>
+<h3>Payment Method</h3>
+<p>Status: ${order.paymentInfo.status ? order.paymentInfo.status : 'Not Paid'}</p>
+<p>Payment Type: ${order.paymentInfo.type}</p>
+</div>
+
+<div class="adjusttnview" style="text-align: center;">
+<a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+</div>
+
+<div style="padding: 20px 0;">
+<h4>Thanks for shopping with us!</h4>
+<p>You can check the status of your orders at any time on our Orders History Page.</p>
+<p>If you need assistance, please email us at <a href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a> or call +91 86570 62511.</p>
+<p>Sincerely, Tiny Tiaraa</p>
+</div>
+
+<div style="color: #888; font-size: 12px; text-align: center; padding-top: 20px;">
+<p>© Tiny Tiaraa</p>
+<p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+<p>GST registration number: 27AAKCR3049R1ZL</p>
+</div>
+</div>
+</body>
+
+</html>
+
+
+`
+
+
+            await shippingMail({
+                email: order.shippingAddress?.email, // Assuming you have the user's email in order object
+                subject: "Your Order Has Been Shipped",
+                html: htmlContent,
+            });
         }
 
         // Update the status of the order
@@ -1132,6 +2137,792 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
         if (req.body.status === "Delivered") {
             order.deliveredAt = Date.now();
             order.paymentInfo.status = "Succeeded";
+
+//             const htmlContentDelivered = `
+// <html>
+// <head>
+//     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+//     <style>
+//         * {
+//             margin: 0;
+//             padding: 0;
+//             font-family: 'Poppins', sans-serif;
+//             box-sizing: border-box;
+//         }
+//         body {
+//             background-color: #f4f4f4;
+//             color: #333;
+//             font-size: 14px;
+//             line-height: 1.6;
+//         }
+//         .email-container {
+//             max-width: 700px;
+//             margin: 20px auto;
+//             background-color: #fff;
+//             padding: 20px;
+//             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//             border-radius: 8px;
+//         }
+//         .header {
+//             text-align: center;
+//             padding-bottom: 20px;
+//             border-bottom: 2px solid #eee;
+//         }
+//         .header img {
+//             width: 120px;
+//             margin-bottom: 10px;
+//         }
+//         .header h1 {
+//             font-size: 28px;
+//             font-weight: 600;
+//             color: #333;
+//         }
+//         .content {
+//             margin: 20px 0;
+//         }
+//         .content p {
+//             margin: 10px 0;
+//         }
+//         .order-summary, .shipping-info, .payment-info {
+//             margin: 20px 0;
+//             padding: 20px;
+//             background-color: #f9f9f9;
+//             border-radius: 5px;
+//         }
+//         .order-summary h3, .shipping-info h3, .payment-info h3 {
+//             font-size: 18px;
+//             margin-bottom: 10px;
+//         }
+//         .order-item {
+//             display: flex;
+//             padding: 10px 0;
+//             border-bottom: 1px solid #eee;
+//         }
+//         .order-item img {
+//             width: 120px;
+//             margin-right: 20px;
+//         }
+//         .order-item-details {
+//             flex: 1;
+//         }
+//         .total {
+//             text-align: right;
+//             font-weight: 600;
+//             font-size: 18px;
+//             margin-top: 20px;
+//         }
+//         .btn {
+//             display: inline-block;
+//             padding: 12px 20px;
+//             background-color: #333;
+//             color: #fff;
+//             text-decoration: none;
+//             font-size: 16px;
+//             margin-top: 20px;
+//             border-radius: 5px;
+//             text-align: center;
+//         }
+//         .footer {
+//             text-align: center;
+//             font-size: 12px;
+//             color: #999;
+//             margin-top: 30px;
+//             border-top: 1px solid #eee;
+//             padding-top: 10px;
+//         }
+//     </style>
+// </head>
+// <body>
+//     <div class="email-container">
+//         <div class="header">
+//             <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="Tiny Tiaraa Logo">
+//             <h1>Order Delivered!</h1>
+//         </div>
+//         <div class="content">
+//             <p>Dear <span style="text-transform: capitalize;">${order.shippingAddress.name},</span></p>
+//             <p>Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
+//             <p>We hope you love your purchase. Thank you for shopping with Tiny Tiaraa!</p>
+//         </div>
+//         <div class="order-summary">
+//             <h3>Order Summary</h3>
+//             ${order.cart.map(item => `
+//             <div class="order-item">
+//                 <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+//                 <div class="order-item-details">
+//                     <h4>${item.name}</h4>
+//                     <p>SKU: ${item.skuid}</p>
+//                     ${item.selectedColor ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+//                     ${item.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+//                     ${item.showWithChain ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+//                     <p>Quantity: ${item.qty}</p>
+//                     <p>Price: ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+//                 </div>
+//             </div>
+//             `).join('')}
+//             <div class="total">
+//                 <p>Subtotal: ₹${order.totalPrice}</p>
+//                 <p>Shipping: Free</p>
+//                 <p>Discount: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+//                 <p><strong>Total: ₹${order.totalPrice}</strong></p>
+//             </div>
+//         </div>
+//         <div class="shipping-info">
+//             <h3>Shipping Address</h3>
+//             <p>${order.shippingAddress.name}</p>
+//             <p>${order.shippingAddress.address1}, ${order.shippingAddress.address2}</p>
+//             <p>${order.shippingAddress.city}, ${order.shippingAddress.country}, ${order.shippingAddress.zipCode}</p>
+//             <p>Email: ${order.shippingAddress.email}</p>
+//             <p>Phone: ${order.shippingAddress.phoneNumber}</p>
+//         </div>
+//         <div class="payment-info">
+//             <h3>Payment Information</h3>
+//             <p>Payment Status: ${order.paymentInfo.status ? order.paymentInfo.status : "Not Paid"}</p>
+//             <p>Payment Type: ${order.paymentInfo.type}</p>
+//         </div>
+//         <div style="text-align: center;">
+//             <a href="http://localhost:5173/user/order/${order._id}" class="btn">View Order Details</a>
+//         </div>
+//         <div class="footer">
+//             <p>© Tiny Tiaraa</p>
+//             <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+//             <p>GST registration number: 27AAKCR3049R1ZL</p>
+//         </div>
+//     </div>
+// </body>
+// </html>
+// `;
+
+// const htmlContentDelivered = `<html>
+// <head>
+//     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+//     <style>
+//         * {
+//             margin: 0;
+//             padding: 0;
+//             font-family: 'Poppins', sans-serif;
+//             box-sizing: border-box;
+//         }
+//         body {
+//             background-color: #f4f4f4;
+//             color: #333;
+//             font-size: 14px;
+//             line-height: 1.6;
+//         }
+//         .email-container {
+//             max-width: 700px;
+//             margin: 20px auto;
+//             background-color: #fff;
+//             padding: 30px;
+//             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+//             border-radius: 12px;
+//             font-size: 15px;
+//         }
+//         .header {
+//             text-align: center;
+//             padding-bottom: 20px;
+//             border-bottom: 2px solid #eee;
+//         }
+//         .header img {
+//             width: 130px;
+//             margin-bottom: 15px;
+//         }
+//         .header h1 {
+//             font-size: 26px;
+//             font-weight: 600;
+//             color: 	#006039; /* Stylish, elegant color */
+//         }
+//         .content {
+//             margin: 20px 0;
+//         }
+//         .content p {
+//             margin: 10px 0;
+//             font-size: 16px;
+//         }
+//         .order-summary, .shipping-info, .payment-info {
+//             margin: 20px 0;
+//             padding: 20px;
+//             background-color: #fafafa;
+//             border-radius: 8px;
+//             border-left: 4px solid 	#006039;
+//         }
+//         .order-summary h3, .shipping-info h3, .payment-info h3 {
+//             font-size: 20px;
+//             color: 	#006039;
+//             margin-bottom: 15px;
+//         }
+//         .order-item {
+//             display: flex;
+//             padding: 10px 0;
+//             border-bottom: 1px solid #eee;
+//             align-items: center;
+//         }
+//         .order-item img {
+//             width: 120px;
+//             height: auto;
+//             margin-right: 20px;
+//             border-radius: 8px;
+//         }
+//         .order-item-details {
+//             flex: 1;
+//         }
+//         .order-item-details h4 {
+//             font-size: 18px;
+//             font-weight: 600;
+//             margin-bottom: 5px;
+//         }
+//         .order-item-details p {
+//             font-size: 14px;
+//             color: #555;
+//         }
+//         .total {
+//             text-align: right;
+//             font-weight: 600;
+//             font-size: 18px;
+//             margin-top: 20px;
+//             color:	#006039;
+//         }
+//         .btn {
+//             display: inline-block;
+//             padding: 12px 30px;
+//             background-color: #006039;
+//             color: #fff !important;
+//             text-decoration: none;
+//             font-size: 16px;
+//             margin-top: 20px;
+//             border-radius: 8px;
+//             text-align: center;
+//             box-shadow: 0 3px 10px rgba(90, 103, 216, 0.2);
+//             transition: background-color 0.3s ease;
+//         }
+//         .btn:hover {
+//             background-color: #098d58;
+//         }
+//         .footer {
+//             text-align: center;
+//             font-size: 12px;
+//             color: #999;
+//             margin-top: 30px;
+//             border-top: 1px solid #eee;
+//             padding-top: 20px;
+//         }
+//         .footer p {
+//             margin: 4px 0;
+//         }
+//         @media only screen and (max-width: 600px) {
+//             .email-container {
+//                 padding: 20px;
+//             }
+//             .order-item {
+//                 flex-direction: column;
+//             }
+//             .order-item img {
+//                 margin-bottom: 10px;
+//                 margin-right: 0;
+//             }
+//             .btn {
+//                 padding: 12px 20px;
+//             }
+//         }
+//     </style>
+// </head>
+// <body>
+//     <div class="email-container">
+//         <div class="header">
+//             <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="Tiny Tiaraa Logo">
+//             <h1>Order Delivered!</h1>
+//         </div>
+//         <div class="content">
+//             <p>Dear <span style="text-transform: capitalize;">${order.shippingAddress.name},</span></p>
+//             <p>Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
+//             <p>We hope you love your purchase. Thank you for shopping with Tiny Tiaraa!</p>
+//         </div>
+//         <div class="order-summary">
+//             <h3>Order Summary</h3>
+//             ${order.cart.map(item => `
+//             <div class="order-item">
+//                 <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+//                 <div class="order-item-details">
+//                     <h4>${item.name}</h4>
+//                     <p>SKU: ${item.skuid}</p>
+//                     ${item.selectedColor ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+//                     ${item.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+//                     ${item.showWithChain ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+//                     <p>Quantity: ${item.qty}</p>
+//                     <p>Price: ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+//                 </div>
+//             </div>
+//             `).join('')}
+//             <div class="total">
+//                 <p>Subtotal: ₹${order.totalPrice}</p>
+//                 <p>Shipping: Free</p>
+//                 <p>Discount: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+//                 <p><strong>Total: ₹${order.totalPrice}</strong></p>
+//             </div>
+//         </div>
+//         <div class="shipping-info">
+//             <h3>Shipping Address</h3>
+//             <p>${order.shippingAddress.name}</p>
+//             <p>${order.shippingAddress.address1}, ${order.shippingAddress.address2}</p>
+//             <p>${order.shippingAddress.city}, ${order.shippingAddress.country}, ${order.shippingAddress.zipCode}</p>
+//             <p>Email: ${order.shippingAddress.email}</p>
+//             <p>Phone: ${order.shippingAddress.phoneNumber}</p>
+//         </div>
+//         <div class="payment-info">
+//             <h3>Payment Information</h3>
+//             <p>Payment Status: ${order.paymentInfo.status ? order.paymentInfo.status : "Not Paid"}</p>
+//             <p>Payment Type: ${order.paymentInfo.type}</p>
+//         </div>
+//         <div style="text-align: center;">
+//             <a href="http://localhost:5173/user/order/${order._id}" class="btn">View Order Details</a>
+//         </div>
+//         <div class="footer">
+//             <p>© Tiny Tiaraa</p>
+//             <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+//             <p>GST registration number: 27AAKCR3049R1ZL</p>
+//         </div>
+//     </div>
+// </body>
+// </html>
+// `
+
+
+// const htmlContentDelivered = `<html>
+// <head>
+//     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+//     <style>
+//         * {
+//             margin: 0;
+//             padding: 0;
+//             font-family: 'Poppins', sans-serif;
+//             box-sizing: border-box;
+//         }
+//         body {
+//             background-color: #f4f4f4;
+//             color: #333;
+//             font-size: 14px;
+//             line-height: 1.6;
+//         }
+//         .email-container {
+//             max-width: 700px;
+//             margin: 20px auto;
+//             background-color: #fff;
+//             padding: 30px;
+//             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+//             border-radius: 12px;
+//             font-size: 15px;
+//         }
+//         .header {
+//             text-align: center;
+//             padding-bottom: 20px;
+//             border-bottom: 2px solid #eee;
+//         }
+//         .header img {
+//             width: 130px;
+//             margin-bottom: 15px;
+//         }
+//         .header h1 {
+//             font-size: 26px;
+//             font-weight: 600;
+//             color: #006039; /* Stylish, elegant color */
+//         }
+//         .content {
+//             margin: 20px 0;
+//         }
+//         .content p {
+//             margin: 10px 0;
+//             font-size: 16px;
+//         }
+//         .order-summary, .shipping-info, .payment-info {
+//             margin: 20px 0;
+//             padding: 20px;
+//             background-color: #fafafa;
+//             border-radius: 8px;
+//             border-left: 4px solid #006039;
+//         }
+//         .order-summary h3, .shipping-info h3, .payment-info h3 {
+//             font-size: 20px;
+//             color: #006039;
+//             margin-bottom: 15px;
+//             font-weight: 600; /* Ensure consistent weight for all headings */
+//         }
+//         .order-item {
+//             display: flex;
+//             padding: 10px 0;
+//             border-bottom: 1px solid #eee;
+//             align-items: center;
+//         }
+//         .order-item img {
+//             width: 120px;
+//             height: auto;
+//             margin-right: 20px;
+//             border-radius: 8px;
+//         }
+//         .order-item-details {
+//             flex: 1;
+//         }
+//         .order-item-details h4 {
+//             font-size: 18px;
+//             font-weight: 600;
+//             margin-bottom: 5px;
+//             color: #333; /* Uniform color for item names */
+//         }
+//         .order-item-details p {
+//             font-size: 14px;
+//             color: #555;
+//         }
+//         .total {
+//             text-align: right;
+//             font-weight: 600;
+//             font-size: 18px;
+//             margin-top: 20px;
+//             color: #006039;
+//         }
+//         .btn {
+//             display: inline-block;
+//             padding: 12px 30px;
+//             background-color: #006039;
+//             color: #fff !important;
+//             text-decoration: none;
+//             font-size: 16px;
+//             margin-top: 20px;
+//             border-radius: 8px;
+//             text-align: center;
+//             box-shadow: 0 3px 10px rgba(90, 103, 216, 0.2);
+//             transition: background-color 0.3s ease;
+//         }
+//         .btn:hover {
+//             background-color: #098d58;
+//         }
+//         .footer {
+//             text-align: center;
+//             font-size: 12px;
+//             color: #999;
+//             margin-top: 30px;
+//             border-top: 1px solid #eee;
+//             padding-top: 20px;
+//         }
+//         .footer p {
+//             margin: 4px 0;
+//         }
+//         @media only screen and (max-width: 600px) {
+//             .email-container {
+//                 padding: 20px;
+//             }
+//             .order-item {
+//                 flex-direction: column;
+//             }
+//             .order-item img {
+//                 margin-bottom: 10px;
+//                 margin-right: 0;
+//             }
+//             .btn {
+//                 padding: 12px 20px;
+//             }
+//         }
+//     </style>
+// </head>
+// <body>
+//     <div class="email-container">
+//         <div class="header">
+//             <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="Tiny Tiaraa Logo">
+//             <h1>Order Delivered!</h1>
+//         </div>
+//         <div class="content">
+//             <p>Dear <span style="text-transform: capitalize;">${order.shippingAddress.name},</span></p>
+//             <p>Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
+//             <p>We hope you love your purchase. Thank you for shopping with Tiny Tiaraa!</p>
+//         </div>
+//         <div class="order-summary">
+//             <h3>Order Summary</h3>
+//             ${order.cart.map(item => `
+//             <div class="order-item">
+//                 <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+//                 <div class="order-item-details">
+//                     <h4>${item.name}</h4>
+//                     <p>SKU: ${item.skuid}</p>
+//                     ${item.selectedColor ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+//                     ${item.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+//                     ${item.showWithChain ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+//                     <p>Quantity: ${item.qty}</p>
+//                     <p>Price: ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+//                 </div>
+//             </div>
+//             `).join('')}
+//             <div class="total">
+//                 <p>Subtotal: ₹${order.totalPrice}</p>
+//                 <p>Shipping: Free</p>
+//                 <p>Discount: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+//                 <p><strong>Total: ₹${order.totalPrice}</strong></p>
+//             </div>
+//         </div>
+//         <div class="shipping-info">
+//             <h3>Shipping Address</h3>
+//             <p>${order.shippingAddress.name}</p>
+//             <p>${order.shippingAddress.address1}, ${order.shippingAddress.address2}</p>
+//             <p>${order.shippingAddress.city}, ${order.shippingAddress.country}, ${order.shippingAddress.zipCode}</p>
+//             <p>Email: ${order.shippingAddress.email}</p>
+//             <p>Phone: ${order.shippingAddress.phoneNumber}</p>
+//         </div>
+//         <div class="payment-info">
+//             <h3>Payment Information</h3>
+//             <p>Payment Status: ${order.paymentInfo.status ? order.paymentInfo.status : "Not Paid"}</p>
+//             <p>Payment Type: ${order.paymentInfo.type}</p>
+//         </div>
+//         <div style="text-align: center;">
+//             <a href="http://localhost:5173/user/order/${order._id}" class="btn">View Order Details</a>
+//         </div>
+//         <div class="footer">
+//             <p>© Tiny Tiaraa</p>
+//             <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+//             <p>GST registration number: 27AAKCR3049R1ZL</p>
+//         </div>
+//     </div>
+// </body>
+// </html>
+// `
+
+const htmlContentDelivered = `
+<html>
+
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+rel="stylesheet">
+<style>
+* {
+margin: 0;
+padding: 0;
+font-family: "Poppins", sans-serif;
+box-sizing: border-box;
+}
+
+.emailconfirm {
+padding-top: 30px;
+width: 60%;
+margin: auto;
+}
+
+.headeremail {
+padding-bottom: 10px;
+display: inline-block;
+width: 100%;
+}
+
+.orderdetails {
+padding: 20px 0;
+border-top: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+.totalcost {
+text-align: right;
+padding: 15px 0;
+
+}
+
+.shippingaddress {
+padding: 20px 0;
+}
+
+.adj {
+font-size: 24px;
+font-weight: 600;
+color: #333;
+}
+
+h3 {
+font-size: 18px;
+font-weight: 500;
+color: #444;
+margin-bottom: 10px;
+}
+
+p {
+font-size: 14px;
+color: #666;
+}
+
+.adjustw {
+width: 25%;
+display: inline-block;
+vertical-align: top;
+}
+.adjustw img{
+width: 150px !important;
+ height: 130px !important;
+    object-fit: contain !important;
+border: 1px solid #eee !important;
+}
+
+.adjustw1 {
+width: 70%;
+display: inline-block;
+}
+
+img {
+width: 100px;
+height: 100px;
+object-fit: contain;
+}
+
+a {
+color: #000;
+text-decoration: none;
+font-size: 14px;
+}
+
+.view-order-btn {
+padding: 10px 22px;
+background-color: black;
+color: white !important;
+text-decoration: none;
+font-size: 17px;
+border-radius: 2px;
+display: inline-block;
+text-align: center;
+}
+.ordersum{
+margin-top:10px !important;
+}
+
+@media (max-width: 1100px) {
+.emailconfirm {
+    width: 75%;
+}
+}
+
+@media (max-width: 800px) {
+.emailconfirm {
+    width: 85%;
+}
+}
+
+@media (max-width: 650px) {
+.emailconfirm {
+    width: 90%;
+}
+
+.adjustw, .adjustw1 {
+    width: 100%;
+    display: block;
+}
+.adjustw img{
+width: 170px !important;
+ height: 150px !important;
+    object-fit: contain !important;
+border: 1px solid #eee !important;
+}
+
+img {
+    width: 100px;
+    height: auto;
+}
+.adjusttnview{
+    margin-top:10px !important;
+    }
+
+.adj {
+font-size: 20px ;
+
+}
+}
+</style>
+</head>
+
+<body>
+<div class="emailconfirm">
+<div class="headeremail">
+<div class="a1adjust" style="width: 90%; float: left;">
+    <h1 class="adj">Order Delivered!</h1>
+    <p>OrderId: ${order._id}</p>
+</div>
+<div class="a2adjust" style="width: 10%; float: left;">
+    <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+        alt="Logo">
+</div>
+</div>
+
+<div style="clear: both;">
+<p>Dear <span style="text-transform: capitalize;">${order.shippingAddress.name},</span></p>
+<p>Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
+ <p>We hope you love your purchase. Thank you for shopping with Tiny Tiaraa!</p>
+</div>
+
+<div class="yourorder">
+<h3 class="ordersum">Order Summary</h3>
+
+${order.cart.map(item => `
+<div class="orderdetails">
+    <div class="adjustw">
+        <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+    </div>
+    <div class="adjustw1">
+        <h4>${item.name}</h4>
+        <p>${item.skuid}</p>
+
+        ${item.selectedColor !== null ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+        ${item?.showWithChain !== null ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+        ${item?.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+
+        <p>${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+    </div>
+</div>`).join('')}
+</div>
+
+<div class="totalcost">
+<p>Subtotal: ₹${order.totalPrice}</p>
+<p>Shipping: Free</p>
+<p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+<p>Total: ₹${order.totalPrice}</p>
+</div>
+
+<div class="shippingaddress">
+<h3>Shipping Address</h3>
+<p>${order.shippingAddress.name}</p>
+<p>Email: ${order.shippingAddress.email}</p>
+<p>${order.shippingAddress.address1}</p>
+<p>${order.shippingAddress.address2}</p>
+<p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+<p>${order.shippingAddress.phoneNumber}</p>
+</div>
+
+<div>
+<h3>Payment Method</h3>
+<p>Status: ${order.paymentInfo.status ? order.paymentInfo.status : 'Not Paid'}</p>
+<p>Payment Type: ${order.paymentInfo.type}</p>
+</div>
+
+<div class="adjusttnview" style="text-align: center;">
+<a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+</div>
+
+<div style="padding: 20px 0;">
+<h4>Thanks for shopping with us!</h4>
+<p>You can check the status of your orders at any time on our Orders History Page.</p>
+<p>If you need assistance, please email us at <a href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a> or call +91 86570 62511.</p>
+<p>Sincerely, Tiny Tiaraa</p>
+</div>
+
+<div style="color: #888; font-size: 12px; text-align: center; padding-top: 20px;">
+<p>© Tiny Tiaraa</p>
+<p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+<p>GST registration number: 27AAKCR3049R1ZL</p>
+</div>
+</div>
+</body>
+
+</html>
+
+
+`
+
+
+
+            await shippingMail({
+                email: order.shippingAddress?.email, // Assuming you have the user's email in order object
+                subject: "Your Order Has Been Delivered",
+                html: htmlContentDelivered,
+            });
+
         }
 
         // Save the order with the new status and docket number

@@ -170,11 +170,7 @@ function CheckoutPage() {
 
     const paymentSubmit = (e) => {
         e.preventDefault()
-        if (validatePhoneNumber()) {
-            // Proceed with form submission
-            console.log("Phone number is valid:", phoneNumber);
-            // For example, you can proceed with other actions here
-        }
+        
 
         if (name === "" || email === "" || phoneNumber === "" || address1 === "" || address2 === "" || zipCode === null || country === "" || city === "") {
             toast.error("Please Fill  Your Delivery Address")

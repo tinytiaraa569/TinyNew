@@ -188,6 +188,9 @@ app.post("/payu/failure", (req, res) => {
 });
 
 
+app.use('/invoices', express.static(path.join(__dirname, 'invoices')));
+
+
 
 // app.post("/calculateEDD", async (req, res) => {
 //     const { origin_pincode, destination_pincode, pickup_date } = req.body;
