@@ -1509,9 +1509,9 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
             }
             order.docketno = req.body.docketNumber;
 
-            const base64PDF = await generateInvoicePDF(order);
+            // const base64PDF = await generateInvoicePDF(order);
     
-            order.invoice = base64PDF;   // Store the path of the invoice in the order
+            // order.invoice = base64PDF;   // Store the path of the invoice in the order
 
 
             // Update cart items
