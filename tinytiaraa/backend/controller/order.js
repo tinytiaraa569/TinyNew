@@ -794,12 +794,11 @@ const generateInvoiceTemplate = (order) => {
        ${
         order.cart.map((item,index)=>{
             const discountPrice = item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice;
-            const cgst = (discountPrice * 0.015).toFixed(2); // 1.5% of discountPrice
-            const sgst = (discountPrice * 0.015).toFixed(2); // 1.5% of discountPrice
-            const igst = (discountPrice * 0.03).toFixed(2);  // 3% of discountPrice
+            const cgst = (discountPrice * 0.015).toFixed(2); 
+            const sgst = (discountPrice * 0.015).toFixed(2); 
+            const igst = (discountPrice * 0.03).toFixed(2);  
             
-            // Total amount including CGST and SGST
-            // const totalAmount = (parseFloat(discountPrice) + parseFloat(cgst) + parseFloat(sgst)).toFixed(2); 
+            
             grandTotal += discountPrice;
             return(
                 ` <div class="ordersumtable">
@@ -2139,7 +2138,7 @@ font-size: 20px ;
 <div class="emailconfirm" >
 <div class="headeremail">
 <div class="a2adjust" style="text-align: center;">
-    <img class="a2adjustimg" style="transform: scale(1.2);" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+    <img class="a2adjustimg" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
         alt="Logo">
 </div>
 <div class="a1adjust" style="text-align: center;">
