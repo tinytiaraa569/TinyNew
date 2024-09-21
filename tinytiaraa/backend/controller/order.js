@@ -3,7 +3,6 @@ const router = express.Router()
 const ErrorHandler = require('../utils/Errorhandler')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const { isAuthenticated, isSeller } = require('../middleware/auth')
-const puppeteer = require('puppeteer');
 
 const Order = require("../model/order")
 const Product = require("../model/product")
@@ -931,34 +930,18 @@ const generateInvoiceTemplate = (order) => {
 
 
 // Generate PDF Invoice
-// const generateInvoicePDF = async (order) => {
-//     const invoiceHTML = generateInvoiceTemplate(order);
-//     return new Promise((resolve, reject) => {
-//         pdf.create(invoiceHTML).toBuffer((err, buffer) => {
-//             if (err) return reject(err);
-
-//             // Convert the PDF buffer to Base64
-//             const base64PDF = buffer.toString('base64');
-//             resolve(base64PDF);
-//         });
-//     });
-// };
-
 const generateInvoicePDF = async (order) => {
     const invoiceHTML = generateInvoiceTemplate(order);
-    try {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.setContent(invoiceHTML, { waitUntil: 'networkidle0' });
-        const buffer = await page.pdf({ format: 'A4' });
-        await browser.close();
-        return buffer.toString('base64'); // Convert to Base64
-    } catch (error) {
-        console.error("Error generating PDF:", error);
-        throw new Error("Failed to generate PDF");
-    }
-};
+    return new Promise((resolve, reject) => {
+        pdf.create(invoiceHTML).toBuffer((err, buffer) => {
+            if (err) return reject(err);
 
+            // Convert the PDF buffer to Base64
+            const base64PDF = buffer.toString('base64');
+            resolve(base64PDF);
+        });
+    });
+};
 
 
 router.post(
