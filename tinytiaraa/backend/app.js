@@ -6,6 +6,7 @@ const cors = require('cors')
 const Razorpay = require("razorpay");
 const path = require("path")
 const crypto = require('crypto');
+const mongoose = require('mongoose')
 require('dotenv').config();
 
 const app = express()
@@ -62,6 +63,7 @@ const subscribe = require("./controller/subscribe")
 
 const referralRoutes = require('./controller/referralRoutes');
 const calculateEDDRoutes = require("./controller/sequel");
+const Order = require("./model/order");
 
 app.use("/api/v2/user", user)
 app.use("/api/v2/shop", shop)
@@ -190,7 +192,36 @@ app.post("/payu/failure", (req, res) => {
 
 // app.use('/invoices', express.static(path.join(__dirname, 'invoices')));
 
+app.get('/invoices/:orderId', async (req, res) => {
+    try {
+        // Make sure you're retrieving the order by its ObjectId, not a string filename
+        const orderId = req.params.orderId;
 
+        // Validate that the orderId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(orderId)) {
+            return res.status(400).json({ message: 'Invalid Order ID' });
+        }
+
+        const order = await Order.findById(orderId);
+
+        if (!order || !order.invoice) {
+            return res.status(404).json({ message: 'Invoice not found' });
+        }
+
+        // Convert the Base64 string back to a buffer
+        const pdfBuffer = Buffer.from(order.invoice, 'base64');
+
+        // Set the appropriate headers for PDF download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${order._id}.pdf`);
+
+        // Send the PDF buffer to the client
+        res.send(pdfBuffer);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 // app.post("/calculateEDD", async (req, res) => {
 //     const { origin_pincode, destination_pincode, pickup_date } = req.body;

@@ -79,6 +79,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    invoice: {
+        type: String, // Path to the invoice PDF
+        required: false,
+    },
     deliveredAt: {
         type: Date
 

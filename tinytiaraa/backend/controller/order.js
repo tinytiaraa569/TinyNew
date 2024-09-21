@@ -557,333 +557,392 @@ const Welcome = require("@react-email/components").default;
 
 
 // HTML Template for Invoice
-// const generateInvoiceTemplate = (order) => {
-//     console.log(order,"order for email ")
-//     return `
-// <html lang="en">
-// <head>
-//     <meta charset="UTF-8">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Document</title>
 
-//     <style>
-//         *{
-//             margin: 0;
-//             padding: 0;
-//             box-sizing: border-box;
-//             font-family: "Arial", sans-serif; 
+function numberToWords(num) {
+    console.log(num ,"num to see in word")
+    const belowTwenty = [
+        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+        "Seventeen", "Eighteen", "Nineteen"
+    ];
+    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    const aboveHundred = ["", "Thousand", "Million", "Billion", "Trillion"];
+
+    if (num === 0) return "Zero";
+
+    function helper(num) {
+        if (num < 20) return belowTwenty[num];
+        if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + belowTwenty[num % 10] : "");
+        if (num < 1000) return belowTwenty[Math.floor(num / 100)] + " Hundred" + (num % 100 !== 0 ? " " + helper(num % 100) : "");
+        return "";
+    }
+
+    let thousandIndex = 0;
+    let result = "";
+
+    while (num > 0) {
+        const part = num % 1000;
+        if (part !== 0) {
+            result = helper(part) + (thousandIndex > 0 ? " " + aboveHundred[thousandIndex] : "") + " " + result;
+        }
+        num = Math.floor(num / 1000);
+        thousandIndex++;
+    }
+
+    return result.trim();
+}
+
+function numberToWordsWithCurrency(num) {
+    return numberToWords(num) ;
+}
+const generateInvoiceTemplate = (order) => {
+    const invoiceDate = new Date(order.createdAt).toLocaleDateString();
+    console.log(order,"order for email ")
+    let grandTotal = 0;
+
+    const totalPriceInWords = numberToWordsWithCurrency(order.totalPrice);
+    return `
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif; 
            
-//         }
-//         .invoice { 
-//             border: 1px solid #ccc; 
-//             padding: 20px 30px;
-//             margin: 20px;
-//          }
-//          .invoicehead{
-//             text-align: center;
-//          }
-//          .invoicehead h4{
-//             padding-top: 4px;
-//          }
-//          .companydetail{
-//             margin-top: 15px;
-//             padding: 10px 50px;
-//             width: 100%;
-//             border: 1px solid #ccc; 
-//             font-size: 13px;
+        }
+        .invoice { 
+            border: 1px solid #ccc; 
+            padding: 20px 30px;
+            margin: 20px;
+         }
+         .invoicehead{
+            text-align: center;
+         }
+         .invoicehead h4{
+            padding-top: 4px;
+         }
+         .companydetail{
+            margin-top: 15px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc; 
+            font-size: 13px;
 
 
-//          }
-//          .companydetail p{
-//             padding: 2px 0;
-//          }
-//          .companydetailleft{
-//             width: 60%;
-//             display: inline-block;
-//          }
-//          .companydetailright{
-//             width: 35%;
-//             display: inline-block;
-//          }
+         }
+         .companydetail p{
+            padding: 2px 0;
+         }
+         .companydetailleft{
+            width: 60%;
+            display: inline-block;
+         }
+         .companydetailright{
+            width: 35%;
+            display: inline-block;
+         }
 
-//          .receiverdetail{
-//             margin-top: 20px;
-//             padding: 10px 50px;
-//             width: 100%;
-//             border: 1px solid #ccc;
-//             font-size: 13px;
+         .receiverdetail{
+            margin-top: 20px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 13px;
 
 
-//          }
-//          .receiverdetail p{
-//             padding: 2px 0;
-//          }
-//          .bankdetails{
-//             margin-top: 20px;
-//             padding: 15px 50px;
-//             width: 100%;
-//             border: 1px solid #ccc;
-//             font-size: 13px;
-//          }
-//          .bankdetails p{
-//             padding: 2px 0;
-//          }
-//          .sign{
-//             margin-top: 20px;
-//             padding: 10px 50px;
-//             width: 100%;
-//             border: 1px solid #ccc;
-//             font-size: 14px;
-//          }
-//          .receiverdetailleft{
-//             width: 60%;
-//             display: inline-block;
-//          }
-//          .receiverdetailright{
-//             width: 35%;
-//             display: inline-block;
-//          }
-//          .ordersumtable{
-//             margin-top: 20px;
-//             padding: 10px 0px;
-//             width: 100%;
-//             font-size: 11px;
-//          }
-//          table{
-//             width: 100%;
-//             border: 1px solid #ccc;
-//             border-collapse: collapse;
+         }
+         .receiverdetail p{
+            padding: 2px 0;
+         }
+         .bankdetails{
+            margin-top: 20px;
+            padding: 15px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 13px;
+         }
+         .bankdetails p{
+            padding: 2px 0;
+         }
+         .sign{
+            margin-top: 20px;
+            padding: 10px 50px;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 14px;
+         }
+         .receiverdetailleft{
+            width: 50%;
+            display: inline-block;
+         }
+         .receiverdetailright{
+            width: 45%;
+            display: inline-block;
+         }
+         .ordersumtable{
+            margin-top: 20px;
+            padding: 10px 0px;
+            width: 100%;
+            font-size: 11px;
+         }
+         table{
+            width: 100%;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
 
-//          }
-//          th{
-//             border: 1px solid #ccc;
-//             padding: 5px;
-//          }
-//          td{
-//             border: 1px solid #ccc;
-//             padding: 5px;
+         }
+         th{
+            border: 1px solid #ccc;
+            padding: 5px;
+         }
+         td{
+            border: 1px solid #ccc;
+            padding: 5px;
 
-//          }
-//          .signing{
-//             height: 100px;
-//          }
+         }
+         .signing{
+            height: 100px;
+         }
          
-//     </style>
-// </head>
-// <body>
+    </style>
+</head>
+<body>
 
-//     <div class="invoice">
-//         <div class="invoicehead">
-//             <p>SUBJECT TO MUMBAI JURISDICTION</p>
-//             <h4>TAX  INVOICE</h4>
-//         </div>
-
-
-//         <div class="companydetail">
-//             <div class="companydetailleft">
-//                 <p>GSTIN : 27AAKCR3049R1ZL</p>
-//                 <p>RU-BRAMA RETAIL PVT. LTD.</p>
-//                 <p>WICEL ADMINSTRATION BUILDING 2ND FLOOR,</p>
-//                 <p>PLOT NO.2, F - 11 & 12, MIDC CENTRAL ROAD,</p>
-//                 <p>MAROL, ANDHERI (EAST),</p>
-//                 <p>MUMBAI 400093</p>
-//                 <p>Email : care@tinytiaraa.com </p>
+    <div class="invoice">
+        <div class="invoicehead">
+            <p>SUBJECT TO MUMBAI JURISDICTION</p>
+            <h4>TAX  INVOICE</h4>
+        </div>
 
 
-//                 <p style="margin-top: 15px;">PAN : AAKCR3049R</p>
+        <div class="companydetail">
+            <div class="companydetailleft">
+                <p>GSTIN : 27AAKCR3049R1ZL</p>
+                <p>RU-BRAMA RETAIL PVT. LTD.</p>
+                <p>WICEL ADMINSTRATION BUILDING 2ND FLOOR,</p>
+                <p>PLOT NO.2, F - 11 & 12, MIDC CENTRAL ROAD,</p>
+                <p>MAROL, ANDHERI (EAST),</p>
+                <p>MUMBAI 400093</p>
+                <p>Email : care@tinytiaraa.com </p>
 
-//             </div>
 
-//             <div class="companydetailright">
-//                 <p>Invoice No : RU - 01</p>
-//                 <p>Invoice Date : 13/06/2000</p>
+                <p style="margin-top: 15px;">PAN : AAKCR3049R</p>
+
+            </div>
+
+            <div class="companydetailright">
+                <p>Invoice No : ${order._id}</p>
+                <p>Invoice Date : ${invoiceDate}</p>
 
 
-//                 <p>M.O.T : Sequel</p>
-//                 <p>SENT : HAND CARRY</p>
+                <p>M.O.T : Sequel</p>
+                <p>Tracking ID : ${order.docketno}</p>
 
                 
-//                 <p>Place of Supply :</p>
-//                 <p>Tax is Payable on Reverse charges : No</p>
+                <p>Place of Supply : </p>
+                <p>Tax is Payable on Reverse charges : No</p>
 
-//             </div>
+            </div>
 
-//         </div>
+        </div>
 
-//         <div class="receiverdetail">
+        <div class="receiverdetail">
 
-//             <div class="receiverdetailleft">
-//                 <p style="font-weight: 600;">Detail of Receiverdetail (Billed To)</p>
+            <div class="receiverdetailleft">
+                
+            <p style="font-weight: 600;">Detail of Consignee (Shipped To)</p>
 
+                <div class="receiverdetailadddresss">
+                    <p>To,</p>
+                    <p>Dear. ${order.shippingAddress.name}</p>
+                    <p>${order.shippingAddress.email},</p>
+                    <p>${order.shippingAddress.address1} </p>
+                    <p>${order.shippingAddress.address2}</p>
+                    <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+                    <p>GSTIN: </p>
 
-//                 <div class="receiverdetailadddresss">
-//                     <p>To,</p>
-//                     <p>Dear. ${order.shippingAddress.name}</p>
-//                     <p>${order.shippingAddress.email},</p>
-//                     <p>${order.shippingAddress.address1} </p>
-//                     <p>${order.shippingAddress.address2}</p>
-//                     <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
-//                     <p>GSTIN: </p>
+                </div>
 
-//                 </div>
+            </div>
 
-//             </div>
+            <div class="receiverdetailright">
+                
+                <p style="font-weight: 600;">Detail of Receiverdetail (Billed To)</p>
 
-//             <div class="receiverdetailright">
-//                 <p style="font-weight: 600;">Detail of Consignee (Shipped To)</p>
+                <div class="receiverdetailadddresss">
+                    <p>To,</p>
+                    <p>Dear. ${order.billingAddress.name}</p>
+                    <p>${order.billingAddress.email},</p>
+                    <p>${order.billingAddress.address1} </p>
+                    <p>${order.billingAddress.address2}</p>
+                    <p>${order.billingAddress.city}, ${order.billingAddress.country} ${order.billingAddress.zipCode}</p>
+                    <p>Pan :</p>
 
+                </div>
 
-//                 <div class="receiverdetailadddresss">
-//                     <p>To,</p>
-//                     <p>DR. SHIKSHA PATEL</p>
-//                     <p>205, VINI ELEGANCE, L.T. ROAD,</p>
-//                     <p>ABOVE TANISHQ SHOWROOM, </p>
-//                     <p>BORIVALI (WEST), MUMBAI 400092</p>
-//                     <p>State: MAHARASHTRA</p>
-//                     <p>GSTIN: </p>
-
-//                     <p>Pan :</p>
-
-//                 </div>
-
-//             </div>
+            </div>
             
 
-//         </div>
+        </div>
 
-//         <div class="ordersumtable">
-//             <table cellpadding="10px" style="font-size: 11px !important;">
-//                 <tr style="background-color: rgb(238, 238, 238) ; " >
-//                     <th>Sr <br> nos</th>
-//                     <th>Product Name <br>HSN / SAC Code</th>
-//                     <th>Carat</th>
-//                     <th>Gross <br>Wt.</th>
-//                     <th>Net <br>Wt.</th>
-//                     <th>Rate <br>Per Unit</th>
-//                     <th>Taxable <br>Value</th>
-//                     <th>CGST (1.5%) <br>Amt & Rate</th>
-//                     <th>SGST (1.5%) <br>Amt & Rate</th>
-//                     <th>IGST (3%) <br>Amt & Rate</th>
-//                     <th>Amount <br>(Rs)</th>
+       ${
+        order.cart.map((item,index)=>{
+            const discountPrice = item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice;
+            const cgst = (discountPrice * 0.015).toFixed(2); // 1.5% of discountPrice
+            const sgst = (discountPrice * 0.015).toFixed(2); // 1.5% of discountPrice
+            const igst = (discountPrice * 0.03).toFixed(2);  // 3% of discountPrice
+            
+            // Total amount including CGST and SGST
+            // const totalAmount = (parseFloat(discountPrice) + parseFloat(cgst) + parseFloat(sgst)).toFixed(2); 
+            grandTotal += discountPrice;
+            return(
+                ` <div class="ordersumtable">
+            <table cellpadding="10px" style="font-size: 11px !important;">
+                <tr style="background-color: rgb(238, 238, 238) ; " >
+                    <th>Sr <br> nos</th>
+                    <th>Product Name <br>HSN / SAC Code</th>
+                    <th>Carat</th>
+                    <th>Gross <br>Wt.</th>
+                    <th>Net <br>Wt.</th>
+                    <th>Rate <br>Per Unit</th>
+                    <th>Taxable <br>Value</th>
+                    <th>CGST (1.5%) <br>Amt & Rate</th>
+                    <th>SGST (1.5%) <br>Amt & Rate</th>
+                    <th>IGST (3%) <br>Amt & Rate</th>
+                    <th>Amount <br>(Rs)</th>
 
 
-//                 </tr>
+                </tr>
     
 
-//                 <tr style="text-align: center;">
-//                     <td rowspan="4">1</td>
-//                     <td>GOLD PENDANT </td>
-//                     <td rowspan="2"></td>
-//                     <td rowspan="4">0.36</td>
-//                     <td rowspan="4">0.36</td>
-//                     <td rowspan="4"></td>
-//                     <td rowspan="4">6553.00</td>
-//                     <td rowspan="4">98.29</td>
-//                     <td rowspan="4">98.29</td>
-//                     <td rowspan="4">Amt & Rate</td>
+                <tr style="text-align: center;">
+                    <td rowspan="4">${index + 1}</td>
+                    <td>${item.name} </td>
+                    <td rowspan="2"></td>
+                    <td rowspan="4">${item.goldWeight.weight}</td>
+                    <td rowspan="4">${item.goldWeight.weight}</td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4">${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice} </td>
+                    <td rowspan="4">${cgst}</td>
+                    <td rowspan="4">${sgst}</td>
+                    <td rowspan="4">Amt & Rate</td>
 
-//                     <td rowspan="4">6749.58</td>
+                    <td rowspan="4">${order.totalPrice}</td>
                     
 
-//                 </tr>
+                </tr>
 
-//                 <tr style="text-align: center;">       
-//                     <td>Enamel </td>
-//                 </tr>
-//                 <tr style="text-align: center;">       
-//                     <td>Diamond </td>
-//                     <td>0.02</td>
-//                 </tr>
-//                 <tr style="text-align: center;">       
-//                     <td>HSN CODE : 71081300 </td>
-//                 </tr>
+               <tr style="text-align: center;"> 
+                     ${order.selectedEnamelColor !== null ? `<td>Enamel (${order.selectedEnamelColor})</td>` : ''}
+                </tr>
+                <tr style="text-align: center;">       
+                    <td>Diamond </td>
+                    <td>${item.diamondWeight.weight}</td>
+                </tr>
+                <tr style="text-align: center;">       
+                    <td>HSN CODE : 71081300 </td>
+                </tr>
 
-//                 <tr style="text-align: center;">
-//                     <td  style="text-align: center;">Total</td>
-//                     <td style="text-align: center;"> </td>
-//                     <td  style="text-align: center;">0.02</td>
-//                     <td  style="text-align: center;">0.36</td>
-//                     <td  style="text-align: center;">0.36</td>
-//                     <td  style="text-align: center;"></td>
-//                     <td  style="text-align: center;">6553.00</td>
-//                     <td  style="text-align: center;">98.29</td>
-//                     <td  style="text-align: center;">98.29</td>
-//                     <td  style="text-align: center;"></td>
+                <tr style="text-align: center;">
+                    <td  style="text-align: center;">Total</td>
+                    <td style="text-align: center;"> </td>
+                    <td  style="text-align: center;">${item.diamondWeight.weight}</td>
+                    <td  style="text-align: center;">${item.goldWeight.weight}</td>
+                    <td  style="text-align: center;">${item.goldWeight.weight}</td>
+                    <td  style="text-align: center;"></td>
+                    <td  style="text-align: center;">${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</td>
+                    <td  style="text-align: center;">${cgst}</td>
+                    <td  style="text-align: center;">${sgst}</td>
+                    <td  style="text-align: center;"></td>
 
-//                     <td >6749.58</td>
+                    <td >${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</td>
 
-//                 </tr>
+                </tr>
 
-//                 <tr>
-//                     <td colspan="8" rowspan="2">Rupees in Words : SIX THOUSAND SEVEN HUNDRED FIFTY ONLY.</td>
-//                     <td style="text-align: center;" colspan="2">Total Invoice Value </td>
-//                     <td style="text-align: center;">Rs. 6750 </td>
+                <tr>
+                    <td colspan="8" rowspan="2">Rupees in Words : ${totalPriceInWords.toUpperCase()}.</td>
+                    <td style="text-align: center;" colspan="2">Total Invoice Value </td>
+                    <td style="text-align: center;">Rs. ${order.totalPrice} </td>
                     
 
 
-//                 </tr>
-//                 <tr style="text-align: center;">
-//                     <td colspan="2">Total Amount Payable  </td>
-//                     <td>Rs. 6750</td>
-//                 </tr>
+                </tr>
+                <tr style="text-align: center;">
+                    <td colspan="2">Total Amount Payable  </td>
+                    <td>Rs. ${order.totalPrice}</td>
+                </tr>
 
-//             </table>
+            </table>
 
-//         </div>
+        </div>`
+            )
+        }).join('') 
+       }
 
-//         <div class="bankdetails">
-//             <p>BANK DETAIL</p>
-//             <p>HDFC BANK LIMITED</p>
-//             <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
-//             <p>A/C. NO. 50200097298019</p>
-//             <p>IFSC : HDFC0000086</p>
+        <div class="bankdetails">
+            <p>BANK DETAIL</p>
+            <p>HDFC BANK LIMITED</p>
+            <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
+            <p>A/C. NO. 50200097298019</p>
+            <p>IFSC : HDFC0000086</p>
 
 
-//             <p style="margin-top: 6px;">Remark : PAYMENT MODE - CASH / ADVANCE</p>
+            <p style="margin-top: 6px;">Remark : PAYMENT MODE - ${order?.paymentInfo?.type} (${order?.paymentInfo?.status ? order?.paymentInfo?.status : "Not Paid"}) </p>
 
-//         </div>
+        </div>
 
-//         <div class="sign">
-//             <div style="text-align: end;">
-//                 <p style="font-weight: 500;">For RU-BRAMA RETAIL PRIVATE LIMITED</p>
-//             </div>
+        <div class="sign">
+            <div style="text-align: end;">
+                <p style="font-weight: 500;">For RU-BRAMA RETAIL PRIVATE LIMITED</p>
+            </div>
 
-//             <div class="signing">
-//                 <div style="display: inline-block;width: 35%;vertical-align: sub;">
-//                     <p style="padding-top: 70px;">Receiver's Sign</p>
-//                 </div>
-//                 <div style="display: inline-block;width: 30%;vertical-align: sub;">
-//                     <p style="padding-top: 70px;">E&OE.</p>
-//                 </div>
-//                 <div style="display: inline-block;width: 30%;vertical-align: sub;">
-//                     <p style="padding-top: 70px;">Authorised Signatory</p>
-//                 </div>
+            <div class="signing">
+                <div style="display: inline-block;width: 35%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">Receiver's Sign</p>
+                </div>
+                <div style="display: inline-block;width: 30%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">E&OE.</p>
+                </div>
+                <div style="display: inline-block;width: 30%;vertical-align: sub;">
+                    <p style="padding-top: 70px;">Authorised Signatory</p>
+                </div>
 
-//             </div>
+            </div>
 
-//         </div>
+        </div>
 
-//     </div>
+    </div>
 
     
-// </body>
-// </html>
-//     `;
-// };
+</body>
+</html>
+    `;
+};
 
 
 
-// // Generate PDF Invoice
-// const generateInvoicePDF = async (order) => {
-//     const invoiceHTML = generateInvoiceTemplate(order);
-//     return new Promise((resolve, reject) => {
-//         pdf.create(invoiceHTML).toFile(`./invoices/${order._id}.pdf`, (err, res) => {
-//             if (err) return reject(err);
-//             resolve(res.filename); // Returns the path to the saved PDF
-//         });
-//     });
-// };
 
+
+
+// Generate PDF Invoice
+const generateInvoicePDF = async (order) => {
+    const invoiceHTML = generateInvoiceTemplate(order);
+    return new Promise((resolve, reject) => {
+        pdf.create(invoiceHTML).toBuffer((err, buffer) => {
+            if (err) return reject(err);
+
+            // Convert the PDF buffer to Base64
+            const base64PDF = buffer.toString('base64');
+            resolve(base64PDF);
+        });
+    });
+};
 
 
 router.post(
@@ -919,7 +978,7 @@ router.post(
             };
 
             const order = await Order.create(orderData);
-            // const invoicePath = await generateInvoicePDF(order);
+            const invoicePath = await generateInvoicePDF(order);
 
             const htmlContent = `
             <html>
@@ -936,9 +995,11 @@ router.post(
         }
 
         .emailconfirm {
-            padding-top: 30px;
-            width: 60%;
+            width: 70%;
             margin: auto;
+            border: 1px solid #eee;
+            padding: 20px 40px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
         }
 
         .headeremail {
@@ -992,6 +1053,10 @@ router.post(
                 object-fit: contain !important;
             border: 1px solid #eee !important;
         }
+            .a2adjustimg{
+            transform: scale(1.2) !important;
+
+            }
 
         .adjustw1 {
             width: 70%;
@@ -1030,9 +1095,20 @@ router.post(
             }
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
             .emailconfirm {
                 width: 85%;
+            }
+                   
+            .adjustw, .adjustw1 {
+                width: 100%;
+                display: block;
+            }
+            .adjustw img{
+            width: 170px !important;
+            height: 150px !important;
+                object-fit: contain !important;
+            border: 1px solid #eee !important;
             }
         }
 
@@ -1071,17 +1147,18 @@ router.post(
 <body>
     <div class="emailconfirm">
         <div class="headeremail">
-            <div class="a1adjust" style="width: 90%; float: left;">
-                <h1 class="adj">Order Confirmation</h1>
-                <p>OrderId: ${order._id}</p>
-            </div>
-            <div class="a2adjust" style="width: 10%; float: left;">
+        <div class="a2adjust" style="text-align: center;">
                 <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
                     alt="Logo">
             </div>
+            <div class="a1adjust" style="text-align: center;">
+                <h1 class="adj">Order Confirmation</h1>
+                <p>OrderId: ${order._id}</p>
+            </div>
+            
         </div>
 
-        <div style="clear: both;">
+        <div style="clear: both;margin-top: 25px;">
             <p>Dear <span style="text-transform: capitalize;">${shippingAddress.name}</span>,</p>
             <p>We have received your Tiny Tiaraa order! Thank you for your purchase.</p>
         </div>
@@ -1131,11 +1208,10 @@ router.post(
         </div>
 
         <div class="adjusttnview" style="text-align: center;">
-            <a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+            <a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
         </div>
 
         
-
         <div style="padding: 20px 0;">
             <h4>Thanks for shopping with us!</h4>
             <p>You can check the status of your orders at any time on our Orders History Page.</p>
@@ -1434,6 +1510,11 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
                 return next(new ErrorHandler("Docket number is required for shipping", 400));
             }
             order.docketno = req.body.docketNumber;
+
+            const base64PDF = await generateInvoicePDF(order);
+    
+            order.invoice = base64PDF;   // Store the path of the invoice in the order
+
 
             // Update cart items
             for (const o of order.cart) {
@@ -1902,9 +1983,11 @@ box-sizing: border-box;
 }
 
 .emailconfirm {
-padding-top: 30px;
-width: 60%;
-margin: auto;
+    width: 70%;
+    margin: auto;
+    border: 1px solid #eee;
+    padding: 20px 40px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
 
 .headeremail {
@@ -1952,6 +2035,10 @@ width: 25%;
 display: inline-block;
 vertical-align: top;
 }
+.a2adjustimg{
+    transform: scale(1.2) !important;
+
+}
 .adjustw img{
 width: 150px !important;
  height: 130px !important;
@@ -1963,6 +2050,9 @@ border: 1px solid #eee !important;
 width: 70%;
 display: inline-block;
 }
+.adjusttnview{
+    margin-top:13px !important;
+    }
 
 img {
 width: 100px;
@@ -1996,9 +2086,20 @@ margin-top:10px !important;
 }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 .emailconfirm {
     width: 85%;
+}
+    
+.adjustw, .adjustw1 {
+    width: 100%;
+    display: block;
+}
+.adjustw img{
+width: 170px !important;
+ height: 150px !important;
+    object-fit: contain !important;
+border: 1px solid #eee !important;
 }
 }
 
@@ -2023,7 +2124,7 @@ img {
     height: auto;
 }
 .adjusttnview{
-    margin-top:10px !important;
+    margin-top:20px !important;
     }
 
 .adj {
@@ -2035,26 +2136,27 @@ font-size: 20px ;
 </head>
 
 <body>
-<div class="emailconfirm">
+<div class="emailconfirm" >
 <div class="headeremail">
-<div class="a1adjust" style="width: 90%; float: left;">
+<div class="a2adjust" style="text-align: center;">
+    <img class="a2adjustimg" style="transform: scale(1.2);" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+        alt="Logo">
+</div>
+<div class="a1adjust" style="text-align: center;">
     <h1 class="adj">Order Shipped!</h1>
     <p>OrderId: ${order._id}</p>
 </div>
-<div class="a2adjust" style="width: 10%; float: left;">
-    <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
-        alt="Logo">
-</div>
+
 </div>
 
-<div style="clear: both;">
+<div style="clear: both;margin-top: 25px;">
 <h2>Hi ${order.shippingAddress.name},</h2>
  <p>Your order has been shipped! We are thrilled to let you know that your Tiny Tiaraa order is on its way.</p>
-<p>Tracking Number: <strong>${order.docketno}</strong></p>
+<p style="padding: 4px 0;">Tracking Number: <strong>${order.docketno}</strong></p>
 <p>Your order is being shipped via <strong>Sequel</strong>. You can expect to receive it soon!</p>
 </div>
 
-<div class="yourorder">
+<div class="yourorder" style="margin-top: 20px;">
 <h3 class="ordersum">Order Summary</h3>
 
 ${order.cart.map(item => `
@@ -2077,9 +2179,9 @@ ${order.cart.map(item => `
 
 <div class="totalcost">
 <p>Subtotal: ₹${order.totalPrice}</p>
-<p>Shipping: Free</p>
+<p style="padding: 4px 0;">Shipping: Free</p>
 <p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
-<p>Total: ₹${order.totalPrice}</p>
+<p style="padding: 4px 0;">Total: ₹${order.totalPrice}</p>
 </div>
 
 <div class="shippingaddress">
@@ -2099,7 +2201,8 @@ ${order.cart.map(item => `
 </div>
 
 <div class="adjusttnview" style="text-align: center;">
-<a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+<a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+<a href="https://tiny-new.vercel.app/invoices/${order._id}" class="view-order-btn" style="margin-left: 10px;" download>Download Invoice</a>
 </div>
 
 <div style="padding: 20px 0;">
@@ -2696,11 +2799,12 @@ box-sizing: border-box;
 }
 
 .emailconfirm {
-padding-top: 30px;
-width: 60%;
-margin: auto;
+    width: 70%;
+    margin: auto;
+    border: 1px solid #eee;
+    padding: 20px 40px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
-
 .headeremail {
 padding-bottom: 10px;
 display: inline-block;
@@ -2831,19 +2935,20 @@ font-size: 20px ;
 <body>
 <div class="emailconfirm">
 <div class="headeremail">
-<div class="a1adjust" style="width: 90%; float: left;">
-    <h1 class="adj">Order Delivered!</h1>
-    <p>OrderId: ${order._id}</p>
-</div>
-<div class="a2adjust" style="width: 10%; float: left;">
+<div class="a2adjust" style="text-align: center;">
     <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
         alt="Logo">
 </div>
+<div class="a1adjust" style="text-align: center;">
+    <h1 class="adj">Order Delivered!</h1>
+    <p>OrderId: ${order._id}</p>
+</div>
+
 </div>
 
 <div style="clear: both;">
 <p>Dear <span style="text-transform: capitalize;">${order.shippingAddress.name},</span></p>
-<p>Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
+<p style="padding: 4px 0;">Your Tiny Tiaraa order <strong>Order ID: ${order._id}</strong> has been successfully delivered!</p>
  <p>We hope you love your purchase. Thank you for shopping with Tiny Tiaraa!</p>
 </div>
 
@@ -2870,9 +2975,9 @@ ${order.cart.map(item => `
 
 <div class="totalcost">
 <p>Subtotal: ₹${order.totalPrice}</p>
-<p>Shipping: Free</p>
+<p style="padding: 4px 0;">Shipping: Free</p>
 <p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
-<p>Total: ₹${order.totalPrice}</p>
+<p style="padding: 4px 0;">Total: ₹${order.totalPrice}</p>
 </div>
 
 <div class="shippingaddress">
@@ -2892,7 +2997,7 @@ ${order.cart.map(item => `
 </div>
 
 <div class="adjusttnview" style="text-align: center;">
-<a href="http://localhost:5173/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+<a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
 </div>
 
 <div style="padding: 20px 0;">
