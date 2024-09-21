@@ -977,7 +977,6 @@ router.post(
             };
 
             const order = await Order.create(orderData);
-            const invoicePath = await generateInvoicePDF(order);
 
             const htmlContent = `
             <html>
