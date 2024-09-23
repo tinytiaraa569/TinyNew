@@ -15,6 +15,8 @@ const path = require('path');
 const { render } = require("@react-email/components")
 const shippingMail = require('../utils/shippingMail')
 
+const puppeteer = require('puppeteer');
+
 
 
 const Welcome = require("@react-email/components").default;
@@ -595,6 +597,8 @@ function numberToWords(num) {
 function numberToWordsWithCurrency(num) {
     return numberToWords(num) ;
 }
+
+
 const generateInvoiceTemplate = (order) => {
     const invoiceDate = new Date(order.createdAt).toLocaleDateString();
     console.log(order,"order for email ")
@@ -930,19 +934,49 @@ const generateInvoiceTemplate = (order) => {
 
 
 // Generate PDF Invoice
+// const generateInvoicePDF = async (order) => {
+//     const invoiceHTML = generateInvoiceTemplate(order);
+//     return new Promise((resolve, reject) => {
+//         pdf.create(invoiceHTML).toBuffer((err, buffer) => {
+//             if (err) return reject(err);
+
+//             // Convert the PDF buffer to Base64
+//             const base64PDF = buffer.toString('base64');
+//             resolve(base64PDF);
+//         });
+//     });
+// };
+
 const generateInvoicePDF = async (order) => {
     const invoiceHTML = generateInvoiceTemplate(order);
-    return new Promise((resolve, reject) => {
-        pdf.create(invoiceHTML).toBuffer((err, buffer) => {
-            if (err) return reject(err);
 
-            // Convert the PDF buffer to Base64
-            const base64PDF = buffer.toString('base64');
-            resolve(base64PDF);
-        });
+    // Launch a Puppeteer browser instance
+    const browser = await puppeteer.launch({
+        headless: true, // Run in headless mode
+        args: ['--no-sandbox', '--disable-setuid-sandbox'], // For security
     });
-};
 
+    const page = await browser.newPage();
+
+    // Set the HTML content
+    await page.setContent(invoiceHTML, {
+        waitUntil: 'networkidle0', // Wait until the page has finished loading
+    });
+
+    // Generate the PDF as a buffer
+    const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true, // Include background styles (optional)
+    });
+
+    // Close the browser
+    await browser.close();
+
+    // Convert the PDF buffer to Base64
+    const base64PDF = pdfBuffer.toString('base64');
+
+    return base64PDF;
+};
 
 router.post(
     "/create-order",
