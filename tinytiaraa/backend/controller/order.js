@@ -10,7 +10,7 @@ const sendOrder = require('../utils/sendOrder');
 const Referral = require('../model/referralModel');
 const User = require('../model/user');
 
-const pdf = require('html-pdf');
+// const pdf = require('html-pdf');
 const path = require('path');
 const { render } = require("@react-email/components")
 const shippingMail = require('../utils/shippingMail')
@@ -18,7 +18,7 @@ const shippingMail = require('../utils/shippingMail')
 const puppeteer = require('puppeteer');
 
 
-
+const pdf = require('html-pdf-node');
 const Welcome = require("@react-email/components").default;
 // const { Welcome } = require("@react-email/components");
 
@@ -636,7 +636,7 @@ const generateInvoiceTemplate = (order) => {
             padding: 10px 50px;
             width: 100%;
             border: 1px solid #ccc; 
-            font-size: 13px;
+            font-size: 11px;
 
 
          }
@@ -657,7 +657,7 @@ const generateInvoiceTemplate = (order) => {
             padding: 10px 50px;
             width: 100%;
             border: 1px solid #ccc;
-            font-size: 13px;
+            font-size: 11px;
 
 
          }
@@ -669,7 +669,7 @@ const generateInvoiceTemplate = (order) => {
             padding: 15px 50px;
             width: 100%;
             border: 1px solid #ccc;
-            font-size: 13px;
+            font-size: 11px;
          }
          .bankdetails p{
             padding: 2px 0;
@@ -679,7 +679,7 @@ const generateInvoiceTemplate = (order) => {
             padding: 10px 50px;
             width: 100%;
             border: 1px solid #ccc;
-            font-size: 14px;
+            font-size: 12px;
          }
          .receiverdetailleft{
             width: 50%;
@@ -693,7 +693,7 @@ const generateInvoiceTemplate = (order) => {
             margin-top: 20px;
             padding: 10px 0px;
             width: 100%;
-            font-size: 11px;
+            font-size: 9px;
          }
          table{
             width: 100%;
@@ -806,7 +806,7 @@ const generateInvoiceTemplate = (order) => {
             grandTotal += discountPrice;
             return(
                 ` <div class="ordersumtable">
-            <table cellpadding="10px" style="font-size: 11px !important;">
+            <table cellpadding="10px" style="font-size: 9px !important;">
                 <tr style="background-color: rgb(238, 238, 238) ; " >
                     <th>Sr <br> nos</th>
                     <th>Product Name <br>HSN / SAC Code</th>
@@ -947,35 +947,55 @@ const generateInvoiceTemplate = (order) => {
 //     });
 // };
 
+// const generateInvoicePDF = async (order) => {
+//     const invoiceHTML = generateInvoiceTemplate(order);
+
+//     // Launch a Puppeteer browser instance
+//     const browser = await puppeteer.launch({
+//         headless: true, // Run in headless mode
+//         args: ['--no-sandbox', '--disable-setuid-sandbox'], // For security
+//     });
+
+//     const page = await browser.newPage();
+
+//     // Set the HTML content
+//     await page.setContent(invoiceHTML, {
+//         waitUntil: 'networkidle0', // Wait until the page has finished loading
+//     });
+
+//     // Generate the PDF as a buffer
+//     const pdfBuffer = await page.pdf({
+//         format: 'A4',
+//         printBackground: true, // Include background styles (optional)
+//     });
+
+//     // Close the browser
+//     await browser.close();
+
+//     // Convert the PDF buffer to Base64
+//     const base64PDF = pdfBuffer.toString('base64');
+
+//     return base64PDF;
+// };
+
 const generateInvoicePDF = async (order) => {
     const invoiceHTML = generateInvoiceTemplate(order);
 
-    // Launch a Puppeteer browser instance
-    const browser = await puppeteer.launch({
-        headless: true, // Run in headless mode
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // For security
+    return new Promise((resolve, reject) => {
+        // Create options for PDF generation
+        const options = { format: 'A4' };
+
+        // Convert HTML string into a PDF buffer using html-pdf-node
+        const file = { content: invoiceHTML };
+
+        pdf.generatePdf(file, options)
+            .then(buffer => {
+                // Convert the PDF buffer to Base64
+                const base64PDF = buffer.toString('base64');
+                resolve(base64PDF);
+            })
+            .catch(err => reject(err));
     });
-
-    const page = await browser.newPage();
-
-    // Set the HTML content
-    await page.setContent(invoiceHTML, {
-        waitUntil: 'networkidle0', // Wait until the page has finished loading
-    });
-
-    // Generate the PDF as a buffer
-    const pdfBuffer = await page.pdf({
-        format: 'A4',
-        printBackground: true, // Include background styles (optional)
-    });
-
-    // Close the browser
-    await browser.close();
-
-    // Convert the PDF buffer to Base64
-    const base64PDF = pdfBuffer.toString('base64');
-
-    return base64PDF;
 };
 
 router.post(
