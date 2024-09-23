@@ -977,6 +977,8 @@ const generateInvoiceTemplate = (order) => {
 //     return base64PDF;
 // };
 
+
+// correct code 
 const generateInvoicePDF = async (order) => {
     const invoiceHTML = generateInvoiceTemplate(order);
 
