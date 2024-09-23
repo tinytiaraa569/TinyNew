@@ -15,7 +15,6 @@ const path = require('path');
 const { render } = require("@react-email/components")
 const shippingMail = require('../utils/shippingMail')
 
-const puppeteer = require('puppeteer');
 
 
 const pdf = require('html-pdf-node');
@@ -997,6 +996,7 @@ const generateInvoicePDF = async (order) => {
             .catch(err => reject(err));
     });
 };
+
 
 router.post(
     "/create-order",
