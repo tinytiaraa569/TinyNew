@@ -18,6 +18,8 @@ const shippingMail = require('../utils/shippingMail')
 
 
 const pdf = require('html-pdf-node');
+const puppeteer = require('puppeteer')
+const chromium = require('chrome-aws-lambda')
 const Welcome = require("@react-email/components").default;
 // const { Welcome } = require("@react-email/components");
 
@@ -2155,6 +2157,9 @@ width: 170px !important;
     object-fit: contain !important;
 border: 1px solid #eee !important;
 }
+.downloadinvoice{
+    margin-top:10px !important;
+}
 }
 
 @media (max-width: 650px) {
@@ -2256,7 +2261,7 @@ ${order.cart.map(item => `
 
 <div class="adjusttnview" style="text-align: center;">
 <a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
-<a href="https://tiny-new.vercel.app/invoices/${order._id}" class="view-order-btn" style="margin-left: 10px;" download>Download Invoice</a>
+<a href="https://tiny-new.vercel.app/invoices/${order._id}" class="view-order-btn downloadinvoice" style="margin-left: 10px;" download>Download Invoice</a>
 </div>
 
 <div style="padding: 20px 0;">
