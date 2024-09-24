@@ -129,23 +129,48 @@ router.delete(
 
 // get couponcode value
 
-router.get(
-  "/get-coupon-value/:name",
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const couponCode = await CoupounCode.findOne({ name: req.params.name });
-      if (!couponCode) {
-        return next(new ErrorHandler("Coupon code not found", 404));
-      }
+// router.get(
+//   "/get-coupon-value/:name",
+//   catchAsyncErrors(async (req, res, next) => {
+//     try {
+//       const couponCode = await CoupounCode.findOne({ name: req.params.name });
+//       if (!couponCode) {
+//         return next(new ErrorHandler("Coupon code not found", 404));
+//       }
 
-      res.status(200).json({
-        success: true,
-        couponCode,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error, 400));
+//       res.status(200).json({
+//         success: true,
+//         couponCode,
+//       });
+//     } catch (error) {
+//       return next(new ErrorHandler(error, 400));
+//     }
+//   })
+// );
+
+router.get('/get-coupon-value/:code', async (req, res) => {
+  const { code } = req.params;
+
+  try {
+    const coupon = await CoupounCode.findOne({ name: code });
+    if (!coupon) {
+      return res.status(404).json({ success: false, message: 'Coupon code does not exist.' });
     }
-  })
-);
+
+    // Return the coupon object with shop ID and relevant fields
+    return res.status(200).json({
+      success: true,
+      couponCode: {
+        value: coupon.value, // Only return value from the database
+        percentageDiscount: coupon.percentageDiscount,
+        shop: coupon.shop, // Ensure the shop ID is included
+        // Exclude any fields that you don't want exposed
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: 'Server error.' });
+  }
+});
 
 module.exports = router

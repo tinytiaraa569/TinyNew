@@ -87,19 +87,81 @@ function Cartpage() {
 
   const shipping = "Free Shipping"
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const name = couponCode;
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   const name = couponCode;
 
+  //   try {
+  //     const res = await axios.get(`${server}/coupon/get-coupon-value/${name}`);
+
+  //     if (res.data.success && res.data.couponCode) {
+  //       const shopId = res.data.couponCode?.shop;
+  //       const couponCodeValue = res.data.couponCode?.value;
+  //       const percentageDiscount = res.data.couponCode?.percentageDiscount;
+  //       const isCouponValid = cart.filter((item) => item.shopId === shopId);
+
+  //       if (isCouponValid.length === 0) {
+  //         toast.error("Coupon code is not valid for items in your cart.");
+  //         setCouponCode("");
+  //       } else {
+  //         const eligiblePrice = isCouponValid.reduce(
+  //           (acc, item) => acc + item.qty * item.discountPrice,
+  //           0
+  //         );
+
+  //         let calculatedDiscount = 0;
+
+  //         if (percentageDiscount !== null) {
+  //           // Calculate discount based on percentage
+  //           calculatedDiscount = (eligiblePrice * (percentageDiscount / 100)).toFixed(2);
+  //         } else {
+  //           // Use fixed value discount
+  //           calculatedDiscount = couponCodeValue.toFixed(2);
+  //         }
+
+  //         setDiscountPrice(calculatedDiscount); // Set the discount price
+  //         setCouponCodeData(res.data.couponCode); // Store coupon code data if needed elsewhere
+  //         toast.success("Coupon applied successfully.");
+  //         setCouponCode("");
+
+  //       }
+  //     } else {
+  //       toast.error("Coupon code does not exist.");
+  //       setCouponCode("");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error applying coupon:", error);
+  //     toast.error("Failed to apply coupon code. Please try again later.");
+  //   }
+  // };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = couponCode; // Only sending the coupon code
+  
     try {
       const res = await axios.get(`${server}/coupon/get-coupon-value/${name}`);
-
-      if (res.data.success && res.data.couponCode) {
-        const shopId = res.data.couponCode?.shop;
-        const couponCodeValue = res.data.couponCode?.value;
-        const percentageDiscount = res.data.couponCode?.percentageDiscount;
+      console.log("Coupon Response:", res.data); // Log the coupon response
+  
+      if (res.data.success) {
+        const shopId = res.data.couponCode?.shop; // Extracting shopId from coupon
+        const couponCodeValue = res.data.couponCode?.value; // This should be 500
+        const percentageDiscount = res.data.couponCode?.percentageDiscount; // This should be null
+  
+        console.log("Shop ID from coupon:", shopId); // Log shopId
+        console.log("Cart Items:", cart); // Log current cart items
+  
+        // Check if cart has items
+        if (!cart || cart.length === 0) {
+          toast.error("Your cart is empty.");
+          return;
+        }
+  
+        // Find valid items for the coupon
         const isCouponValid = cart.filter((item) => item.shopId === shopId);
-
+        console.log("Valid Items for Coupon:", isCouponValid); // Log valid items
+  
         if (isCouponValid.length === 0) {
           toast.error("Coupon code is not valid for items in your cart.");
           setCouponCode("");
@@ -108,33 +170,32 @@ function Cartpage() {
             (acc, item) => acc + item.qty * item.discountPrice,
             0
           );
-
+  
           let calculatedDiscount = 0;
-
-          if (percentageDiscount !== null) {
-            // Calculate discount based on percentage
-            calculatedDiscount = (eligiblePrice * (percentageDiscount / 100)).toFixed(2);
-          } else {
-            // Use fixed value discount
+  
+          // Apply fixed value discount
+          if (couponCodeValue !== null) {
             calculatedDiscount = couponCodeValue.toFixed(2);
+          } else {
+            // If percentageDiscount is not null, calculate discount
+            calculatedDiscount = (eligiblePrice * (percentageDiscount / 100)).toFixed(2);
           }
-
+  
           setDiscountPrice(calculatedDiscount); // Set the discount price
           setCouponCodeData(res.data.couponCode); // Store coupon code data if needed elsewhere
           toast.success("Coupon applied successfully.");
           setCouponCode("");
-
         }
       } else {
         toast.error("Coupon code does not exist.");
         setCouponCode("");
       }
     } catch (error) {
-      console.error("Error applying coupon:", error);
+      console.error("Error applying coupon:", error.response ? error.response.data : error.message);
       toast.error("Failed to apply coupon code. Please try again later.");
     }
   };
-
+  
   const totalPrice = (subTotalPrice - discountPrice).toFixed(2);
 
   useEffect(() => {
@@ -401,7 +462,7 @@ function Cartpage() {
                 </div>
                 <div className="sub-total ">
                   <span className="label">
-                    Delivery By <span className="deltext">Jul 02 - Jul 03</span>
+                    Delivery By <span className="deltext">Sequel</span>
                   </span>
                   <span className="value">Free</span>
                 </div>
@@ -534,7 +595,8 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const metalColor = metalColors[data.selectedColor]?.replace(" ", "") + "clrStock";
 
   const enamelStock = data.Enamelcolorstock?.[enamelColor]?.[`${enamelColor}${metalColor}`];
-
+  const d = data.name
+  const product_name = d.replace(/\s+/g, "-")
 
   const increment = () => {
     if (enamelStock === undefined || enamelStock === null || value >= enamelStock) {
@@ -636,7 +698,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
     <div className="leftcartpage">
       <div className="leftcardsec1">
         <div className="leftcardimg">
-          <Link className="cartimage-container" href="">
+          <Link className="cartimage-container" to={`/product/${product_name}`}>
             <img
               src={`${data?.images[0]?.url}`}
               width={166}
@@ -646,7 +708,10 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         </div>
         <div className="leftcarddetail">
           <div className="leftcarddeatilhead">
-            <h2>{data.name}</h2>
+            <Link to={`/product/${product_name}`}>
+            <h2 > {data.name}</h2>
+
+            </Link>
             <div className='cursor-pointer mr-4' onClick={() => removeFromCartHandler(data)}>
               <MdDeleteForever size={30} color='#e44343' />
             </div>

@@ -20,7 +20,7 @@ function CheckoutPage() {
     const { user } = useSelector((state) => state.user)
     const [userInfo, setUserInfo] = useState(false)
     const [orderData, setOrderData] = useState([])
-    console.log(orderData.cart, "see what is in checkout age")
+    console.log(orderData, "see what is in checkout age")
 
     const navigate = useNavigate()
 
@@ -52,16 +52,23 @@ function CheckoutPage() {
 
     const [isSameAddress, setIsSameAddress] = useState(false); // Checkbox state
     const [billingAddress, setBillingAddress] = useState({
+        name: '',
         country: '',
         city: '',
         address1: '',
         address2: '',
-        zipCode: ''
+        zipCode: '',
+        phoneNumber:''
+        
     });
 
 
     const [referralBalance, setReferralBalance] = useState(0);
     const [appliedReferral, setAppliedReferral] = useState(0);
+    const [gstin, setgstin] = useState("");
+    const [pandetails, setpandetails] = useState("");
+
+
 
     const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * (item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice), 0)
 
@@ -100,6 +107,8 @@ function CheckoutPage() {
         setIsSameAddress(!isSameAddress);
         if (!isSameAddress) {
             setBillingAddress({
+                name,
+                phoneNumber,
                 country,
                 city,
                 address1,
@@ -108,6 +117,8 @@ function CheckoutPage() {
             });
         } else {
             setBillingAddress({
+                name:name,
+                phoneNumber:phoneNumber,
                 country: country,
                 city: city,
                 address1: address1,
@@ -125,6 +136,8 @@ function CheckoutPage() {
             setZipCode('');
             setCountry('');
             setCity('');
+            setName('')
+            setphoneNumber('')
         } else {
             setSelectedAddressIndex(index);
             const address = user.addresses[index];
@@ -133,6 +146,8 @@ function CheckoutPage() {
             setZipCode(address.zipCode);
             setCountry(address.country);
             setCity(address.city);
+            setName(address.name)
+            setphoneNumber(address.phoneNumber)
         }
     };
 
@@ -177,7 +192,7 @@ function CheckoutPage() {
 
         } else {
             const shippingAddress = {
-                email, name, phoneNumber, address1, address2, zipCode, country, city ,estimatedDeliveryRange
+                email, name, phoneNumber, address1, address2, zipCode, country, city ,estimatedDeliveryRange,pandetails,gstin
             }
             const finalBillingAddress = isSameAddress ? shippingAddress : billingAddress;
             const orderData = {
@@ -304,7 +319,7 @@ const calculateEDD = async () => {
 
 
                 <div className='checkoutsectionmainlast flex gap-10 justify-center w-full h-auto'>
-                    <div className='checkoutleft w-[50%] '>
+                    <div className='checkoutleft w-[50%]'>
                         <form action="">
 
                             <div className='w-full'>
@@ -513,107 +528,200 @@ const calculateEDD = async () => {
 
                                 </div>
 
-                                <div className="form-information bg-[#ffffff] mb-[16px] p-4 shadow-lg">
-                <div className='mb-[12px]'>
-                    <h2 className='text-[16px] font-[400] text-[#161618]'>Billing Address</h2>
-                </div>
-                <div className='flex gap-5 items-center mb-4'>
-                    <div className='w-[100%]'>
-                        <input
-                            type='checkbox'
-                            id='same-address'
-                            checked={isSameAddress}
-                            onChange={handleCheckboxChangebilling}
-                            className='mr-2'
-                        />
-                        <label htmlFor='same-address' className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]'>
-                            Billing address is the same as delivery address
-                        </label>
-                    </div>
-                </div>
-                {!isSameAddress && (
-                    <>
-                        <div className='flex gap-5 items-center mb-4 sercol' >
-                            <div className='w-[45%] adjustinpser'>
-                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">Apartment, Floor *</label>
-                                <input
-                                    id="billing-address1"
-                                    type='text'
-                                    value={billingAddress.address1}
-                                    onChange={(e) => setBillingAddress(prev => ({ ...prev, address1: e.target.value }))}
-                                    className='int-emailcheck'
-                                    placeholder="Enter Your address"
-                                />
-                            </div>
-                            <div className='w-[45%] adjustinpser'>
-                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address2">Street, Town / City *</label>
-                                <input
-                                    id="billing-address2"
-                                    type='text'
-                                    value={billingAddress.address2}
-                                    onChange={(e) => setBillingAddress(prev => ({ ...prev, address2: e.target.value }))}
-                                    className='int-emailcheck'
-                                    placeholder="Enter Your Address2"
-                                />
-                            </div>
-                        </div>
-                        <div className='flex gap-5 items-center mb-4 sercol' >
-                            <div className='w-[45%] adjustinpser'>
-                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-country">Country *</label>
-                                <select
-                                    id='billing-country'
-                                    className="int-emailcheck rounded-[5px]"
-                                    value={billingAddress.country}
-                                    onChange={(e) => setBillingAddress(prev => ({ ...prev, country: e.target.value }))}
-                                >
-                                    <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block" value="">
-                                        Choose your country
-                                    </option>
-                                    {Country &&
-                                        Country.getAllCountries().map((item) => (
-                                            <option key={item.isoCode} value={item.isoCode}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                            <div className='w-[45%] adjustinpser'>
-                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-state">State *</label>
-                                <select
-                                    id='billing-state'
-                                    className="int-emailcheck"
-                                    value={billingAddress.city}
-                                    onChange={(e) => setBillingAddress(prev => ({ ...prev, city: e.target.value }))}
-                                >
-                                    <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]" value="">
-                                        Choose your State
-                                    </option>
-                                    {State &&
-                                        State.getStatesOfCountry(billingAddress.country).map((item) => (
-                                            <option key={item.isoCode} value={item.isoCode}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                        <div className='flex gap-5 items-center mb-4 sercol' >
-                            <div className='w-[45%] adjustinpser'>
-                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-zipcode">Zip Code *</label>
-                                <input
-                                    id="billing-zipcode"
-                                    type='text'
-                                    value={billingAddress.zipCode}
-                                    onChange={(e) => setBillingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
-                                    className='int-emailcheck'
-                                    placeholder="Enter Your Zipcode"
-                                />
-                            </div>
-                        </div>
-                    </>
-                )}
-            </div>
 
+                                {/* Billing Address */}
+                                <div className="form-information bg-[#ffffff] mb-[16px] p-4 shadow-lg">
+                                        <div className='mb-[12px]'>
+                                            <h2 className='text-[16px] font-[400] text-[#161618]'>Billing Address</h2>
+                                        </div>
+                                        <div className='flex gap-5 items-center mb-4'>
+                                            <div className='w-[100%]'>
+                                                <input
+                                                    type='checkbox'
+                                                    id='same-address'
+                                                    checked={isSameAddress}
+                                                    onChange={handleCheckboxChangebilling}
+                                                    className='mr-2'
+                                                />
+                                                <label htmlFor='same-address' className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]'>
+                                                    Billing address is the same as delivery address
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {!isSameAddress && (
+                                            <>        
+                                             <div className='flex gap-5 items-center mb-4 sercol' >
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">First Name *</label>
+                                                        <input
+                                                            id="billing-address1"
+                                                            type='text'
+                                                            value={billingAddress.name}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, name: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your Name"
+                                                        />
+                                                    </div>
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address2">Last Name *</label>
+                                                        <input
+                                                            id="billing-address2"
+                                                            type='text'
+                                                            value={billingAddress.name}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, name: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your Name"
+                                                        />
+                                                    </div>
+                                                </div>           
+                                                <div className='flex gap-5 items-center mb-4 sercol' >
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">Apartment, Floor *</label>
+                                                        <input
+                                                            id="billing-address1"
+                                                            type='text'
+                                                            value={billingAddress.address1}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, address1: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your address"
+                                                        />
+                                                    </div>
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address2">Street, Town / City *</label>
+                                                        <input
+                                                            id="billing-address2"
+                                                            type='text'
+                                                            value={billingAddress.address2}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, address2: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your Address2"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='flex gap-5 items-center mb-4 sercol' >
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-country">Country *</label>
+                                                        <select
+                                                            id='billing-country'
+                                                            className="int-emailcheck rounded-[5px]"
+                                                            value={billingAddress.country}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, country: e.target.value }))}
+                                                        >
+                                                            <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block" value="">
+                                                                Choose your country
+                                                            </option>
+                                                            {Country &&
+                                                                Country.getAllCountries().map((item) => (
+                                                                    <option key={item.isoCode} value={item.isoCode}>
+                                                                        {item.name}
+                                                                    </option>
+                                                                ))}
+                                                        </select>
+                                                    </div>
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-state">State *</label>
+                                                        <select
+                                                            id='billing-state'
+                                                            className="int-emailcheck"
+                                                            value={billingAddress.city}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, city: e.target.value }))}
+                                                        >
+                                                            <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]" value="">
+                                                                Choose your State
+                                                            </option>
+                                                            {State &&
+                                                                State.getStatesOfCountry(billingAddress.country).map((item) => (
+                                                                    <option key={item.isoCode} value={item.isoCode}>
+                                                                        {item.name}
+                                                                    </option>
+                                                                ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className='flex gap-5 items-center mb-4 sercol' >
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-zipcode">Zip Code *</label>
+                                                        <input
+                                                            id="billing-zipcode"
+                                                            type='text'
+                                                            value={billingAddress.zipCode}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your Zipcode"
+                                                        />
+                                                    </div>
+                                                    <div className='w-[45%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-zipcode">Phone Number *</label>
+                                                        <input
+                                                            id="billing-zipcode"
+                                                            type='text'
+                                                            value={billingAddress.phoneNumber}
+                                                            onChange={(e) => setBillingAddress(prev => ({ ...prev, phoneNumber: e.target.value }))}
+                                                            className='int-emailcheck'
+                                                            placeholder="Enter Your PhoneNumber"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )}
+                                </div>
+
+
+                                {/* credentails information */}
+
+                                {
+                                    orderData.totalPrice > 50000 && (
+                                        <div className="cerdtentaisl-information bg-[#ffffff] mb-[16px] p-4 shadow-lg">
+                                        <div className='mb-[12px]'>
+                                            <h2 className='text-[16px] font-[400] text-[#161618]'>Information Required</h2>
+                                        </div>
+                                        <div className='flex gap-5 items-center mb-4'>
+                                            <div className='w-[100%]'>
+                                            
+                                                <label htmlFor='same-address' className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]'>
+                                                If the order amount exceeds 50,000, you will be required to provide additional details such as your PAN card information.
+                                                </label>
+                                            </div>
+                                        </div>
+    
+                                        <div className='flex gap-5 items-center mb-4 sercol'>
+                                            <div className='w-[45%]  adjustinpser'>
+                                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-gstin">GSTIN (Optinal)</label>
+                                                 
+                                                    <input
+                                                        id="shipping-gstin"
+                                                        type='text'
+                                                        value={gstin}
+                                                        onChange={(e) => setgstin(e.target.value)}
+                                                        className='int-emailcheck'
+                                                        placeholder="Enter Your GSTIN Number"
+                                                        
+                                                    />
+                                                
+                                            </div>
+                                            <div className='w-[45%]  adjustinpser'>
+                                                <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-pandetails">Enter PanCard details *</label>
+                                                 
+                                                    <input
+                                                        id="shipping-pandetails"
+                                                        type='text'
+                                                        value={pandetails}
+                                                        onChange={(e) => setpandetails(e.target.value)}
+                                                        className='int-emailcheck'
+                                                        placeholder="Enter Pancard Details"
+                                                        required
+                                                    />
+                                                
+                                            </div>
+                                        </div>
+    
+                                    </div>
+    
+
+                                    )
+                                }
+
+                               
                                 {/* deleverymethod */}
                                 <div className="contact-information bg-[#ffffff] mb-[16px] shadow-lg">
                                     <div className=' mb-[12px]'>

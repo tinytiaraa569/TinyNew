@@ -604,7 +604,7 @@ const generateInvoiceTemplate = (order) => {
     const invoiceDate = new Date(order.createdAt).toLocaleDateString();
     console.log(order,"order for email ")
     let grandTotal = 0;
-
+   
     const totalPriceInWords = numberToWordsWithCurrency(order.totalPrice);
     return `
 <html lang="en">
@@ -796,98 +796,122 @@ const generateInvoiceTemplate = (order) => {
 
         </div>
 
-       ${
-        order.cart.map((item,index)=>{
-            const discountPrice = item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice;
-            const cgst = (discountPrice * 0.015).toFixed(2); 
-            const sgst = (discountPrice * 0.015).toFixed(2); 
-            const igst = (discountPrice * 0.03).toFixed(2);  
-            
-            
-            grandTotal += discountPrice;
-            return(
-                ` <div class="ordersumtable">
-            <table cellpadding="10px" style="font-size: 9px !important;">
-                <tr style="background-color: rgb(238, 238, 238) ; " >
-                    <th>Sr <br> nos</th>
-                    <th>Product Name <br>HSN / SAC Code</th>
-                    <th>Carat</th>
-                    <th>Gross <br>Wt.</th>
-                    <th>Net <br>Wt.</th>
-                    <th>Rate <br>Per Unit</th>
-                    <th>Taxable <br>Value</th>
-                    <th>CGST (1.5%) <br>Amt & Rate</th>
-                    <th>SGST (1.5%) <br>Amt & Rate</th>
-                    <th>IGST (3%) <br>Amt & Rate</th>
-                    <th>Amount <br>(Rs)</th>
+       <div class="ordersumtable" style="overflow: hidden;">
+  <table cellpadding="10px" style="font-size: 9px !important;overflow: hidden !important;">
+    <thead>
+      <tr style="background-color: rgb(238, 238, 238);">
+        <th>Sr <br> nos</th>
+        <th>Product Name <br>HSN / SAC Code</th>
+        <th>Carat</th>
+        <th>Gross <br>Wt.</th>
+        <th>Net <br>Wt.</th>
+        <th>Rate <br>Per Unit</th>
+        <th>Taxable <br>Value</th>
+        <th>CGST (1.5%) <br>Amt & Rate</th>
+        <th>SGST (1.5%) <br>Amt & Rate</th>
+        <th>IGST (3%) <br>Amt & Rate</th>
+        <th>Amount <br>(Rs)</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${order.cart
+        .map((item, index) => {
+          const discountPrice = item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice;
+          const cgst = (discountPrice * 0.015).toFixed(2);
+          const sgst = (discountPrice * 0.015).toFixed(2);
+          const igst = (discountPrice * 0.03).toFixed(2);
+          
+          grandTotal += discountPrice;
+          return `
+            <tr style="text-align: center;">
+              <td rowspan="4">${index + 1}</td>
+              <td rowspan="${item?.selectedEnamelColor ? 1 : 2}">${item.name} ${item.showWithChain ? '& chain': ''}</td>
+              <td rowspan="${item?.selectedEnamelColor ? 1 : 2}"></td>
+               <td rowspan="4">
+                ${item.showWithChain 
+                    ? (item.selectedChainSize === '13inch' 
+                        ? (parseFloat(item.goldWeight.weight) + 1).toFixed(2)  // Add 1g for 13inch chain
+                        : item.selectedChainSize === '18inch' 
+                        ? (parseFloat(item.goldWeight.weight) + 2).toFixed(2)  // Add 2g for 18inch chain
+                        : parseFloat(item.goldWeight.weight).toFixed(2))        // If no chain, show original weight
+                    : parseFloat(item.goldWeight.weight).toFixed(2)               // If showWithChain is false, use original weight
+                }
+                </td>
+              <td rowspan="4">
+                ${item.showWithChain 
+                    ? (item.selectedChainSize === '13inch' 
+                        ? (parseFloat(item.goldWeight.weight) + 1).toFixed(2) 
+                        : item.selectedChainSize === '18inch' 
+                        ? (parseFloat(item.goldWeight.weight) + 2).toFixed(2) 
+                        : parseFloat(item.goldWeight.weight).toFixed(2)) 
+                    : parseFloat(item.goldWeight.weight).toFixed(2)
+                }
+                </td>
+              <td rowspan="4">${item.qty}</td>
+              <td rowspan="4">${discountPrice}</td>
+              <td rowspan="4">${cgst}</td>
+              <td rowspan="4">${sgst}</td>
+              <td rowspan="4">Amt & Rate</td>
+              <td rowspan="4">${discountPrice}</td>
+            </tr>
+            <tr style="text-align: center;">
+              ${item?.selectedEnamelColor ? `<td>Enamel (${item.selectedEnamelColor})</td>` : `<td></td>`}
+            </tr>
+            <tr style="text-align: center;">
+              <td>Diamond</td>
+              <td>${item.diamondWeight.weight}</td>
+            </tr>
+            <tr style="text-align: center;">
+              <td>HSN CODE: 71081300</td>
+            </tr>`;
+        })
+        .join('')}
+    </tbody>
+    <tfoot>
+      <tr style="text-align: center;">
+        <td>Total</td>
+        <td></td>
+        <td>${order.cart.reduce((acc, item) => acc + parseFloat(item.diamondWeight.weight) || 0, 0).toFixed(2)} ct</td>
+        <td>
+            ${order.cart.reduce((acc, item) => {
+                let additionalWeight = 0;
+                if (item.showWithChain) {
+                    additionalWeight = item.selectedChainSize === '13inch' ? 1 : 
+                                        item.selectedChainSize === '18inch' ? 2 : 0;
+                }
+                return acc + parseFloat(item.goldWeight.weight) + additionalWeight;
+            }, 0).toFixed(2)}
+            </td>
 
-
-                </tr>
-    
-
-                <tr style="text-align: center;">
-                    <td rowspan="4">${index + 1}</td>
-                    <td>${item.name} </td>
-                    <td rowspan="2"></td>
-                    <td rowspan="4">${item.goldWeight.weight}</td>
-                    <td rowspan="4">${item.goldWeight.weight}</td>
-                    <td rowspan="4"></td>
-                    <td rowspan="4">${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice} </td>
-                    <td rowspan="4">${cgst}</td>
-                    <td rowspan="4">${sgst}</td>
-                    <td rowspan="4">Amt & Rate</td>
-
-                    <td rowspan="4">${order.totalPrice}</td>
-                    
-
-                </tr>
-
-               <tr style="text-align: center;"> 
-                     ${order.selectedEnamelColor !== null ? `<td>Enamel (${order.selectedEnamelColor})</td>` : ''}
-                </tr>
-                <tr style="text-align: center;">       
-                    <td>Diamond </td>
-                    <td>${item.diamondWeight.weight}</td>
-                </tr>
-                <tr style="text-align: center;">       
-                    <td>HSN CODE : 71081300 </td>
-                </tr>
-
-                <tr style="text-align: center;">
-                    <td  style="text-align: center;">Total</td>
-                    <td style="text-align: center;"> </td>
-                    <td  style="text-align: center;">${item.diamondWeight.weight}</td>
-                    <td  style="text-align: center;">${item.goldWeight.weight}</td>
-                    <td  style="text-align: center;">${item.goldWeight.weight}</td>
-                    <td  style="text-align: center;"></td>
-                    <td  style="text-align: center;">${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</td>
-                    <td  style="text-align: center;">${cgst}</td>
-                    <td  style="text-align: center;">${sgst}</td>
-                    <td  style="text-align: center;"></td>
-
-                    <td >${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</td>
-
-                </tr>
-
-                <tr>
-                    <td colspan="8" rowspan="2">Rupees in Words : ${totalPriceInWords.toUpperCase()}.</td>
-                    <td style="text-align: center;" colspan="2">Total Invoice Value </td>
-                    <td style="text-align: center;">Rs. ${order.totalPrice} </td>
-                    
-
-
-                </tr>
-                <tr style="text-align: center;">
-                    <td colspan="2">Total Amount Payable  </td>
-                    <td>Rs. ${order.totalPrice}</td>
-                </tr>
-
-            </table>
-
-        </div>`
-            )
-        }).join('') 
-       }
+            <td>
+            ${order.cart.reduce((acc, item) => {
+                let additionalWeight = 0;
+                if (item.showWithChain) {
+                    additionalWeight = item.selectedChainSize === '13inch' ? 1 : 
+                                        item.selectedChainSize === '18inch' ? 2 : 0;
+                }
+                return acc + parseFloat(item.goldWeight.weight) + additionalWeight;
+            }, 0).toFixed(2)}
+            </td>
+        <td></td>
+        <td>${grandTotal}</td>
+        <td>${order.cart.reduce((acc, item) => acc + parseFloat((item.chainPrice > 0 ? (item.discountPrice + item.chainPrice) * 0.015 : item.discountPrice * 0.015).toFixed(2)), 0)}</td>
+        <td>${order.cart.reduce((acc, item) => acc + parseFloat((item.chainPrice > 0 ? (item.discountPrice + item.chainPrice) * 0.015 : item.discountPrice * 0.015).toFixed(2)), 0)}</td>
+        <td></td>
+        <td>${order.totalPrice}</td>
+      </tr>
+      <tr>
+        <td colspan="8" rowspan="2">Rupees in Words: ${totalPriceInWords.toUpperCase()}.</td>
+        <td colspan="2">Total Invoice Value</td>
+        <td>Rs. ${order.totalPrice}</td>
+      </tr>
+      <tr style="text-align: center;">
+        <td colspan="2">Total Amount Payable</td>
+        <td>Rs. ${order.totalPrice}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 
         <div class="bankdetails">
             <p>BANK DETAIL</p>
@@ -1551,6 +1575,11 @@ router.get(
 //new code 
 
 router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
+    const metalColors = {
+        0: "Yellow Gold",
+        1: "Rose Gold",
+        2: "White Gold",
+    };
     try {
         const order = await Order.findById(req.params.id);
         console.log(order,"order from backend")
@@ -3227,7 +3256,85 @@ router.put(
     })
 );
 
+//cancel of order
 
+router.put("/cancel-order/:id", isSeller, catchAsyncErrors(async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+            return next(new ErrorHandler("Order not found with this id", 400));
+        }
+
+        // Check if the order is eligible for cancellation
+        if (order.status === "Shipping" || order.status === "Delivered" || order.status === "Received" || order.status === "On the way" ||  order.status === "Processing Refund" || order.status === "refund Success" ) {
+            return next(new ErrorHandler("Order cannot be cancelled as it has already been shipped or delivered.", 400));
+        }
+
+        // Set order status to "Cancelled"
+        order.status = "Cancelled";
+
+        // Restore the stock for each item in the order
+        for (const cartItem of order.cart) {
+            await restoreStock(cartItem);
+        }
+
+        // If payment was made, process the refund (optional, depending on your payment gateway)
+        // if (order.paymentInfo && order.paymentInfo.status === "Succeeded") {
+        //     // Add logic for refunding the customer, e.g. via Stripe or PayPal
+        //     // await processRefund(order.paymentInfo); // Custom function to handle refund
+        // }
+
+        // Save the order after updating the status and restoring stock
+        await order.save({ validateBeforeSave: false });
+
+        // Notify the customer about the cancellation
+        // await cancellationMail({
+        //     email: order.shippingAddress?.email, // Assuming email is in the order object
+        //     subject: "Your Order Has Been Cancelled",
+        //     html: `Your order with ID: ${order._id} has been cancelled. If you have any questions, please contact support.`, // Customize this as needed
+        // });
+
+        res.status(200).json({
+            success: true,
+            message: "Order has been cancelled successfully.",
+        });
+
+        async function restoreStock(cartItem) {
+            const product = await Product.findById(cartItem._id);
+
+            const metalColors = {
+                0: "YellowGold",
+                1: "RoseGold",
+                2: "WhiteGold",
+            };
+
+            // Restore stock for enamel and metal colors
+            const selectedMetalColor = metalColors[cartItem.selectedColor];
+            const selectedEnamelColor = cartItem.selectedEnamelColor;
+
+            if (selectedEnamelColor) {
+                const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                const enamelKey = `${cleanedEnamelColor}${selectedMetalColor.replace(/ /g, '')}clrStock`;
+                product.Enamelcolorstock[cleanedEnamelColor][enamelKey] += cartItem.qty;
+            } else if (selectedMetalColor) {
+                const metalKey = `${selectedMetalColor}clrStock`;
+                product.Metalcolorstock[metalKey] += cartItem.qty;
+            } else {
+                product.stock += cartItem.qty;
+            }
+
+            // Decrement the sold_out field since the items are being returned to stock
+            product.sold_out -= cartItem.qty;
+
+            // Save the product after restoring stock
+            await product.save({ validateBeforeSave: false });
+        }
+
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}));
 
 
 module.exports = router

@@ -1588,7 +1588,7 @@ function ProductDetails({ data }) {
 
                         </div>
 
-                        <ProductDetailsInfo data={data} />
+                        <ProductDetailsInfo data={data} shouldShowChainOptions={shouldShowChainOptions} />
 
 
                     </div>
@@ -1602,7 +1602,7 @@ function ProductDetails({ data }) {
 }
 
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data ,shouldShowChainOptions }) => {
     const [active, setActive] = useState(1)
     console.log(data, "see the data")
     const [expanded, setExpanded] = useState(true);
@@ -1690,26 +1690,32 @@ const ProductDetailsInfo = ({ data }) => {
                                 </div>
                             </div>
 
+                            {shouldShowChainOptions && 
                             <div className="bg-[#5DC2B0] w-[300px] font-Poppins mb-3 rounded-[4px] productdetailresptable">
-                                <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
-                                    <span><GiHeartNecklace /></span>
-                                    <span className='font-[500]'>Chain </span>
+                            <div className="t1sec px-[12.5px] py-[16px] gap-2 flex items-center">
+                                <span><GiHeartNecklace /></span>
+                                <span className='font-[500]'>Chain </span>
+                            </div>
+                            <div className="tsec2 flex font-Poppins">
+                                <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
+                                    <div className='pb-[2px] font-[600] '>Length</div>
+                                    <p className='text-[#4f3267] text-[13px]'>13 inch</p>
+                                    <p className='text-[#4f3267] text-[13px]'>18 inch</p>
+
                                 </div>
-                                <div className="tsec2 flex font-Poppins">
-                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
-                                        <div className='pb-[2px] font-[600] '>Length</div>
-                                        <p className='text-[#4f3267] text-[13px]'>13 inch</p>
-                                        <p className='text-[#4f3267] text-[13px]'>18 inch</p>
+                                <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
+                                    <div className='pb-[2px] font-[600] '>Weight</div>
+                                    <p className='text-[#4f3267] text-[13px]'> 1gms </p>
+                                    <p className='text-[#4f3267] text-[13px]'> 2gms </p>
 
-                                    </div>
-                                    <div className='w-[200px] bg-[#b6f0e5] mr-[1.5px] px-[10px] py-[2px]'>
-                                        <div className='pb-[2px] font-[600] '>Weight</div>
-                                        <p className='text-[#4f3267] text-[13px]'> 1gms </p>
-                                        <p className='text-[#4f3267] text-[13px]'> 2gms </p>
-
-                                    </div>
                                 </div>
                             </div>
+                            </div>
+
+                            
+                            }
+
+                            
 
                         </div>
                         {/* table section */}
@@ -1857,11 +1863,11 @@ const ProductDetailsInfo = ({ data }) => {
                                     <div className='pl-3'>
                                         <h1 className='font-[500] capitalize'>{item.user.name}</h1>
                                         <Ratings rating={data?.ratings} />
-                                        <div className='w-full flex mt-2 gap-4'>
+                                        {/* <div className='w-full flex mt-2 gap-4'>
 
                                             <img src={review1img} alt="" className='w-[200px] h-[200px] border object-fill shadow rounded-[5px]' />
                                             <img src={review2img} alt="" className='w-[200px] h-[200px] border object-fill shadow rounded-[5px]' />
-                                        </div>
+                                        </div> */}
                                         <p className='w-[60%] mt-3'>{item.comment}</p>
 
                                     </div>
