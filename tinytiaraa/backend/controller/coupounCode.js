@@ -129,48 +129,92 @@ router.delete(
 
 // get couponcode value
 
-// router.get(
-//   "/get-coupon-value/:name",
-//   catchAsyncErrors(async (req, res, next) => {
-//     try {
-//       const couponCode = await CoupounCode.findOne({ name: req.params.name });
-//       if (!couponCode) {
-//         return next(new ErrorHandler("Coupon code not found", 404));
-//       }
+router.get(
+  "/get-coupon-value/:name",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const couponCode = await CoupounCode.findOne({ name: req.params.name });
+      if (!couponCode) {
+        return next(new ErrorHandler("Coupon code not found", 404));
+      }
 
-//       res.status(200).json({
-//         success: true,
-//         couponCode,
-//       });
-//     } catch (error) {
-//       return next(new ErrorHandler(error, 400));
-//     }
-//   })
-// );
-
-router.get('/get-coupon-value/:code', async (req, res) => {
-  const { code } = req.params;
-
-  try {
-    const coupon = await CoupounCode.findOne({ name: code });
-    if (!coupon) {
-      return res.status(404).json({ success: false, message: 'Coupon code does not exist.' });
+      res.status(200).json({
+        success: true,
+        couponCode,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
     }
+  })
+);
 
-    // Return the coupon object with shop ID and relevant fields
-    return res.status(200).json({
-      success: true,
-      couponCode: {
-        value: coupon.value, // Only return value from the database
-        percentageDiscount: coupon.percentageDiscount,
-        shop: coupon.shop, // Ensure the shop ID is included
-        // Exclude any fields that you don't want exposed
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ success: false, message: 'Server error.' });
-  }
-});
+
+router.post(
+  "/apply-coupon",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { name, cartItems } = req.body; // Receive the coupon code and cart items from the frontend
+      const couponCode = await CoupounCode.findOne({ name });
+
+      if (!couponCode) {
+        return next(new ErrorHandler("Coupon code not found", 404));
+      }
+
+      // Find eligible cart items that belong to the shop the coupon applies to
+      const isCouponValid = cartItems.filter(item => item.shopId === couponCode.shop);
+
+      if (isCouponValid.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Coupon code is not valid for items in your cart."
+        });
+      }
+
+      const eligiblePrice = isCouponValid.reduce(
+        (acc, item) => acc + item.qty * item.discountPrice,
+        0
+      );
+
+      let calculatedDiscount = 0;
+
+      if (couponCode.percentageDiscount) {
+        calculatedDiscount = (eligiblePrice * (couponCode.percentageDiscount / 100)).toFixed(2);
+      } else if (couponCode.value) {
+        calculatedDiscount = Math.min(eligiblePrice, couponCode.value).toFixed(2);
+      }
+
+      res.status(200).json({
+        success: true,
+        discount: calculatedDiscount,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  })
+);
+// router.get('/get-coupon-value/:code', async (req, res) => {
+//   const { code } = req.params;
+
+//   try {
+//     const coupon = await CoupounCode.findOne({ name: code });
+//     if (!coupon) {
+//       return res.status(404).json({ success: false, message: 'Coupon code does not exist.' });
+//     }
+
+//     // Return the coupon object with shop ID and relevant fields
+//     return res.status(200).json({
+//       success: true,
+//       couponCode: {
+//         value: coupon.value, // Only return value from the database
+//         percentageDiscount: coupon.percentageDiscount,
+//         shop: coupon.shop, // Ensure the shop ID is included
+//         // Exclude any fields that you don't want exposed
+//       },
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ success: false, message: 'Server error.' });
+//   }
+// });
 
 module.exports = router

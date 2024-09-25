@@ -135,66 +135,86 @@ function Cartpage() {
   //   }
   // };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = couponCode; // Only sending the coupon code
   
     try {
-      const res = await axios.get(`${server}/coupon/get-coupon-value/${name}`);
-      console.log("Coupon Response:", res.data); // Log the coupon response
+      const res = await axios.post(`${server}/coupon/apply-coupon`, {
+        name: couponCode,
+        cartItems: cart, // Send the cart to the server for validation
+      });
   
       if (res.data.success) {
-        const shopId = res.data.couponCode?.shop; // Extracting shopId from coupon
-        const couponCodeValue = res.data.couponCode?.value; // This should be 500
-        const percentageDiscount = res.data.couponCode?.percentageDiscount; // This should be null
-  
-        console.log("Shop ID from coupon:", shopId); // Log shopId
-        console.log("Cart Items:", cart); // Log current cart items
-  
-        // Check if cart has items
-        if (!cart || cart.length === 0) {
-          toast.error("Your cart is empty.");
-          return;
-        }
-  
-        // Find valid items for the coupon
-        const isCouponValid = cart.filter((item) => item.shopId === shopId);
-        console.log("Valid Items for Coupon:", isCouponValid); // Log valid items
-  
-        if (isCouponValid.length === 0) {
-          toast.error("Coupon code is not valid for items in your cart.");
-          setCouponCode("");
-        } else {
-          const eligiblePrice = isCouponValid.reduce(
-            (acc, item) => acc + item.qty * item.discountPrice,
-            0
-          );
-  
-          let calculatedDiscount = 0;
-  
-          // Apply fixed value discount
-          if (couponCodeValue !== null) {
-            calculatedDiscount = couponCodeValue.toFixed(2);
-          } else {
-            // If percentageDiscount is not null, calculate discount
-            calculatedDiscount = (eligiblePrice * (percentageDiscount / 100)).toFixed(2);
-          }
-  
-          setDiscountPrice(calculatedDiscount); // Set the discount price
-          setCouponCodeData(res.data.couponCode); // Store coupon code data if needed elsewhere
-          toast.success("Coupon applied successfully.");
-          setCouponCode("");
-        }
+        setDiscountPrice(res.data.discount); // Set the discount price
+        toast.success("Coupon applied successfully.");
       } else {
-        toast.error("Coupon code does not exist.");
-        setCouponCode("");
+        toast.error(res.data.message || "Coupon code is not valid.");
       }
+      setCouponCode("");
     } catch (error) {
-      console.error("Error applying coupon:", error.response ? error.response.data : error.message);
+      console.error("Error applying coupon:", error);
       toast.error("Failed to apply coupon code. Please try again later.");
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const name = couponCode; // Only sending the coupon code
+  
+  //   try {
+  //     const res = await axios.get(`${server}/coupon/get-coupon-value/${name}`);
+  //     console.log("Coupon Response:", res.data); // Log the coupon response
+  
+  //     if (res.data.success) {
+  //       const shopId = res.data.couponCode?.shop; // Extracting shopId from coupon
+  //       const couponCodeValue = res.data.couponCode?.value; // This should be 500
+  //       const percentageDiscount = res.data.couponCode?.percentageDiscount; // This should be null
+  
+  //       console.log("Shop ID from coupon:", shopId); // Log shopId
+  //       console.log("Cart Items:", cart); // Log current cart items
+  
+  //       // Check if cart has items
+  //       if (!cart || cart.length === 0) {
+  //         toast.error("Your cart is empty.");
+  //         return;
+  //       }
+  
+  //       // Find valid items for the coupon
+  //       const isCouponValid = cart.filter((item) => item.shopId === shopId);
+  //       console.log("Valid Items for Coupon:", isCouponValid); // Log valid items
+  
+  //       if (isCouponValid.length === 0) {
+  //         toast.error("Coupon code is not valid for items in your cart.");
+  //         setCouponCode("");
+  //       } else {
+  //         const eligiblePrice = isCouponValid.reduce(
+  //           (acc, item) => acc + item.qty * item.discountPrice,
+  //           0
+  //         );
+  
+  //         let calculatedDiscount = 0;
+  
+  //         // Apply fixed value discount
+  //         if (couponCodeValue !== null) {
+  //           calculatedDiscount = couponCodeValue.toFixed(2);
+  //         } else {
+  //           // If percentageDiscount is not null, calculate discount
+  //           calculatedDiscount = (eligiblePrice * (percentageDiscount / 100)).toFixed(2);
+  //         }
+  
+  //         setDiscountPrice(calculatedDiscount); // Set the discount price
+  //         setCouponCodeData(res.data.couponCode); // Store coupon code data if needed elsewhere
+  //         toast.success("Coupon applied successfully.");
+  //         setCouponCode("");
+  //       }
+  //     } else {
+  //       toast.error("Coupon code does not exist.");
+  //       setCouponCode("");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error applying coupon:", error.response ? error.response.data : error.message);
+  //     toast.error("Failed to apply coupon code. Please try again later.");
+  //   }
+  // };
   
   const totalPrice = (subTotalPrice - discountPrice).toFixed(2);
 
