@@ -257,4 +257,3 @@ app.get('/invoices/:orderId', async (req, res) => {
 
 app.use(ErrorHandler)
 module.exports = app;
-;

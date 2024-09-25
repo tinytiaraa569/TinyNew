@@ -146,7 +146,7 @@ function CheckoutPage() {
             setZipCode(address.zipCode);
             setCountry(address.country);
             setCity(address.city);
-            setName(address.name)
+            // setName(address.name)
             setphoneNumber(address.phoneNumber)
         }
     };
@@ -556,7 +556,7 @@ const calculateEDD = async () => {
                                                         <input
                                                             id="billing-address1"
                                                             type='text'
-                                                            value={billingAddress.name}
+                                                            value= {billingAddress.name}
                                                             onChange={(e) => setBillingAddress(prev => ({ ...prev, name: e.target.value }))}
                                                             className='int-emailcheck'
                                                             placeholder="Enter Your Name"
@@ -670,7 +670,7 @@ const calculateEDD = async () => {
                                 {/* credentails information */}
 
                                 {
-                                    orderData.totalPrice > 50000 && (
+                                    orderData.totalPrice > 200000 && (
                                         <div className="cerdtentaisl-information bg-[#ffffff] mb-[16px] p-4 shadow-lg">
                                         <div className='mb-[12px]'>
                                             <h2 className='text-[16px] font-[400] text-[#161618]'>Information Required</h2>
