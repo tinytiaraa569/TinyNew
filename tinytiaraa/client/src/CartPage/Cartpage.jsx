@@ -134,28 +134,30 @@ function Cartpage() {
   //     toast.error("Failed to apply coupon code. Please try again later.");
   //   }
   // };
+ 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  //withcard items
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
   
-    try {
-      const res = await axios.post(`${server}/coupon/apply-coupon`, {
-        name: couponCode,
-        cartItems: cart, // Send the cart to the server for validation
-      });
+  //   try {
+  //     const res = await axios.post(`${server}/coupon/apply-coupon`, {
+  //       name: couponCode,
+  //       cartItems: cart, // Send the cart to the server for validation
+  //     });
   
-      if (res.data.success) {
-        setDiscountPrice(res.data.discount); // Set the discount price
-        toast.success("Coupon applied successfully.");
-      } else {
-        toast.error(res.data.message || "Coupon code is not valid.");
-      }
-      setCouponCode("");
-    } catch (error) {
-      console.error("Error applying coupon:", error);
-      toast.error("Failed to apply coupon code. Please try again later.");
-    }
-  };
+  //     if (res.data.success) {
+  //       setDiscountPrice(res.data.discount); // Set the discount price
+  //       toast.success("Coupon applied successfully.");
+  //     } else {
+  //       toast.error(res.data.message || "Coupon code is not valid.");
+  //     }
+  //     setCouponCode("");
+  //   } catch (error) {
+  //     console.error("Error applying coupon:", error);
+  //     toast.error("Failed to apply coupon code. Please try again later.");
+  //   }
+  // };
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   const name = couponCode; // Only sending the coupon code
@@ -216,6 +218,28 @@ function Cartpage() {
   //   }
   // };
   
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const res = await axios.post(`${server}/coupon/apply-coupon`, {
+        name: couponCode,
+        cartItems: cart, // Send the cart to the server for validation
+      });
+  
+      if (res.data.success) {
+        setDiscountPrice(res.data.discount);  // Set the discount price
+        localStorage.setItem("couponToken", res.data.token);  // Save the JWT token for later use
+        toast.success("Coupon applied successfully.");
+      } else {
+        toast.error(res.data.message || "Coupon code is not valid.");
+      }
+      setCouponCode("");
+    } catch (error) {
+      console.error("Error applying coupon:", error);
+      toast.error("Failed to apply coupon code. Please try again later.");
+    }
+  };
   const totalPrice = (subTotalPrice - discountPrice).toFixed(2);
 
   useEffect(() => {

@@ -6,6 +6,10 @@ const ErrorHandler = require("../utils/Errorhandler")
 const Shop = require("../model/shop")
 const { isSeller } = require("../middleware/auth");
 const CoupounCode = require("../model/coupounCode")
+const jwt = require('jsonwebtoken');
+
+// Secret key to sign the JWT
+const JWT_SECRET = "ewjdgss372547ydj";
 
 
 //create Coupoun code
@@ -149,19 +153,63 @@ router.get(
 );
 
 
+// router.post(
+//   "/apply-coupon",
+//   catchAsyncErrors(async (req, res, next) => {
+//     try {
+//       const { name, cartItems } = req.body; // Receive the coupon code and cart items from the frontend
+//       const couponCode = await CoupounCode.findOne({ name });
+
+//       if (!couponCode) {
+//         return next(new ErrorHandler("Coupon code not found", 404));
+//       }
+
+//       // Find eligible cart items that belong to the shop the coupon applies to
+//       const isCouponValid = cartItems.filter(item => item.shopId === couponCode.shop);
+
+//       if (isCouponValid.length === 0) {
+//         return res.status(400).json({
+//           success: false,
+//           message: "Coupon code is not valid for items in your cart."
+//         });
+//       }
+
+//       const eligiblePrice = isCouponValid.reduce(
+//         (acc, item) => acc + item.qty * item.discountPrice,
+//         0
+//       );
+
+//       let calculatedDiscount = 0;
+
+//       if (couponCode.percentageDiscount) {
+//         calculatedDiscount = (eligiblePrice * (couponCode.percentageDiscount / 100)).toFixed(2);
+//       } else if (couponCode.value) {
+//         calculatedDiscount = Math.min(eligiblePrice, couponCode.value).toFixed(2);
+//       }
+
+//       res.status(200).json({
+//         success: true,
+//         discount: calculatedDiscount,
+//       });
+//     } catch (error) {
+//       return next(new ErrorHandler(error.message, 400));
+//     }
+//   })
+// );
+
 router.post(
   "/apply-coupon",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const { name, cartItems } = req.body; // Receive the coupon code and cart items from the frontend
+      const { name, cartItems } = req.body;  // Receive the coupon code and cart items from the frontend
       const couponCode = await CoupounCode.findOne({ name });
 
       if (!couponCode) {
         return next(new ErrorHandler("Coupon code not found", 404));
       }
 
-      // Find eligible cart items that belong to the shop the coupon applies to
-      const isCouponValid = cartItems.filter(item => item.shopId === couponCode.shop);
+      // Filter cart items that belong to the shop the coupon applies to
+      const isCouponValid = cartItems.filter((item) => item.shopId === couponCode.shop);
 
       if (isCouponValid.length === 0) {
         return res.status(400).json({
@@ -170,11 +218,28 @@ router.post(
         });
       }
 
+      // Calculate eligible cart value
       const eligiblePrice = isCouponValid.reduce(
         (acc, item) => acc + item.qty * item.discountPrice,
         0
       );
 
+      // Check if eligible price falls between minAmount and maxAmount (if specified)
+      if (couponCode.minAmount && eligiblePrice < couponCode.minAmount) {
+        return res.status(400).json({
+          success: false,
+          message: `Minimum order amount should be ${couponCode.minAmount} to apply this coupon.`,
+        });
+      }
+
+      if (couponCode.maxAmount && eligiblePrice > couponCode.maxAmount) {
+        return res.status(400).json({
+          success: false,
+          message: `Maximum order amount to apply this coupon is ${couponCode.maxAmount}.`,
+        });
+      }
+
+      // Calculate discount
       let calculatedDiscount = 0;
 
       if (couponCode.percentageDiscount) {
@@ -183,15 +248,25 @@ router.post(
         calculatedDiscount = Math.min(eligiblePrice, couponCode.value).toFixed(2);
       }
 
+      // Create a JWT token with discount info
+      const token = jwt.sign(
+        { discount: calculatedDiscount, couponName: couponCode.name }, // Payload
+        JWT_SECRET, // Secret key
+        { expiresIn: "1h" } // Token expires in 1 hour
+      );
+
+      // Respond with discount amount and JWT token
       res.status(200).json({
         success: true,
         discount: calculatedDiscount,
+        token, // Send the token to the frontend
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
     }
   })
 );
+
 // router.get('/get-coupon-value/:code', async (req, res) => {
 //   const { code } = req.params;
 
