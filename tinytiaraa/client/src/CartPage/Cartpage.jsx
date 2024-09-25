@@ -23,7 +23,7 @@ import axios from 'axios';
 import { FaTimesCircle } from 'react-icons/fa';
 import { XCircleIcon } from 'lucide-react';
 import { GiCash } from 'react-icons/gi';
-
+import CryptoJS from 'crypto-js';
 
 
 
@@ -32,6 +32,8 @@ function Cartpage() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  const JWT_SECRET = "ewjdgss372547ydj"
 
   // const toatalPrice = data.discountPrice * value
   const { cart } = useSelector((state) => state.cart)
@@ -218,22 +220,50 @@ function Cartpage() {
   //   }
   // };
   
+  const decryptDiscount = (encryptedDiscount) => {
+    const [ivHex, encryptedData] = encryptedDiscount.split(':'); // Split IV and encrypted data
+    const iv = CryptoJS.enc.Hex.parse(ivHex); // Convert hex IV to CryptoJS format
+  
+    // Use the same hashed secret
+    const hashedKey = CryptoJS.SHA256("ewjdgss372547ydj"); // Ensure this matches your backend hash
+  
+    const decrypted = CryptoJS.AES.decrypt(
+      { ciphertext: CryptoJS.enc.Hex.parse(encryptedData) },
+      hashedKey,
+      { iv: iv }
+    );
+  
+    const discount = decrypted.toString(CryptoJS.enc.Utf8); // Convert to string
+    console.log(discount,"discoutn")
+    if (!discount) {
+      throw new Error("Invalid discount value received.");
+    }
+  
+    return parseFloat(discount); // Convert to float
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const res = await axios.post(`${server}/coupon/apply-coupon`, {
         name: couponCode,
         cartItems: cart, // Send the cart to the server for validation
       });
-  
+
       if (res.data.success) {
-        setDiscountPrice(res.data.discount);  // Set the discount price
-        localStorage.setItem("couponToken", res.data.token);  // Save the JWT token for later use
+        // Decrypt the discount value before using it
+        const decryptedDiscount = decryptDiscount(res.data.discount);
+
+        // Set the discount price
+        setDiscountPrice(decryptedDiscount);
+        localStorage.setItem("couponToken", res.data.token); // Save the JWT token for later use
         toast.success("Coupon applied successfully.");
       } else {
         toast.error(res.data.message || "Coupon code is not valid.");
       }
+      
+      // Clear the coupon code input
       setCouponCode("");
     } catch (error) {
       console.error("Error applying coupon:", error);
