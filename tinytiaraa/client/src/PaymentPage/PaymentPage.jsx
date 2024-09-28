@@ -927,7 +927,7 @@ function PaymentPage() {
     
             // Step 2: Prepare PayU payment options
             const payuOptions = {
-                key: "ArcB3P",
+                key: "XA5XsM",
                 txnid: transactionId,
                 amount: orderData.totalPrice,
                 productinfo: "TEST PRODUCT",
@@ -947,7 +947,7 @@ function PaymentPage() {
             // Redirect to PayU payment gateway
             const form = document.createElement('form');
             form.setAttribute('method', 'POST');
-            form.setAttribute('action', 'https://test.payu.in/_payment'); // Use live URL in production
+            form.setAttribute('action', 'https://secure.payu.in/_payment'); // Use live URL in production
     
             // Add all parameters to the form
             Object.keys(payuOptions).forEach(key => {
@@ -1133,11 +1133,11 @@ function PaymentPage() {
                                     <button onClick={handleRazorpayPayment}>Pay With Razorpay</button>
                                 )}
 
-                                {selectedPaymentMethod === 'payu' && generatePayUForm()}
+                                {/* {selectedPaymentMethod === 'payu' && generatePayUForm()} */}
 
-                                {/* {selectedPaymentMethod === 'payu' && (
+                                {selectedPaymentMethod === 'payu' && (
             <button onClick={handlePayUPayment}>Pay With PayU</button>
-        )} */}
+        )}
 
 
                                 {selectedPaymentMethod === 'cod' && (
