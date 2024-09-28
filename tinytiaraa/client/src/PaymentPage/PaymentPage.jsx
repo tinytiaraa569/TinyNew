@@ -875,8 +875,8 @@ function PaymentPage() {
         }
 
         return (
-            <form action='https://secure.payu.in/_payment' method='post' >
-                <input type="hidden" name="key" value={"XA5XsM"} />
+            <form action='https://test.payu.in/_payment' method='post' >
+                <input type="hidden" name="key" value={"ArcB3P"} />
                 <input type="hidden" name="txnid" value={transactionId} />
                 <input type="hidden" name="amount" value={orderData?.totalPrice} />
                 <input type="hidden" name="productinfo" value="TEST PRODUCT" /> {/* Add product info here */}
