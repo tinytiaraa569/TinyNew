@@ -1133,11 +1133,11 @@ function PaymentPage() {
                                     <button onClick={handleRazorpayPayment}>Pay With Razorpay</button>
                                 )}
 
-                                {/* {selectedPaymentMethod === 'payu' && generatePayUForm()} */}
+                                {selectedPaymentMethod === 'payu' && generatePayUForm()}
 
-                                {selectedPaymentMethod === 'payu' && (
+                                {/* {selectedPaymentMethod === 'payu' && (
             <button onClick={handlePayUPayment}>Pay With PayU</button>
-        )}
+        )} */}
 
 
                                 {selectedPaymentMethod === 'cod' && (
