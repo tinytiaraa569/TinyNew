@@ -738,54 +738,63 @@ function PaymentPage() {
             toast.error('Failed to update referral balance.');
         }
     };
-
+    
+    
 
 
     //payu success
-    const handlePayuPaymentSuccess = async (paymentDetails) => {
+    const handlePayUSuccess = async (paymentDetails) => {
+        console.log('Payment successful via PayU. Details:', paymentDetails);
+
+        // Retrieve referral code from session storage
+        const referralCode = sessionStorage.getItem('referralCode');
+        console.log('Captured referral code:', referralCode);
+
+        const latestOrderData = localStorage.getItem("latestOrder");
+
+        if (!latestOrderData) {
+            console.error("No latest order data found.");
+            return;
+        }
+
+        const latestOrder = JSON.parse(latestOrderData);
+        const referralBalanceUsed = latestOrder.appliedReferral || 0;
+        const user = latestOrder.user;
+
+        // Check if the order has already been placed using this txnid
+        if (latestOrder.paymentInfo?.id === paymentDetails.txnid) {
+            console.log("Order with this txnid has already been placed.");
+            return;
+        }
+
+        // Define the updatedOrder object
+        const updatedOrder = {
+            ...latestOrder,
+            paymentInfo: {
+                id: paymentDetails.txnid, // Use PayU's txnid
+                status: paymentDetails.status, // PayU payment status
+                type: 'PayU', // Payment method
+            },
+            referralCode: referralCode,
+        };
+
         try {
-            // Verify payment status
-            if (paymentDetails.status !== "success") {
-                throw new Error("Payment not successful");
-            }
-
-            // Retrieve order data and referral code
-            const referralCode = sessionStorage.getItem('referralCode');
-            const latestOrderData = localStorage.getItem("latestOrder");
-
-            if (!latestOrderData) {
-                throw new Error("No latest order data found.");
-            }
-
-            const latestOrder = JSON.parse(latestOrderData);
-            const referralBalanceUsed = latestOrder.appliedReferral || 0;
-            const user = latestOrder.user;
-
-            // Prepare the updated order object
-            const updatedOrder = {
-                ...latestOrder,
-                paymentInfo: {
-                    id: paymentDetails.txnid, // PayU transaction ID
-                    status: 'success',
-                    type: 'PayU',
-                },
-                referralCode: referralCode,
-            };
-
-            // Place the order
+            // Send updated order to server
             const response = await axios.post(`${server}/order/create-order`, updatedOrder, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
 
+            console.log('Server response:', response.data);
             const orderId = response.data.order._id;
+            console.log('Order ID:', orderId);
 
-            // Handle referral balance update if necessary
             if (referralBalanceUsed > 0 && user) {
+                // Deduct referral balance if applied
                 const currentReferralBalance = user.referralBalance || 0;
-                let updatedReferralBalance;
 
+                let updatedReferralBalance;
                 if (currentReferralBalance < referralBalanceUsed) {
                     updatedReferralBalance = 0;
                     toast.warning(`Referral balance used: ${currentReferralBalance}. Remaining balance is zero.`);
@@ -793,24 +802,28 @@ function PaymentPage() {
                     updatedReferralBalance = currentReferralBalance - referralBalanceUsed;
                 }
 
+                // Update the backend with the new referral balance
                 await updateReferralBalanceInBackend(user._id, updatedReferralBalance);
+
+                // Update the user object with the new referral balance
                 user.referralBalance = updatedReferralBalance;
             }
 
             // Clear local storage and navigate to success page
+            localStorage.removeItem("latestOrder");
             localStorage.setItem("cartItems", JSON.stringify([]));
-            localStorage.setItem("latestOrder", JSON.stringify([]));
             localStorage.setItem("orderDetails", JSON.stringify({ ...updatedOrder, orderId }));
             navigate("/order/success");
-            window.location.reload();
 
+            // Provide feedback to the user
             toast.success("Order Successfully Placed");
         } catch (error) {
-            console.error("Error placing order:", error);
+            console.log(error);
             toast.error("Failed to place order. Please try again.");
         }
     };
-
+  
+   
     const metalColors = {
         0: "Yellow Gold",
         1: "Rose Gold",
@@ -862,16 +875,16 @@ function PaymentPage() {
         }
 
         return (
-            <form action='https://secure.payu.in/_payment' method='post'>
-                <input type="hidden" name="key" value={"XA5XsM"} />
+            <form action='https://test.payu.in/_payment' method='post' >
+                <input type="hidden" name="key" value={"ArcB3P"} />
                 <input type="hidden" name="txnid" value={transactionId} />
                 <input type="hidden" name="amount" value={orderData?.totalPrice} />
                 <input type="hidden" name="productinfo" value="TEST PRODUCT" /> {/* Add product info here */}
                 <input type="hidden" name="firstname" value={orderData?.shippingAddress?.name} /> {/* Add first name here */}
                 <input type="hidden" name="email" value={orderData?.shippingAddress?.email} />
                 <input type="hidden" name="phone" value={orderData?.shippingAddress?.phoneNumber} /> {/* Add phone number here */}
-                <input type="hidden" name="surl" value={`${server}payu/success`} />
-                <input type="hidden" name="furl" value={`http://localhost:5173/payment`} />
+                <input type="hidden" name="surl" value={`${backend_url}payu/success`} />
+                <input type="hidden" name="furl" value={`${backend_url}payu/failure`} />
                 <input type="hidden" name="udf1" value={"details1"} />
                 <input type="hidden" name="udf2" value={"details2"} />
                 <input type="hidden" name="udf3" value={"details3"} />
@@ -885,6 +898,74 @@ function PaymentPage() {
             </form>
         );
     };
+
+    const handlePayUPayment = async () => {
+        try {
+            // Generate a unique transaction ID
+            const transactionId = `txn_${Date.now()}`;
+    
+            // Prepare payment data
+            const paymentData = {
+                name: orderData.shippingAddress.name,
+                email: orderData.shippingAddress.email,
+                amount: orderData.totalPrice,
+                transactionId: transactionId,
+                phone: orderData.shippingAddress.phoneNumber, // Add phone number here
+            };
+    
+            // Step 1: Request hash from backend
+            const response = await fetch(`${backend_url}payu/hash`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(paymentData),
+            });
+    
+            const data = await response.json();
+            const { hash } = data;
+    
+            // Step 2: Prepare PayU payment options
+            const payuOptions = {
+                key: "ArcB3P",
+                txnid: transactionId,
+                amount: orderData.totalPrice,
+                productinfo: "TEST PRODUCT",
+                firstname: orderData.shippingAddress.name,
+                email: orderData.shippingAddress.email,
+                phone: orderData.shippingAddress.phoneNumber, // Include phone number
+                surl: `${backend_url}payu/success`, // Success URL
+                furl: `${backend_url}payu/failure`, // Failure URL
+                udf1: 'details1',
+                udf2: 'details2',
+                udf3: 'details3',
+                udf4: 'details4',
+                udf5: 'details5',
+                hash: hash,
+            };
+    
+            // Redirect to PayU payment gateway
+            const form = document.createElement('form');
+            form.setAttribute('method', 'POST');
+            form.setAttribute('action', 'https://test.payu.in/_payment'); // Use live URL in production
+    
+            // Add all parameters to the form
+            Object.keys(payuOptions).forEach(key => {
+                const hiddenField = document.createElement('input');
+                hiddenField.setAttribute('type', 'hidden');
+                hiddenField.setAttribute('name', key);
+                hiddenField.setAttribute('value', payuOptions[key]);
+                form.appendChild(hiddenField);
+            });
+    
+            document.body.appendChild(form);
+            form.submit(); // Submit the form to PayU
+        } catch (error) {
+            console.error("Error in handlePayUPayment:", error);
+            alert("Error occurred while processing payment.");
+        }
+    };
+    
     return (
         <div className='w-full bg-[#fafafa;] pb-8'>
              {isLoading && (
@@ -915,7 +996,7 @@ function PaymentPage() {
                                 <div className='flex items-center gap-4'>
                                     <div>
                                         <label className='text-[14px] font-[500] mb-[4px] tracking-[0.55px] block' for="shipping-method">Standard Delivery - FREE</label>
-                                        <span className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block'>(Delivery By Jul 19 - Jul 22)</span>
+                                        <span className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block'>(Delivery By {orderData?.shippingAddress?.estimatedDeliveryRange})</span>
                                     </div>
                                 </div>
 
@@ -1052,7 +1133,11 @@ function PaymentPage() {
                                     <button onClick={handleRazorpayPayment}>Pay With Razorpay</button>
                                 )}
 
-                                {selectedPaymentMethod === 'payu' && generatePayUForm()}
+                                {/* {selectedPaymentMethod === 'payu' && generatePayUForm()} */}
+
+                                {selectedPaymentMethod === 'payu' && (
+            <button onClick={handlePayUPayment}>Pay With PayU</button>
+        )}
 
 
                                 {selectedPaymentMethod === 'cod' && (
@@ -1146,7 +1231,7 @@ function PaymentPage() {
                                     </div>
                                     <div className="sub-total ">
                                         <span className="label">
-                                            Delivery By <span className="deltext">(Jul 02 - Jul 03)</span>
+                                            Delivery By <span className="deltext">({orderData?.shippingAddress?.estimatedDeliveryRange})</span>
                                         </span>
                                         <span className="value">Free</span>
                                     </div>

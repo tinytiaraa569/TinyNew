@@ -17,8 +17,8 @@ import { TbCertificate } from "react-icons/tb";
 import { MdOutlineAppRegistration } from "react-icons/md";
 import { GiHeartNecklace } from "react-icons/gi";
 import { GiMaterialsScience } from "react-icons/gi";
-
-
+import ImgZoom from 'react-img-zoom';
+// import 'react-img-zoom/dist/index.css';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
@@ -40,6 +40,8 @@ import './productdetails.css'
 import withchainimg from './withchain.svg'
 import withoutchainimg from './withoutchain.svg'
 
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 import { EmailIcon, FacebookIcon, WhatsappIcon, } from "react-share";
 import { EmailShareButton, FacebookShareButton, WhatsappShareButton, } from "react-share";
@@ -700,13 +702,26 @@ function ProductDetails({ data }) {
             }
         }
 
+         // Handle selected metal colors when no enamel color is selected
+         if (selectedColor === 0 ) {
+            return data.MetalColor.YellowGoldclr || []; // Return Yellow Gold images
+            
+        } else if (selectedColor === 1) {
+            return data.MetalColor.RoseGoldclr || []; // Return Rose Gold images
+        } else if (selectedColor === 2) {
+            return data.MetalColor.WhiteGoldclr || []; // Return White Gold images
+        }
+
 
         // Default to metal color images if no enamel color is selected
-        if (showWithChain === true) return data.withchainimages || [];
-        if (showWithChain === false) return data.withchainoutimages || [];
-        if (selectedColor === 0) return data.MetalColor.YellowGoldclr || [];
-        if (selectedColor === 1) return data.MetalColor.RoseGoldclr || [];
-        if (selectedColor === 2) return data.MetalColor.WhiteGoldclr || [];
+        if (showWithChain === true) {
+            return data.withchainimages || []; // Return chain images if the chain is selected
+        } else if (showWithChain === false) {
+            return data.withchainoutimages || []; // Return non-chain images if the chain is not selected
+        }
+    
+       
+    
 
         return data.images || [];
     })();
@@ -766,6 +781,7 @@ function ProductDetails({ data }) {
         const month = date.toLocaleString("default", { month: "short" });
         return `${day} ${month}`;
     };
+    const [isZoomed, setIsZoomed] = useState(false);
 
     const calculateEDD = async () => {
         if (!pincode) {
@@ -815,8 +831,68 @@ function ProductDetails({ data }) {
 
     console.log(data,"see product detail")
 
-   
 
+    // const selectedImage = (() => {
+    //     // If a metal color is selected
+    //     if (selectedColor === 0) {
+    //         if (showWithChain === true) {
+    //             // If Yellow Gold with chain is selected, return the 4th image (index 3)
+    //             return data.MetalColor.YellowGoldclr[2]?.url || data.images && data.images[0]?.url;
+    //         } else {
+    //             // If Yellow Gold without chain, return all Yellow Gold images
+    //             return imagesArray.length > 0 ? imagesArray[select]?.url : data.MetalColor.YellowGoldclr[0]?.url;
+    //         }
+    //     } else if (selectedColor === 1) {
+    //         // If Rose Gold is selected
+    //         if (showWithChain === true) {
+    //             return data.MetalColor.RoseGoldclr[2]?.url || data.images && data.images[0]?.url;
+    //         } else {
+    //             return imagesArray.length > 0 ? imagesArray[select]?.url : data.MetalColor.RoseGoldclr[0]?.url;
+    //         }
+    //     } else if (selectedColor === 2) {
+    //         // If White Gold is selected
+    //         if (showWithChain === true) {
+    //             return data.MetalColor.WhiteGoldclr[2]?.url || data.images && data.images[0]?.url;
+    //         } else {
+    //             return imagesArray.length > 0 ? imagesArray[select]?.url : data.MetalColor.WhiteGoldclr[0]?.url;
+    //         }
+    //     } 
+    
+    //     // Fallback to the original image logic if no specific metal color or chain option is selected
+    //     return select !== null && imagesArray.length > 0
+    //         ? imagesArray[select]?.url
+    //         : data.images && data.images[0]?.url;
+    // })();
+
+    const selectedImage = (() => {
+        let imageUrl = null;
+    
+        if (selectedColor !== null && selectedEnamelColor === null) {
+            const metalColorImages = [
+                data.MetalColor.YellowGoldclr || [],
+                data.MetalColor.RoseGoldclr || [],
+                data.MetalColor.WhiteGoldclr || []
+            ];
+    
+            // Check with chain logic
+            const images = metalColorImages[selectedColor];
+            if (showWithChain && !select) {
+                imageUrl = images[2]?.url;
+            } else if (select !== null) {
+                imageUrl = images[select]?.url;
+            }
+        }
+    
+        // If there's no specific selected color, fallback to the general images array
+        if (!imageUrl && imagesArray.length > 0) {
+            imageUrl = imagesArray[select]?.url || data.images?.[0]?.url;
+        }
+    
+        return imageUrl;
+    })();
+    
+   
+   
     return (
         <div className='bg-white'>
             {
@@ -863,6 +939,7 @@ function ProductDetails({ data }) {
                                     )
                                     } */}
 
+{/*                                     
                                     {select !== null && imagesArray.length > 0 ? (
                                         <img
                                             src={`${imagesArray[select]?.url}`}
@@ -875,8 +952,22 @@ function ProductDetails({ data }) {
                                             alt=""
                                             className='w-[100%] h-[60vh] object-contain'
                                         />
-                                    )}
+                                    )} */}
 
+                                <Zoom 
+                                    zoomMargin={40} 
+                                    defaultStyles={{ overlay: { zIndex: 1000 } }} 
+                                    onZoom={() => setIsZoomed(true)} // Set zoomed state to true when the modal opens
+                                    onUnzoom={() => setIsZoomed(false)} // Reset when it closes
+                                >
+                                    <img
+                                        src={selectedImage}
+                                        alt=""
+                                        className="w-[100%] h-[60vh] object-contain !cursor-pointer" // Image to click and zoom
+                                    />
+                                </Zoom>
+
+                                
 
                                     <div className='w-full flex'>
                                         {renderImages()}
@@ -978,7 +1069,7 @@ function ProductDetails({ data }) {
 
                                     </div>
                                         
-                                    <div className="instockcon">
+                                    {/* <div className="instockcon">
                                         <div className="instockconflex">
                                             {(() => {
                                                 if (selectedEnamelColor !== null) {
@@ -1091,7 +1182,7 @@ function ProductDetails({ data }) {
                                                 })()}
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     
 

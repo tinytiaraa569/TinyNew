@@ -78,6 +78,7 @@ import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
 import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
+import PayUSuccess from './PaymentPage/PayUSuccess';
 
 // import ReactGA from 'react-ga';
 // ReactGA.initialize('G-DQ8YVWKBTB');
@@ -420,7 +421,7 @@ useEffect(() => {
             </SellerProtectedRoute>
           } />
 
-
+        <Route path="/payu/order/success" element={<PayUSuccess />} />
 
 
 

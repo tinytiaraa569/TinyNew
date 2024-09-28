@@ -1041,8 +1041,8 @@ router.post(
 
         try {
             const userId = req.user ? req.user._id : null;
-            const guestEmail = shippingAddress.email;
-            const guestName = shippingAddress.name;
+            const guestEmail = shippingAddress?.email;
+            const guestName = shippingAddress?.name;
 
             const orderData = {
                 cart,
