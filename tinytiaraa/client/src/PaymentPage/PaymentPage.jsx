@@ -68,7 +68,7 @@ function PaymentPage() {
         billingAddress: orderData?.finalBillingAddress,
 
         
-         user:  orderData?.user ?  orderData?.user :  orderData?.shippingAddress?.email,
+        user: user && orderData?.user ,
         totalPrice: orderData?.totalPrice,
         couponDiscount: orderData?.discountPrice,
         paymentInfo: {},
