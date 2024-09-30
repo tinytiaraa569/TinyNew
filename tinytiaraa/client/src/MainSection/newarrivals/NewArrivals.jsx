@@ -40,6 +40,11 @@ function NewArrivals() {
     };
   }, [products]);
 
+  // Sort products by `sold_out` value in descending order (higher sold_out first)
+  const sortedProducts = products && Array.isArray(products)
+    ? [...products].sort((a, b) => b.sold_out - a.sold_out)
+    : [];
+
   return (
     <div className='bg-[#fff] py-5'>
       <div className={`customheadingnewarrivals ${styles.section}`}>
@@ -49,14 +54,14 @@ function NewArrivals() {
         </div>
         <div className="grid custom-grid gap-[20px]">
           {
-            products && Array.isArray(products) && products.slice(0, visibleCount).map((i, index) => (
+            sortedProducts.slice(0, visibleCount).map((i, index) => (
               <ProductCard data={i} key={index} />
             ))
           }
         </div>
       </div>
       {
-        Array.isArray(products) && visibleCount < products.length && (
+        sortedProducts.length > visibleCount && (
           <div className="text-center mt-[15px]">
             <button 
               className='productviewmore text-[17px] font-[600] font-Poppins cursor-pointer'

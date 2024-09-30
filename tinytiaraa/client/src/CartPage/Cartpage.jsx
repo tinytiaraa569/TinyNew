@@ -47,6 +47,9 @@ function Cartpage() {
   const [discountPrice, setDiscountPrice] = useState(null)
   const [availableCoupons, setAvailableCoupons] = useState([]);
 
+
+  const[personalmsg,setpersonalmsg] =useState("")
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -353,6 +356,7 @@ function Cartpage() {
       discountPrice,
       referralBalance, // Include referral balance
       appliedReferral,
+      personalmsg,
       
 
     }
@@ -426,24 +430,30 @@ function Cartpage() {
                 <div className="contactusec">
                   <h3>Need Help?</h3>
                   <div className="contactus">
+                    <Link to="tel:+91 8657062511" target="_blank">
                     <div className="phonecontact">
                       <span className="phoneicon" width={24} height={24}>
                         <i className="fa-solid fa-phone text-[#006039]" />
                       </span>
                       <span className="phonenumber spantext !text-[12px]">Call US :- +91 86570 62511</span>
                     </div>
+                      </Link>
+                      <Link to="mailto:care@tinytiaraa.com" target="_blank">
                     <div className="phonecontact">
                       <span className="emailicon" width={24} height={24}>
                         <i className="fa-solid fa-envelope text-[#006039]" />
                       </span>
                       <span className="phonenumber spantext">Email US</span>
                     </div>
+                    </Link>
+                    <Link to="https://web.whatsapp.com/send?phone=+91%208657062511" target="_blank">
                     <div className="phonecontact">
                       <span className="chaticon" width={24} height={24}>
                         <i className="fa-solid fa-message text-[#006039]" />
                       </span>
                       <span className="phonenumber spantext">Chat With US </span>
                     </div>
+                    </Link>
                     <a className="textclr" href="">
                       Shipping and Return Policy
                     </a>{" "}
@@ -460,7 +470,7 @@ function Cartpage() {
                     <span className="sub-heading">
                       Leave your message &amp; we’ll send it along as handwritten note.
                     </span>
-                    <textarea name="" id="" defaultValue={""} />
+                    <textarea className='!text-[11px]' name="" id="" defaultValue={""} value={personalmsg} onChange={(e)=>{setpersonalmsg(e.target.value)}}/>
                   </div>
                   <div className="btn-wrapper">
                     <span className="a2 save-btn">Save</span>

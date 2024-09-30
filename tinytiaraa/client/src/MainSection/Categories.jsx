@@ -10,6 +10,7 @@ function Categories() {
     const handleViewProducts = (categoryTitle) => {
         // Navigate to the products page with the category as a query parameter
         navigate(`/products?category=${categoryTitle}`);
+        window.scrollTo({ top: 0, behavior: "smooth" }); 
       };
     return (
         <div className='Categories pb-5'  >

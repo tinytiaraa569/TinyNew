@@ -1062,7 +1062,10 @@ function ProductsPage() {
             ) : error ? (
               <p className="text-center text-red-500">{error}</p>
             ) : filteredData.length === 0 ? (
+              <>
               <h1 className="text-center text-lg">No product found</h1>
+              <p className="text-center text-[14px] text-[#030303b7]">We're working on restocking our collection. Stay tuned for new arrivals soon!</p>
+              </>
             ) : (
               <div
                 className={`adjustgridfilter grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ${

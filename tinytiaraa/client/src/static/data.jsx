@@ -58,20 +58,21 @@ export const categoriesData = [
     image_Url:
       "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388144518.png",
   },
-  // {
-  //   id: 3,
-  //   title: "Pearl Collection",
-  //   subTitle: "",
-  //   image_Url:
-  //     "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
+  {
+    id: 3,
+    title: "Pearl Collection",
+    subTitle: "",
+    image_Url:
+      "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
 
-  //   bannerimg: pearlimg,
-  //   subcategories: [
-  //     { name: "No Products" },
+    bannerimg: pearlimg,
+    productbanner: pendantbanner,
+    subcategories: [
+      { name: "No Products" },
 
 
-  //   ],
-  // },
+    ],
+  },
   {
     id: 4,
     title: "Diamond Black Bead Bracelets",

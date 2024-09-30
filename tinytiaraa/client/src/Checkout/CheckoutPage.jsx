@@ -61,6 +61,7 @@ function CheckoutPage() {
         phoneNumber:''
         
     });
+    const[personalmsg,setpersonalmsg] =useState("")
 
 
     const [referralBalance, setReferralBalance] = useState(0);
@@ -158,6 +159,7 @@ function CheckoutPage() {
             setDiscountPrice(fetchedOrderData.discountPrice);
             setReferralBalance(fetchedOrderData.referralBalance || 0); // Set referral balance
             setAppliedReferral(fetchedOrderData.appliedReferral || 0); // Set applied referral
+            setpersonalmsg(fetchedOrderData.personalmsg)
         }
     }, [])
 
@@ -192,7 +194,7 @@ function CheckoutPage() {
 
         } else {
             const shippingAddress = {
-                email, name, phoneNumber, address1, address2, zipCode, country, city ,estimatedDeliveryRange,pandetails,gstin
+                email, name, phoneNumber, address1, address2, zipCode, country, city ,estimatedDeliveryRange,pandetails,gstin,personalmsg
             }
             const finalBillingAddress = isSameAddress ? shippingAddress : billingAddress;
             const orderData = {
@@ -201,7 +203,8 @@ function CheckoutPage() {
                 
                 subTotalPrice, shipping, discountPrice, user, shippingAddress, finalBillingAddress, gstAmount,
                 referralBalance,
-                appliedReferral,
+               
+                appliedReferral
             }
 
             console.log(orderData,"see from checkout page")
