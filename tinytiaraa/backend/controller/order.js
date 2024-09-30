@@ -1055,7 +1055,7 @@ router.post(
                 referralCodeUsed: referralCode || null,
                 referredGuestEmail: userId ? null : guestEmail,
                 referredGuestName: userId ? null : guestName,
-                rewardAmount: 200 // Adjust based on your logic
+                rewardAmount:  totalPrice * 0.05 // Adjust based on your logic
             };
 
             const order = await Order.create(orderData);
@@ -1336,7 +1336,7 @@ router.post(
 
                     if (referrer) {
                         // Assuming each order has a fixed reward amount of 200 INR
-                        const rewardAmount = 200;
+                        const rewardAmount = totalPrice * 0.05;
 
                         referrer.referralBalance = (referrer.referralBalance || 0) + rewardAmount;
                         await referrer.save();

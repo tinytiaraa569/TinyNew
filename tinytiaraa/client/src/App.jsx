@@ -79,6 +79,8 @@ import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsP
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
 import PayUSuccess from './PaymentPage/PayUSuccess';
+import MyChatbot from './chatbot/Chatbotmsg';
+import Chatbotmsg from './chatbot/Chatbotmsg';
 
 // import ReactGA from 'react-ga';
 // ReactGA.initialize('G-DQ8YVWKBTB');
@@ -219,7 +221,12 @@ useEffect(() => {
         {!shouldHideNavbar && <Navbar1 />}
 
 
+      
+
+
         <ScrollToTopButton />
+
+        <Chatbotmsg />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />

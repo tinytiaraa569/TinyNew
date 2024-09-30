@@ -66,6 +66,9 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    rewardAmount:{
+        type: Number,
+    },
    
     guestEmail: {
         type: String,

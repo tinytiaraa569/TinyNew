@@ -28,7 +28,7 @@ const referralSchema = new mongoose.Schema({
   rewardAmount: {
     type: Number,
     required: true,
-    default: 200, // Reward amount for using the referral
+    // default: 200, // Reward amount for using the referral
   },
   referralBalance: {
     type: Number,

@@ -26,6 +26,74 @@ exports.generateReferralCode = catchAsyncErrors(async (req, res, next) => {
 
 // Handle Referral During Purchase
 
+// old code 
+// exports.handleReferral = catchAsyncErrors(async (req, res, next) => {
+//     const { referralCode, orderIds } = req.body;
+
+//     if (!referralCode || !orderIds || !Array.isArray(orderIds)) {
+//         return next(new ErrorHandler('Invalid input data', 400));
+//     }
+
+//     // Find the referral by code
+//     const referral = await Referral.findOne({ referralCode });
+//     if (!referral) {
+//         return next(new ErrorHandler('Invalid referral code', 400));
+//     }
+
+//     if (referral.referralUsed) {
+//         return next(new ErrorHandler('Referral code already used', 400));
+//     }
+
+//     try {
+//         // Process each order
+//         for (const orderId of orderIds) {
+//             const order = await Order.findById(orderId);
+//             if (!order) {
+//                 console.error(`Order not found for ID: ${orderId}`);
+//                 continue; // Skip if the order is not found
+//             }
+
+//             if (order.referralCode === referralCode) {
+//                 console.warn(`Referral code ${referralCode} already applied to order ${orderId}`);
+//                 continue; // Skip if the referral code is already applied
+//             }
+
+//             order.referralCode = referralCode;
+//             await order.save();
+//         }
+
+//         // Update referrer's balance
+//         const referrer = await User.findById(referral.referrer);
+//         if (!referrer) {
+//             console.error('Referrer not found');
+//             return next(new ErrorHandler('Referrer not found', 404));
+//         }
+
+//         const currentBalance = referrer.referralBalance || 0;
+//         const rewardAmount = referral.rewardAmount || 0;
+//         const newBalance = currentBalance + rewardAmount;
+
+//         if (isNaN(newBalance)) {
+//             console.error('Computed referral balance is NaN');
+//             return next(new ErrorHandler('Invalid referral balance', 500));
+//         }
+
+//         referrer.referralBalance = newBalance;
+//         await referrer.save();
+
+//         // Mark referral as used
+//         referral.referralUsed = true;
+//         await referral.save();
+
+//         res.status(200).json({ success: true, message: 'Referral applied successfully' });
+
+//     } catch (err) {
+//         console.error('Error applying referral:', err);
+//         return next(new ErrorHandler('An error occurred while applying the referral', 500));
+//     }
+// });
+
+// new code 
 exports.handleReferral = catchAsyncErrors(async (req, res, next) => {
     const { referralCode, orderIds } = req.body;
 
@@ -57,28 +125,31 @@ exports.handleReferral = catchAsyncErrors(async (req, res, next) => {
                 continue; // Skip if the referral code is already applied
             }
 
+            // Calculate 5% of the total order value
+            const orderValue = order.totalPrice; // Assuming order.totalPrice is the total value
+            const rewardAmount = orderValue * 0.05; // 5% reward
+
             order.referralCode = referralCode;
             await order.save();
+
+            // Update referrer's balance
+            const referrer = await User.findById(referral.referrer);
+            if (!referrer) {
+                console.error('Referrer not found');
+                return next(new ErrorHandler('Referrer not found', 404));
+            }
+
+            const currentBalance = referrer.referralBalance || 0;
+            const newBalance = currentBalance + rewardAmount;
+
+            if (isNaN(newBalance)) {
+                console.error('Computed referral balance is NaN');
+                return next(new ErrorHandler('Invalid referral balance', 500));
+            }
+
+            referrer.referralBalance = newBalance;
+            await referrer.save();
         }
-
-        // Update referrer's balance
-        const referrer = await User.findById(referral.referrer);
-        if (!referrer) {
-            console.error('Referrer not found');
-            return next(new ErrorHandler('Referrer not found', 404));
-        }
-
-        const currentBalance = referrer.referralBalance || 0;
-        const rewardAmount = referral.rewardAmount || 0;
-        const newBalance = currentBalance + rewardAmount;
-
-        if (isNaN(newBalance)) {
-            console.error('Computed referral balance is NaN');
-            return next(new ErrorHandler('Invalid referral balance', 500));
-        }
-
-        referrer.referralBalance = newBalance;
-        await referrer.save();
 
         // Mark referral as used
         referral.referralUsed = true;
@@ -91,6 +162,7 @@ exports.handleReferral = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('An error occurred while applying the referral', 500));
     }
 });
+
 
 // exports.handleReferral = catchAsyncErrors(async (req, res, next) => {
 //     const { referralCode, orderIds } = req.body;

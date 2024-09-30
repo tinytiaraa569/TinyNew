@@ -68,7 +68,7 @@ function PaymentPage() {
         billingAddress: orderData?.finalBillingAddress,
 
         
-        user: user && orderData?.user,
+        user: user && orderData?.user ,
         totalPrice: orderData?.totalPrice,
         couponDiscount: orderData?.discountPrice,
         paymentInfo: {},
@@ -654,7 +654,7 @@ function PaymentPage() {
 
         const latestOrder = JSON.parse(latestOrderData);
         const referralBalanceUsed = latestOrder.appliedReferral || 0;
-        const user = latestOrder.user;
+        const user = latestOrder.user ;
 
         // Define the updatedOrder object
         const updatedOrder = {
@@ -1135,9 +1135,9 @@ function PaymentPage() {
 
                                 {/* {selectedPaymentMethod === 'payu' && generatePayUForm()} */}
 
-                                {selectedPaymentMethod === 'payu' && (
-            <button onClick={handlePayUPayment}>Pay With PayU</button>
-        )}
+                                                    {selectedPaymentMethod === 'payu' && (
+                                <button className='cursor-pointer' onClick={handlePayUPayment}>Pay With PayU</button>
+                            )}
 
 
                                 {selectedPaymentMethod === 'cod' && (

@@ -10,6 +10,7 @@ const ReferralList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [referralBalance, setReferralBalance] = useState(0);
+    console.log(referrals,"referrrals ")
 
     // Function to fetch referral balance
     const fetchReferralBalance = async () => {
@@ -159,7 +160,7 @@ const ReferralList = () => {
                                                     {user.email}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    ₹{referral.rewardAmount || '0'}
+                                                ₹{referral.rewardAmount ? (referral.rewardAmount * 0.05).toFixed(2) : '0'}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {referral.referralUsed ? 'Completed' : 'Pending'}
