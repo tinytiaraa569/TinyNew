@@ -1,17 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
 import { FaComments, FaTimes } from 'react-icons/fa'; // Import both icons
 import './chatbotmsg.css'; // Assuming you're styling in a CSS file
+import axios from 'axios'; // for making API calls
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllOrdersOfUser } from '@/redux/actions/order';
 
 const Chatbotmsg = () => {
+  const { order, isLoading } = useSelector((state) => state.order)
+
   const [isOpen, setIsOpen] = useState(false); // State to track the open/close status
+  const [orders, setOrders] = useState([]); // State to store fetched orders
+  console.log(orders,'from chatbotmsg')
+  console.log(order,'from chatbotmsg order')
 
   const toggleChatbot = () => {
     setIsOpen(!isOpen);
   };
+    const dispatch = useDispatch()
+    const fetchOrders = (email) => {
+      const data = orders && orders?.find((item) => item?.email === email)
+      dispatch(getAllOrdersOfUser(email))
 
- 
+      console.log(data,"data order")
+        
+    };
+    const OrderFetcher = ({ previousStep }) => {
+      const email = previousStep.value;
+    
+      useEffect(() => {
+        if (email) {
+          fetchOrders(email);
+        }
+      }, [email]); // Only re-run the effect if the email changes
+    
+      return (
+        <div>
+          {orders.length > 0 ? (
+            orders.map((order, index) => (
+              <div key={index}>
+                <p>Order ID: {order._id}</p> {/* Corrected ID access */}
+                <p>Status: {order.status}</p> {/* Ensure status exists */}
+                <p>Total Amount: ₹{order.totalPrice}</p>
+              </div>
+            ))
+          ) : (
+            <p>No orders found for the email {email}.</p>
+          )}
+        </div>
+      );
+    };
+    
   
   const steps = [
     {
@@ -42,11 +82,33 @@ const Chatbotmsg = () => {
     {
       id: '2',
       options: [
-        { value: '1', label: 'I need help with an order.', trigger: '3' },
+        { value: '1', label: 'I need help with an order.', trigger: 'email-input' },
         { value: '2', label: 'I have a question about products.', trigger: '4' },
         { value: '3', label: 'I want to provide feedback.', trigger: '5' },
         { value: '4', label: 'Other inquiries', trigger: '6' },
       ],
+    },
+    {
+      id: 'email-input',
+      message: 'Please provide your email to look up your order.',
+      trigger: 'email',
+    },
+    {
+      id: 'email',
+      user: true,
+      validator: (value) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(value)) {
+          return 'Please enter a valid email address.';
+        }
+        return true;
+      },
+      trigger: 'fetch-orders',
+    },
+    {
+      id: 'fetch-orders',
+      component: <OrderFetcher />, // Component to fetch and display the orders
+      trigger: 'end-message', // Optionally trigger an end message after displaying orders
     },
     {
       id: '3',

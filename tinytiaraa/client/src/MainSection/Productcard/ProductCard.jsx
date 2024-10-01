@@ -80,7 +80,7 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
 
   return (
     <div className='parentsinglecrd'>
-      <div className="parentproductcard w-full h-[330px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
+      <div className="parentproductcard w-full h-[314px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
         <div className="flex justify-end "></div>
 
         <div className='w-full h-[150px] overflow-hidden'>
@@ -92,13 +92,13 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
             />
           </Link>
         </div>
-        <div className='w-full h-[auto] overflow-hidden '>
+        <div className='w-full h-[auto] overflow-hidden ' title={data.name}>
           <Link to={`/product/${product_name}`}>
-            <h4 className='pb-1 font-[500] text-[14px] text-center'>{data.name.length > 50 ? data.name.slice(0, 50) + "..." : data.name}</h4>
+            <h4 className='pb-1 font-[500] text-[14px] text-center'>{data.name.length > 28 ? data.name.slice(0, 28) + "..." : data.name}</h4>
           </Link>
           <p className={`${styles.skuid}`}>{data.skuid}</p>
           <div className=" mt-2 flex items-center justify-between">
-            <div className="flex">
+            <div className="flex ">
               <h5 className={`${styles.productDiscountPrice}`}>
                 ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
               </h5>

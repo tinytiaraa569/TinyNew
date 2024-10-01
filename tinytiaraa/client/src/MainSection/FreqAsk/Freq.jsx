@@ -215,12 +215,11 @@ function CustomizedAccordions() {
             >
               <img src={freq7} alt="" />
 
-              <Typography>Do you offer gift wrapping?</Typography>
+              <Typography>Timely Shipping and Delivery</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Yes, we provide gift-wrapping services for a small additional
-                charge.
+              Experience reliable and prompt shipping services to ensure your orders arrive on time.
               </Typography>
             </AccordionDetails>
           </Accordion>
