@@ -80,7 +80,7 @@ import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
 import PayUSuccess from './PaymentPage/PayUSuccess';
 // import MyChatbot from './chatbot/Chatbotmsg';
-import Chatbotmsg from './chatbot/Chatbotmsg';
+// import Chatbotmsg from './chatbot/Chatbotmsg';
 
 // import ReactGA from 'react-ga';
 // ReactGA.initialize('G-DQ8YVWKBTB');
