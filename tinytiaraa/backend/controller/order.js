@@ -1043,6 +1043,7 @@ router.post(
             const userId = req.user ? req.user._id : null;
             const guestEmail = shippingAddress?.email;
             const guestName = shippingAddress?.name;
+            const referredRewardAmount = totalPrice * 0.05
 
             const orderData = {
                 cart,
@@ -1055,7 +1056,7 @@ router.post(
                 referralCodeUsed: referralCode || null,
                 referredGuestEmail: userId ? null : guestEmail,
                 referredGuestName: userId ? null : guestName,
-                rewardAmount:  totalPrice * 0.05 // Adjust based on your logic
+                rewardAmount:  referredRewardAmount
             };
 
             const order = await Order.create(orderData);
@@ -1328,6 +1329,8 @@ router.post(
                 } else if (guestEmail && !referral.referredGuestEmails.includes(guestEmail)) {
                     referral.referredGuestEmails.push(guestEmail);
                     referral.referredGuestNames.push(guestName || 'Unknown');
+                    referral.referredRewardAmounts.push(referredRewardAmount);
+                    
                     rewardGranted = true;
                 }
 
@@ -1335,7 +1338,7 @@ router.post(
                     const referrer = referral.referrer;
 
                     if (referrer) {
-                        // Assuming each order has a fixed reward amount of 200 INR
+                        
                         const rewardAmount = totalPrice * 0.05;
 
                         referrer.referralBalance = (referrer.referralBalance || 0) + rewardAmount;

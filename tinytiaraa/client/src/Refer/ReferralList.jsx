@@ -182,7 +182,7 @@ const ReferralList = () => {
                                                     {email}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    ₹{referral.rewardAmount || '0'}
+                                                ₹{referral.referredRewardAmounts[index] || '0'}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {referral.referralUsed ? 'Completed' : 'Pending'}

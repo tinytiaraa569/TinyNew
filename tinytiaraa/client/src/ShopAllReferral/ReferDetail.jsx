@@ -66,7 +66,16 @@ function ReferDetail({ referralId, onClose }) {
 
     console.log(referral, "see data")
 
-    const referralUsedAmount = referral.rewardAmount * referral.referredGuestEmails.length - referralBalance;
+    const totalReferredRewardsUsed = referral.referredRewardAmounts.reduce((total, amount) => {
+        // Convert amount to a number, or treat as 0 if it's NaN
+        const numericAmount = parseFloat(amount) || 0; // or use +amount
+        return total + numericAmount;
+    }, 0);
+// Log the total to the console
+console.log('Total Referred Rewards Used:', totalReferredRewardsUsed);
+
+// Calculate the amount actually used
+        const referralUsedAmount = totalReferredRewardsUsed - referralBalance;
 
     return (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 p-4">
@@ -119,7 +128,7 @@ function ReferDetail({ referralId, onClose }) {
                             </div>
                             <div className="flex items-center">
                                 <p className="font-medium text-gray-700">Referral Amount Used:</p>
-                                <p className="ml-2 text-gray-600"> ({referralUsedAmount || '0'} INR) </p>
+                                <p className="ml-2 text-gray-600"> ({referralUsedAmount > 0 ? referralUsedAmount.toFixed(2) : 0} INR) </p>
                                 {/* {referral.referralUsed ? 'Yes' : 'No'} */}
                             </div>
                         </div>
@@ -139,7 +148,7 @@ function ReferDetail({ referralId, onClose }) {
                                             <p className="font-medium text-gray-800">{referral.referredGuestNames[index]}</p>
                                             <p className="text-gray-600">{email}</p>
                                         </div>
-                                        <p className="font-medium text-gray-800">{referral.rewardAmount} INR</p>
+                                        <p className="font-medium text-gray-800">₹{referral.referredRewardAmounts[index] || '0'} INR</p>
                                     </div>
                                 ))}
                             </div>

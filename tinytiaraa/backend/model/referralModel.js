@@ -25,6 +25,7 @@ const referralSchema = new mongoose.Schema({
   referredUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Track users who used the code
   referredGuestEmails: [String], // Track guest emails who used the code
   referredGuestNames: [String], // Track guest names who used the code (optional)
+  referredRewardAmounts:[String],
   rewardAmount: {
     type: Number,
     required: true,
