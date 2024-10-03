@@ -86,6 +86,7 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
         <div className='w-full h-[150px] overflow-hidden'>
           <Link to={`/product/${product_name}`}>
           <img
+              loading='lazy'
               src={enamelColorImages.length > 0 ? enamelColorImages[0]?.url : data.images && data.images[1]?.url}
               alt=""
               className='parentproductimg w-full h-[150px] object-contain'

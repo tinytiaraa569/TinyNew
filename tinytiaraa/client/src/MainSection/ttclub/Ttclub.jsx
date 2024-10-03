@@ -46,7 +46,7 @@ function Ttclub() {
   return (
     <div className="ttclub">
       <div className="videocon">
-        <video autoPlay muted loop src={ttclubvideo}></video>
+        <video loading='lazy' autoPlay muted loop src={ttclubvideo}></video>
       </div>
       <div className="ttclubmain">
         <div className="ttclubmainadjust">

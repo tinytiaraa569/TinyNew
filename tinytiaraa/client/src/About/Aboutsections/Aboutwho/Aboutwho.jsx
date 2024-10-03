@@ -15,7 +15,7 @@ function Aboutwho() {
     // </div>
 
     <div className="slidersec">
-          <img src={aboutbanner1} alt="First Slide" />
+          <img loading='lazy' src={aboutbanner1} alt="First Slide" />
         </div>
   )
 }

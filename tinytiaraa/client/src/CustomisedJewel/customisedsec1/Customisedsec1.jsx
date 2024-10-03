@@ -15,7 +15,7 @@ function Customisedsec1() {
 
     <div>
       <div className="slidersec sliderseccustom">
-        <img src={custombanner3} alt="First Slide" />
+        <img loading='lazy' src={custombanner3} alt="First Slide" />
 
         <div className="text-overlay">
           <h1>Customize Your Own Masterpiece</h1>

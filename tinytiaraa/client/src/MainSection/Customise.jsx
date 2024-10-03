@@ -62,6 +62,7 @@ function Customise() {
           {/* Image Section */}
           <div className="leftcustomimg">
             <img
+            loading='lazy'
               src={steps[currentStep].image}
               alt={steps[currentStep].title}
             />

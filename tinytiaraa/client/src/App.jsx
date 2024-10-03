@@ -79,6 +79,7 @@ import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsP
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
 import PayUSuccess from './PaymentPage/PayUSuccess';
+import Silver from './silvercomp/Silver';
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
 
@@ -257,6 +258,10 @@ useEffect(() => {
           <Route path='/activation/:activation_token' element={<ActivationPage />} />
           <Route path='/products' element={<ProductsPage />} />
           <Route path='/product/:name' element={<ProductDetailsPage />} />
+
+
+          <Route path='/silver' element={<Silver />} />
+
 
 
           <Route path='/profile' element={

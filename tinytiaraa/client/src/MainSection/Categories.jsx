@@ -20,7 +20,7 @@ function Categories() {
                 {categoriesData.map((category) => (
                     <div className="categoriescard" key={category.id} onClick={() => handleViewProducts(category.title)}>
                         <div className="categoriesimg">
-                            <img src={category.bannerimg} alt={category.title} />
+                            <img loading='lazy' src={category.bannerimg} alt={category.title} />
                             <div className="categoriestext">
                                 <div className='adjust'>
                                     <h3>{category.title}</h3>

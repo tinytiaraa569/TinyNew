@@ -183,6 +183,7 @@
         font-size: 16px;
         line-height: 32px;
     }
+    
 }
 @media (max-width: 768px) {
     .accordiansright {
@@ -220,7 +221,9 @@
     .accordiansleft {
         width: 100%;
     }
-
+    
+    
+    
     .accordiansright {
         width: 100%;
     }
@@ -247,6 +250,10 @@
         border: 1px solid #D9D9D9;
         resize: none;
     }
+    .mobfaqbtn{
+        display: none !important;
+    }
+    
 }
 
 @media (max-width:400px) {

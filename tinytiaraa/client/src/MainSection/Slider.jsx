@@ -91,16 +91,16 @@ function SliderSection() {
     <>
       <Slider {...settings}>
         <div className="slidersec cursor-pointer" >
-          <img src={firstimg1} alt="First Slide" />
+          <img loading='lazy' src={firstimg1} alt="First Slide" />
         </div>
         <div className="slidersec cursor-pointer" >
-          <img src={navoffer} alt="Third Slide" />
+          <img loading='lazy' src={navoffer} alt="Third Slide" />
         </div>
         <div className="slidersec cursor-pointer">
-          <img src={navbanner3} alt="Slider Six" />
+          <img loading='lazy' src={navbanner3} alt="Slider Six" />
         </div>
         <div className="slidersec cursor-pointer">
-          <img src={navbanner2} alt="Slider Six" />
+          <img loading='lazy' src={navbanner2} alt="Slider Six" />
         </div>
 
         

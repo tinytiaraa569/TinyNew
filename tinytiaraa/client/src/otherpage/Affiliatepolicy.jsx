@@ -7,7 +7,6 @@ function Affiliatepolicy() {
 
     <div className="TermsConsection">
         <h3 className='text-[18px] font-[700]'>Affiliate Program Commission Policy</h3>
-        <p>Thank you for joining the Tiny Tiaraa Kids Jewelry Affiliate Program! We are thrilled to have you as an affiliate and appreciate your efforts in promoting and referring customers to purchase our products. This policy outlines the commission structure for affiliates who successfully refer sales of Tiny Tiaraa Kids Jewelry products.</p>
     </div>
     <div className="conditions">
         <ol>
@@ -26,10 +25,13 @@ function Affiliatepolicy() {
             <p>To be eligible to receive commissions, the following criteria must be met:</p>
             <ul>
                 <li>
-                    <p>Purchases must be made using the affiliate's unique referral link provided by the Tiny Tiaraa affiliate Program.</p>
+                    <p>Affiliates will earn a commission of 5% on the net sales value of Products sold through their unique referral link. The "Net Sales Value" is defined as the sale price of the Products less applicable taxes. discounts, and returns.</p>
                 </li>
                 <li>
                    <p>The sale must be legitimate and free from fraudulent or deceptive practices.</p>
+                </li>
+                <li>
+                   <p>The commission will only be valid if the product is not returned within 7 days. </p>
                 </li>
             </ul>
             </li>
@@ -80,7 +82,7 @@ function Affiliatepolicy() {
         </ol>
 
     </div>
-    <p>We appreciate your participation in the Tiny Tiaraa Kids Jewelry Affiliate Program and look forward to your continued success in promoting our Products.</p>
+    <p>We appreciate your participation in the Tiny Tiaraa Kids Jewellery Affiliate Program and look forward to your continued success in promoting our Products.</p>
     </div>
   
 </div>

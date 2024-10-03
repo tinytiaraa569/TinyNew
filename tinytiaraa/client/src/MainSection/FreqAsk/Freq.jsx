@@ -287,7 +287,7 @@ function CustomizedAccordions() {
           {showMore ? "View Less" : "View More"}
         </button>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mobfaqbtn">
         <button
           className="freqbtn"
           onClick={() => {

@@ -32,7 +32,7 @@ function ExchangePolicy() {
                 </li>
             </ul>
 
-            <h2 className='font-[500] mt-2'>Products eligible for exchange must:</h2>
+            <h2 className='font-[500] mt-2'>Exchanges are subject to the following conditions:</h2>
             <ul className='ml-3'>
                 <li>
                     <p>Size: If the jewellery does not fit the child properly.</p>
@@ -70,7 +70,7 @@ function ExchangePolicy() {
 
             <li className='conditonssubsection'>
             <h3>Exchange Period:</h3>
-            <p>Customers may initiate an exchange request within 7 days from the date of purchase.</p>
+            <p>Customers may initiate an exchange request within 7 days from the date of delivery.</p>
             </li>
 
             <li className='conditonssubsection'>
@@ -78,17 +78,17 @@ function ExchangePolicy() {
             <p>Exchanges will be processed for the following valid reasons:</p>
             <ul>
                 <li>
-                <p>To initiate an exchange: Customers must visit the Tiny Tiaraa store where the original purchase was made or contact our customer support team for online purchases.</p>
+                <p>To initiate an exchange: Customers must visit the Tiny Tiaraa website or contact our customer support team.</p>
                 </li>
                 <li>
                 <p>The product will be inspected to ensure it meets eligibility criteria.</p>
                 </li>
                 <li>
-                <p>Upon approval, the customer may select a new product of equivalent value or pay the difference if the new product's value exceeds the original purchase price.</p>
+                <p>Upon approval, the customer may select a new product of equivalent value or pay the difference if the new product's value exceeds the original purchase price</p>
                 </li>
 
                 <li>
-                <p>Upon approval, the customer may select a new product of equivalent value or pay the difference if the new product's value exceeds the original purchase price.</p>
+                <p>For online purchases, customers must contact customer support for instructions on returning the product. Once received and inspected, the exchange will be processed.</p>
                 </li>
                 
             </ul>
@@ -129,9 +129,9 @@ function ExchangePolicy() {
 
             <li className='conditonssubsection'>
             <h3>Contact Information</h3>
-            <p>
-            For any questions or further assistance regarding the warranty extension for kids’ jewellery, please reach out to our customer support team.
-            </p>
+    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' jewellery. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
+            
+           
             </li>
 
 
@@ -142,7 +142,6 @@ function ExchangePolicy() {
         </ol>
 
     </div>
-    <p>At Tiny Tiaraa, we value your trust and aim to ensure your happiness with our kids' jewellery. We hope this Exchange Policy provides you with confidence in choosing our products. If you have any questions or need assistance with an exchange, please contact our customer support team. Happy shopping!</p>
     </div>
   
 </div>

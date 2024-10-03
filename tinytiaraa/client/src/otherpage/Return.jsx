@@ -23,7 +23,7 @@ function ReturnPolicy() {
                 To be eligible for a return, the following conditions must be met:
                 </h4>
             <li>
-            <p>The product must be purchased from an authorised Tiny Tiaraa store or our official website.</p>     
+            <p>The product must be purchased from our official website.</p>     
             </li>
             <li>
             <p>The product must be in its original condition, unused, and include all original packaging, tags and accessories.</p>     
@@ -33,7 +33,7 @@ function ReturnPolicy() {
 
             <li className='conditonssubsection'>
             <h3>Return Period:</h3>
-            <p>Customers may initiate a return request within 7 days from the date of purchase or delivery.</p>
+            <p>Customers may initiate a return request within 7 days from the date of delivery.</p>
             </li>
 
             <li className='conditonssubsection'>
@@ -41,10 +41,10 @@ function ReturnPolicy() {
             <p>Returns will be accepted for the following reasons:</p>
             <ul>
                 <li>
-                <p><span className='boldspan'>Defect or Damage:</span> if the product has manufacturing defects or damages, we will accept the return and provide a full refund or replacement without additional charges.</p>
+                <p><span className='boldspan'>Defect or Damage:</span> If the product has manufacturing defects or damages, we will accept the return and provide a full refund or replacement without additional charges.</p>
                 </li>
                 <li>
-                <p><span className='boldspan'>Incorrect Product:</span>   If the product received differs from the product ordered, we will accept the return and provide a full refund or replacement</p>
+                <p><span className='boldspan'>Incorrect Product:</span> If the product received differs from the product ordered, we will accept the return and provide a full refund or replacement</p>
                 </li>
             </ul>
             </li>
@@ -54,15 +54,16 @@ function ReturnPolicy() {
             <ul>
                 <p>To initiate a return:</p>
                 <li>
-                <p>If the purchase was made in-store, return the product to the same Tiny Tiaraa store where it was purchased.</p>
+                <p>For online purchases, contact our customer support team to request a return.</p>
                 </li>
                 <li>
-                 <p>For online purchases, contact our customer support team to request a return.</p>
+                 <p>Our customer support team will arrange for a pick up of the jewellery from the location where the product was delivered based on your availability.</p>
                 </li>
 
-                <p>The product will be inspected by our team to ensure it meets the return eligibility criteria.</p>
-                <p>If the return request is approved, customers may choose between a full refund or a replacement product of the same value.</p>
-                
+                <p>The customer will have to create and share video while packing the goods at the time of return. The same needs to be shared on care@tinytiaraa.com.</p>
+                <p>The logistics person will pack the jewellery and the documents in a tamper proof bag under customers presence at the time of pick up of the parcel.</p>
+                <p>Once the product is returned at out office, the product will be inspected by our team to ensure it meets the return eligibility criteria.</p>
+                <p>If the return request is approved, customers may choose between having a full refund or a replacement product.</p>
             </ul>
 
             </li>
@@ -71,13 +72,16 @@ function ReturnPolicy() {
             <h3>Non-Eligible Products for Return:</h3>
             <p>The following products are not eligible for return:</p>
             <ul>
-                    <p>Customized or personalized jewellery with specific engravings or alterations requested by the customer.</p>
+                    <p>Jewellery that is not manufactured by Tiny Tiaraa.</p>
                 <li>
-                    <p>Products that are missing original packaging or tags.</p>
+                    <p>Customized or personalized jewellery with specific engravings or alterations requested by the customer will be taken back after deducting 25% of the invoice value. </p>
                 </li>
                 <li>
-                    <p>Products showing signs of wear, misuse, or damage caused by the customer.</p>
+                    <p>Products that are missing original invoice, packaging, certificates or tags.</p>
                 </li>  
+                <li>
+                    <p>Products showing signs of wear, misuse, or damage caused by the customer.</p>
+                </li> 
             </ul>
             </li>
 
@@ -110,7 +114,7 @@ function ReturnPolicy() {
                     <p>Customers will receive a full refund or replacement product of equal value, based on their preference.</p>   
                 </li>
                 <li>
-                    <p>Refunds will be processed using the same payment method as the original purchase.</p>
+                    <p>Refunds will be processed using the same payment method as the original purchase</p>
                 </li>
                 <li>
                 <p>Replacement products will be dispatched after the returned product has been received and inspected.</p>

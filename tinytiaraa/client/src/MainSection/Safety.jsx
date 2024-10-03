@@ -57,7 +57,7 @@ const Safety = () => {
     <>
       <div className="refermain">
         <div className="refermainimg">
-          <img src={refernewbanner} alt="" />
+          <img loading='lazy' src={refernewbanner} alt="" />
         </div>
         <div className="refermaincontent">
           <div className="referheading">
