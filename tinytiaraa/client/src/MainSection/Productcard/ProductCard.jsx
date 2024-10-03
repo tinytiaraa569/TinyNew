@@ -55,12 +55,12 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
   }
 
   const shareOnInstagram = (product) => {
-    const url = `https://www.instagram.com/?url=https://tiny-tiaraa.vercel.app/product/${product_name}`
+    const url = `https://www.instagram.com/?url=https://www.tinytiaraa.com/product/${product_name}`
     window.open(url, '_blank')
   }
 
   const handleWhatsappShare = () => {
-    const productLink = `https://tiny-tiaraa.vercel.app/product/${product_name}`
+    const productLink = `https://www.tinytiaraa.com/product/${product_name}`
     const message = `Check out this amazing product: ${productLink}`
 
     // Try to open WhatsApp Desktop App URI
@@ -94,19 +94,21 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
         </div>
         <div className='w-full h-[auto] overflow-hidden ' title={data.name}>
           <Link to={`/product/${product_name}`}>
-            <h4 className='pb-1 font-[500] text-[14px] text-center'>{data.name.length > 28 ? data.name.slice(0, 28) + "..." : data.name}</h4>
+            <h4 className='pb-1 font-[500] text-[14px] text-center !line-clamp-1'>{data.name.length > 28 ? data.name.slice(0, 28) + "..." : data.name}</h4>
           </Link>
           <p className={`${styles.skuid}`}>{data.skuid}</p>
-          <div className=" mt-2 flex items-center justify-between">
+          <div className=" mt-2 flex items-center justify-center">
             <div className="flex ">
               <h5 className={`${styles.productDiscountPrice}`}>
                 ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
               </h5>
+              <span>
               {data.originalPrice > 0 && (
                 <h4 className={`${styles.price} line-through`}>
                   ₹{data.originalPrice.toFixed(0)}
                 </h4>
               )}
+              </span>
             </div>
           </div>
         </div>
@@ -156,7 +158,7 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
           <div className=''>
             {showShareIcons && (
               <div className="share-icons absolute top-28 right-0 mt-4 flex gap-[4px] p-2  rounded-md z-10">
-                <FacebookShareButton url={`https://tiny-tiaraa.vercel.app/product/${product_name}`} onClick={closeShareIcons} >
+                <FacebookShareButton url={`https://www.tinytiaraa.com/product/${product_name}`} onClick={closeShareIcons} >
                   <FacebookIcon size={32} round={true} />
                 </FacebookShareButton>
 
@@ -164,7 +166,7 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
                   <WhatsappIcon size={32} round={true} />
                 </div>
 
-                <EmailShareButton url={`https://tiny-tiaraa.vercel.app/product/${product_name}`} onClick={closeShareIcons} >
+                <EmailShareButton url={`https://www.tinytiaraa.com/product/${product_name}`} onClick={closeShareIcons} >
                   <EmailIcon size={32} round={true} />
                 </EmailShareButton>
 

@@ -1289,7 +1289,7 @@ router.post(
         </div>
 
         <div class="adjusttnview" style="text-align: center;">
-            <a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+            <a href="https://www.tinytiaraa.com/user/order/${order._id}" class="view-order-btn">View Order Details</a>
         </div>
 
         
@@ -2292,8 +2292,8 @@ ${order.cart.map(item => `
 </div>
 
 <div class="adjusttnview" style="text-align: center;">
-<a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
-<a href="https://tiny-new.vercel.app/invoices/${order._id}" class="view-order-btn downloadinvoice" style="margin-left: 10px;" download>Download Invoice</a>
+<a href="https://www.tinytiaraa.com/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+<a href="https://backend.tinytiaraa.com:8000/invoices/${order._id}" class="view-order-btn downloadinvoice" style="margin-left: 10px;" download>Download Invoice</a>
 </div>
 
 <div style="padding: 20px 0;">
@@ -3088,7 +3088,7 @@ ${order.cart.map(item => `
 </div>
 
 <div class="adjusttnview" style="text-align: center;">
-<a href="https://tiny-tiaraanew.vercel.app/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+<a href="https://www.tinytiaraa.com/user/order/${order._id}" class="view-order-btn">View Order Details</a>
 </div>
 
 <div style="padding: 20px 0;">

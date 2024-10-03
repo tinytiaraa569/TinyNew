@@ -13,7 +13,7 @@ function FollowUS() {
 
 
             <div className="socialvariants">
-                <Link to="https://www.facebook.com/profile.php?id=61552003617016" target="_blank" >
+                <Link to="https://www.facebook.com/people/Tiny-Tiaraa/61551799145871" target="_blank" >
                     <div className="socailcardfollow socialfb">
                         <SiFacebook className='socialiconfollow' />
                         <span>Facebook</span>

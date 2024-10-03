@@ -1061,10 +1061,24 @@ function ProductsPage() {
               <p className="text-center">Loading products...</p>
             ) : error ? (
               <p className="text-center text-red-500">{error}</p>
-            ) : filteredData.length === 0 ? (
+            ) : filteredData.length === 0  && selectedCategory ? (
               <>
               <h1 className="text-center text-lg">No product found</h1>
               <p className="text-center text-[14px] text-[#030303b7]">We're working on restocking our collection. Stay tuned for new arrivals soon!</p>
+              <div className="flex justify-center mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  {selectedCategory?.extraimgurl?.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image.url}
+                      alt={`extra-${index}`}
+                      className="cursor-pointer w-full h-60 object-cover shadow-lg rounded-lg border border-gray-200"
+                    />
+                  ))}
+                </div>
+              </div>
+
+
               </>
             ) : (
               <div

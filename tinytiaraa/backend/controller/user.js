@@ -56,7 +56,7 @@ router.post("/create-user", async (req, res, next) => {
               },
         }
         const activationToken = createActivationToken(user)
-        const activationUrl = `https://tiny-tiaraanew.vercel.app/activation/${activationToken}`
+        const activationUrl = `https://www.tinytiaraa.com/activation/${activationToken}`
 
         try {
             await sendMail({

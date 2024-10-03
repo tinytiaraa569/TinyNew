@@ -5,7 +5,7 @@ const styles = {
     productTitle: 'text-[22px] font-[600] font-Poppins text-[#333]',
     skuid:'text-[#727386] text-center text-[12px] font-Poppins',
     productDiscountPrice:"font-bold text-[15px] text-[#333] font-Poppins",
-    price:"font-[500] text-[15px] text-[#d55b45] pl-3 line-through font-Poppins",
+    price:"font-[500] text-[15px] text-[#d55b45] pl-2 line-through font-Poppins",
     shop_name:"pt-3 text-[15px] text-blue-400 pb-3",
     active_indicator:"absolute bottom-[-37%] left-0 h-[3px] w-full bg-[#1BB8E5]",
     button: 'w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer',

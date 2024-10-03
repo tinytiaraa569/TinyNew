@@ -14,7 +14,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'https://tiny-tiaraanew.vercel.app',
+    origin: 'http://localhost:5173',
     credentials: true
 }));
 
@@ -172,10 +172,10 @@ app.post("/payu/success", (req, res) => {
         // You can store the transaction details in your database, update order status, etc.
 
         // Redirect to success page with transaction details
-        return res.redirect(`https://tiny-tiaraanew.vercel.app/payu/order/success?txnid=${txnid}&status=success`);
+        return res.redirect(`https://www.tinytiaraa.com/payu/order/success?txnid=${txnid}&status=success`);
     } else {
         // If the status isn't success, treat it as a failure
-        return res.redirect(`https://tiny-tiaraanew.vercel.app/payu/order/failure?txnid=${txnid}&status=${status}`);
+        return res.redirect(`https://www.tinytiaraa.com/payu/order/failure?txnid=${txnid}&status=${status}`);
     }
 });
 

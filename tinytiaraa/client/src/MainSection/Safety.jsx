@@ -36,7 +36,7 @@ const Safety = () => {
       icon: <FaGift size={40} />,
       title: "Get Reward",
       description:
-        "Earn 5% amount for each successful order placed through your link.",
+        "Get 5% for every order; rewards will be credited 7 days after acceptance.",
     },
   ];
 

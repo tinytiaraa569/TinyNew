@@ -72,22 +72,41 @@ export const categoriesData = [
 
 
     ],
+    extraimgurl:[
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png"},
+    ]
+   
   },
-  {
-    id: 4,
-    title: "Diamond Black Bead Bracelets",
-    subTitle: "",
-    bannerimg: "https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw23b41aef/images/hi-res/50F1KPBCTAA32_1.jpg",
-    productbanner: braceletsbanner,
+  // {
+  //   id: 4,
+  //   title: "Diamond Black Bead Bracelets",
+  //   subTitle: "",
+  //   bannerimg: "https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw23b41aef/images/hi-res/50F1KPBCTAA32_1.jpg",
+  //   productbanner: braceletsbanner,
     
-    image_Url:
-      "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388143843.png",
-    subcategories: [
-      { name: "No Products" },
+  //   image_Url:
+  //     "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388143843.png",
+  //   subcategories: [
+  //     { name: "No Products" },
 
 
-    ],
-  },
+  //   ],
+  //   // extraimgurl:[
+  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/qh92blce0zkcbeto4yho.jpg"},
+  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/viwnib6ruqfwzyyb44he.jpg"},
+  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933344/blackbead/hg84nsmbekpadpgbglkk.jpg"},
+  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933343/blackbead/qaluq3xf3kznjfegfacq.jpg"},
+  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933319/blackbead/wm4wx0awpgd1vvpoqlfk.jpg"},
+
+      
+  //   // ]
+  // },
   {
     id: 5,
     title: "Diamond Bracelets",
@@ -146,9 +165,16 @@ export const categoriesData = [
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
     subcategories: [
       { name: "No Products" },
-
-
     ],
+    extraimgurl:[
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932271/mom%20and%20me/qqcsa7s4yuqsagyirybf.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930094/mom%20and%20me/o5xrkryyeqfiyduj528j.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930020/mom%20and%20me/soeeeh3sjnzryg9dmj9c.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932243/mom%20and%20me/dt2avtp4bqsisu4zxuk5.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932187/mom%20and%20me/df5eyj4erpqaijndoipj.png"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png"},
+    ]
   }
 ];
 

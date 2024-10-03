@@ -127,7 +127,7 @@ function Contactsec3() {
                         <div className="social-media">
                             <p>Connect with us :</p>
                             <div className="social-icons">
-                                <Link to="https://www.facebook.com/profile.php?id=61552003617016" target="_blank">
+                                <Link to="https://www.facebook.com/profile.php?id=61551799145871" target="_blank">
                                     <i className="fab fa-facebook-f" />
                                 </Link>
                                 <Link to="https://web.whatsapp.com/send?phone=+91%208657062511" target="_blank">

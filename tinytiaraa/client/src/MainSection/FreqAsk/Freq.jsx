@@ -94,7 +94,7 @@ function CustomizedAccordions() {
             >
               <img src={freq1} alt="" />
               <Typography>
-                What materials are used in Tiny Tiaraa Jewelry?
+                What is Unique about Tiny Tiaraa Jewelry?
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -177,8 +177,7 @@ function CustomizedAccordions() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Exchanges can be made within 7 days of purchase for items in
-                their original condition.
+              Exchanges can be made within 7 days of delivery for items in their original condition.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -237,8 +236,7 @@ function CustomizedAccordions() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                We introduce new collections seasonally and on special
-                occasions.
+              We introduce new collections for monthly festivals, seasonally, and on special occasions.
               </Typography>
             </AccordionDetails>
           </Accordion>

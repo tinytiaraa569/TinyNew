@@ -191,7 +191,7 @@ function Navbar1() {
                             </div>
                             <div className='text-center'>
 
-                                <span>Get 10% Off On Your Order above ₹5000 Or More! :- Tiny10</span>
+                                <span>Use coupon code <b>NAVRATRI500</b>  at checkout for an additional ₹500 Off!</span>
                             </div>
 
                         </Slider>
@@ -199,7 +199,7 @@ function Navbar1() {
                     </div>
 
                     <div className="social-icons ">
-                        <Link to="https://www.facebook.com/profile.php?id=61552003617016" target="_blank">
+                        <Link to="https://www.facebook.com/profile.php?id=61551799145871" target="_blank">
                             <i className="fab fa-facebook" />
                         </Link>
                         <Link to="https://www.instagram.com/tiny_tiaraa/" target="_blank">

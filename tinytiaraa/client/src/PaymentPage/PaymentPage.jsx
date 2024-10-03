@@ -1060,7 +1060,7 @@ function PaymentPage() {
                             </div>
 
                             <div className=''>
-                                <div className='flex items-center gap-8'>
+                                {/* <div className='flex items-center gap-8'>
                                     <div className='flex items-center gap-2'>
                                         <input
                                             id="razorpay"
@@ -1078,7 +1078,7 @@ function PaymentPage() {
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className='flex items-center gap-8'>
                                     <div className='flex items-center gap-2'>

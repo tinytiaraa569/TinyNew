@@ -245,7 +245,7 @@ function CheckoutPage() {
     const originPincode = "400093"; // You can set this dynamically if needed
     const destinationPincode = "400001"; // This can be dynamic, depending on user input
     const pickupDate =  new Date().toISOString().split("T")[0];; // Current date
-   const token = "b525f7a40e4a5ed99fdfc95897925641"
+   const token = "dc1b1181290fc5c34e1f4434f84b033b"
 
 
 //    useEffect(() => {

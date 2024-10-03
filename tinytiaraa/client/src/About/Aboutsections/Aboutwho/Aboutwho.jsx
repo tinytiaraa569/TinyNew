@@ -1,6 +1,6 @@
 import React from 'react'
 import './Aboutwho.css'
-import aboutbanner2 from './aboutbanner2.jpg'
+import aboutbanner1 from './aboutbanner1.jpg'
 
 function Aboutwho() {
   return (
@@ -15,7 +15,7 @@ function Aboutwho() {
     // </div>
 
     <div className="slidersec">
-          <img src={aboutbanner2} alt="First Slide" />
+          <img src={aboutbanner1} alt="First Slide" />
         </div>
   )
 }

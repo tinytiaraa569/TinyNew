@@ -4,11 +4,11 @@ const router = express.Router();
 
 router.post("/calculateEDD", async (req, res) => {
     const { origin_pincode, destination_pincode, pickup_date } = req.body;
-    const token = "b525f7a40e4a5ed99fdfc95897925641"; // Sequel API token
+    const token = "dc1b1181290fc5c34e1f4434f84b033b"; // Sequel API token
 
     try {
         const response = await axios.post(
-            "https://test.sequel247.com/api/shipment/calculateEDD",
+            " https://sequel247.com/api/shipment/calculateEDD",
             {
                 origin_pincode,
                 destination_pincode,
@@ -34,12 +34,12 @@ router.post("/calculateEDD", async (req, res) => {
 
 router.post("/track", async (req, res) => {
     // const { docket } = req.body; // The docket number is passed from the frontend
-    const token = "b525f7a40e4a5ed99fdfc95897925641"; // Sequel API token
+    const token = "dc1b1181290fc5c34e1f4434f84b033b"; // Sequel API token
     const docket = "0661237829"
 
     try {
         const response = await axios.post(
-            "https://test.sequel247.com/api/track",
+            " https://sequel247.com/api/track",
             {
                 token,
                 docket, // Include the docket number in the body

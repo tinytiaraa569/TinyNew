@@ -83,7 +83,7 @@ function ProductDetails({ data }) {
     };
 
     const productSlug = createSlug(data.name);
-    const productUrl = `https://tiny-tiaraanew.vercel.app/product/${productSlug}`;
+    const productUrl = `https://www.tinytiaraa.com/product/${productSlug}`;
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpansion = () => {
@@ -1026,7 +1026,9 @@ function ProductDetails({ data }) {
                                 <div className='w-full 800px:w-[50%] pt-2'>
 
                                     <h1 className={`${styles.productTitle} !font-[450] productpageproname`}>{data.name}</h1>
-                                    <h3 className={`text-[#727386] text-left  text-[14px] font-Poppins pt-2 productpageproskuid`}>{data.skuid}</h3>
+                                     <p className='text-[#727386] pt-1 text-[14px]'>Design Application No. {data.designno}</p>
+
+                                    <h3 className={`text-[#727386] text-left  text-[14px] font-Poppins pt-1 productpageproskuid`}>{data.skuid}</h3>
                                     <p 
                                      className={`font-Poppins pt-1 text-[14px] productpageprodesc ${isExpanded ? '' : 'line-clamp'}`} 
                                       onClick={toggleReadMore}
@@ -1855,7 +1857,7 @@ const ProductDetailsInfo = ({ data ,shouldShowChainOptions }) => {
                                         </div>
                                         <div className='w-[320px] bg-[#d1fbf3] mb-[1.5px] px-[10px] py-[10px] flex gap-[10px] items-center featurestsec'>
                                             <div className='font-[500] '><MdOutlineAppRegistration /></div>
-                                            <p className='text-[#4f3267] text-[15px]'>Design Registration No. {data.designno}</p>
+                                            <p className='text-[#4f3267] text-[15px]'>Design Application No. {data.designno}</p>
                                         </div>
 
 
