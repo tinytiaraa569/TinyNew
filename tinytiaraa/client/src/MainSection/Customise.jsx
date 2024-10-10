@@ -62,7 +62,7 @@ function Customise() {
           {/* Image Section */}
           <div className="leftcustomimg">
             <img
-            loading='lazy'
+              loading="lazy"
               src={steps[currentStep].image}
               alt={steps[currentStep].title}
             />
@@ -99,6 +99,8 @@ function Customise() {
             >
               Customize Your Jewelry
             </button>
+
+            <p className="text-[#000000d6] text-[13px] mt-2">Coming Soon..</p>
           </div>
         </div>
       </div>

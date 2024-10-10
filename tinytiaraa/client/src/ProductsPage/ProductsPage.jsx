@@ -13,6 +13,9 @@ import allproductbanner from "./allproductbanner.jpg";
 
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+
 function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filteredData, setFilteredData] = useState([]);
@@ -28,6 +31,7 @@ function ProductsPage() {
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
   console.log(products, "products");
 
@@ -62,31 +66,40 @@ function ProductsPage() {
     }
   }, [isMobile]);
   useEffect(() => {
-    // Extract the category from the URL
+    // Extract the parameters from the URL
     const searchParams = new URLSearchParams(location.search);
     const categoryData = searchParams.get("category");
+    const subcategoryData = searchParams.get("subcategory"); // Extract the subcategory
 
     console.log(categoryData, "see what is category data");
+    console.log(subcategoryData, "see what is subcategory data");
 
     // Find the category that matches the categoryData
     if (categoryData) {
-      const matchedCategory = categoriesData.find(
-        (category) => category.title === categoryData
-      );
-      setSelectedCategory(matchedCategory);
+        const matchedCategory = categoriesData.find(
+            (category) => category.title === categoryData
+        );
+        setSelectedCategory(matchedCategory);
     }
-  }, [location.search]);
 
-  useEffect(() => {
-    const subcategoryData = searchParams.get("subcategory");
-    console.log(categoryData, "see what is category data");
+    // Set the selected subcategory if it exists
     if (subcategoryData) {
-      const productsInSubcategory = filteredData.filter(
-        (product) => product.subcategory === subcategoryData
-      );
-      setFilteredData(productsInSubcategory);
+        setSelectedSubcategory(subcategoryData); // Assuming selectedSubcategory is defined in state
     }
-  }, []);
+}, [location.search]); // Dependency array to re-run when URL changes
+  // useEffect(() => {
+  //   const subcategoryData = searchParams.get("subcategory");
+  //   console.log(subcategoryData, "see what is subcategory data");
+  //   console.log(products,"from sub cat")
+  //   if (subcategoryData ) {
+  //     const productsInSubcategory = products.filter(
+  //       (product) => product.subcategory === subcategoryData
+  //     );
+  //     console.log(productsInSubcategory,"subcatgory filtered adtaa ")
+  //     setFilteredData(productsInSubcategory);
+  //     console.log(productsInSubcategory,"check sub cate")
+  //   }
+  // }, [location.search]);
   console.log(filteredData, "filtered products checking");
 
   // Handle loading and error states
@@ -148,6 +161,14 @@ function ProductsPage() {
       if (categoryData) {
         filteredProducts = filteredProducts.filter(
           (product) => product.category === categoryData
+        );
+      }
+
+
+       // Filter by category
+       if (subcategoryData) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.subcategory === subcategoryData
         );
       }
 
@@ -600,6 +621,12 @@ function ProductsPage() {
         setSelectedCategory(null);
         updateURLParams({ category: "" });
         break;
+      case "subcategory": // New case for subcategory
+        setSelectedSubcategory(""); // Adjust this line based on your state variable name
+        updateURLParams({ subcategory: "" }); // Adjust this line based on how you're managing URL parameters
+        break;
+
+        
       
 
       default:
@@ -651,8 +678,16 @@ function ProductsPage() {
   const query = new URLSearchParams(location.search);
   const selectedEnamelColorimg = query.get('enamelColor') || ''; // Default to empty string if no color is selected
 
+  const submitHandle = (category, subcategory = null) => {
+    const subcategoryParam = subcategory ? `&subcategory=${subcategory.name}` : '';
+    navigate(`/products?category=${category.title}${subcategoryParam}`);
+};
+const [selectedSubcat, setSelectedSubcat] = useState(null); // State to track selected subcategory
 
- 
+// Handle tab click to filter images based on subcategory
+const handleSubcatClick = (subcat) => {
+  setSelectedSubcat(subcat); // Update the selected subcategory
+};
  
   return (
     <>
@@ -665,6 +700,7 @@ function ProductsPage() {
         {selectedCategory ? (
           <div className="productbanner">
             <img
+              loading="lazy"
               src={selectedCategory.productbanner}
               alt={selectedCategory.title}
             />
@@ -672,6 +708,7 @@ function ProductsPage() {
         ) : (
           <div className="productbanner">
              <img
+              loading="lazy"
               src={allproductbanner}
               
             />
@@ -787,6 +824,16 @@ function ProductsPage() {
                             />
                         </div>
                     )}
+
+                {selectedSubcategory && ( // New check for selected subcategory
+                        <div className="flex items-center bg-blue-200 px-2 py-1 rounded-md">
+                          <span className="text-[12px]">Subcategory: {selectedSubcategory}</span>
+                          <RiCloseFill
+                            className="ml-2 cursor-pointer"
+                            onClick={() => removeFilter("subcategory")} // Handle removal
+                          />
+                        </div>
+                      )}
                 </div>
               </div>
 
@@ -1053,7 +1100,7 @@ function ProductsPage() {
             <div className="sortline"></div>
           </div>
           <div className="section filtsecbig">
-            <h1 className="text-center text-2xl font-semibold mb-8">
+            <h1 className="text-center text-2xl font-semibold mb-5">
               {categoryData ? categoryData : "All Products"}
             </h1>
 
@@ -1063,33 +1110,173 @@ function ProductsPage() {
               <p className="text-center text-red-500">{error}</p>
             ) : filteredData.length === 0  && selectedCategory ? (
               <>
+              <p className="text-center text-[14px] text-[#030303b7]">
+                We're working on restocking our collection. Stay tuned for new arrivals soon!
+              </p>
+ {/* Display extracat data */}
+             
               
-              <p className="text-center text-[14px] text-[#030303b7]">We're working on restocking our collection. Stay tuned for new arrivals soon!</p>
-              <div className="flex justify-center mt-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                  {selectedCategory?.extraimgurl?.map((image, index) => (
-                    <img
+              
+              <div className="mt-6">
+                {/* Group images by collection and convert the result to an array */}
+                {Object.entries(
+                  selectedCategory?.extraimgurl?.reduce((acc, image) => {
+                    // If the collection doesn't exist in the accumulator, add it
+                    if (!acc[image.collection]) {
+                      acc[image.collection] = [];
+                    }
+                    // Add the image to the respective collection
+                    acc[image.collection].push(image);
+                    return acc;
+                  }, {})
+                ).map(([collectionName, images]) => (
+                  <div key={collectionName} className="mb-12 ">
+                    {/* Display the collection name */}
+                    <h2 className="comingcollectionline text-center text-lg font-semibold ">
+                      {collectionName} 
+                    </h2>
+                    {selectedCategory?.extracat?.length > 0 && (
+                      <div className="mt-3 mb-3 pb-2">
+                        
+                        <div className="flex justify-center">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                            {selectedCategory?.extracat?.map((category, index) => (
+                              <div
+                              onClick={() => handleSubcatClick(category.catname)} 
+                                key={index}
+                                className="subpendantcat cursor-pointer w-[200px] bg-white border border-[#41d399c1] shadow-lg rounded-[22px] p-4 text-center transition-transform duration-300 hover:shadow-xl hover:scale-105"
+                              >
+                                <h3 className="font-Poppins text-[16px] text-[#000000c2] mb-2">{category.catname}</h3>
+                                <div className="overflow-hidden">
+                                  {category.catimg && (
+                                    <img
+                                      src={category.catimg}
+                                      alt={category.catname}
+                                      className="w-full h-32 object-contain  rounded-md mt-2"
+                                    />
+                                  )}
+                                </div>
+                                <div className=" mb-3">
+                                  <button className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]">
+                                    View {category.catname}
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <p className="text-center text-[12px] text-[#00000081] ">A preview of what's to come! Discover a sneak peek of our upcoming collection, with more stunning pieces arriving soon.</p>
+                    <div className="text-center text-[12px] text-[#1d1d1dc9] mb-4">(coming soon...)</div>
+                    {/* Render images of the collection below the collection name */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {images
+                  // Filter images by selected subcategory or show all images if no subcategory is selected
+                  .filter((image) =>
+                    selectedSubcat ? image.subcat === selectedSubcat : true
+                  )
+                  .map((image, index) => (
+                    <Zoom
                       key={index}
-                      src={image.url}
-                      alt={`extra-${index}`}
-                      className="cursor-pointer w-full h-60 object-cover shadow-lg rounded-lg border border-gray-200"
-                    />
+                      zoomMargin={40}
+                      defaultStyles={{ overlay: { zIndex: 1000 } }}
+                      onZoom={() => setIsZoomed(true)}
+                      onUnzoom={() => setIsZoomed(false)}
+                    >
+                      <img
+                        loading="lazy"
+                        src={image.url}
+                        alt={`extra-${index}`}
+                        className="!cursor-pointer w-full h-60 object-cover shadow-lg rounded-lg border border-gray-200"
+                      />
+                    </Zoom>
                   ))}
-                </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-
-              </>
+            </>
+            
+            
             ) : (
+              <>
+
+          {/* {selectedCategory && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
+                  <div className="mt-8">
+                      <h2 className="text-center text-xl font-semibold mb-4">Subcategories</h2>
+                      <div className="flex justify-center">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                              {selectedCategory.subcategories.map((subcat, subIndex) => (
+                                  <div key={subIndex} className="bg-white shadow-md rounded-lg p-4 text-center">
+                                      <h3 className="font-Poppins text-lg">{subcat.name}</h3>
+                                      {subcat.imageUrl && (
+                                          <img src={subcat.imageUrl} alt={subcat.name} className="w-full h-32 object-cover rounded-md mt-2" />
+                                      )}
+                                      <button
+                                          onClick={() => submitHandle(selectedCategory, subcat)}
+                                          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                      >
+                                          View {subcat.name}
+                                      </button>
+                                  </div>
+                              ))}
+                          </div>
+                      </div>
+                  </div>
+              )} */}
+
+
+              {/* //only for diamond endant */}
+              {selectedCategory && selectedCategory.title === "Diamond Pendants" && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
+                      <div className="mt-3 mb-10 pb-7 border-b border-[#5DC2B0]">
+                          <h2 className="text-center text-[18px] font-[500] text-[#000000cf] mb-4">SubCategories</h2>
+                          <div className="flex justify-center">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                                  {selectedCategory.subcategories.map((subcat, subIndex) => (
+                                      <div onClick={() => submitHandle(selectedCategory, subcat)} key={subIndex} className="subpendantcat cursor-pointer w-[230px] bg-white border border-[#41d399c1] shadow-lg rounded-[22px] p-4 text-center transition-transform duration-300 hover:shadow-xl hover:scale-105">
+
+                                          <h3 className="font-Poppins text-[16px] text-[#000000c2] mb-2">{subcat.name}</h3>
+                                          <div className="overflow-hidden">
+
+                                          {subcat?.imageUrl && (
+                                            <img
+                                            src={subcat.imageUrl}
+                                            alt={subcat.name}
+                                            className="w-full h-32 object-contain scale-[1.35] rounded-md mt-2"
+                                            />
+                                          )}
+                                          </div>
+                                          <div className="mt-[-20px] mb-3">
+                                          <button
+                                              
+                                              className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]"
+                                              >
+                                              View {subcat.name}
+                                          </button>
+                                            </div>
+                                      </div>
+                                  ))}
+                              </div>
+                          </div>
+                      </div>
+                  )}
+
+
+
+
               <div
                 className={`adjustgridfilter grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ${
                   isFilterVisible ? "xl:grid-cols-4" : "xl:grid-cols-5"
                 } mb-12`}
-              >
+                >
                 {filteredData.map((product, index) => (
                   <ProductCard data={product} key={index} selectedEnamelColorimg={selectedEnamelColorimg} />
                 ))}
+
+                
               </div>
+                </>
             )}
           </div>
         </div>

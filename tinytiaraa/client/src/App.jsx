@@ -77,9 +77,13 @@ import { PriceRangeProvider } from './pricerange/PriceRangeContext';
 import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
 import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
+
+import ShopAllUsers from './ShopAllUsers/ShopAllUsers'
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
 import PayUSuccess from './PaymentPage/PayUSuccess';
 import Silver from './silvercomp/Silver';
+
+import Error404 from './Errror404/Error404'
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
 
@@ -96,26 +100,50 @@ function App() {
 //   ReactGA.initialize('G-DQ8YVWKBTB'); // Replace with your actual GA4 Measurement ID
 //   ReactGA.pageview(window.location.pathname + window.location.search);
 // }, []);
-useEffect(() => {
-  // Trigger a page view on route change
-  window.gtag('config', 'G-DQ8YVWKBTB', {
-    page_path: location.pathname + location.search,
-  });
-}, [location]);
+// useEffect(() => {
+//   // Trigger a page view on route change
+//   window.gtag('config', 'G-E1YSJRP0GY', {
+//     page_path: location.pathname + location.search,
+//   });
+// }, [location]);
+  useEffect(() => {
+  // Delay the gtag page view event
+  const timeoutId = setTimeout(() => {
+    window.gtag('config', 'G-E1YSJRP0GY', {
+      page_path: window.location.pathname + window.location.search,
+    });
+  }, 9000); // 5-second delay (adjust the time as needed)
 
+  return () => clearTimeout(timeoutId); // Cleanup the timeout if the component unmounts
+}, [location]);
 
   const dispatch = useDispatch();
 
 
 
 
-  useEffect(() => {
-    Store.dispatch(loadUser())
-    Store.dispatch(loadSeller())
-    Store.dispatch(getAllProducts())
-    Store.dispatch(getAllEvents());
-  }, [dispatch])
+  // useEffect(() => {
+  //   Store.dispatch(getAllProducts())
+  //   Store.dispatch(loadUser())
+  //   Store.dispatch(loadSeller())
+  //   Store.dispatch(getAllEvents());
+  // }, [dispatch])
 
+  useEffect(() => {
+    // Load the user and seller immediately for authentication purposes
+    Store.dispatch(loadUser());
+    Store.dispatch(loadSeller());
+  
+    // Delay fetching of products and events to allow the initial page load
+    setTimeout(() => {
+      Store.dispatch(getAllProducts());
+    }, 3000); // 2-second delay
+  
+    setTimeout(() => {
+      Store.dispatch(getAllEvents());
+    }, 5000); // 4-second delay
+  }, [dispatch]);
+  
 
   useEffect(() => {
     captureReferralCode();
@@ -123,13 +151,6 @@ useEffect(() => {
 
 
 
-
-  // const { events, isLoading } = useSelector((state) => state.events)
-
-  // console.log(events)
-
-
-  // console.log(isSeller, seller)
 
   const shouldHideNavbar = location.pathname === '/dashboard' ||
     location.pathname.startsWith('/admin-manage') ||
@@ -150,12 +171,11 @@ useEffect(() => {
     location.pathname.startsWith('/dashboard-requests') ||
     location.pathname.startsWith('/dashboard-Contactus') ||
     location.pathname.startsWith('/dashboard-ratecard') ||
+    location.pathname.startsWith('/dashboard-allusers') ||
 
 
 
-
-
-
+    
     location.pathname.startsWith('/order/:id')
 
 
@@ -406,7 +426,13 @@ useEffect(() => {
             </SellerProtectedRoute>
           } />
 
-          <Route path='/shopproduct/:name' element={
+          <Route path='/dashboard-allusers' element={
+            <SellerProtectedRoute >
+              <ShopAllUsers />
+            </SellerProtectedRoute>
+          } />
+
+          <Route path='/shopproduct/:id' element={
             <SellerProtectedRoute >
               <ShopProductDetailsPage />
             </SellerProtectedRoute>
@@ -450,6 +476,12 @@ useEffect(() => {
           <Route path='/checkout-page' element={<CheckoutPage />} />
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/order/success' element={<OrderSuccessPage />} />
+
+
+          <Route path='/*' element={<Error404/>} />
+
+         
+
 
 
 

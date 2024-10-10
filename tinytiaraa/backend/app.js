@@ -14,7 +14,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://tiny-tiaraanew.vercel.app',
     credentials: true
 }));
 
@@ -24,6 +24,23 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 5
 app.use(cookieParser());
 
 
+// const allowedOrigins = [
+//     'https://tinytiaraa.com',
+//     'https://www.tinytiaraa.com'
+// ];
+
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, origin);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true
+// }));
 
 
 
@@ -164,6 +181,47 @@ app.post("/payu/hash", async (req, res) => {
     });
 });
 
+
+// payu  new route crypto.hash
+
+// app.post("/payu/hash", async (req, res) => {
+//     const { name, email, amount, transactionId } = req.body;
+
+//     console.log("Received data:", { name, email, amount, transactionId });
+
+//     const data = {
+//         key: process.env.PAYU_MERCHANT_KEY,
+//         salt: process.env.PAYU_SALT,
+//         txnid: transactionId,
+//         amount: amount,
+//         productinfo: "TEST PRODUCT",
+//         firstname: name,
+//         email: email,
+//         udf1: 'details1',
+//         udf2: 'details2',
+//         udf3: 'details3',
+//         udf4: 'details4',
+//         udf5: 'details5',
+//     };
+
+//     // Construct the hash string following PayU's format
+//     const stringToHash = `${data.key}|${data.txnid}|${data.amount}|${data.productinfo}|${data.firstname}|${data.email}|${data.udf1}|${data.udf2}|${data.udf3}|${data.udf4}|${data.udf5}||||||${data.salt}`;
+
+//     console.log("String to hash:", stringToHash);
+
+//     // Use crypto to hash the string
+//     const cryp = crypto.createHash('sha512');
+//     cryp.update(stringToHash);
+//     const hash = cryp.digest('hex');
+
+//     console.log("Generated hash:", hash);
+
+//     return res.status(200).send({
+//         hash: hash,
+//         transactionId: transactionId
+//     });
+// });
+
 app.post("/payu/success", (req, res) => {
     const { txnid, status, ...otherParams } = req.body;
 
@@ -188,7 +246,7 @@ app.post("/payu/failure", (req, res) => {
     // You can log the failure details, notify the user, etc.
 
     // Redirect to failure page with transaction details
-    return res.redirect('https://tiny-tiaraanew.vercel.app/payment');
+    return res.redirect('https://www.tinytiaraa.com/payment');
 });
 
 

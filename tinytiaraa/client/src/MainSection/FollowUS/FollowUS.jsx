@@ -1,7 +1,7 @@
 import React from 'react'
 import './FollowUS.css'
 import { SiFacebook } from "react-icons/si";
-import { FaInstagram, FaPinterest, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaPinterest, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 function FollowUS() {
     return (
@@ -43,6 +43,16 @@ function FollowUS() {
                 <div className="socailcardfollow socialpintrest">
                     <FaPinterest className='socialiconfollow' />
                     <span>Pinterest</span>
+
+                </div>
+               
+                </Link>
+
+
+                <Link to="">
+                <div className="socailcardfollow socialyoutube">
+                    <FaYoutube className='socialiconfollow' />
+                    <span>Youtube</span>
 
                 </div>
                 </Link>

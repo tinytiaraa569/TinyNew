@@ -782,11 +782,11 @@ const generateInvoiceTemplate = (order) => {
 
                 <div class="receiverdetailadddresss">
                     <p>To,</p>
-                    <p>Dear. ${order.billingAddress.name}</p>
-                    <p>${order.billingAddress.email},</p>
-                    <p>${order.billingAddress.address1} </p>
-                    <p>${order.billingAddress.address2}</p>
-                    <p>${order.billingAddress.city}, ${order.billingAddress.country} ${order.billingAddress.zipCode}</p>
+                    <p>Dear. ${order?.billingAddress?.name}</p>
+                    <p>${order?.billingAddress?.email},</p>
+                    <p>${order?.billingAddress?.address1} </p>
+                    <p>${order?.billingAddress?.address2}</p>
+                    <p>${order?.billingAddress?.city}, ${order?.billingAddress?.country} ${order?.billingAddress?.zipCode}</p>
                     <p>Pan :</p>
 
                 </div>
@@ -2271,7 +2271,7 @@ ${order.cart.map(item => `
 <div class="totalcost">
 <p>Subtotal: ₹${order.totalPrice}</p>
 <p style="padding: 4px 0;">Shipping: Free</p>
-<p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : 'No coupon applied'}</p>
+<p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : '500 off'}</p>
 <p style="padding: 4px 0;">Total: ₹${order.totalPrice}</p>
 </div>
 

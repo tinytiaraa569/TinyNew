@@ -417,4 +417,20 @@ router.get("/user-details/:id", isAuthenticated, catchAsyncErrors(async (req, re
         return next(new ErrorHandler(error.message, 500));
     }
 }));
+
+
+//all users 
+router.get("/get-all-users", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+    try {
+        const users = await User.find(); // Fetch all users from the database
+
+        res.status(200).json({
+            success: true,
+            users, // Return the users
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}));
+
 module.exports = router

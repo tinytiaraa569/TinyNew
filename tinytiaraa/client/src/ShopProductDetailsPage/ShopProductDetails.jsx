@@ -59,6 +59,7 @@ function ShopProductDetails({ product }) {
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-lg">
+            
             <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
             <p className="text-lg mb-2"><strong>SKU:</strong> {product?.skuid}</p>
             <p className="text-lg mb-2"><strong>Price:</strong> ₹{product?.discountPrice}</p>

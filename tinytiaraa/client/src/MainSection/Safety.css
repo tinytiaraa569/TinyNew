@@ -178,6 +178,9 @@
     border-radius: 50%;
     z-index: 1;
   }
+  .referbtnnew{
+    margin-top: 10px !important;
+  }
 }
 
 @media (max-width: 400px) {

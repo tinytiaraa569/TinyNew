@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { server } from '@/server';
 import { toast } from 'react-toastify';
@@ -8,6 +8,9 @@ const RateCard = () => {
     const [diamondRate, setDiamondRate] = useState('');
     const [labourCharge, setLabourCharge] = useState('');
     const [miscellaneous, setMiscellaneous] = useState('');
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -6,13 +6,13 @@ import ShopProductDetails from './ShopProductDetails';
 
 function ShopProductDetailsPage() {
   const { products } = useSelector((state) => state.products);
-  const { name } = useParams();
+  const { id } = useParams();
   const [data, setData] = useState(null);
   const productName = name.replace(/-/g, ' ');
 
   useEffect(() => {
     if (products && products.length > 0) {
-      const product = products.find((product) => product.name === productName);
+      const product = products.find((product) => product._id === id);
       if (product) {
         setData(product);
       } else {

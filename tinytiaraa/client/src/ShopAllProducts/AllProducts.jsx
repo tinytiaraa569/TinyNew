@@ -16,6 +16,10 @@ function AllProducts() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
     const handleDelete = (id) => {
         dispatch(deleteProduct(id));
         window.location.reload();
@@ -110,7 +114,7 @@ function AllProducts() {
             minWidth: 100,
             sortable: false,
             renderCell: (params) => (
-                <Link to={`/shopproduct/${params.row.name}`}>
+                <Link to={`/shopproduct/${params.row.id}`}>
                     <button>
                         <AiOutlineEye size={20} />
                     </button>

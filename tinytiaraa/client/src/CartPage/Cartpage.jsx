@@ -589,7 +589,7 @@ function Cartpage() {
                   <div>
                     <h3 className="text-xl font-[500]  mb-1">Refer & Earn</h3>
                     <div className="my-4">
-                      <h3 className="text-lg font-medium mb-2">Referral Balance: ₹{referralBalance}</h3>
+                      <h3 className="text-lg font-medium mb-2">Referral Balance: ₹{referralBalance.toFixed(2)}</h3>
                       {appliedReferral === 0 ? (
                         <button
                           className="button bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2 hover:bg-blue-600 transition-colors"
@@ -835,7 +835,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
               {/* Render chain option only if showWithChain is true */}
               {shouldShowChainOptions && (
-                <h3 className='text-[0.6rem]'><span className='font-[500]'>Chain:</span> {data.showWithChain ? 'With Chain' : 'Without Chain'} ({data.showWithChain ?  data.selectedChainSize: ''})</h3>
+                <h3 className='text-[0.6rem]'><span className='font-[500]'>Chain:</span> {data.showWithChain ? 'With Chain' : 'Without Chain'} {data.showWithChain ?  (`(${data.selectedChainSize})`) : ''}</h3>
               )}
 
             </div>

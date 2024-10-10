@@ -472,7 +472,7 @@ const TrackOrder = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getAllOrdersOfUser(user._id))
+        dispatch(getAllOrdersOfUser(user.email))
     }, [])
     console.log(orders,"from my orders")
     const columns = [

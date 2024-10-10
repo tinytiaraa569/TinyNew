@@ -898,19 +898,86 @@ function PaymentPage() {
             </form>
         );
     };
+    
+    // code for live 
+    // const handlePayUPayment = async () => {
+    //     try {
+    //         // Generate a unique transaction ID
+    //         const transactionId = `txn_${Date.now()}`;
+    
+    //         // Prepare payment data
+    //         const paymentData = {
+    //             name: orderData.shippingAddress.name,
+    //             email: orderData.shippingAddress.email,
+    //             amount: orderData.totalPrice,
+    //             transactionId: transactionId,
+    //             phone: orderData.shippingAddress.phoneNumber, // Add phone number here
+    //         };
+    
+    //         // Step 1: Request hash from backend
+    //         const response = await fetch(`${backend_url}payu/hash`, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(paymentData),
+    //         });
+    
+    //         const data = await response.json();
+    //         const { hash } = data;
+    
+    //         // Step 2: Prepare PayU payment options
+    //         const payuOptions = {
+    //             key: "XA5XsM",
+    //             txnid: transactionId,
+    //             amount: orderData.totalPrice,
+    //             productinfo: "TEST PRODUCT",
+    //             firstname: orderData.shippingAddress.name,
+    //             email: orderData.shippingAddress.email,
+    //             phone: orderData.shippingAddress.phoneNumber, // Include phone number
+    //             surl: `https://www.tinytiaraa.com/payu/order/success?txnid=${transactionId}&status=success`, // Success URL
+    //             furl: `https://www.tinytiaraa.com/payment`, // Failure URL
+    //             udf1: 'details1',
+    //             udf2: 'details2',
+    //             udf3: 'details3',
+    //             udf4: 'details4',
+    //             udf5: 'details5',
+    //             hash: hash,
+    //         };
+    
+    //         // Redirect to PayU payment gateway
+    //         const form = document.createElement('form');
+    //         form.setAttribute('method', 'POST');
+    //         form.setAttribute('action', 'https://secure.payu.in/_payment'); // Use live URL in production
+    
+    //         // Add all parameters to the form
+    //         Object.keys(payuOptions).forEach(key => {
+    //             const hiddenField = document.createElement('input');
+    //             hiddenField.setAttribute('type', 'hidden');
+    //             hiddenField.setAttribute('name', key);
+    //             hiddenField.setAttribute('value', payuOptions[key]);
+    //             form.appendChild(hiddenField);
+    //         });
+    
+    //         document.body.appendChild(form);
+    //         form.submit(); // Submit the form to PayU
+    //     } catch (error) {
+    //         console.error("Error in handlePayUPayment:", error);
+    //         alert("Error occurred while processing payment.");
+    //     }
+    // };
 
+    //code for test payu
     const handlePayUPayment = async () => {
         try {
-            // Generate a unique transaction ID
-            const transactionId = `txn_${Date.now()}`;
+            const transactionId = generateTransactionID(); // Use the same transaction ID logic
     
-            // Prepare payment data
             const paymentData = {
                 name: orderData.shippingAddress.name,
                 email: orderData.shippingAddress.email,
                 amount: orderData.totalPrice,
                 transactionId: transactionId,
-                phone: orderData.shippingAddress.phoneNumber, // Add phone number here
+                phone: orderData.shippingAddress.phoneNumber,
             };
     
             // Step 1: Request hash from backend
@@ -925,7 +992,6 @@ function PaymentPage() {
             const data = await response.json();
             const { hash } = data;
     
-            // Step 2: Prepare PayU payment options
             const payuOptions = {
                 key: "XA5XsM",
                 txnid: transactionId,
@@ -933,9 +999,9 @@ function PaymentPage() {
                 productinfo: "TEST PRODUCT",
                 firstname: orderData.shippingAddress.name,
                 email: orderData.shippingAddress.email,
-                phone: orderData.shippingAddress.phoneNumber, // Include phone number
-                surl: `${backend_url}payu/success`, // Success URL
-                furl: `${backend_url}payu/failure`, // Failure URL
+                phone: orderData.shippingAddress.phoneNumber,
+                surl: `${backend_url}payu/success`,
+                furl: `${backend_url}payu/failure`,
                 udf1: 'details1',
                 udf2: 'details2',
                 udf3: 'details3',
@@ -947,9 +1013,8 @@ function PaymentPage() {
             // Redirect to PayU payment gateway
             const form = document.createElement('form');
             form.setAttribute('method', 'POST');
-            form.setAttribute('action', 'https://secure.payu.in/_payment'); // Use live URL in production
+            form.setAttribute('action', 'https://secure.payu.in/_payment');
     
-            // Add all parameters to the form
             Object.keys(payuOptions).forEach(key => {
                 const hiddenField = document.createElement('input');
                 hiddenField.setAttribute('type', 'hidden');
@@ -959,7 +1024,7 @@ function PaymentPage() {
             });
     
             document.body.appendChild(form);
-            form.submit(); // Submit the form to PayU
+            form.submit();
         } catch (error) {
             console.error("Error in handlePayUPayment:", error);
             alert("Error occurred while processing payment.");
@@ -1246,7 +1311,7 @@ function PaymentPage() {
                                             {
                                                 orderData?.appliedReferral > 0 ?
                                                     `- ₹${orderData?.appliedReferral}` :
-                                                    `Available: ₹${orderData?.referralBalance}`
+                                                    `Available: ₹${orderData?.referralBalance?.toFixed(2)}`
                                             }
                                         </span>
 

@@ -31,9 +31,12 @@
     margin-top: 20px;
 }
 
-.whypage .whypiconcon img {
+.whypage .whypiconcon img ,.sholidcheck {
     width: 106px;
     height: 91px;
+}
+.sholidcheck{
+    color: #006039;
 }
 
 .whypage .whypiconcon .whypiconconflex {

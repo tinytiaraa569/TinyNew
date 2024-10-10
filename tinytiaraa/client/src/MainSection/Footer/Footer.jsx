@@ -1,6 +1,6 @@
 import React from 'react'
 import './Footer.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logoimg from '../../Navbar1/logo.png'
 import { FaPhoneAlt } from 'react-icons/fa';
@@ -12,12 +12,13 @@ function Footer() {
             top: 0,
         });
     };
+    const navigate = useNavigate()
     return (
         <div className="footermain">
 
             <div className='footer'>
                 <div className="footerone">
-                    <img src={logoimg} alt="" />
+                    <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" onClick={()=>navigate('/') } />
                 </div>
                 <div className="footertwo">
                     <h4 className='footerheading'>LOCATE US</h4>
@@ -62,23 +63,23 @@ function Footer() {
                         <ul>
                             <li><Link onClick={scrollToTop} to="/about">Our Story</Link></li>
                             <li><Link onClick={scrollToTop} to="/contacts">Contact Us</Link></li>
-                            <li><Link onClick={scrollToTop} to="/terms-and-conditions">TERMS & CONDITIONS</Link></li>
-                            <li><Link onClick={scrollToTop} to="/privacy-policy">PRIVACY POLICY</Link></li>
+                            <li><Link onClick={scrollToTop} to="/terms-and-conditions" >Terms & Conditions</Link></li>
+                            <li><Link onClick={scrollToTop} to="/privacy-policy" >Privacy Policy</Link></li>
                             {/* <li><Link onClick={scrollToTop} to="/warranty-extension">WARRANTY EXTENSION</Link></li> */}
-                            <li><Link onClick={scrollToTop} to="/exchange-policy">EXCHANGE POLICY</Link></li>
-                            <li><Link onClick={scrollToTop} to="/return-policy">RETURN POLICY</Link></li>
+                            <li><Link onClick={scrollToTop} to="/exchange-policy" > Exchange Policy</Link></li>
+                            <li><Link onClick={scrollToTop} to="/return-policy" > Return Policy</Link></li>
                         </ul>
                     </div>
                 </div>
                 <div className="footerfour">
                     <h4 className='footerheading'>POLICY</h4>
                     <ul>
-                        <li><Link onClick={scrollToTop} to="/affiliate-program-commission-policy">AFFILIATE PROGRAM COMMISSION POLICY </Link></li>
+                        <li><Link onClick={scrollToTop} to="/affiliate-program-commission-policy">Affiliate Program Commission Policy </Link></li>
                         {/* <li><Link onClick={scrollToTop} to="/gold-jewellery-insurance-policy">GOLD JEWELLERY INSURANCE POLICY</Link></li> */}
-                        <li><Link onClick={scrollToTop} to="/children-safety-jewellery-policy">CHILDREN SAFETY JEWELRY POLICY</Link></li>
-                        <li><Link onClick={scrollToTop} to="/customised-jewellery-policy">CUSTOMISED JEWELRY POLICY</Link></li>
+                        <li><Link onClick={scrollToTop} to="/children-safety-jewellery-policy">Children Safety Jewelry Policy</Link></li>
+                        <li><Link onClick={scrollToTop} to="/customised-jewellery-policy">Customised Jewelry Policy</Link></li>
                         {/* <li><Link onClick={scrollToTop} to="/gold-coin-promotion-with-personalised-horoscope-engraving-policy">GOLD COIN PROMOTION WITH PERSONALISED HOROSCOPE ENGRAVING POLICY</Link></li> */}
-                        <li><Link onClick={scrollToTop} to="/gold-and-diamond-jewellery-certification-policy">GOLD AND DIAMOND JEWELRY CERTIFICATION POLICY</Link></li>
+                        <li><Link onClick={scrollToTop} to="/gold-and-diamond-jewellery-certification-policy"> Gold And Diamond Jewelry Certification Policy</Link></li>
                     </ul>
                 </div>
 

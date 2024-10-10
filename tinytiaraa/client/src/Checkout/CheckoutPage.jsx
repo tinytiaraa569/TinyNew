@@ -375,8 +375,8 @@ const calculateEDD = async () => {
                                     </div>
 
                                     <div className='flex gap-5 items-center mb-4 sercol'>
-                                        <div className='w-[45%]  adjustinpser'>
-                                            <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-fname">First Name *</label>
+                                        <div className='w-[93%]  adjustinpser'>
+                                            <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-fname">Full Name *</label>
                                             {user ? (
                                                 <input
                                                     id="shipping-fname"
@@ -393,12 +393,12 @@ const calculateEDD = async () => {
                                                     value={name}
                                                     onChange={(e) => setName(e.target.value)}
                                                     className='int-emailcheck'
-                                                    placeholder="Enter first name"
+                                                    placeholder="Enter Your full name"
                                                     required
                                                 />
                                             )}
                                         </div>
-                                        <div className='w-[45%]  adjustinpser'>
+                                        {/* <div className='w-[45%]  adjustinpser'>
                                             <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-lname">Last Name *</label>
                                             {user ? (
                                                 <input
@@ -420,7 +420,7 @@ const calculateEDD = async () => {
                                                     required
                                                 />
                                             )}
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     <div className='flex gap-5 items-center mb-4 sercol'>
@@ -438,26 +438,30 @@ const calculateEDD = async () => {
                                         />
                                         {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
                                     </div>
-                                        <div className='w-[45%] adjustinpser'>
-                                            <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' for="shipping-counry">Country *</label>
-                                            <select
-                                                id='shipping-counry'
-                                                className="int-emailcheck rounded-[5px]"
-                                                value={country}
-                                                onChange={(e) => setCountry(e.target.value)}
-                                            >
-                                                <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block" value="">
-                                                    Choose your country
-                                                </option>
-                                                {Country &&
-                                                    Country.getAllCountries().map((item) => (
-                                                        <option key={item.isoCode} value={item.isoCode}>
-                                                            {item.name}
-                                                        </option>
-                                                    ))}
-                                            </select>
-
-                                        </div>
+                                    <div className='w-[45%] adjustinpser'>
+            <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="shipping-country">
+                Country *
+            </label>
+            <select
+                id='shipping-country'
+                className="int-emailcheck rounded-[5px]"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+            >
+                {/* Show default option only if country is not selected */}
+                {country === '' && (
+                    <option className="text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block" value="">
+                        Select Country
+                    </option>
+                )}
+                {Country && 
+                    Country.getAllCountries().filter(item => item.isoCode === 'IN').map((item) => (
+                        <option key={item.isoCode} value={item.isoCode}>
+                            {item.name}
+                        </option>
+                    ))}
+            </select>
+        </div>
                                     </div>
 
                                     <div className='flex gap-5 items-center mb-4 sercol'>
@@ -554,18 +558,18 @@ const calculateEDD = async () => {
                                         {!isSameAddress && (
                                             <>        
                                              <div className='flex gap-5 items-center mb-4 sercol' >
-                                                    <div className='w-[45%] adjustinpser'>
-                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">First Name *</label>
+                                                    <div className='w-[93%] adjustinpser'>
+                                                        <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address1">Full Name *</label>
                                                         <input
                                                             id="billing-address1"
                                                             type='text'
                                                             value= {billingAddress.name}
                                                             onChange={(e) => setBillingAddress(prev => ({ ...prev, name: e.target.value }))}
                                                             className='int-emailcheck'
-                                                            placeholder="Enter Your Name"
+                                                            placeholder="Enter Your Full Name"
                                                         />
                                                     </div>
-                                                    <div className='w-[45%] adjustinpser'>
+                                                    {/* <div className='w-[45%] adjustinpser'>
                                                         <label className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px] block' htmlFor="billing-address2">Last Name *</label>
                                                         <input
                                                             id="billing-address2"
@@ -575,7 +579,7 @@ const calculateEDD = async () => {
                                                             className='int-emailcheck'
                                                             placeholder="Enter Your Name"
                                                         />
-                                                    </div>
+                                                    </div> */}
                                                 </div>           
                                                 <div className='flex gap-5 items-center mb-4 sercol' >
                                                     <div className='w-[45%] adjustinpser'>
@@ -682,7 +686,7 @@ const calculateEDD = async () => {
                                             <div className='w-[100%]'>
                                             
                                                 <label htmlFor='same-address' className='text-[12px] text-[#6f6f79] font-[400] mb-[4px] tracking-[0.55px]'>
-                                                If the order amount exceeds 50,000, you will be required to provide additional details such as your PAN card information.
+                                                If the order amount exceeds 2,00,000, you will be required to provide additional details such as your PAN card information.
                                                 </label>
                                             </div>
                                         </div>
@@ -787,7 +791,7 @@ const calculateEDD = async () => {
                                                     {val?.showWithChain !== null && (
                                                         <div className="">
                                                             <span className="text-[#161618] font-[500] text-[13px]">Chain :</span>
-                                                            <span className=" text-[#161618]  text-[13px] pl-2" >{val.showWithChain ? 'With Chain' : 'Without Chain'}</span>
+                                                            <span className=" text-[#161618]  text-[13px] pl-2" >{val.showWithChain ? 'With Chain' : 'Without Chain'} </span>
                                                         </div>
 
                                                     )}
@@ -863,7 +867,7 @@ const calculateEDD = async () => {
                                                 orderData?.appliedReferral > 0 ?
                                                     `- ₹${orderData?.appliedReferral}` :
                                                     <>
-                                                        Available: ₹${orderData?.referralBalance}
+                                                        Available: ₹${orderData?.referralBalance?.toFixed(2)}
                                                         {/* <button onClick={handleApplyReferral} className='ml-4 text-[16px] text-blue-500'>
                                                             Apply
                                                         </button> */}

@@ -32,13 +32,7 @@ import navoffer from './sliderimages/navoffer.jpg';
 
 
 
-
 import { useNavigate } from 'react-router-dom';
-
-
-
-
-
 
 
 
@@ -91,10 +85,26 @@ function SliderSection() {
     <>
       <Slider {...settings}>
         <div className="slidersec cursor-pointer" >
-          <img loading='lazy' src={firstimg1} alt="First Slide" />
+        
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/evlkqnumibuxzcbaeqw7" alt="First Slide" />
         </div>
-        <div className="slidersec cursor-pointer" >
-          <img loading='lazy' src={navoffer} alt="Third Slide" />
+        {/* bannner with web */}
+      <div className="slidersec cursor-pointer" >
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/cxfxa1didovjio1rv1ag" alt="Third Slide" />
+        </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/ymn55i9cb7mmaus8qikj" alt="Slider Six" />
+        </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/czo3frgxqtg7yaovwrga" alt="Slider Six" />
+        </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/fdt75zohk6h6iuzuhqun" alt="Third Slide" />
+        </div>
+
+
+        {/* <div className="slidersec cursor-pointer" >
+          <img  src={navoffer} alt="Third Slide" />
         </div>
         <div className="slidersec cursor-pointer">
           <img loading='lazy' src={navbanner3} alt="Slider Six" />
@@ -103,14 +113,24 @@ function SliderSection() {
           <img loading='lazy' src={navbanner2} alt="Slider Six" />
         </div>
 
-        
-
-        
-     
-
         <div className="slidersec cursor-pointer">
           <img src={navbanner4} alt="Third Slide" />
+        </div> */}
+
+
+      {/* bannner with web */}
+      {/* <div className="slidersec cursor-pointer" >
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728229445/slidersbanner/cxfxa1didovjio1rv1ag.webp" alt="Third Slide" />
         </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728229885/slidersbanner/ymn55i9cb7mmaus8qikj.webp" alt="Slider Six" />
+        </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728230219/slidersbanner/czo3frgxqtg7yaovwrga.webp" alt="Slider Six" />
+        </div>
+        <div className="slidersec cursor-pointer">
+          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728230372/slidersbanner/fdt75zohk6h6iuzuhqun.webp" alt="Third Slide" />
+        </div> */}
 
         
         {/* <div className="slidersec cursor-pointer" onClick={()=>{navigate("/products?category=Diamond%20Bracelets")}}>

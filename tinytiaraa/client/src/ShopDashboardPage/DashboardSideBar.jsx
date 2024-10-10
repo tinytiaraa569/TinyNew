@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/collapsible"
 
 import { BiCategory } from "react-icons/bi";
-import { TbCategoryPlus } from "react-icons/tb";
+import { TbCategoryPlus, TbUsersGroup } from "react-icons/tb";
 import { IoIosOptions } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa";
 
@@ -177,6 +177,13 @@ function DashboardSideBar({ active }) {
                 </Link>
             </div>
 
+
+            <div className="w-full flex items-center p-4">
+                <Link to="/dashboard-allusers" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
+                <TbUsersGroup  size={30} color={`${active === 15 ? "#3d9bc0" : "#555"}`} />
+                    <h5 className={`pl-2 text-[18px] font-[400] ${active ===15 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>All Users</h5>
+                </Link>
+            </div>
 
 
 

@@ -165,7 +165,7 @@ function UserOrderDetails() {
                                 <div className='mt-2'>
                                 {item.showWithChain !== undefined && (
                                     <h5 className='pl-3 text-[13px] text-[#0000008c]'>
-                                        <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} ({item.selectedChainSize})
+                                        <span className='font-[600]'>Chain :</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} {item.selectedChainSize ? (item.selectedChainSize) : ""}
                                     </h5>
                                 )}
                                 {item.selectedColor !== null && (
@@ -267,18 +267,18 @@ function UserOrderDetails() {
             <div className="w-full flex justify-between items-center mb-5">
                 <div className='w-[50%] '>
                     <h4 className='pt-3 text-[18px] font-[600]'>Shipping Address</h4>
-                    <h4 className='pt-3 text-[14px] text-[#000b]'>{data?.shippingAddress.address1}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress.address2}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress.city}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress.country}</h4>
+                    <h4 className='pt-3 text-[14px] text-[#000b]'>{data?.shippingAddress?.address1}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress?.address2}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress?.city}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.shippingAddress?.country}</h4>
                     <h4 className='pt-1 text-[14px] font-[500] text-[#000b]'>{data?.shippingAddress?.phoneNumber}</h4>
                 </div>
                 <div className='w-[50%] '>
-                    <h4 className='pt-3 text-[18px] font-[600]'>Shipping Address</h4>
-                    <h4 className='pt-3 text-[14px] text-[#000b]'>{data?.billingAddress.address1}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress.address2}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress.city}</h4>
-                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress.country}</h4>
+                    <h4 className='pt-3 text-[18px] font-[600]'>Billing Address</h4>
+                    <h4 className='pt-3 text-[14px] text-[#000b]'>{data?.billingAddress?.address1}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress?.address2}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress?.city}</h4>
+                    <h4 className='pt-1 text-[14px] text-[#000b]'>{data?.billingAddress?.country}</h4>
                     <h4 className='pt-1 text-[14px] font-[500] text-[#000b]'>{data?.billingAddress?.phoneNumber}</h4>
                 </div>
 

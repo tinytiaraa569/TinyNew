@@ -1,3 +1,9 @@
+.wishlistwidth{
+    max-height: calc(100vh - 120px); 
+    overflow-y: auto;
+    /* padding: 16px; */
+}
+
 @media (max-width:1300px) {
     .wishlistwidth{
         width: 40% !important;

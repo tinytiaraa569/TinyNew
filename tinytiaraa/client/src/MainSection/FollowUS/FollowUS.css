@@ -74,6 +74,10 @@
     background: #E60023;
 
 }
+.followus .socialyoutube{
+    opacity: 70%;
+    background: #e32542;
+}
 
 .followus .socialfb:hover{
     opacity: 100%;
@@ -89,7 +93,10 @@
     opacity: 100%;
 
 }
+.followus .socialyoutube:hover{
+    opacity: 100%;
 
+}
 
 
 

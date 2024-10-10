@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
-import { MdChevronRight, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
+import { MdChevronRight, MdOutlineArrowDropDown, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
 import navimg from './about.jpg'
 import { categoriesData } from '@/static/data';
 import styles from '@/Styles/styles';
@@ -13,11 +13,11 @@ import Wishlist from '../Wishlist/Wishlist.jsx'
 import { useSelector } from 'react-redux';
 import Badge from '@mui/material/Badge';
 
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiFillGolden, AiOutlineHeart } from 'react-icons/ai';
 import { CgProfile, CgSearch } from 'react-icons/cg';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
-import { IoIosArrowDown, IoIosArrowUp, IoMdMail } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp, IoMdArrowDropright, IoMdMail } from 'react-icons/io';
 import DropDown from '@/Navbar/DropDown';
 import { backend_url } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
@@ -90,8 +90,6 @@ function Navbar1() {
     const submitHandle = (category, subcategory = null) => {
         const subcategoryParam = subcategory ? `&subcategory=${subcategory.name}` : '';
         navigate(`/products?category=${category.title}${subcategoryParam}`);
-       
-
     };
     const toggleShopDropdown = () => {
         setShopDropdownOpen((prevState) => !prevState);
@@ -145,8 +143,8 @@ function Navbar1() {
     };
 
     const openclosewhislist = () => {
-        setOpen(false);
         setOpenWishlist(true)
+        // setOpen(false);
     }
     const resetSearch = () => {
         setsearchTerm("");
@@ -258,9 +256,18 @@ function Navbar1() {
                                                 <div className='mb-2'>
                                                     <h3 className='font-[500]'>Shop Now</h3>
                                                 </div>
+                                                <div className='flex !items-center'>
+                                                <AiFillGolden size={22} color="#FFD700" />
+                                                <span className='pt-2 pb-1 collectionnav1 pl-1 ' onClick={() => { navigate("/products") }}>  Gold</span>
 
-                                                <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/products") }}>Gold</h6>
-                                                <h6 className='pb-2 collectionnav1'>Silver</h6>
+                                                </div>
+
+                                                <div className='flex items-center'>
+                                                <AiFillGolden size={22} color="#C0C0C0" />
+
+                                                <h6 className='pb-1 pt-2 pl-1  collectionnav1' onClick={()=>{navigate("/products?category=kids%20accessories")}}>Silver</h6>
+                                                
+                                                </div>
 
 
 
@@ -274,12 +281,12 @@ function Navbar1() {
 
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens <span className='text-[#a8a8a8]'> (coming soon)</span></h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[red]'> | New</span></h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization</h6>
-                                                    <h6 className='pb-2 collectionnav1'>Gifts</h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens </h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[#ff0000d6] text-[11px]'> (coming soon)</span></h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization <span className='text-[#ff0000d6] text-[11px]'> (coming soon)</span></h6>
+                                                    {/* <h6 className='pb-2 collectionnav1'>Gifts</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gallery </h6>
-                                                    <h6 className='pb-2 collectionnav1'>Media</h6>
+                                                    <h6 className='pb-2 collectionnav1'>Media</h6> */}
 
 
 
@@ -299,15 +306,43 @@ function Navbar1() {
                                                         <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
                                                             <img src={i.image_Url} alt="" style={{ width: "30px", height: "35px", objectFit: "contain", userSelect: "none" }} />
                                                             <h3 className='text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{i.title}</h3>
+                                                            <div className='  absolute left-[95%]'>
+
+                                                            {
+                                                                i.title === "Diamond Pendants" ?
+                                                                <IoMdArrowDropright />
+                                                                :
+                                                                ""
+                                                                
+                                                                
+                                                            }
+                                                            </div>
+
+                                                             { i.title === "Diamond Pendants" && (
+                                                                <div className={`subcatchild top-3 left-[100%] pt-[2px] pb-2 w-[230px] bg-[#fff] border border-[#eee] absolute z-30 rounded-[3px] shadow-sm`}>
+                                                                    {i.subcategories.map((val, subIndex) => (
+                                                                        <div className='pl-[10px]' key={subIndex} onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}>
+                                                                            <h3 className='m-2 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{val.name}</h3>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+ 
 
                                                             {/* Display subcategories */}
                                                             {/* <div className={`subcatchild top-3 left-[100%]  pb-4 w-[250px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm`}>
                                                                 {i.subcategories.map((val, subIndex) => (
-                                                                    <div key={subIndex} onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}>
+                                                                    <div key={subIndex} onClick={(e) => { 
+                                                                        e.stopPropagation();
+                                                                         submitHandle(i, val);
+                                                                 }}>
                                                                         <h3 className='m-3 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{val.name}</h3>
                                                                     </div>
                                                                 ))}
                                                             </div> */}
+
+                                                            
+                                                         
                                                         </div>
                                                     ))}
                                                 </div>
@@ -356,18 +391,18 @@ function Navbar1() {
                                                     to={`/products${buildQueryString(50000, 75000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
-                                                    <h6 className='mb-1 text-[14px]'> ₹ 50000 - ₹ 75000</h6>
+                                                    <h6 className='mb-1 text-[14px]'> ₹ 50000 - ₹ 100000</h6>
 
 
                                                 </Link>
-                                                <Link
+                                                {/* <Link
                                                     to={`/products${buildQueryString(75000, 100000)}`}
                                                     className='pb-2 collectionnav1 text-white'
                                                 >
                                                     <h6 className='mb-1 text-[14px]'> ₹ 75000 - ₹ 100000</h6>
 
 
-                                                </Link>
+                                                </Link> */}
                                             </div>
                                         </div>
 
@@ -384,7 +419,7 @@ function Navbar1() {
 
                         <div>
                             <div className="logo py-1" onClick={() => navigate("/")}>
-                                <img src={logo} alt="" />
+                                <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
                             </div>
                         </div>
 
@@ -549,7 +584,7 @@ function Navbar1() {
                     }
       w-full h-[70px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden `}
             >
-                <div className="w-full flex items-center justify-between">
+                <div className="w-full flex items-center justify-between cursor-pointer">
                     <div>
                         <BiMenuAltLeft size={40} className='ml-4' onClick={() => setOpen(true)} />
                     </div>
@@ -558,7 +593,7 @@ function Navbar1() {
                         setbars(false)
                         navigate("/")
                     }} >
-                        <img className='w-[150px] h-[60px] object-contain' src={logo} alt="" />
+                        <img loading='lazy' className='w-[150px] h-[60px] object-contain' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
                     </div>
 
                     <div>
@@ -566,7 +601,7 @@ function Navbar1() {
                             closenavbar()
                             navigate("/cart")
 
-                        }} className='mr-[20px]'>
+                        }} className='mr-[20px] cursor-pointer'>
 
 <Badge badgeContent={cart && cart.length} color="primary" badgeContentClassName="custom-badge-content">
 
@@ -589,10 +624,7 @@ function Navbar1() {
                             <div className='mobajustnavsall fixed w-[75%]  bg-[white] h-screen top-0 left-0 z-10 overflow-x-hidden overflow-y-auto'>
                                 <div className="w-full justify-between flex pr-3">
                                     <div>
-
-
-
-                                        <div className="mt-5 ml-5 mr-[15px]" onClick={() => openclosewhislist()}>
+                                        <div className="mt-5 ml-5 mr-[15px] cursor-pointer" onClick={() => openclosewhislist()}>
                                             <Badge badgeContent={wishlist && wishlist.length} color="primary">
                                                 <AiOutlineHeart size={30} />
                                             </Badge>
@@ -600,7 +632,7 @@ function Navbar1() {
                                         </div>
                                         {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
                                     </div>
-                                    <RxCross1 size={30} className='ml-4 mt-5' onClick={() => setOpen(false)} />
+                                    <RxCross1 size={30} className='ml-4 mt-5 cursor-pointer' onClick={() => setOpen(false)} />
 
                                 </div>
 

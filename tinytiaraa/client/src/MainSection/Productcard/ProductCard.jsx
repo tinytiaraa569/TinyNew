@@ -86,7 +86,6 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
         <div className='w-full h-[150px] overflow-hidden'>
           <Link to={`/product/${product_name}`}>
           <img
-              loading='lazy'
               src={enamelColorImages.length > 0 ? enamelColorImages[0]?.url : data.images && data.images[1]?.url}
               alt=""
               className='parentproductimg w-full h-[150px] object-contain'
@@ -100,15 +99,16 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
           <p className={`${styles.skuid}`}>{data.skuid}</p>
           <div className=" mt-2 flex items-center justify-center">
             <div className="flex ">
-              <h5 className={`${styles.productDiscountPrice}`}>
-                ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
-              </h5>
-              <span>
-              {data.originalPrice > 0 && (
+            {data.originalPrice > 0 && (
                 <h4 className={`${styles.price} line-through`}>
                   ₹{data.originalPrice.toFixed(0)}
                 </h4>
               )}
+              <h5 className={`${styles.productDiscountPrice} pl-2`}>
+                ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
+              </h5>
+              <span>
+              
               </span>
             </div>
           </div>

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DashboardHeader from '../ShopDashboardPage/DashboardHeader'
 import DashboardSideBar from '../ShopDashboardPage/DashboardSideBar'
 import AllProducts from './AllProducts'
 
 function ShopAllProducts() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div>
       <DashboardHeader />

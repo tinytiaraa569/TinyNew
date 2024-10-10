@@ -17,10 +17,10 @@ function Categories() {
             <h1 className='Categoriesexplore text-[30px] font-[450]'>Explore By Category</h1>
 
             <div className="categoriessection">
-                {categoriesData.map((category) => (
+                {categoriesData.slice(0, 8).map((category) => (
                     <div className="categoriescard" key={category.id} onClick={() => handleViewProducts(category.title)}>
                         <div className="categoriesimg">
-                            <img loading='lazy' src={category.bannerimg} alt={category.title} />
+                            <img src={category.bannerimg} alt={category.title} />
                             <div className="categoriestext">
                                 <div className='adjust'>
                                     <h3>{category.title}</h3>

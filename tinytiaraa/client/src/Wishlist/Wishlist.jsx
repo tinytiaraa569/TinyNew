@@ -9,6 +9,7 @@ import { removeFromWishlist } from '@/redux/actions/wishlist';
 import { backend_url } from '@/server';
 import { addToCart } from '@/redux/actions/cart';
 import './wishlist.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Wishlist({ setOpenWishlist }) {
@@ -30,8 +31,8 @@ function Wishlist({ setOpenWishlist }) {
 
 
   return (
-    <div className='fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10'>
-      <div className="wishlistwidth fixed top-0 right-0 min-h-full w-[25%] bg-white flex flex-col justify-between shadow-sm">
+    <div className='fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10 overflow-y-scroll'>
+      <div className="wishlistwidth fixed top-0 right-0 min-h-full w-[28%] bg-white flex flex-col justify-between shadow-sm">
 
         {
           wishlist && wishlist.length === 0 ?
@@ -65,7 +66,7 @@ function Wishlist({ setOpenWishlist }) {
                   wishlist && wishlist.map((i, index) => {
                     return (
 
-                      <CartSingle key={index} data={i} removeFromWishlistHandler={removeFromWishlistHandler} addToCartHandler={addToCartHandler} />
+                      <CartSingle key={index} data={i} removeFromWishlistHandler={removeFromWishlistHandler} addToCartHandler={addToCartHandler} setOpenWishlist={setOpenWishlist} />
                     )
 
                   })
@@ -82,32 +83,44 @@ function Wishlist({ setOpenWishlist }) {
   )
 }
 
-const CartSingle = ({ data ,removeFromWishlistHandler ,addToCartHandler}) => {
+const CartSingle = ({ data ,removeFromWishlistHandler ,addToCartHandler ,setOpenWishlist}) => {
+  const d = data.name
+  const product_name = d.replace(/\s+/g, "-")
 
-  
+  const navigate = useNavigate()
+
 
 
   return (
     <div className='border-b p-4'>
 
-      <div className='w-full flex  items-center'>
+      <div className='w-full flex  items-center cursor-pointer' >
         <RxCross1 className='cursor-pointer' onClick={()=>removeFromWishlistHandler(data)}/>
-        <img src={`${data?.images[0]?.url}`} alt="" className='w-[130px]  h-[140px] ml-2 self-center object-contain' />
+        
+        <img src={`${data?.images[0]?.url}`} alt="" className='w-[130px]  h-[140px] ml-2 self-center object-contain' onClick={()=>{
+        navigate(`/product/${product_name}`)
+        setOpenWishlist(false)
+      }} />
+        
 
 
-        <div className="w-[70%] pl-[5px] pr-[5px]0 font-Poppins">
-          <h1 className='text-[15px]' >{data.name}</h1>
+        <div className="w-[70%] pl-[5px] pr-[5px] font-Poppins" onClick={()=>{
+        navigate(`/product/${product_name}`)
+        setOpenWishlist(false)
+      }}>
+          <h1 className='text-[13px]' >{data.name}</h1>
           <p className={`text-[#727386]  text-[12px] font-Poppins`}>{data.skuid}</p>
-          <div className="flex ">
+          <div className="flex pt-2">
+            
+            <h4 className={`${styles.price} line-through text-[15px]`}>
+              {data.originalPrice ? " ₹" + data.originalPrice : null}
+            </h4>
             <h5 className={`${styles.productDiscountPrice} text-[15px]`}>
               ₹
               {data.originalPrice === 0
                 ? data.originalPrice
                 : data.discountPrice}
             </h5>
-            <h4 className={`${styles.price} line-through text-[15px]`}>
-              {data.originalPrice ? " ₹" + data.originalPrice : null}
-            </h4>
           </div>
 
 

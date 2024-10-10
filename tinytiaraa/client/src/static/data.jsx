@@ -17,6 +17,10 @@ import setsbanner from './productpage/setsbanner.jpg'
 import mombanner from './productpage/mombanner.jpg'
 import religiousbanner from './productpage/religiousbanner.jpg'
 
+import set from './productpage/set.webp'
+
+
+
 
 
 
@@ -29,7 +33,7 @@ export const categoriesData = [
     id: 1,
     title: "Diamond Earrings",
     subTitle: "",
-    bannerimg: earringimg,
+    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728233441/homecategory/uibyrfneap5pipa9xfbd.webp",
     productbanner: earringbanner,
     image_Url:
       "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320772799.png",
@@ -44,10 +48,10 @@ export const categoriesData = [
     id: 2,
     title: "Diamond Pendants",
     subcategories: [
-      { name: "Alphabet" },
-      { name: "Numeric" },
-      { name: "religious" },
-      { name: "Generic" },
+      { name: "Alphabet" , imageUrl:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1724665551/products/yktdqyyf8uq36roltwtk.png" },
+      { name: "Numeric" , imageUrl:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1724490065/products/i5phtsnxz7l5bcb1rkfr.png" },
+      // { name: "religious" },
+      { name: "Generic" ,imageUrl : 'https://res.cloudinary.com/ddaef5aw1/image/upload/v1725259902/products/hqyu0qmdqpids34pnvuf.png' },
 
 
     ],
@@ -58,55 +62,50 @@ export const categoriesData = [
     image_Url:
       "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388144518.png",
   },
-  {
-    id: 3,
-    title: "Pearl Collection",
-    subTitle: "",
-    image_Url:
-      "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
-
-    bannerimg: pearlimg,
-    productbanner: pendantbanner,
-    subcategories: [
-      { name: "No Products" },
-
-
-    ],
-    extraimgurl:[
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png"},
-    ]
-   
-  },
   // {
-  //   id: 4,
-  //   title: "Diamond Black Bead Bracelets",
+  //   id: 3,
+  //   title: "Pearl Collection",
   //   subTitle: "",
-  //   bannerimg: "https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dw23b41aef/images/hi-res/50F1KPBCTAA32_1.jpg",
-  //   productbanner: braceletsbanner,
-    
   //   image_Url:
-  //     "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388143843.png",
+  //     "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
+
+  //   bannerimg: pearlimg,
+  //   productbanner: pendantbanner,
   //   subcategories: [
   //     { name: "No Products" },
 
 
   //   ],
-  //   // extraimgurl:[
-  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/qh92blce0zkcbeto4yho.jpg"},
-  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/viwnib6ruqfwzyyb44he.jpg"},
-  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933344/blackbead/hg84nsmbekpadpgbglkk.jpg"},
-  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933343/blackbead/qaluq3xf3kznjfegfacq.jpg"},
-  //   //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933319/blackbead/wm4wx0awpgd1vvpoqlfk.jpg"},
-
-      
-  //   // ]
+  //   extraimgurl:[
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png"},
+  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png"},
+  //   ]
+   
   // },
+  {
+    id: 4,
+    title: "Diamond Black Bead Bracelets",
+    subTitle: "",
+    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728039131/jgruybidtzxt0brpc6eo.jpg",
+    productbanner: braceletsbanner,
+    
+    image_Url:
+      "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388143843.png",
+    subcategories: [
+      { name: "Nazaria" },
+
+
+    ],
+    extraimgurl:[
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728055284/blackbead/y0rjx87oqv4nvkcosuhw.jpg" ,Price:"13429"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/viwnib6ruqfwzyyb44he.jpg" ,Price:"17109"},
+    ]
+  },
   {
     id: 5,
     title: "Diamond Bracelets",
@@ -154,17 +153,22 @@ export const categoriesData = [
 
     ],
   },
+ 
   {
-    id: 8,
-    title: "Mom and Me Collection",
-    bannerimg: meandmomimg,
+    id: 9,
+    title: "kids accessories",
+    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728128636/omojkqjm5kuwohjaswsy.jpg",
 
-    productbanner: mombanner,
+    productbanner: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728372366/hchxwiyvrtmfehtjjdwv.jpg",
 
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
     subcategories: [
-      { name: "No Products" },
+      { name: "glass" },
+      { name: "spoon" },
+      { name: "bowl" },
+
+
     ],
     extraimgurl:[
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png"},
@@ -175,7 +179,67 @@ export const categoriesData = [
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932187/mom%20and%20me/df5eyj4erpqaijndoipj.png"},
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png"},
     ]
-  }
+  },
+  {
+    id: 8,
+    title: "Coming Soon ...",
+    bannerimg: meandmomimg,
+
+    productbanner: mombanner,
+
+    subTitle: "",
+    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
+    subcategories: [
+      { name: "No Products" },
+    ],
+    extracat:[
+      {catname:"Bangles",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728466023/subcat/bje3a3du6ghi67cp5bzs.png"},
+      {catname:"Hoops",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/rwppnecx5mrgdlg7iyy1.png"},
+      {catname:"PearlPendant",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/vdzctlcyhogvdbozxxye.png"},
+      {catname:"SetPendant",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/keuchtg5y2wwznmzqxvf.png"},
+    ],
+    extraimgurl:[
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932271/mom%20and%20me/qqcsa7s4yuqsagyirybf.png", collection:"Mom And Me Collection", subcat:"Hoops"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930094/mom%20and%20me/o5xrkryyeqfiyduj528j.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930020/mom%20and%20me/soeeeh3sjnzryg9dmj9c.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932243/mom%20and%20me/dt2avtp4bqsisu4zxuk5.png", collection:"Mom And Me Collection", subcat:"Hoops"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932187/mom%20and%20me/df5eyj4erpqaijndoipj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+
+
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474476/mom%20and%20me/eyckztgyviclkduvsnf4.png", collection:"Mom And Me Collection", subcat:"Hoops"},
+
+      
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728472894/mom%20and%20me/qeahgvk4nich337yldqx.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474083/mom%20and%20me/b9jmmadfiriqmgrs3xul.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474099/mom%20and%20me/xjqmy2m4wj6vzer8nasq.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+
+
+      
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474357/mom%20and%20me/muqqtz5sluoevmosqrwj.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474376/mom%20and%20me/liozhflrettlya85l5zk.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474401/mom%20and%20me/y5a982bpe571lww8wzxb.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+
+
+
+      
+      
+
+       
+
+
+
+      // {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png", collection:"Pearl Collection"},
+      //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png", collection:"Pearl Collection"},
+        
+    ]
+  },
 ];
 
 // product Data

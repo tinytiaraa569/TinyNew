@@ -33,9 +33,9 @@ router.post("/calculateEDD", async (req, res) => {
 });
 
 router.post("/track", async (req, res) => {
-    // const { docket } = req.body; // The docket number is passed from the frontend
+    const { docket } = req.body; // The docket number is passed from the frontend
     const token = "dc1b1181290fc5c34e1f4434f84b033b"; // Sequel API token
-    const docket = "0661237829"
+    // const docket = "0661237829"
 
     try {
         const response = await axios.post(

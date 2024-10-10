@@ -57,7 +57,7 @@ const Safety = () => {
     <>
       <div className="refermain">
         <div className="refermainimg">
-          <img loading='lazy' src={refernewbanner} alt="" />
+          <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/referbanner/gjy47mmbywemijnbu1o6" alt="" />
         </div>
         <div className="refermaincontent">
           <div className="referheading">

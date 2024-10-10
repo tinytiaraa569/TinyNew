@@ -423,7 +423,8 @@ function OrderDetails() {
                 <div className='mt-2'>
                     {item.showWithChain !== undefined && (
                         <h5 className='text-sm text-[#0000008c]'>
-                            <span className='font-bold'>Chain:</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} ({item.selectedChainSize})
+                            <span className='font-bold'>Chain:</span> {item.showWithChain ? 'With Chain' : 'Without Chain'} {item.showWithChain ?  (`(${item.selectedChainSize})`) : ''}
+                            
                         </h5>
                     )}
                     {item.selectedColor !== null && (
@@ -467,11 +468,11 @@ function OrderDetails() {
                 </div>
                 <div className='w-[50%] '>
                     <h4 className='pt-3 text-[20px] font-[600]'>Billing Address</h4>
-                    <h4 className='pt-3 text-[15px] text-[#000b]'>{data?.billingAddress.name}</h4>
-                    <h4 className='pt-3 text-[15px] text-[#000b]'>{data?.billingAddress.address1}</h4>
-                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress.address2}</h4>
-                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress.city}</h4>
-                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress.country}</h4>
+                    <h4 className='pt-3 text-[15px] text-[#000b]'>{data?.billingAddress?.name}</h4>
+                    <h4 className='pt-3 text-[15px] text-[#000b]'>{data?.billingAddress?.address1}</h4>
+                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress?.address2}</h4>
+                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress?.city}</h4>
+                    <h4 className='pt-1 text-[15px] text-[#000b]'>{data?.billingAddress?.country}</h4>
                     <h4 className='pt-1 text-[15px] font-[500] text-[#000b]'>{data?.billingAddress?.email}</h4>
 
                     <h4 className='pt-1 text-[15px] font-[500] text-[#000b]'>{data?.billingAddress?.phoneNumber}</h4>

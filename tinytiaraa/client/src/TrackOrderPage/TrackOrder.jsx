@@ -26,7 +26,7 @@ function TrackOrder() {
     };
 
     useEffect(() => {
-        dispatch(getAllOrdersOfUser(user._id));
+        dispatch(getAllOrdersOfUser(user.email));
 
         const cachedData = localStorage.getItem('trackingStatus');
         if (cachedData) {
@@ -52,6 +52,8 @@ function TrackOrder() {
         1: "Rose Gold",
         2: "White Gold",
     };
+
+    const latestTrackingUpdate = trackingStatus?.data?.tracking?.slice(-1)[0];
 
     return (
         <div className='w-full min-h-screen bg-gray-50 py-10'>
@@ -150,9 +152,8 @@ function TrackOrder() {
                                     <FaBoxOpen className='text-green-500 mr-3' size={24} />
                                     <p className='text-lg'>
                                         <strong>Current Status:</strong>{' '}
-                                        {trackingStatus.data.tracking && trackingStatus.data.tracking.length > 0
-                                            ? trackingStatus.data.tracking[0].description
-                                            : 'No updates available'}
+                                        
+                                        {latestTrackingUpdate?.description || 'No updates available'}
                                     </p>
                                 </div>
                                 <div className='flex items-center'>
