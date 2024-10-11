@@ -47,7 +47,7 @@ function SliderSection() {
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 10000, // Slightly slower autoplay speed for better visibility
+    autoplaySpeed: 8000, // Slightly slower autoplay speed for better visibility
     swipeToSlide: true,
     responsive: [
       {
@@ -83,13 +83,13 @@ function SliderSection() {
 
   return (
     <>
-      <Slider {...settings}>
+      {/* <Slider {...settings}> */}
         <div className="slidersec cursor-pointer" >
         
           <img  src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/evlkqnumibuxzcbaeqw7" alt="First Slide" />
         </div>
         {/* bannner with web */}
-        <div className="slidersec cursor-pointer" >
+        {/* <div className="slidersec cursor-pointer" >
           <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/cxfxa1didovjio1rv1ag" alt="Third Slide" />
         </div>
         <div className="slidersec cursor-pointer">
@@ -100,7 +100,7 @@ function SliderSection() {
         </div>
         <div className="slidersec cursor-pointer">
           <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/fdt75zohk6h6iuzuhqun" alt="Third Slide" />
-        </div>
+        </div> */}
 
 
         {/* <div className="slidersec cursor-pointer" >
@@ -146,7 +146,7 @@ function SliderSection() {
         <div className="slidersec">
           <img src={slider4} alt="Slider Four" />
         </div> */}
-      </Slider>
+      {/* </Slider> */}
     </>
   );
 }

@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { MdChevronRight, MdOutlineArrowDropDown, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
-import navimg from './about.jpg'
+import navimg from './about.webp'
 import { categoriesData } from '@/static/data';
 import styles from '@/Styles/styles';
 import Wishlist from '../Wishlist/Wishlist.jsx'
