@@ -38,7 +38,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src={img3} alt="" />
+          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628277/whypageicon/lnzes534vuzomlkdwqb1.svg" alt="" />
 
           <div>
             <h6>Crafted with Love</h6>
@@ -46,7 +46,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src={img4} alt="" />
+          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628481/whypageicon/yzyhxaclamwrl8nx2hmj.svg" alt="" />
 
           <div>
             <h6>Customizable Options</h6>
@@ -64,14 +64,14 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy'  src={img6} alt="" />
+          <img  loading='lazy'  src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628532/whypageicon/ojnoilbzdykmn3yh7wa8.svg" alt="" />
 
           <div>
             <h6>Age-Appropriate Styles</h6>
           </div>
         </div>
         <div className='whypiconconflex'>
-          <img  loading='lazy'  src={img7} alt="" />
+          <img  loading='lazy'  src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628561/whypageicon/pqgeij2csqbbiwe6rhhy.svg" alt="" />
 
           <div>
             <h6>Free Delivery Services</h6>
