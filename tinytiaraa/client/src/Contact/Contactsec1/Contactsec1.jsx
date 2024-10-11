@@ -5,7 +5,7 @@ import contactbanner from './contactbanner.png'
 function Contactsec1() {
   return (
     <div className="slidersec">
-      <img src={contactbanner} alt="Third Slide" />
+      <img loading="lazy" src={contactbanner} alt="Third Slide" />
     </div>
   );
 }

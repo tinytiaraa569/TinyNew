@@ -122,12 +122,12 @@ function App() {
 
 
 
-  useEffect(() => {
-    Store.dispatch(loadUser())
-    Store.dispatch(loadSeller())
-    Store.dispatch(getAllEvents());
-    Store.dispatch(getAllProducts())
-  }, [dispatch])
+  // useEffect(() => {
+  //   Store.dispatch(loadUser())
+  //   Store.dispatch(loadSeller())
+  //   Store.dispatch(getAllEvents());
+  //   Store.dispatch(getAllProducts())
+  // }, [dispatch])
 
   // useEffect(() => {
   //   // Load the user and seller immediately for authentication purposes
