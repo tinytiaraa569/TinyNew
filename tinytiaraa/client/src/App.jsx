@@ -122,27 +122,27 @@ function App() {
 
 
 
-  // useEffect(() => {
-  //   Store.dispatch(getAllProducts())
-  //   Store.dispatch(loadUser())
-  //   Store.dispatch(loadSeller())
-  //   Store.dispatch(getAllEvents());
-  // }, [dispatch])
-
   useEffect(() => {
-    // Load the user and seller immediately for authentication purposes
-    Store.dispatch(loadUser());
-    Store.dispatch(loadSeller());
+    Store.dispatch(loadUser())
+    Store.dispatch(loadSeller())
+    Store.dispatch(getAllEvents());
+    Store.dispatch(getAllProducts())
+  }, [dispatch])
+
+  // useEffect(() => {
+  //   // Load the user and seller immediately for authentication purposes
+  //   Store.dispatch(loadUser());
+  //   Store.dispatch(loadSeller());
   
-    // Delay fetching of products and events to allow the initial page load
-    setTimeout(() => {
-      Store.dispatch(getAllProducts());
-    }, 3000); // 2-second delay
+  //   // Delay fetching of products and events to allow the initial page load
+  //   setTimeout(() => {
+  //     Store.dispatch(getAllProducts());
+  //   }, 3000); // 2-second delay
   
-    setTimeout(() => {
-      Store.dispatch(getAllEvents());
-    }, 5000); // 4-second delay
-  }, [dispatch]);
+  //   setTimeout(() => {
+  //     Store.dispatch(getAllEvents());
+  //   }, 5000); // 4-second delay
+  // }, [dispatch]);
   
 
   useEffect(() => {
