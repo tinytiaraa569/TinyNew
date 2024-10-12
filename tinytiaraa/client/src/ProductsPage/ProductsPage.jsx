@@ -33,7 +33,7 @@ function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
-  console.log(products, "products seeing");
+  console.log(products, "products");
 
   const categoryData = searchParams.get("category");
   const subcategoryData = searchParams.get("subcategory");
@@ -689,6 +689,7 @@ const handleSubcatClick = (subcat) => {
   setSelectedSubcat(subcat); // Update the selected subcategory
 };
  
+
   return (
     <>
       {/* <div className="productbanner">

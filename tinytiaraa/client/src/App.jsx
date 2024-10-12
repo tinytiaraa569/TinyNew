@@ -127,11 +127,11 @@ function App() {
     Store.dispatch(loadSeller())
     Store.dispatch(getAllEvents());
       // Fetch initial products
-      dispatch(getAllProducts(100, 0)); // Fetch the first 40 products
+      dispatch(getAllProducts(20, 0)); // Fetch the first 40 products
 
 
       
-          dispatch(getAllProducts(200, 100)); // Fetch the next 200 products
+          dispatch(getAllProducts(240, 20)); // Fetch the next 200 products
     
    
   }, [dispatch])

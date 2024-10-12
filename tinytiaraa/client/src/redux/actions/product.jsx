@@ -219,7 +219,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // get all products
 // actions/productActions.js
-export const getAllProducts = (limit = 100, offset = 0) => async (dispatch) => {
+export const getAllProducts = (limit = 20, offset = 0) => async (dispatch) => {
     try {
         dispatch({
             type: "getAllProductsRequest",
@@ -228,7 +228,7 @@ export const getAllProducts = (limit = 100, offset = 0) => async (dispatch) => {
         const { data } = await axios.get(`${server}/product/get-all-products`, {
             params: { limit, offset } // Add parameters for pagination
         });
-
+        
         dispatch({
             type: "getAllProductsSuccess",
             payload: data.products,

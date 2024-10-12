@@ -979,23 +979,25 @@ router.delete("/delete-shop-product/:id", isSeller, catchAsyncErrors(async (req,
 
 // get all products
 router.get("/get-all-products", catchAsyncErrors(async (req, res, next) => {
-    const limit = parseInt(req.query.limit) || 100; // Default limit to fetch
+    const limit = parseInt(req.query.limit) || 20; // Default limit to fetch
     const offset = parseInt(req.query.offset) || 0; // Default offset for pagination
 
+    console.log(`Incoming request with Limit: ${limit}, Offset: ${offset}`);
+
     try {
-        // Fetching products sorted by 'createdAt' in descending order
         const products = await Product.find()
             .sort({ createdAt: -1 }) // Sort by 'createdAt' field in descending order
             .limit(limit) // Limit the number of products returned
             .skip(offset); // Skip the first 'offset' number of products
 
-        // Sending response with the fetched products
+        console.log(`Fetched ${products.length} products`); // Log the number of products fetched
+
         res.status(200).json({
             success: true,
             products,
         });
     } catch (error) {
-        // Handling errors
+        console.error('Error fetching products:', error);
         return next(new ErrorHandler(error, 400));
     }
 }));
