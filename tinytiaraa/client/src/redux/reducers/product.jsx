@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 const initialState ={
-    isLoading:true
+    isLoading:true,
+    products: [],
+    error: null, 
 }
 
 export const productReducer = createReducer(initialState,(builder)=>{
@@ -14,8 +16,6 @@ export const productReducer = createReducer(initialState,(builder)=>{
         state.isLoading = false
         state.product = action.payload
         state.success = true;
-
-
 
     })
     
@@ -71,7 +71,7 @@ export const productReducer = createReducer(initialState,(builder)=>{
     })
     .addCase('getAllProductsSuccess', (state, action) => {
         state.isLoading = false;
-        state.products  = action.payload
+         state.products = [...state.products, ...action.payload];
 
        
     })

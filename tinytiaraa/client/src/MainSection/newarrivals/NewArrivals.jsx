@@ -17,6 +17,13 @@ function NewArrivals() {
       setVisibleCount(10); // Show 10 products on larger screens (desktop)
     }
   };
+  useEffect(() => {
+    console.time('Products Load Time'); // Start the timer when the component mounts
+
+    return () => {
+      console.timeEnd('Products Load Time'); // End the timer when the component unmounts
+    };
+  }, []);
 
   const handleViewMore = () => {
     const scrollPosition = window.scrollY;

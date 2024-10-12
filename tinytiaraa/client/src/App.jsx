@@ -126,7 +126,14 @@ function App() {
     Store.dispatch(loadUser())
     Store.dispatch(loadSeller())
     Store.dispatch(getAllEvents());
-    Store.dispatch(getAllProducts())
+      // Fetch initial products
+      dispatch(getAllProducts(100, 0)); // Fetch the first 40 products
+
+
+      
+          dispatch(getAllProducts(200, 100)); // Fetch the next 200 products
+    
+   
   }, [dispatch])
 
   // useEffect(() => {

@@ -33,7 +33,7 @@ function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
-  console.log(products, "products");
+  console.log(products, "products seeing");
 
   const categoryData = searchParams.get("category");
   const subcategoryData = searchParams.get("subcategory");
