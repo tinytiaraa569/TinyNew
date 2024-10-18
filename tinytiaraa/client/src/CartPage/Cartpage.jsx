@@ -340,6 +340,15 @@ function Cartpage() {
 
   const finalPrice = (totalPrice - appliedReferral).toFixed(2);
 
+  // Fetch currency and conversion rates from state
+const { currency, conversionRates } = useSelector((state) => state.currency);
+
+// Convert prices based on the selected currency
+const convertedSubTotalPrice = (subTotalPrice * (conversionRates[currency] || 1)).toFixed(2);
+const convertedDiscountPrice = (discountPrice * (conversionRates[currency] || 1)).toFixed(2);
+const convertedFinalPrice = (finalPrice * (conversionRates[currency] || 1)).toFixed(2);
+
+
 
 
 
@@ -507,7 +516,7 @@ function Cartpage() {
     <p className="text-gray-500">Loading coupons...</p>
   ) : availableCoupons.length > 0 ? (
     <div className="flex flex-wrap gap-3">
-      {availableCoupons.map((coupon) => (
+      {availableCoupons?.slice(0, 2).map((coupon) => (
         <div 
           key={coupon._id} 
           className="bg-green-200 text-green-800 px-3 py-2 rounded-full text-[14px]  shadow-sm hover:bg-green-300 transition cursor-pointer"
@@ -529,11 +538,14 @@ function Cartpage() {
                 <h3>Order Summary</h3>
                 <div className="sub-total ">
                   <span className="label">Subtotal</span>
-                  <span className="value">₹ {subTotalPrice}</span>
+                  {/* <span className="value">₹ {subTotalPrice}</span> */}
+                  <span className="value">
+                   {currency} {convertedSubTotalPrice}
+                  </span>
                 </div>
                 <div className="sub-total ">
                   <span className="label">Coupon Discount:</span>
-                  <span className="value">
+                  {/* <span className="value">
                     {discountPrice > 0 ? (
                       <div className="flex items-center">
                         <h5 className="label !text-[16px]">- ₹{discountPrice}</h5>
@@ -542,7 +554,19 @@ function Cartpage() {
                     ) : (
                       <h5 className="text-[18px] font-[600]">-</h5>
                     )}
-                  </span>
+                  </span> */}
+                   <span className="value">
+                      {discountPrice > 0 ? (
+                        <div className="flex items-center">
+                          <h5 className="label !text-[16px]">- {currency} {convertedDiscountPrice}</h5>
+                          <span onClick={handleClearCoupon} className="ml-2 cursor-pointer text-red-500">
+                            <FaTimesCircle />
+                          </span>
+                        </div>
+                      ) : (
+                        <h5 className="text-[18px] font-[600]">-</h5>
+                      )}
+                    </span>
                 </div>
                 <div className="sub-total ">
                   <span className="label">
@@ -578,7 +602,8 @@ function Cartpage() {
 
                 <div className="sub-total sub-totalpp">
                   <span className="">Order Total </span>
-                  <span className="">₹ {finalPrice}</span>
+                  {/* <span className="">₹ {finalPrice}</span> */}
+                  <span className="">{currency} {convertedFinalPrice}</span>
                 </div>
               </div>
 
@@ -668,12 +693,20 @@ function Cartpage() {
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
   const [value, setValue] = useState(data.qty)
+  const { currency, conversionRates } = useSelector((state) => state.currency); // Get currency and conversion rates from state
+
   const metalColors = {
     0: "Yellow Gold",
     1: "Rose Gold",
     2: "White Gold",
   };
-  const totalPrice = data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice * value;
+
+  const convertedDiscountPrice = (data.discountPrice * (conversionRates[currency] || 1)).toFixed(0);
+  const convertedOriginalPrice = (data.originalPrice * (conversionRates[currency] || 1)).toFixed(0);
+  const convertedChainPrice = data.chainPrice > 0 ? (data.chainPrice * (conversionRates[currency] || 1)).toFixed(0) : 0;
+
+  // const totalPrice = data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice * value;
+  const totalPrice = data.chainPrice > 0 ? (parseFloat(convertedDiscountPrice) + parseFloat(convertedChainPrice)) : (parseFloat(convertedDiscountPrice) * value);
 
   const enamelColor = data.selectedEnamelColor?.toLowerCase();
   const metalColor = metalColors[data.selectedColor]?.replace(" ", "") + "clrStock";
@@ -814,9 +847,19 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
           </div>
           <div className="leftcardprice mb-2">
-            <span className="oprice">₹ {data.chainPrice > 0 ? data.originalPrice + data.chainPrice : data.originalPrice} </span>
+            {/* <span className="oprice">₹ {data.chainPrice > 0 ? data.originalPrice + data.chainPrice : data.originalPrice} </span>
             <span className="disprice pl-1">₹ {data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice} </span>
-            <span className='text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1'>save ₹{(data.originalPrice - data.discountPrice).toFixed(2)}</span>
+            <span className='text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1'>save ₹{(data.originalPrice - data.discountPrice).toFixed(2)}</span> */}
+
+        <span className="oprice">
+          {currency} {data.chainPrice > 0 ? (parseFloat(convertedOriginalPrice) + parseFloat(convertedChainPrice)).toFixed(0) : convertedOriginalPrice}
+        </span>
+        <span className="disprice pl-1">
+          {currency} {data.chainPrice > 0 ? (parseFloat(convertedDiscountPrice) + parseFloat(convertedChainPrice)).toFixed(0) : convertedDiscountPrice}
+        </span>
+        <span className="text-[#EB4F5C] ml-[5px] text-[0.9rem] pl-1">
+          save {currency} {(data.originalPrice * conversionRates[currency] - data.discountPrice * conversionRates[currency]).toFixed(2)}
+        </span>
           </div>
 
           <div className="details">
@@ -857,11 +900,19 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             </div>
           </div>
           <div className="checkoutsectionprice mt-1 mb-0.5">
-            <h3 className='text-[0.8rem] '>₹{data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice} * {value}</h3>
+            {/* <h3 className='text-[0.8rem] '>₹{data.chainPrice > 0 ? data.discountPrice + data.chainPrice : data.discountPrice} * {value}</h3>
             <div>
               <span className='text-[#EB4F5C] text-[0.8rem]'>SubTotal :-  ₹ {totalPrice}</span>
-            </div>
+            </div> */}
+          <h3 className="text-[0.8rem]">
+          {currency} {data.chainPrice > 0 ? (parseFloat(convertedDiscountPrice) + parseFloat(convertedChainPrice)).toFixed(2) : convertedDiscountPrice} * {value}
+        </h3>
+        <div>
+          <span className="text-[#EB4F5C] text-[0.8rem]">
+            SubTotal :- {currency} {totalPrice.toFixed(2)}
+          </span>
 
+          </div>
 
 
           </div>

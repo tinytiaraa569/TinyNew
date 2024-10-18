@@ -18,6 +18,7 @@ function CheckoutPage() {
 
     const { cart } = useSelector((state) => state.cart)
     const { user } = useSelector((state) => state.user)
+    const { currency, conversionRates } = useSelector((state) => state.currency); // Accessing currency and conversion rates
     const [userInfo, setUserInfo] = useState(false)
     const [orderData, setOrderData] = useState([])
     console.log(orderData, "see what is in checkout age")
@@ -73,6 +74,9 @@ function CheckoutPage() {
 
     const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * (item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice), 0)
 
+    // new code 
+    const convertedSubTotalPrice = (subTotalPrice * (conversionRates[currency] || 1)).toFixed(2);
+
     const shipping = "Free Shipping"
     const [error, setError] = useState('');
 
@@ -99,11 +103,18 @@ function CheckoutPage() {
     // };
 
     const totalPrice = (subTotalPrice - discountPrice).toFixed(2);
+    const convertedTotalPrice = (totalPrice * (conversionRates[currency] || 1)).toFixed(2);
+
+
+    // useEffect(() => {
+    //     const gst = (totalPrice * 3) / 100;
+    //     setGstAmount(gst.toFixed(2));
+    // }, [totalPrice]);
 
     useEffect(() => {
-        const gst = (totalPrice * 3) / 100;
+        const gst = (convertedTotalPrice * 3) / 100;
         setGstAmount(gst.toFixed(2));
-    }, [totalPrice]);
+    }, [convertedTotalPrice]);
     const handleCheckboxChangebilling = () => {
         setIsSameAddress(!isSameAddress);
         if (!isSameAddress) {
@@ -303,6 +314,7 @@ const calculateEDD = async () => {
             calculateEDD();
         }
     }, [zipCode ,originPincode, destinationPincode, pickupDate]);
+   
 
     return (
 
@@ -769,6 +781,14 @@ const calculateEDD = async () => {
 
                                 {
                                     orderData?.cart?.map((val, index) => {
+                                        const convertedOriginalPrice = (val.chainPrice > 0 
+                                            ? (val.originalPrice + val.chainPrice) * (conversionRates[currency] || 1)
+                                            : val.originalPrice * (conversionRates[currency] || 1)).toFixed();
+                                    
+                                        const convertedDiscountPrice = (val.chainPrice > 0 
+                                            ? (val.discountPrice + val.chainPrice) * (conversionRates[currency] || 1)
+                                            : val.discountPrice * (conversionRates[currency] || 1)).toFixed();
+                                    
                                         return (
 
 
@@ -781,9 +801,20 @@ const calculateEDD = async () => {
                                                     <div className="flex justify-between items-center">
                                                         <div className="text-[#161618] text-[13px] ">QTY : <span>{val.qty}</span>
                                                         </div>
-                                                        <div className="">
+                                                        {/* <div className="">
                                                             <span className="text-[#6f6f79] text-[13px] line-through">₹{val.chainPrice > 0 ? val.originalPrice + val.chainPrice : val.originalPrice}</span>
                                                             <span className=" text-[13px] pl-2" >₹{val.chainPrice > 0 ? val.discountPrice + val.chainPrice : val.discountPrice}</span>
+                                                        </div> */}
+                                                         <div className="">
+                                                            {/* Original Price with line-through */}
+                                                            <span className="text-[#6f6f79] text-[13px] line-through">
+                                                                {currency} {convertedOriginalPrice}
+                                                            </span>
+                                                            
+                                                            {/* Discounted Price */}
+                                                            <span className="text-[13px] pl-2">
+                                                                {currency} {convertedDiscountPrice}
+                                                            </span>
                                                         </div>
 
 
@@ -828,11 +859,12 @@ const calculateEDD = async () => {
 
                                     <div className="sub-total mt-2 ">
                                         <span className="label">Subtotal</span>
-                                        <span className="value">₹ {orderData?.subTotalPrice}</span>
+                                        {/* <span className="value">₹ {orderData?.subTotalPrice}</span> */}
+                                        <span className="value">{currency} {convertedSubTotalPrice}</span>
                                     </div>
                                     <div className="sub-total ">
                                         <span className="label">Coupon Discount:</span>
-                                        <span className="value">
+                                        {/* <span className="value">
                                             {orderData?.discountPrice > 0 ? (
                                                 <div className="flex items-center">
                                                     <h5 className="label !text-[16px]">- ₹{orderData?.discountPrice}</h5>
@@ -840,7 +872,17 @@ const calculateEDD = async () => {
                                             ) : (
                                                 <h5 className="text-[18px] font-[600]">-</h5>
                                             )}
-                                        </span>
+                                        </span> */}
+
+                                    <span className="value">
+                                                        {orderData?.discountPrice > 0 ? (
+                                                            <div className="flex items-center">
+                                                                <h5 className="label !text-[16px]">- {currency} {(orderData?.discountPrice * (conversionRates[currency] || 1)).toFixed(2)}</h5>
+                                                            </div>
+                                                        ) : (
+                                                            <h5 className="text-[18px] font-[600]">-</h5>
+                                                        )}
+                                     </span>
                                     </div>
                                     <div className="sub-total ">
                                         <span className="label">
@@ -849,9 +891,13 @@ const calculateEDD = async () => {
                                         <span className="value">Free</span>
                                     </div>
 
-                                    <div className="sub-total mt-2  ">
+                                    {/* <div className="sub-total mt-2  ">
                                         <span className="label">GST (3%):</span>
                                         <span className="value">₹ {gstAmount}</span>
+                                    </div> */}
+                                    <div className="sub-total mt-2">
+                                        <span className="label">GST (3%):</span>
+                                        <span className="value">{currency} {gstAmount}</span>
                                     </div>
 
                                     <div className="sub-total mt-2 bb ">
@@ -877,10 +923,15 @@ const calculateEDD = async () => {
 
                                     </div>
 
-                                    <div className="sub-total sub-totalpp">
+                                    {/* <div className="sub-total sub-totalpp">
                                         <span className="">Order Total </span>
                                         <span className="">₹ {orderData?.totalPrice}</span>
-                                    </div>
+                                    </div> */}
+
+                                        <div className="sub-total sub-totalpp">
+                                                        <span className="">Order Total</span>
+                                                        <span className="">{currency} {convertedTotalPrice}</span>
+                                        </div>
 
 
 

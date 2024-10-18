@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Lottie from "react-lottie";
 import animationData from "./success-icon.json";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function OrderSuccessPage() {
     
     const [orderDetails, setOrderDetails] = useState(null);
     const [gstAmount, setGstAmount] = useState(0);
     const [couponDiscount, setCouponDiscount] = useState(0);
+    const { currency, conversionRates } = useSelector((state) => state.currency);
+
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -46,6 +49,10 @@ function OrderSuccessPage() {
     }, []);
 
     console.log(orderDetails, "successpage");
+     // Convert prices based on the selected currency
+     const convertPrice = (price) => {
+        return (price * (conversionRates[currency] || 1)).toFixed(2);
+    };
 
     return (
         <div className='w-full h-auto py-10 bg-gray-50'>
@@ -97,17 +104,23 @@ function OrderSuccessPage() {
                                         )}
                                     </div>
                                 </div>
-                                <p className='text-gray-700 font-medium'>₹{item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+                                <p className='text-gray-700 font-medium'>₹{convertPrice(item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice)}</p>
+                                {/* <p className='text-gray-700 font-medium'>₹{item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p> */}
                             </div>
                         ))}
                     </div>
 
                     <div className='text-right'>
-                        {couponDiscount > 0 && (
+                        {/* {couponDiscount > 0 && (
                             <p className='text-gray-700 text-lg'>Coupon Discount: -₹{couponDiscount}</p>
+                        )} */}
+                         {couponDiscount > 0 && (
+                            <p className='text-gray-700 text-lg'>Coupon Discount: -₹{convertPrice(couponDiscount)}</p>
                         )}
-                        <p className='text-gray-700 text-lg'>GST (3%): ₹{gstAmount}</p>
-                        <h3 className='text-xl font-semibold text-gray-700 mt-2'>Total Price: ₹{orderDetails?.totalPrice}</h3>
+                        {/* <p className='text-gray-700 text-lg'>GST (3%): ₹{gstAmount}</p>
+                        <h3 className='text-xl font-semibold text-gray-700 mt-2'>Total Price: ₹{orderDetails?.totalPrice}</h3> */}
+                          <p className='text-gray-700 text-lg'>GST (3%): ₹{convertPrice(gstAmount)}</p>
+                          <h3 className='text-xl font-semibold text-gray-700 mt-2'>Total Price: ₹{convertPrice(orderDetails?.totalPrice)}</h3>
                     </div>
 
                     <div className='flex justify-center mt-4'>

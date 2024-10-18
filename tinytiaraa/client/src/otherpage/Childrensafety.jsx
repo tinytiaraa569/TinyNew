@@ -1,8 +1,16 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 
 function Childrensafety() {
   return (
     <div className='TermsConpage'>
+           <Helmet>
+        <title>CHILDREN SAFETY JEWELLERY POLICY | Tiny Tiaraa</title>
+        <meta name="description" content="At Tiny Tiaraa, we prioritize children's safety with our Child Safety Jewellery Policy. Contact us for more info." />
+        <meta name="keywords" content="Infants jewellery kids jewellery children's jewellery infant jewellery gold jewellery for kids silver jewellery for kids Diamond Jewellery for kids and infants natural diamond jewellery for kids CZ diamond jewellery for kids jewellery for kids jewellery for children jewellery for infants fine jewellery for kids dainty jewellery for kids Princess jewellery for kids Birthday jewellery for kids Holiday jewellery for kids Gift jewellery for kids Gift Cards Gold Saving plans" />
+        <link rel="canonical" href="/children-safety-jewellery-policy" />
+
+      </Helmet>
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">

@@ -18,6 +18,8 @@ function PaymentPage() {
     const [isLoading, setIsLoading] = useState(false);
 
     const { user } = useSelector((state) => state.user)
+    const { currency, conversionRates } = useSelector((state) => state.currency); // Accessing currency and conversion rates
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -1030,7 +1032,13 @@ function PaymentPage() {
             alert("Error occurred while processing payment.");
         }
     };
-    
+
+    // Helper function to handle conversion
+    const convertPrice = (price) => (price * (conversionRates[currency] || 1)).toFixed(2);
+
+    const gstAmount = (orderData?.subTotalPrice || 0) * 0.03;
+
+
     return (
         <div className='w-full bg-[#fafafa;] pb-8'>
              {isLoading && (
@@ -1223,6 +1231,15 @@ function PaymentPage() {
 
                                 {
                                     orderData?.cart?.map((val, index) => {
+                                        const convertedOriginalPrice = (val.chainPrice > 0 
+                                            ? (val.originalPrice + val.chainPrice) * (conversionRates[currency] || 1)
+                                            : val.originalPrice * (conversionRates[currency] || 1)).toFixed();
+                                    
+                                        const convertedDiscountPrice = (val.chainPrice > 0 
+                                            ? (val.discountPrice + val.chainPrice) * (conversionRates[currency] || 1)
+                                            : val.discountPrice * (conversionRates[currency] || 1)).toFixed();
+
+                                            
                                         return (
 
 
@@ -1235,11 +1252,21 @@ function PaymentPage() {
                                                     <div className="flex justify-between items-center">
                                                         <div className="text-[#161618] text-[13px] ">QTY : <span>{val.qty}</span>
                                                         </div>
-                                                        <div className="">
+                                                        {/* <div className="">
                                                             <span className="text-[#6f6f79] text-[13px] line-through">₹{val.chainPrice > 0 ? val.originalPrice + val.chainPrice : val.originalPrice}</span>
                                                             <span className=" text-[13px] pl-2" >₹{val.chainPrice > 0 ? val.discountPrice + val.chainPrice : val.discountPrice}</span>
+                                                        </div> */}
+                                                        <div className="">
+                                                            {/* Original Price with line-through */}
+                                                            <span className="text-[#6f6f79] text-[13px] line-through">
+                                                                {currency} {convertedOriginalPrice}
+                                                            </span>
+                                                            
+                                                            {/* Discounted Price */}
+                                                            <span className="text-[13px] pl-2">
+                                                                {currency} {convertedDiscountPrice}
+                                                            </span>
                                                         </div>
-
 
                                                     </div>
                                                     {val?.showWithChain !== null && (
@@ -1280,14 +1307,26 @@ function PaymentPage() {
 
                                     <div className="sub-total mt-2 ">
                                         <span className="label">Subtotal</span>
-                                        <span className="value">₹ {orderData?.subTotalPrice}</span>
+                                        {/* <span className="value">₹ {orderData?.subTotalPrice}</span> */}
+                                        <span className="value">
+                                            {currency} {convertPrice(orderData?.subTotalPrice)}
+                                        </span>
                                     </div>
                                     <div className="sub-total ">
                                         <span className="label">Coupon Discount:</span>
-                                        <span className="value">
+                                        {/* <span className="value">
                                             {orderData?.discountPrice > 0 ? (
                                                 <div className="flex items-center">
                                                     <h5 className="label !text-[16px]">- ₹{orderData?.discountPrice}</h5>
+                                                </div>
+                                            ) : (
+                                                <h5 className="text-[18px] font-[600]">-</h5>
+                                            )}
+                                        </span> */}
+                                         <span className="value">
+                                            {orderData?.discountPrice > 0 ? (
+                                                <div className="flex items-center">
+                                                    <h5 className="label !text-[16px]">- {currency} {convertPrice(orderData?.discountPrice)}</h5>
                                                 </div>
                                             ) : (
                                                 <h5 className="text-[18px] font-[600]">-</h5>
@@ -1303,7 +1342,10 @@ function PaymentPage() {
 
                                     <div className="sub-total  ">
                                         <span className="label">GST (3%):</span>
-                                        <span className="value">₹ {orderData?.gstAmount}</span>
+                                        {/* <span className="value">₹ {orderData?.gstAmount}</span> */}
+                                        <span className="value">
+                                        {currency} {convertPrice(gstAmount)}
+                                        </span>
                                     </div>
                                     <div className='sub-total mt-2 bb '>
                                         <span className="label">Referral Discount</span>
@@ -1319,7 +1361,10 @@ function PaymentPage() {
 
                                     <div className="sub-total sub-totalpp">
                                         <span className="">Order Total </span>
-                                        <span className="">₹ {orderData?.totalPrice}</span>
+                                        {/* <span className="">₹ {orderData?.totalPrice}</span> */}
+                                        <span className="">
+                                            {currency} {convertPrice(orderData?.totalPrice)}
+                                        </span>
                                     </div>
 
 

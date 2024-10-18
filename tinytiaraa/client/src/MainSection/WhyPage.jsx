@@ -38,7 +38,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628277/whypageicon/lnzes534vuzomlkdwqb1.svg" alt="" />
+          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1729156466/whypageicon/w3ch9irup1m4flpyfll1.svg" alt="" className='object-contain'/>
 
           <div>
             <h6>Crafted with Love</h6>

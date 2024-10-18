@@ -73,6 +73,8 @@ const customised = require("./controller/Customised")
 const contactus = require("./controller/contactus")
 const ttclub = require("./controller/ttclub")
 const subscribe = require("./controller/subscribe")
+const spin = require("./controller/spin")
+
 
 
 
@@ -96,6 +98,8 @@ app.use('/api/v2/customised', customised);
 app.use('/api/v2/contactus', contactus);
 app.use('/api/v2/ttclub', ttclub);
 app.use('/api/v2/subscribe', subscribe);
+app.use('/api/v2/spin', spin);
+
 
 
 app.use("/api/v2", calculateEDDRoutes);
@@ -315,5 +319,15 @@ app.get('/invoices/:orderId', async (req, res) => {
 // });
 //error handling
 
+
+app.get('/api/conversion-rates', (req, res) => {
+    const conversionRates = {
+      INR: 1,
+      USD: 0.012,
+      EUR: 0.011,
+      // Add more currencies if needed
+    };
+    res.json(conversionRates);
+  });
 app.use(ErrorHandler)
 module.exports = app;

@@ -86,6 +86,8 @@ function ProductDetails({ data }) {
     const productUrl = `https://www.tinytiaraa.com/product/${productSlug}`;
     const [isExpanded, setIsExpanded] = useState(false);
 
+    const { currency, conversionRates } = useSelector((state) => state.currency); // Access currency state and conversion rates
+
     const toggleExpansion = () => {
       setIsExpanded(!isExpanded);
     };
@@ -759,7 +761,9 @@ function ProductDetails({ data }) {
         return 0;
     };
     const discountPercentage = calculateDiscountPercentage(finalOriginalPrice, finalPrice);
-
+    const convertedFinalPrice = (finalPrice * (conversionRates[currency] || 1)).toFixed(0);
+    const convertedFinalOriginalPrice = (finalOriginalPrice * (conversionRates[currency] || 1)).toFixed(0);
+  
     console.log(selectedChainSize, "chain size")
 
     // const [isExpanded, setIsExpanded] = useState(false);
@@ -1060,13 +1064,24 @@ function ProductDetails({ data }) {
 
 
                                     <div className="flex items-center pt-3">
-                                    <h4 className={`${styles.price} line-through`}>
+                                    {/* <h4 className={`${styles.price} line-through`}>
                                             {finalOriginalPrice ? " ₹" + finalOriginalPrice : null}
                                         </h4>
                                         <h5 className={`${styles.productDiscountPrice} !stext-[#01463A]`}>
 
                                             ₹{finalPrice}
+                                        </h5> */}
+
+                                        {/* conversion price  */}
+                                        <h4 className={`${styles.price} line-through`}>
+                                            {finalOriginalPrice ? `${currency} ${convertedFinalOriginalPrice}` : null}
+                                        </h4>
+
+                                        {/* Discounted Price */}
+                                        <h5 className={`${styles.productDiscountPrice} !text-[#01463A]`}>
+                                            {currency} {convertedFinalPrice}
                                         </h5>
+
                                         
                                         {discountPercentage > 0 && (
                                             <span className="ml-2 text-[#4B4B4B] font-[450]">
@@ -1978,7 +1993,7 @@ function ProductDetails({ data }) {
                                         {isLoading ? (
                                             <p>Loading...</p>
                                          ) : (
-                                         showResult && <p className='text-[14px]'>Estimated Delivery: {estimatedDeliveryRange}</p>
+                                         showResult && <p className='text-[14px]'>Estimated Delivery: {estimatedDeliveryRange}  </p>
                                          )}
                                          </div>
 

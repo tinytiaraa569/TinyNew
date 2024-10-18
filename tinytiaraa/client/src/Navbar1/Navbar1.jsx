@@ -17,13 +17,14 @@ import { AiFillGolden, AiOutlineHeart } from 'react-icons/ai';
 import { CgProfile, CgSearch } from 'react-icons/cg';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
-import { IoIosArrowDown, IoIosArrowUp, IoMdArrowDropright, IoMdMail } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp, IoIosClose, IoMdArrowDropright, IoMdMail } from 'react-icons/io';
 import DropDown from '@/Navbar/DropDown';
 import { backend_url } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { usePriceRange } from '@/pricerange/PriceRangeContext';
 import logo from './logo.png'
 import { IoSearchOutline } from 'react-icons/io5';
+import CurrencySelector from '../../CurrencySelector/CurrencySelector';
 
 
 function Navbar1() {
@@ -162,6 +163,43 @@ function Navbar1() {
         setShopDropdownOpen(false);
     };
 
+    const [isCurrencySelectorOpen, setIsCurrencySelectorOpen] = useState(false);
+
+    const toggleCurrencySelector = () => {
+        setIsCurrencySelectorOpen(!isCurrencySelectorOpen);
+    };
+    const [selectedCurrency, setSelectedCurrency] = useState('INR'); // Default currency
+
+    const currencyData = {
+        USD: { country: "United States", flag: "https://flagcdn.com/us.svg" },
+        EUR: { country: "European Union", flag: "https://flagcdn.com/eu.svg" },
+        INR: { country: "India", flag: "https://flagcdn.com/in.svg" },
+        GBP: { country: "United Kingdom", flag: "https://flagcdn.com/gb.svg" },
+        AUD: { country: "Australia", flag: "https://flagcdn.com/au.svg" },
+        CAD: { country: "Canada", flag: "https://flagcdn.com/ca.svg" },
+        JPY: { country: "Japan", flag: "https://flagcdn.com/jp.svg" },
+        CNY: { country: "China", flag: "https://flagcdn.com/cn.svg" },
+        NZD: { country: "New Zealand", flag: "https://flagcdn.com/nz.svg" },
+        SGD: { country: "Singapore", flag: "https://flagcdn.com/sg.svg" },
+        CHF: { country: "Switzerland", flag: "https://flagcdn.com/ch.svg" },
+        HKD: { country: "Hong Kong", flag: "https://flagcdn.com/hk.svg" },
+        SEK: { country: "Sweden", flag: "https://flagcdn.com/se.svg" },
+        NOK: { country: "Norway", flag: "https://flagcdn.com/no.svg" },
+        DKK: { country: "Denmark", flag: "https://flagcdn.com/dk.svg" },
+        RUB: { country: "Russia", flag: "https://flagcdn.com/ru.svg" },
+        ZAR: { country: "South Africa", flag: "https://flagcdn.com/za.svg" },
+        BRL: { country: "Brazil", flag: "https://flagcdn.com/br.svg" },
+        MXN: { country: "Mexico", flag: "https://flagcdn.com/mx.svg" },
+        KRW: { country: "South Korea", flag: "https://flagcdn.com/kr.svg" },
+        MYR: { country: "Malaysia", flag: "https://flagcdn.com/my.svg" },
+        THB: { country: "Thailand", flag: "https://flagcdn.com/th.svg" },
+        SAR: { country: "Saudi Arabia", flag: "https://flagcdn.com/sa.svg" },
+      };
+      const handleCurrencySelect = (currency) => {
+        setSelectedCurrency(currency);
+        toggleCurrencySelector(); // Close the selector after selecting
+    };
+
     console.log(user,"user details")
     return (
         <>
@@ -189,7 +227,7 @@ function Navbar1() {
                             </div>
                             <div className='text-center'>
 
-                                <span>Use coupon code <b>NAVRATRI500</b>  at checkout for an additional ₹500 Off!</span>
+                                <span>Use coupon code <b>Diwali500</b>  at checkout for an additional ₹500 Off!</span>
                             </div>
 
                         </Slider>
@@ -197,6 +235,26 @@ function Navbar1() {
                     </div>
 
                     <div className="social-icons ">
+                        {/* <h1 onClick={toggleCurrencySelector} style={{ cursor: 'pointer' }}>currency</h1> */}
+
+                        <div className='mr-6' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                            <img src={currencyData[selectedCurrency].flag} alt={`${selectedCurrency} flag`} className="w-5 h-5 mr-2" />
+                            <span className='font-[400]'>{selectedCurrency}</span>
+                        </div>
+                        {isCurrencySelectorOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white px-3 pb-6 pt-2 rounded-lg shadow-lg max-w-sm w-full text-black" style={{ boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.3)" }}>
+
+                                <div className='flex justify-end' onClick={toggleCurrencySelector}>
+                                <IoIosClose size={30} className='cursor-pointer'/>
+
+                                </div>
+                             
+                            <CurrencySelector onCurrencySelect={handleCurrencySelect} toggleCurrencySelector={toggleCurrencySelector} />
+                            </div>
+                          </div>
+
+                        )}
                         <Link to="https://www.facebook.com/profile.php?id=61551799145871" target="_blank">
                             <i className="fab fa-facebook" />
                         </Link>

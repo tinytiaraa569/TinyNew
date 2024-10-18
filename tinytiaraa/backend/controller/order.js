@@ -914,15 +914,16 @@ const generateInvoiceTemplate = (order) => {
 </div>
 
         <div class="bankdetails">
-            <p>BANK DETAIL</p>
-            <p>HDFC BANK LIMITED</p>
-            <p>AURA, NITYANAND NAGAR III, ANDHERI</p>
-            <p>A/C. NO. 50200097298019</p>
-            <p>IFSC : HDFC0000086</p>
-
-
             <p style="margin-top: 6px;">Remark : PAYMENT MODE - ${order?.paymentInfo?.type} (${order?.paymentInfo?.status ? order?.paymentInfo?.status : "Not Paid"}) </p>
+        </div>
+        <div class="bankdetails">
+        <p style="margin-top: 1px;">Return Policy: Returns accepted within 7 days of delivery, with the product in original condition, undamaged.</p>
 
+        <p style="margin-top: 1px;">ID Verification: Delivery may require ID verification. Have your government-issued ID ready.</p>
+
+        <p style="margin-top: 1px;">Refunds: Refunds will be issued to the original payment method after product verification.</p>
+
+        <p style="margin-top: 1px;">Conditions: Returns and refunds depend on receiving the product in its original state with packaging and certifications intact.</p>
         </div>
 
         <div class="sign">
@@ -2056,265 +2057,265 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
 // `
 
 
-const htmlContent = `
-<html>
+                const htmlContent = `
+                <html>
 
-<head>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
-rel="stylesheet">
-<style>
-* {
-margin: 0;
-padding: 0;
-font-family: "Poppins", sans-serif;
-box-sizing: border-box;
-}
+                <head>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+                rel="stylesheet">
+                <style>
+                * {
+                margin: 0;
+                padding: 0;
+                font-family: "Poppins", sans-serif;
+                box-sizing: border-box;
+                }
 
-.emailconfirm {
-    width: 70%;
-    margin: auto;
-    border: 1px solid #eee;
-    padding: 20px 40px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
-}
+                .emailconfirm {
+                    width: 70%;
+                    margin: auto;
+                    border: 1px solid #eee;
+                    padding: 20px 40px;
+                    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+                }
 
-.headeremail {
-padding-bottom: 10px;
-display: inline-block;
-width: 100%;
-}
+                .headeremail {
+                padding-bottom: 10px;
+                display: inline-block;
+                width: 100%;
+                }
 
-.orderdetails {
-padding: 20px 0;
-border-top: 1px solid #ccc;
-border-bottom: 1px solid #ccc;
-}
+                .orderdetails {
+                padding: 20px 0;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                }
 
-.totalcost {
-text-align: right;
-padding: 15px 0;
+                .totalcost {
+                text-align: right;
+                padding: 15px 0;
 
-}
+                }
 
-.shippingaddress {
-padding: 20px 0;
-}
+                .shippingaddress {
+                padding: 20px 0;
+                }
 
-.adj {
-font-size: 24px;
-font-weight: 600;
-color: #333;
-}
+                .adj {
+                font-size: 24px;
+                font-weight: 600;
+                color: #333;
+                }
 
-h3 {
-font-size: 18px;
-font-weight: 500;
-color: #444;
-margin-bottom: 10px;
-}
+                h3 {
+                font-size: 18px;
+                font-weight: 500;
+                color: #444;
+                margin-bottom: 10px;
+                }
 
-p {
-font-size: 14px;
-color: #666;
-}
+                p {
+                font-size: 14px;
+                color: #666;
+                }
 
-.adjustw {
-width: 25%;
-display: inline-block;
-vertical-align: top;
-}
-.a2adjustimg{
-    transform: scale(1.2) !important;
+                .adjustw {
+                width: 25%;
+                display: inline-block;
+                vertical-align: top;
+                }
+                .a2adjustimg{
+                    transform: scale(1.2) !important;
 
-}
-.adjustw img{
-width: 150px !important;
- height: 130px !important;
-    object-fit: contain !important;
-border: 1px solid #eee !important;
-}
+                }
+                .adjustw img{
+                width: 150px !important;
+                height: 130px !important;
+                    object-fit: contain !important;
+                border: 1px solid #eee !important;
+                }
 
-.adjustw1 {
-width: 70%;
-display: inline-block;
-}
-.adjusttnview{
-    margin-top:13px !important;
-    }
+                .adjustw1 {
+                width: 70%;
+                display: inline-block;
+                }
+                .adjusttnview{
+                    margin-top:13px !important;
+                    }
 
-img {
-width: 100px;
-height: 100px;
-object-fit: contain;
-}
+                img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+                }
 
-a {
-color: #000;
-text-decoration: none;
-font-size: 14px;
-}
+                a {
+                color: #000;
+                text-decoration: none;
+                font-size: 14px;
+                }
 
-.view-order-btn {
-padding: 10px 22px;
-background-color: black;
-color: white !important;
-text-decoration: none;
-font-size: 17px;
-border-radius: 2px;
-display: inline-block;
-text-align: center;
-}
-.ordersum{
-margin-top:10px !important;
-}
+                .view-order-btn {
+                padding: 10px 22px;
+                background-color: black;
+                color: white !important;
+                text-decoration: none;
+                font-size: 17px;
+                border-radius: 2px;
+                display: inline-block;
+                text-align: center;
+                }
+                .ordersum{
+                margin-top:10px !important;
+                }
 
-@media (max-width: 1100px) {
-.emailconfirm {
-    width: 75%;
-}
-}
+                @media (max-width: 1100px) {
+                .emailconfirm {
+                    width: 75%;
+                }
+                }
 
-@media (max-width: 1000px) {
-.emailconfirm {
-    width: 85%;
-}
-    
-.adjustw, .adjustw1 {
-    width: 100%;
-    display: block;
-}
-.adjustw img{
-width: 170px !important;
- height: 150px !important;
-    object-fit: contain !important;
-border: 1px solid #eee !important;
-}
-.downloadinvoice{
-    margin-top:10px !important;
-}
-}
+                @media (max-width: 1000px) {
+                .emailconfirm {
+                    width: 85%;
+                }
+                    
+                .adjustw, .adjustw1 {
+                    width: 100%;
+                    display: block;
+                }
+                .adjustw img{
+                width: 170px !important;
+                height: 150px !important;
+                    object-fit: contain !important;
+                border: 1px solid #eee !important;
+                }
+                .downloadinvoice{
+                    margin-top:10px !important;
+                }
+                }
 
-@media (max-width: 650px) {
-.emailconfirm {
-    width: 90%;
-}
+                @media (max-width: 650px) {
+                .emailconfirm {
+                    width: 90%;
+                }
 
-.adjustw, .adjustw1 {
-    width: 100%;
-    display: block;
-}
-.adjustw img{
-width: 170px !important;
- height: 150px !important;
-    object-fit: contain !important;
-border: 1px solid #eee !important;
-}
+                .adjustw, .adjustw1 {
+                    width: 100%;
+                    display: block;
+                }
+                .adjustw img{
+                width: 170px !important;
+                height: 150px !important;
+                    object-fit: contain !important;
+                border: 1px solid #eee !important;
+                }
 
-img {
-    width: 100px;
-    height: auto;
-}
-.adjusttnview{
-    margin-top:20px !important;
-    }
+                img {
+                    width: 100px;
+                    height: auto;
+                }
+                .adjusttnview{
+                    margin-top:20px !important;
+                    }
 
-.adj {
-font-size: 20px ;
+                .adj {
+                font-size: 20px ;
 
-}
-}
-</style>
-</head>
+                }
+                }
+                </style>
+                </head>
 
-<body>
-<div class="emailconfirm" >
-<div class="headeremail">
-<div class="a2adjust" style="text-align: center;">
-    <img class="a2adjustimg" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
-        alt="Logo">
-</div>
-<div class="a1adjust" style="text-align: center;">
-    <h1 class="adj">Order Shipped!</h1>
-    <p>OrderId: ${order._id}</p>
-</div>
+                <body>
+                <div class="emailconfirm" >
+                <div class="headeremail">
+                <div class="a2adjust" style="text-align: center;">
+                    <img class="a2adjustimg" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png"
+                        alt="Logo">
+                </div>
+                <div class="a1adjust" style="text-align: center;">
+                    <h1 class="adj">Order Shipped!</h1>
+                    <p>OrderId: ${order._id}</p>
+                </div>
 
-</div>
+                </div>
 
-<div style="clear: both;margin-top: 25px;">
-<h2>Hi ${order.shippingAddress.name},</h2>
- <p>Your order has been shipped! We are thrilled to let you know that your Tiny Tiaraa order is on its way.</p>
-<p style="padding: 4px 0;">Tracking Number: <strong>${order.docketno}</strong></p>
-<p>Your order is being shipped via <strong>Sequel</strong>. You can expect to receive it soon!</p>
-</div>
+                <div style="clear: both;margin-top: 25px;">
+                <h2>Hi ${order.shippingAddress.name},</h2>
+                <p>Your order has been shipped! We are thrilled to let you know that your Tiny Tiaraa order is on its way.</p>
+                <p style="padding: 4px 0;">Tracking Number: <strong>${order.docketno}</strong></p>
+                <p>Your order is being shipped via <strong>Sequel</strong>. You can expect to receive it soon!</p>
+                </div>
 
-<div class="yourorder" style="margin-top: 20px;">
-<h3 class="ordersum">Order Summary</h3>
+                <div class="yourorder" style="margin-top: 20px;">
+                <h3 class="ordersum">Order Summary</h3>
 
-${order.cart.map(item => `
-<div class="orderdetails">
-    <div class="adjustw">
-        <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
-    </div>
-    <div class="adjustw1">
-        <h4>${item.name}</h4>
-        <p>${item.skuid}</p>
+                ${order.cart.map(item => `
+                <div class="orderdetails">
+                    <div class="adjustw">
+                        <img src="${item.images && item.images[1]?.url}" alt="${item.name}">
+                    </div>
+                    <div class="adjustw1">
+                        <h4>${item.name}</h4>
+                        <p>${item.skuid}</p>
 
-        ${item.selectedColor !== null ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
-        ${item?.showWithChain !== null ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
-        ${item?.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
+                        ${item.selectedColor !== null ? `<p>Metal Color: ${metalColors[item.selectedColor]}</p>` : ''}
+                        ${item?.showWithChain !== null ? `<p>Chain: ${item.showWithChain ? 'With Chain' : 'Without Chain'} ${item.showWithChain && item.selectedChainSize ? `(${item.selectedChainSize})` : ''}</p>` : ''}
+                        ${item?.selectedEnamelColor ? `<p>Enamel Color: ${item.selectedEnamelColor}</p>` : ''}
 
-        <p>${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
-    </div>
-</div>`).join('')}
-</div>
+                        <p>${item.qty} x ₹${item.chainPrice > 0 ? item.discountPrice + item.chainPrice : item.discountPrice}</p>
+                    </div>
+                </div>`).join('')}
+                </div>
 
-<div class="totalcost">
-<p>Subtotal: ₹${order.totalPrice}</p>
-<p style="padding: 4px 0;">Shipping: Free</p>
-<p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : '500 off'}</p>
-<p style="padding: 4px 0;">Total: ₹${order.totalPrice}</p>
-</div>
+                <div class="totalcost">
+                <p>Subtotal: ₹${order.totalPrice}</p>
+                <p style="padding: 4px 0;">Shipping: Free</p>
+                <p>Coupon: ₹${order.couponDiscount ? order.couponDiscount : '500 off'}</p>
+                <p style="padding: 4px 0;">Total: ₹${order.totalPrice}</p>
+                </div>
 
-<div class="shippingaddress">
-<h3>Shipping Address</h3>
-<p>${order.shippingAddress.name}</p>
-<p>Email: ${order.shippingAddress.email}</p>
-<p>${order.shippingAddress.address1}</p>
-<p>${order.shippingAddress.address2}</p>
-<p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
-<p>${order.shippingAddress.phoneNumber}</p>
-</div>
+                <div class="shippingaddress">
+                <h3>Shipping Address</h3>
+                <p>${order.shippingAddress.name}</p>
+                <p>Email: ${order.shippingAddress.email}</p>
+                <p>${order.shippingAddress.address1}</p>
+                <p>${order.shippingAddress.address2}</p>
+                <p>${order.shippingAddress.city}, ${order.shippingAddress.country} ${order.shippingAddress.zipCode}</p>
+                <p>${order.shippingAddress.phoneNumber}</p>
+                </div>
 
-<div>
-<h3>Payment Method</h3>
-<p>Status: ${order.paymentInfo.status ? order.paymentInfo.status : 'Not Paid'}</p>
-<p>Payment Type: ${order.paymentInfo.type}</p>
-</div>
+                <div>
+                <h3>Payment Method</h3>
+                <p>Status: ${order.paymentInfo.status ? order.paymentInfo.status : 'Not Paid'}</p>
+                <p>Payment Type: ${order.paymentInfo.type}</p>
+                </div>
 
-<div class="adjusttnview" style="text-align: center;">
-<a href="https://www.tinytiaraa.com/user/order/${order._id}" class="view-order-btn">View Order Details</a>
-<a href="https://backend.tinytiaraa.com:8000/invoices/${order._id}" class="view-order-btn downloadinvoice" style="margin-left: 10px;" download>Download Invoice</a>
-</div>
+                <div class="adjusttnview" style="text-align: center;">
+                <a href="https://www.tinytiaraa.com/user/order/${order._id}" class="view-order-btn">View Order Details</a>
+                <a href="https://backend.tinytiaraa.com:8000/invoices/${order._id}" class="view-order-btn downloadinvoice" style="margin-left: 10px;" download>Download Invoice</a>
+                </div>
 
-<div style="padding: 20px 0;">
-<h4>Thanks for shopping with us!</h4>
-<p>You can check the status of your orders at any time on our Orders History Page.</p>
-<p>If you need assistance, please email us at <a href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a> or call +91 86570 62511.</p>
-<p>Sincerely, Tiny Tiaraa</p>
-</div>
+                <div style="padding: 20px 0;">
+                <h4>Thanks for shopping with us!</h4>
+                <p>You can check the status of your orders at any time on our Orders History Page.</p>
+                <p>If you need assistance, please email us at <a href="mailto:care@tinytiaraa.com">care@tinytiaraa.com</a> or call +91 86570 62511.</p>
+                <p>Sincerely, Tiny Tiaraa</p>
+                </div>
 
-<div style="color: #888; font-size: 12px; text-align: center; padding-top: 20px;">
-<p>© Tiny Tiaraa</p>
-<p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
-<p>GST registration number: 27AAKCR3049R1ZL</p>
-</div>
-</div>
-</body>
+                <div style="color: #888; font-size: 12px; text-align: center; padding-top: 20px;">
+                <p>© Tiny Tiaraa</p>
+                <p>Ru- Brama Retail Private Limited, Plot F-11 & 12-1, Second Floor, Admin Bldg., MIDC (Marol), Central Road, Opp. Seepz Main Gate, WICEL, Andheri(East), Mumbai, 400093, Maharashtra, India</p>
+                <p>GST registration number: 27AAKCR3049R1ZL</p>
+                </div>
+                </div>
+                </body>
 
-</html>
+                </html>
 
 
-`
+                `
 
 
             await shippingMail({

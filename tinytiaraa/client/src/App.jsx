@@ -78,19 +78,27 @@ import ShopRateCardPage from './ShopRateCardPage/ShopRateCardPage';
 import ShopProductDetailsPage from './ShopProductDetailsPage/ShopProductDetailsPage';
 import ShopEditProductPage from './ShopEditProductPage/ShopEditProductPage';
 
+import ShopAllSpin from './ShopAllSpin/ShopAllSpin'
+
 import ShopAllUsers from './ShopAllUsers/ShopAllUsers'
 import ScrollToTopButton from './scrollto/ScrollToTopButton';
 import PayUSuccess from './PaymentPage/PayUSuccess';
 import Silver from './silvercomp/Silver';
 
-import Error404 from './Errror404/Error404'
+import Error404 from './Errror404/Error404';
+
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
+import SpinandWin from './SpinandWin/SpinandWin'
+import CurrencySelector from '../CurrencySelector/CurrencySelector'
+import ShopCurrency from '../CurrencySelector/ShopCurrency'
+
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
 
 // import ReactGA from 'react-ga';
 // ReactGA.initialize('G-DQ8YVWKBTB');
 // ReactGA.pageview(window.location.pathname + window.location.search);
-
 
 function App() {
 
@@ -179,7 +187,12 @@ function App() {
     location.pathname.startsWith('/dashboard-Contactus') ||
     location.pathname.startsWith('/dashboard-ratecard') ||
     location.pathname.startsWith('/dashboard-allusers') ||
+    location.pathname.startsWith('/dashboard-allspin') ||
+    location.pathname.startsWith('/dashboard-currency') ||
 
+
+
+    
 
 
     
@@ -239,7 +252,13 @@ function App() {
 
   return (
     <div>
+       <Helmet>
+        <title>Safe, Certified and Registered Natural Diamond & Gold jewellery for infants and Kids</title>
+        <meta name="description" content="Certified gold diamond & silver and CZ kid's jewellery at Tiny Tiaraa. Quality & safety-first pieces. Perfect fit for sensitive skin. Free shipping & 48-hour delivery*." />
+        <meta name="keywords" content="Infants jewellery kids jewellery children's jewellery infant jewellery gold jewellery for kids silver jewellery for kids Diamond Jewellery for kids and infants natural diamond jewellery for kids CZ diamond jewellery for kids jewellery for kids jewellery for children jewellery for infants fine jewellery for kids dainty jewellery for kids Princess jewellery for kids Birthday jewellery for kids Holiday jewellery for kids Gift jewellery for kids Gift Cards Gold Saving plans" />
+        <link rel="canonical" href="/" />
 
+      </Helmet>
 
 
 
@@ -278,6 +297,8 @@ function App() {
 
 
 
+
+          <Route path='/spinandwin' element={<SpinandWin />} />
 
 
           <Route path='/login' element={<LoginPage />} />
@@ -439,6 +460,21 @@ function App() {
             </SellerProtectedRoute>
           } />
 
+          <Route path='/dashboard-allspin' element={
+            <SellerProtectedRoute >
+              <ShopAllSpin />
+            </SellerProtectedRoute>
+          } />
+
+          <Route path='/dashboard-currency' element={
+            <SellerProtectedRoute >
+              <ShopCurrency />
+            </SellerProtectedRoute>
+          } />
+
+
+
+
           <Route path='/shopproduct/:id' element={
             <SellerProtectedRoute >
               <ShopProductDetailsPage />
@@ -505,6 +541,8 @@ function App() {
           pauseOnHover
 
         />
+        {/* <CurrencySelector /> */}
+
         <Footer />
 
       </PriceRangeProvider>

@@ -1,8 +1,16 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 
 function ExchangePolicy() {
   return (
     <div className='TermsConpage'>
+        <Helmet>
+        <title>Exchange Policy | Kids Jewellery | Tiny Tiaraa</title>
+        <meta name="description" content="Discover our hassle-free Exchange Policy for Tiny Tiaraa Kids Jewellery products | Initiate exchange within 7 days for size, style preference, or defects | Online/at stores | Contact us for more details." />
+        <meta name="keywords" content="Infants jewellery kids jewellery children's jewellery infant jewellery gold jewellery for kids silver jewellery for kids Diamond Jewellery for kids and infants natural diamond jewellery for kids CZ diamond jewellery for kids jewellery for kids jewellery for children jewellery for infants fine jewellery for kids dainty jewellery for kids Princess jewellery for kids Birthday jewellery for kids Holiday jewellery for kids Gift jewellery for kids Gift Cards Gold Saving plans" />
+        <link rel="canonical" href="/exchange-policy" />
+
+      </Helmet>
     <div className='TermsConAdjust'>
 
     <div className="TermsConsection">

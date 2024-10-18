@@ -1,9 +1,17 @@
 import React from 'react'
 import './Termscon.css'
+import { Helmet } from 'react-helmet-async'
 
 function TermsCon() {
   return (
     <div className='TermsConpage'>
+         <Helmet>
+        <title>Terms & Conditions | Kids Jewellery | Tiny Tiaraa</title>
+        <meta name="description" content="Welcome to Tiny Tiaraa! Read and agree to our Terms & Conditions. Learn about intellectual property rights, product info, order placement, pricing, shipping, returns, user account privacy, and website security. Sell Gold and Silver Kids jewellery and accessories." />
+        <meta name="keywords" content="Jewelry" />
+        <link rel="canonical" href="/terms-and-conditions" />
+
+      </Helmet>
         <div className='TermsConAdjust'>
 
         <div className="TermsConsection">

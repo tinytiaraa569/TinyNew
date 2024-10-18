@@ -24,6 +24,8 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
   const d = data.name
   const product_name = d.replace(/\s+/g, "-")
   const navigate = useNavigate()
+  const { currency, conversionRates } = useSelector((state) => state.currency); // Accessing currency state and conversion rates
+
 
   useEffect(() => {
     if (wishlist && wishlist.find((i) => i._id === data._id)) {
@@ -78,6 +80,9 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
     ? Object.values(data.enamelColors[selectedEnamelColorimg]).flat()
     : [];
 
+    const convertedOriginalPrice = (data.originalPrice * (conversionRates[currency] || 1)).toFixed(0);
+    const convertedDiscountPrice = (data.discountPrice * (conversionRates[currency] || 1)).toFixed(0);
+  
   return (
     <div className='parentsinglecrd'>
       <div className="parentproductcard w-full h-[314px] pb-4 bg-white rounded-[15px] shadow-lg  p-3 relative cursor-pointer overflow-hidden " onMouseLeave={handleMouseLeave}>
@@ -101,11 +106,11 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
             <div className="flex ">
             {data.originalPrice > 0 && (
                 <h4 className={`${styles.price} line-through`}>
-                  ₹{data.originalPrice.toFixed(0)}
+                   {currency} {convertedOriginalPrice}
                 </h4>
               )}
               <h5 className={`${styles.productDiscountPrice} pl-2`}>
-                ₹{data.discountPrice ? data.discountPrice.toFixed(0) : '0'}
+              {currency} {convertedDiscountPrice}
               </h5>
               <span>
               
