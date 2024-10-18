@@ -233,11 +233,7 @@ function Navbar1() {
                         </Slider>
 
                     </div>
-
-                    <div className="social-icons ">
-                        {/* <h1 onClick={toggleCurrencySelector} style={{ cursor: 'pointer' }}>currency</h1> */}
-
-                        <div className='mr-6' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                    <div className='!mr-10' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                             <img src={currencyData[selectedCurrency].flag} alt={`${selectedCurrency} flag`} className="w-5 h-5 mr-2" />
                             <span className='font-[400]'>{selectedCurrency}</span>
                         </div>
@@ -255,6 +251,11 @@ function Navbar1() {
                           </div>
 
                         )}
+
+                    <div className="social-icons ">
+                        {/* <h1 onClick={toggleCurrencySelector} style={{ cursor: 'pointer' }}>currency</h1> */}
+
+                       
                         <Link to="https://www.facebook.com/profile.php?id=61551799145871" target="_blank">
                             <i className="fab fa-facebook" />
                         </Link>
@@ -620,7 +621,7 @@ function Navbar1() {
             <div className='nav1bannermobile '>
                     
 
-                    <div className='couponscetion !text-[12px]'>
+                    <div className='couponscetion !text-[12px] !w-[90%]'>
                         <Slider {...settings} >
                             <div className='text-center couponsectionadjustslider'>
                                 <span>Get ₹500 Off On Your First Order Of ₹5000 Or More! :- Welcome500</span>
@@ -634,6 +635,25 @@ function Navbar1() {
                         </Slider>
 
                     </div>
+                    <div className='!mr-10 !w-[10%]' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                            <img src={currencyData[selectedCurrency].flag} alt={`${selectedCurrency} flag`} className="w-5 h-5 mr-2" />
+                            <span className='font-[400]'>{selectedCurrency}</span>
+                        </div>
+                        {isCurrencySelectorOpen && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white px-3 pb-6 pt-2 rounded-lg shadow-lg max-w-sm w-full text-black" style={{ boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.3)" }}>
+
+                                <div className='flex justify-end' onClick={toggleCurrencySelector}>
+                                <IoIosClose size={30} className='cursor-pointer'/>
+
+                                </div>
+                             
+                            <CurrencySelector onCurrencySelect={handleCurrencySelect} toggleCurrencySelector={toggleCurrencySelector} />
+                            </div>
+                          </div>
+
+                        )}
+                  
 
                     
                 </div>

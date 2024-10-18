@@ -333,7 +333,7 @@
         display: none;
     }
     .nav1bannermobile{
-        display: block;
+        display: flex;
     }
     .mobile-nav {
         display: block;
