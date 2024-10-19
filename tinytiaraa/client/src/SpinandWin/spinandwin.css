@@ -30,6 +30,23 @@
     }
     
 }
+@media (max-width:370px) {
+
+    .spinandwinheading{
+        font-size: 22px !important;
+    }
+    .spinandwinpara{
+        font-size: 14px !important;
+    }
+    .adjustspnimg{
+        width: 50px !important;
+        height: 70px !important;
+        top: 24% !important;
+        left: 14% !important;
+        object-fit: contain;
+    }
+    
+}
 @media (max-width:350px) {
 
     .spinandwinheading{
