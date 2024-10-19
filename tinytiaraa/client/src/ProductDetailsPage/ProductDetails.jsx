@@ -45,6 +45,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 
 import { EmailIcon, FacebookIcon, WhatsappIcon, } from "react-share";
 import { EmailShareButton, FacebookShareButton, WhatsappShareButton, } from "react-share";
+import { Helmet } from 'react-helmet-async';
 
 
 Modal.setAppElement('#root'); // Replace '#root' with the ID of your root element
@@ -900,6 +901,15 @@ function ProductDetails({ data }) {
    
     return (
         <div className='bg-white'>
+            <>
+            <Helmet>
+                <title>{data.name} - Safe, Certified and Registered Natural Diamond & Gold jewellery for infants and Kids</title>
+                <meta name="description" content={`Buy ${data.name} - ${data.description}`} />
+                <meta name="keywords" content={`Infants jewellery, kids jewellery, ${data.category}, gold jewellery for kids, ${data.name} ${data.tags}`} />
+                <link rel="canonical" href={productUrl} />
+            </Helmet>
+
+            </>
             {
                 data ?
                     <div className={`${styles.section} w-[95%] 800px:w-[80%]`}>

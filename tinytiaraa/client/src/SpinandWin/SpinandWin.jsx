@@ -4,6 +4,7 @@ import { FaTrophy } from 'react-icons/fa';
 import { IoIosClose } from "react-icons/io";
 import axios from 'axios';
 import { server } from '@/server';
+import './spinandwin.css'
 
 
 const data = [
@@ -96,9 +97,9 @@ function SpinandWin() {
   return (
     <div className="flex flex-col justify-center items-center h-auto">
       <div className="p-1 rounded-lg">
-        <h1 className="text-[30px] font-bold text-center text-gray-800 mb-2">🎉 Spin and Win! 🎉</h1>
-        <p className="text-[18px] text-center text-gray-600 mb-2">🎊 Give it a whirl and unlock amazing prizes! 🎊</p>
-        <div className="relative">
+        <h1 className="spinandwinheading text-[30px] font-bold text-center text-gray-800 mb-2">🎉 Spin and Win! 🎉</h1>
+        <p className="spinandwinpara text-[18px] text-center text-gray-600 mb-2">🎊 Give it a whirl and unlock amazing prizes! 🎊</p>
+        <div className="relative flex justify-center">
         <Wheel
           mustStartSpinning={mustSpin}
           prizeNumber={prizeNumber}
@@ -122,21 +123,9 @@ function SpinandWin() {
             
         />
             <style jsx>{`
-            @media (max-width: 550px) {
-                .adjustspnimg {
-                    left: 10% !important; // Change this value as needed for smaller screens
-                }
-            }
-                @media (max-width: 500px) {
-                .adjustspnimg {
-                    
-                    left: 8% !important; // Change this value as needed for smaller screens
-                }
-                     @media (max-width: 450px) {
-                .adjustspnimg {
-                    top:'20%'!important;
-                    left: 0% !important; // Change this value as needed for smaller screens
-                }
+               
+               
+                 
             }
         `}</style>
         </div>

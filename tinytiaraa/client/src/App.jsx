@@ -504,17 +504,6 @@ function App() {
 
         <Route path="/payu/order/success" element={<PayUSuccess />} />
 
-
-
-
-
-
-
-
-
-
-
-
           <Route path='/cart' element={<Cartpage />} />
           <Route path='/checkout-page' element={<CheckoutPage />} />
           <Route path='/payment' element={<PaymentPage />} />

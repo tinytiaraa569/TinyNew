@@ -621,7 +621,7 @@ function Navbar1() {
             <div className='nav1bannermobile '>
                     
 
-                    <div className='couponscetion !text-[12px] !w-[90%]'>
+                    <div className='couponscetion !text-[12px] w-[85%]'>
                         <Slider {...settings} >
                             <div className='text-center couponsectionadjustslider'>
                                 <span>Get ₹500 Off On Your First Order Of ₹5000 Or More! :- Welcome500</span>
@@ -635,9 +635,12 @@ function Navbar1() {
                         </Slider>
 
                     </div>
-                    <div className='!mr-10 !w-[10%]' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                    <div className='currencysection !mr-10 w-[10%]' onClick={toggleCurrencySelector} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                        <div className='headcurrencymain ml-3'>
+
                             <img src={currencyData[selectedCurrency].flag} alt={`${selectedCurrency} flag`} className="w-5 h-5 mr-2" />
-                            <span className='font-[400]'>{selectedCurrency}</span>
+                            <span className='headcurrencycode font-[400]'>{selectedCurrency}</span>
+                        </div>
                         </div>
                         {isCurrencySelectorOpen && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

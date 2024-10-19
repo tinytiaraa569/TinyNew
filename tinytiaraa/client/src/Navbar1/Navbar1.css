@@ -316,6 +316,11 @@
     scrollbar-width: thin; /* Firefox support */
     scrollbar-color: #888 #f1f1f1; /* Custom colors for scrollbar and track */
 }
+.headcurrencymain{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width:1300px) {
     .navbar1 .logo img {
         width: 150px;
@@ -454,6 +459,20 @@
     .mobajustnavsall {
         width: 90% !important;
     }
+    .headcurrencycode{
+        font-size: 12px !important;
+    }
+    .currencysection{
+       
+        width: 15% !important;
+    }
+    .couponscetion{
+        width: 82% !important;
+
+    }
+    .headcurrencycode{
+        margin-top: 2px;
+    }
 
 }
 
@@ -462,6 +481,10 @@
      .couponscetion span{
          font-size: 8px !important;
      }
+     .headcurrencycode{
+        font-size: 8px !important;
+    }
+     
  }
 
  @media (max-width:350px) {
