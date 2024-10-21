@@ -83,7 +83,20 @@
   
   .slidersec {
     width: 100%;
-    height: 540px;
+    height: 530px;
+  }
+
+  .slidersec img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media (max-width: 1150px) {
+  
+  .slidersec {
+    width: 100%;
+    height: 515px;
   }
 
   .slidersec img {
@@ -97,7 +110,7 @@
   
   .slidersec {
     width: 100%;
-    height: 500px;
+    height: 490px;
   }
 
   .slidersec img {
@@ -110,7 +123,7 @@
   
   .slidersec {
     width: 100%;
-    height: 460px;
+    height: 430px;
   }
 
   .slidersec img {
@@ -135,7 +148,7 @@
 
   .slidersec {
     width: 100%;
-    height: 440px;
+    height: 410px;
   }
 
   .slidersec img {
@@ -163,7 +176,7 @@
   
   .slidersec {
     width: 100%;
-    height: 400px;
+    height: 380px;
   }
 
   .slidersec img {
@@ -188,7 +201,7 @@
 
   .slidersec {
     width: 100%;
-    height: 350px;
+    height: 330px;
   }
 
   .slidersec img {
@@ -202,7 +215,7 @@
   
   .slidersec {
     width: 100%;
-    height: 310px;
+    height: 300px;
   }
 
   .slidersec img {
@@ -215,7 +228,7 @@
   
   .slidersec {
     width: 100%;
-    height: 280px;
+    height: 270px;
   }
 
   .slidersec img {
@@ -224,10 +237,35 @@
     object-fit: cover;
   }
 }
+@media (max-width: 580px) {
+  .slidersec {
+    width: 100vw;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .slidersec img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slidercontentadjust h1 {
+    font-size: 10vw;
+  }
+
+  .slidercontentadjust p {
+    font-size: 3.5vw;
+  }
+
+  .slidercontentadjust button {
+    font-size: 3vw;
+  }
+}
 @media (max-width: 550px) {
   .slidersec {
     width: 100vw;
-    height: 240px;
+    height: 230px;
     overflow: hidden;
   }
 
@@ -274,10 +312,35 @@
     font-size: 3vw;
   }
 }
+@media (max-width: 480px) {
+  .slidersec {
+    width: 100vw;
+    height: 215px;
+    overflow: hidden;
+  }
+
+  .slidersec img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slidercontentadjust h1 {
+    font-size: 10vw;
+  }
+
+  .slidercontentadjust p {
+    font-size: 3.5vw;
+  }
+
+  .slidercontentadjust button {
+    font-size: 3vw;
+  }
+}
 @media (max-width: 450px) {
   .slidersec {
     width: 100vw;
-    height: 200px;
+    height: 190px;
     overflow: hidden;
   }
 
@@ -302,7 +365,7 @@
 @media (max-width: 400px) {
   .slidersec {
     width: 100%;
-    height: 175px;
+    height: 170px;
   }
 
   .slidersec img {
