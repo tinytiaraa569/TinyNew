@@ -191,10 +191,6 @@ function App() {
     location.pathname.startsWith('/dashboard-currency') ||
 
 
-
-    
-
-
     
     location.pathname.startsWith('/order/:id')
 

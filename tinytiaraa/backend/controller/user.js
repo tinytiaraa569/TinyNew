@@ -420,7 +420,7 @@ router.get("/user-details/:id", isAuthenticated, catchAsyncErrors(async (req, re
 
 
 //all users 
-router.get("/get-all-users", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.get("/get-all-users", catchAsyncErrors(async (req, res, next) => {
     try {
         const users = await User.find(); // Fetch all users from the database
 
