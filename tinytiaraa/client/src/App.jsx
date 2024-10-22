@@ -92,6 +92,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import SpinandWin from './SpinandWin/SpinandWin'
 import CurrencySelector from '../CurrencySelector/CurrencySelector'
 import ShopCurrency from '../CurrencySelector/ShopCurrency'
+import ShopCreateBanner from './catalog/CreateBanners/ShopCreateBanner'
 
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
@@ -189,9 +190,8 @@ function App() {
     location.pathname.startsWith('/dashboard-allusers') ||
     location.pathname.startsWith('/dashboard-allspin') ||
     location.pathname.startsWith('/dashboard-currency') ||
+    location.pathname.startsWith('/create-Banners') ||
 
-
-    
     location.pathname.startsWith('/order/:id')
 
 
@@ -505,8 +505,14 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/order/success' element={<OrderSuccessPage />} />
 
-
+          <Route path="/sitemap.xml" element={null} />
           <Route path='/*' element={<Error404/>} />
+
+
+
+          {/* dynamic routes starts here  */}
+
+          <Route path='/create-Banners' element={<ShopCreateBanner />} />
 
          
 

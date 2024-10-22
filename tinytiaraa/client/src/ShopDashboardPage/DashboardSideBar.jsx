@@ -22,6 +22,7 @@ import { TbCategoryPlus, TbUsersGroup } from "react-icons/tb";
 import { IoIosOptions } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa";
 import { PiSpinnerBallDuotone } from "react-icons/pi";
+import { TbLibraryPhoto } from "react-icons/tb";
 
 
 function DashboardSideBar({ active }) {
@@ -29,6 +30,11 @@ function DashboardSideBar({ active }) {
     const [openMenu,setOpenMenu] =useState(false)
 
     const cataloglinks = [
+        {
+            title: "Banner",
+            href: '/create-Banners',
+            icon:<TbLibraryPhoto />
+        },
         {
             title: "Category",
             href: '/create-category',
@@ -38,12 +44,9 @@ function DashboardSideBar({ active }) {
             title: "SubCategory",
             href: '/create-SubCategory',
             icon:<TbCategoryPlus />
-        },
-        {
-            title: "Variants",
-            href: '/create-Variants',
-            icon:<IoIosOptions />
         }
+        
+       
     ]
 
     return (
