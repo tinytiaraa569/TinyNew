@@ -505,7 +505,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/order/success' element={<OrderSuccessPage />} />
 
-          <Route path="/sitemap.xml" element={null} />
+
           <Route path='/*' element={<Error404/>} />
 
 
