@@ -94,6 +94,10 @@ import CurrencySelector from '../CurrencySelector/CurrencySelector'
 import ShopCurrency from '../CurrencySelector/ShopCurrency'
 import ShopCreateBanner from './catalog/CreateBanners/ShopCreateBanner'
 
+import NewBanner from './catalog/CreateBanners/NewBanner'
+import MetaPixelTracker from './MetaPixelTracker';
+
+
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
 
@@ -125,6 +129,9 @@ function App() {
 
   return () => clearTimeout(timeoutId); // Cleanup the timeout if the component unmounts
 }, [location]);
+
+
+
 
   const dispatch = useDispatch();
 
@@ -245,7 +252,9 @@ function App() {
   }, []); // Only run on initial mount
 
 
+ 
 
+  console.log(location,"location address")
   return (
     <div>
        <Helmet>
@@ -255,6 +264,8 @@ function App() {
         <link rel="canonical" href="/" />
 
       </Helmet>
+
+      <MetaPixelTracker />
 
 
 
@@ -513,6 +524,12 @@ function App() {
           {/* dynamic routes starts here  */}
 
           <Route path='/create-Banners' element={<ShopCreateBanner />} />
+
+          <Route path='/dashboard/banner/edit/:id' element={<NewBanner />} /> 
+          <Route path='/dashboard/banner/create' element={<NewBanner />} />
+
+
+          
 
          
 

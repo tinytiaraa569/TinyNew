@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FiPackage, FiShoppingBag } from 'react-icons/fi'
 import { RxDashboard } from 'react-icons/rx'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { MdOutlineAddBusiness, MdOutlineContactPhone, MdOutlinePriceChange } from "react-icons/md";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { VscNewFile } from "react-icons/vsc";
@@ -28,7 +28,10 @@ import { TbLibraryPhoto } from "react-icons/tb";
 function DashboardSideBar({ active }) {
 
     const [openMenu,setOpenMenu] =useState(false)
-
+    const [activeLink, setActiveLink] = useState(null); // Track the selected link
+    const navigate = useNavigate()
+    const location = useLocation(); // Get the current location object
+    const currentPath = location.pathname; // Get the current path
     const cataloglinks = [
         {
             title: "Banner",
@@ -48,6 +51,17 @@ function DashboardSideBar({ active }) {
         
        
     ]
+
+    const handleToggleMenu = (index) => {
+        // Set the openMenuIndex to the clicked index or null if it's already open
+        setOpenMenu(openMenu === index ? null : index);
+    };
+
+    function handlemove(url){
+        navigate(url)
+    }
+
+    console.log(openMenu,"open menu stte ")
 
     return (
         <div className='w-full h-auto md:h-[auto] bg-white shadow-sm sticky top-0 left-0 z-10'>
@@ -72,37 +86,42 @@ function DashboardSideBar({ active }) {
                             <h5 className={`pl-2 text-[18px]   text-center font-[400] ${active === 2 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>catalog</h5>
                             {
                                 openMenu ? 
-                                <FaAngleRight size={20} color='#555' className='ml-7' />
-                                :
                                 <FaAngleDown  size={20} color='#555' className='ml-7' />
+                                :
+                                <FaAngleRight size={20} color='#555' className='ml-7' />
 
                             }
                         </CollapsibleTrigger>
                     </Link>
 
                 </div>
-                <CollapsibleContent className='w-full flex items-center flex-col md:flex-row md:justify-start '>
-                    <div className="w-full flex flex-col pl-6 ">
-
-                        {
-                            cataloglinks.map((item, i) => {
-                                return (
-                                    <div key={i} className='pb-2'>
-
-                                        <Link to={item.href} className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
-
-                                            <span size={30} color='#3d9bc0'>{item.icon}</span>
-
-                                            <h5 className={`pl-2 text-[16px]  font-[400]  text-[#555] font-Poppins`}>{item.title}</h5>
-                                        </Link>
-                                    </div>
-
-                                )
-
-                            })
-                        }
+                {
+                    openMenu && (
+                        <CollapsibleContent className='w-full flex items-center flex-col md:flex-row md:justify-start'>
+             
+                    <div className="w-full flex flex-col pl-6"  >
+                    
+                    {cataloglinks.map((item, i) => (
+                        <div key={i} className="pb-2"  onClick={()=>{handlemove(item.href)}}>
+                        <span
+                           
+                            className={`cursor-pointer w-full flex items-center justify-center flex-col md:flex-row md:justify-start ${
+                            currentPath === item.href ? 'text-[#3d9bc0]' : 'text-[#555]' // Highlight the active link
+                            }`}
+                        >
+                            <span>{item.icon}</span>
+                            <h5 className={`pl-2 text-[16px] font-[400] font-Poppins`}>
+                            {item.title}
+                            </h5>
+                        </span>
+                        </div>
+                    ))}
                     </div>
-                </CollapsibleContent>
+                 </CollapsibleContent>
+                        
+                    )
+                }
+                
             </Collapsible>
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-orders" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>

@@ -67,6 +67,7 @@
     "tailwindcss-animate": "^1.0.7",
     "timeago.js": "^4.0.2",
     "twilio": "^5.3.3",
+    "xlsx": "^0.18.5",
     "xzoom": "^1.0.15"
   },
   "devDependencies": {
