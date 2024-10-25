@@ -88,7 +88,7 @@ function SliderSection() {
       <Slider {...settings}>
         <div className="slidersec cursor-pointer" >
         
-          <img  src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239445/slidersbanner/upglf2ndz3cgbfhnsgbk.webp" alt="First Slide" />
+          <img  src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp" alt="First Slide" />
         </div>
 
         {/* <div className="slidersec cursor-pointer">
@@ -96,10 +96,10 @@ function SliderSection() {
         </div> */}
         {/* bannner with web */}
         <div className="slidersec cursor-pointer" >
-          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239665/slidersbanner/snfilzvqmzpj83ck2kmp.webp" alt="Third Slide" />
+          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/snfilzvqmzpj83ck2kmp.webp" alt="Third Slide" />
         </div>
         <div className="slidersec cursor-pointer">
-          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/snfilzvqmzpj83ck2kmp.webp" alt="Slider Six" />
+          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/lsuewidepylphulztw7t.webp" alt="Slider Six" />
         </div>
         <div className="slidersec cursor-pointer">
           <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/czo3frgxqtg7yaovwrga" alt="Slider Six" />
