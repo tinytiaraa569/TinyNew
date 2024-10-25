@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { json, Link, useNavigate } from 'react-router-dom'
 import { Country, State } from "country-state-city";
 import axios from 'axios';
-import { backend_url, server } from '@/server';
+import { backend_url, imgdburl, server } from '@/server';
 import { toast } from 'react-toastify';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IoIosArrowBack } from "react-icons/io";
@@ -794,7 +794,18 @@ const calculateEDD = async () => {
 
                                             <div key={index} className='ordercardsec flex mb-5 shadow-sm'>
                                                 <div className="image-section">
-                                                    <img src={`${val?.images[0]?.url}`} width="100%" height="100" />
+                                                    <img 
+                                                    loading='lazy'
+                                                    // src={`${val?.images[0]?.url}`} 
+                                                    src={
+                                                        val?.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? val.images[0].url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${val?.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                                    }
+                                                    width="100%" height="100" />
                                                 </div>
                                                 <div className="detail-section">
                                                     <h3 className='text-[#161618] text-[14px] mb-[5px]'>{val.name}</h3>

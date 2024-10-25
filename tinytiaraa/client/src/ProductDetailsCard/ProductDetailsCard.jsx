@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { RxCross1 } from "react-icons/rx";
 import styles from '../Styles/styles';
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai';
-import { backend_url } from '@/server';
+import { backend_url, imgdburl } from '@/server';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addToCart } from '@/redux/actions/cart';
@@ -78,7 +78,15 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                             onClick={() => setSelect(index)}
                         >
                             <img
-                                src={`${image?.url}`}
+                                // src={`${image?.url}`}
+                                src={
+                                    image?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                        ? image.url.replace(
+                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                            `${imgdburl}/uploads/images`
+                                          )
+                                        : `${imgdburl}${image?.url}` // Prepend imgdburl if not Cloudinary
+                                }
                                 alt=""
                                 className='h-[200px]'
                             />
@@ -145,32 +153,72 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                                     {select !== null && (
                                         selectedColor === 0 && data.MetalColor.YellowGoldclr ? (
                                             <img
-                                                src={`${data.MetalColor.YellowGoldclr[select]?.url}`}
+                                                // src={`${data.MetalColor.YellowGoldclr[select]?.url}`}
+                                                src={
+                                                    data.MetalColor.YellowGoldclr[select]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                        ? data.MetalColor.YellowGoldclr[select].url.replace(
+                                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                            `${imgdburl}/uploads/images`
+                                                          )
+                                                        : `${imgdburl}${data.MetalColor.YellowGoldclr[select]?.url}`
+                                                }
                                                 alt=""
                                                 className='w-[90%] h-[60vh] object-contain'
                                             />
                                         ) : selectedColor === 1 && data.MetalColor.RoseGoldclr ? (
                                             <img
-                                                src={`${data.MetalColor.RoseGoldclr[select]?.url}`}
+                                                // src={`${data.MetalColor.RoseGoldclr[select]?.url}`}
+                                                src={
+                                                    data.MetalColor.RoseGoldclr[select]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                        ? data.MetalColor.RoseGoldclr[select].url.replace(
+                                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                            `${imgdburl}/uploads/images`
+                                                          )
+                                                        : `${imgdburl}${data.MetalColor.RoseGoldclr[select]?.url}`
+                                                }
                                                 alt=""
                                                 className='w-[90%] h-[60vh] object-contain'
                                             />
                                         ) : selectedColor === 2 && data.MetalColor.WhiteGoldclr ? (
                                             <img
-                                                src={`${data.MetalColor.WhiteGoldclr[select]?.url}`}
+                                                // src={`${data.MetalColor.WhiteGoldclr[select]?.url}`}
+                                                src={
+                                                    data.MetalColor.WhiteGoldclr[select]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                        ? data.MetalColor.WhiteGoldclr[select].url.replace(
+                                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                            `${imgdburl}/uploads/images`
+                                                          )
+                                                        : `${imgdburl}${data.MetalColor.WhiteGoldclr[select]?.url}`
+                                                }
                                                 alt=""
                                                 className='w-[90%] h-[60vh] object-contain'
                                             />
                                         ) : (
                                             data.images && data.images[select] ? (
                                                 <img
-                                                    src={`${data.images[select]?.url}`}
+                                                    // src={`${data.images[select]?.url}`}
+                                                    src={
+                                                        data.images[select]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? data.images[select].url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                              )
+                                                            : `${imgdburl}${data.images[select]?.url}`
+                                                    }
                                                     alt=""
                                                     className='w-[90%] h-[60vh] object-contain'
                                                 />
                                             ) : (
                                                 <img
-                                                    src={`${data.images && data.images[0]?.url}`} // Default to the first image if select is null or out of range
+                                                src={
+                                                    data.images && data.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                        ? data.images[0].url.replace(
+                                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                            `${imgdburl}/uploads/images`
+                                                          )
+                                                        : `${imgdburl}${data.images && data.images[0]?.url}`
+                                                }
+                                                    // src={`${data.images && data.images[0]?.url}`} // Default to the first image if select is null or out of range
                                                     alt=""
                                                     className='w-[90%] h-[60vh] object-contain'
                                                 />

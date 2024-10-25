@@ -11,10 +11,11 @@ import singupimg from '../Navbar1/logo.png'
 import signupbanner from './singupbanner.jpg'
 
 function Login() {
-
+    
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [visible, setVisible] = useState(false)
+    const [isLoading, setIsLoading] = useState(false); // Loading state
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -23,6 +24,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true); // Set loading to true before the request
 
         await axios.post(`${server}/user/login-user`, {
             email,
@@ -36,7 +38,9 @@ function Login() {
             console.log(error)
             toast.error(error.message)
 
-        })
+        }).finally(() => {
+            setIsLoading(false); // Set loading to false after the request
+        });
 
     }
 
@@ -117,6 +121,11 @@ function Login() {
         // </div>
 
         <div className='signuppagemaincon'>
+             {isLoading && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="text-white text-xl">Logging in, please wait...</div>
+                </div>
+            )}
             <div className='singupcon'>
 
                 <div className='singupconleft'>

@@ -4,6 +4,7 @@ import { server } from '@/server';
 import { toast } from 'react-toastify';
 import { FiRefreshCcw } from 'react-icons/fi';
 import { MdConnectWithoutContact } from 'react-icons/md';
+import { CiBank } from "react-icons/ci";
 
 const ReferralList = () => {
     const [referrals, setReferrals] = useState([]);
@@ -110,13 +111,22 @@ const ReferralList = () => {
                                 Total Reward Amount: ₹{referralBalance}
                             </p>
                         </div>
+
+                        {/* <div className='mt-2'>
+                            <div className='w-[140px] bg-green-500 px-3 py-2 text-white rounded flex justify-center items-center'>
+
+                        <CiBank size={26} />
+                        <button className='ml-2'>Withdraw</button>
+                            </div>
+                        </div> */}
+                        
                     </div>
                     <div className='flex items-center'>
                         <button
                             onClick={updateReferralBalances}
                             className="px-4 flex items-center py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         >
-                            <FiRefreshCcw className='mr-2' />
+                            <FiRefreshCcw className='mr-1' />
                             Update Referral Balances
                         </button>
                     </div>

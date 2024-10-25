@@ -4,7 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import styles from '../Styles/styles';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import { backend_url, server } from '@/server';
+import { backend_url, imgdburl, server } from '@/server';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/redux/actions/cart';
 import { toast } from 'react-toastify';
@@ -817,7 +817,16 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <div className="leftcardimg">
           <Link className="cartimage-container" to={`/product/${product_name}`}>
             <img
-              src={`${data?.images[0]?.url}`}
+            loading='lazy'
+              // src={`${data?.images[0]?.url}`}
+              src={
+                data?.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                    ? data.images[0].url.replace(
+                        /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                        `${imgdburl}/uploads/images`
+                    )
+                    : `${imgdburl}${data?.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+            }
               width={166}
               height={166}
             />

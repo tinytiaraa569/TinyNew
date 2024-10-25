@@ -5,7 +5,7 @@ import { BsFillBagFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { CiViewList } from "react-icons/ci";
-import { backend_url, server } from '@/server'
+import { backend_url, imgdburl, server } from '@/server'
 import { RxCross1 } from 'react-icons/rx'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import axios from 'axios'
@@ -154,7 +154,17 @@ function UserOrderDetails() {
                 data && data?.cart.map((item, index) => {
                     return (
                         <div key={index} className='w-full flex items-start mt-5 mb-5'>
-                            <img src={`${item.images && item.images[1]?.url}`} alt="" className='w-[160px] h-[160px] border border-gray-200' />
+                            <img 
+                            // src={`${item.images && item.images[1]?.url}`} 
+                            src={
+                                item.images && item.images[1]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                    ? item.images[1].url.replace(
+                                        /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                        `${imgdburl}/uploads/images`
+                                    )
+                                    : `${imgdburl}${item.images[1]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                            }
+                            alt="" className='w-[160px] h-[160px] border border-gray-200' />
                             <div className="w-full pl-2">
                                 <h5 className='pl-3 text-[15px] font-[600]'>{item.name}</h5>
                                 <p className='pl-3 text-[12px] text-[#0000008c]'>{item.skuid}</p>

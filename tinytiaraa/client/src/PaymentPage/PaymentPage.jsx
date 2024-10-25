@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import razopayimg from './images/razorpay-icon.svg'
 import payuimg from './images/PayU.svg'
-import { backend_url, server } from '@/server';
+import { backend_url, imgdburl, server } from '@/server';
 import { Country, State } from 'country-state-city';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -1245,7 +1245,17 @@ function PaymentPage() {
 
                                             <div key={index} className='ordercardsec flex mb-5 shadow-sm'>
                                                 <div className="image-section">
-                                                    <img src={`${val?.images[0]?.url}`} width="100%" height="100" />
+                                                    <img 
+                                                    // src={`${val?.images[0]?.url}`} 
+                                                    src={
+                                                        val?.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? val.images[0].url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${val?.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                                    }
+                                                    width="100%" height="100" />
                                                 </div>
                                                 <div className="detail-section">
                                                     <h3 className='text-[#161618] text-[14px] mb-[5px]'>{val.name}</h3>

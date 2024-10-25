@@ -1,5 +1,5 @@
 import { getAllOrdersOfUser } from '@/redux/actions/order';
-import { server } from '@/server';
+import { imgdburl, server } from '@/server';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,7 +81,17 @@ function TrackOrder() {
                                 <ul className='divide-y divide-gray-200'>
                                     {data.cart.map((item, index) => (
                                         <li key={index} className='py-4 flex items-start'>
-                                            <img className='w-32 h-32 rounded-md object-cover border border-gray-300 shadow-sm' src={item.images[0]?.url} alt={item.name} />
+                                            <img className='w-32 h-32 rounded-md object-cover border border-gray-300 shadow-sm'
+                                            //  src={item.images[0]?.url}
+                                            src={
+                                                item.images && item.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                    ? item.images[0].url.replace(
+                                                        /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                        `${imgdburl}/uploads/images`
+                                                    )
+                                                    : `${imgdburl}${item.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                            }
+                                              alt={item.name} />
                                             <div className='ml-6 flex-1'>
                                                 <p className='text-lg font-semibold text-gray-800'>{item.name}</p>
                                                 <p className="text-gray-500 text-sm">{item.skuid}</p>

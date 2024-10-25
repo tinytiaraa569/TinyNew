@@ -4,7 +4,7 @@ import styles from '../../Styles/styles'
 import { AiFillHeart, AiOutlineEye, AiOutlineHeart, AiOutlineShareAlt } from 'react-icons/ai'
 import './productcard.css'
 import ProductDetailsCard from '../../ProductDetailsCard/ProductDetailsCard'
-import { backend_url } from '@/server'
+import { backend_url, imgdburl } from '@/server'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToWishlist, removeFromWishlist } from '@/redux/actions/wishlist'
 import { EmailIcon, FacebookIcon, WhatsappIcon } from "react-share"
@@ -91,7 +91,26 @@ function ProductCard({ data ,selectedEnamelColorimg}) {
         <div className='w-full h-[150px] overflow-hidden'>
           <Link to={`/product/${product_name}`}>
           <img
-              src={enamelColorImages.length > 0 ? enamelColorImages[0]?.url : data.images && data.images[1]?.url}
+              // src={enamelColorImages.length > 0 ? enamelColorImages[0]?.url : data.images && data.images[1]?.url}
+              src={
+                enamelColorImages.length > 0 
+                    ? (
+                        enamelColorImages[0].url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/) 
+                            ? enamelColorImages[0].url.replace(
+                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/, 
+                                `${imgdburl}/uploads/images`
+                            ) 
+                            : `${imgdburl}${enamelColorImages[0].url}`
+                      )
+                    : (
+                        data.images && data.images[1].url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/) 
+                            ? data.images[1].url.replace(
+                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/, 
+                                `${imgdburl}/uploads/images`
+                            ) 
+                            : `${imgdburl}${data.images && data.images[1].url}`
+                      )
+            }
               alt=""
               className='parentproductimg w-full h-[150px] object-contain'
             />

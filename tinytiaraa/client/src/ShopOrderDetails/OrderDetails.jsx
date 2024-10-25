@@ -267,7 +267,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import styles from '@/Styles/styles'
 import { getAllOrdersOfShop } from '@/redux/actions/order'
-import { server } from '@/server'
+import { imgdburl, server } from '@/server'
 import { FaFileInvoice } from 'react-icons/fa'
 
 function OrderDetails() {
@@ -410,9 +410,19 @@ function OrderDetails() {
            
             {/* Order Items */}
             <div>
-    {data && data?.cart.map((item, index) => (
-        <div key={index} className='w-full px-4 py-5 flex items-start mt-5 mb-5 border border-[#ddd] rounded-lg shadow-sm'>
-            <img src={`${item.images[0].url}`} alt="" className='w-[280px] h-[280px] rounded-md object-cover' />
+            {data && data?.cart.map((item, index) => (
+                <div key={index} className='w-full px-4 py-5 flex items-start mt-5 mb-5 border border-[#ddd] rounded-lg shadow-sm'>
+             <img 
+            // src={`${item.images[0].url}`}
+                src={
+                item.images && item.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                    ? item.images[0].url.replace(
+                        /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                        `${imgdburl}/uploads/images`
+                    )
+                    : `${imgdburl}${item.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+             }
+             alt="" className='w-[280px] h-[280px] rounded-md object-cover' />
             <div className="w-full ml-4">
                 <h5 className='text-lg font-semibold'>{item.name}</h5>
                 <h5 className='text-sm text-[#0000008c]'>{item.skuid}</h5>

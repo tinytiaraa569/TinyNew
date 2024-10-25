@@ -3,6 +3,7 @@ import Lottie from "react-lottie";
 import animationData from "./success-icon.json";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { imgdburl } from '@/server';
 
 function OrderSuccessPage() {
     
@@ -87,7 +88,17 @@ function OrderSuccessPage() {
                         {orderDetails?.cart.map((item, index) => (
                             <div key={index} className='flex items-start justify-between mb-4'>
                                 <div className='flex items-center'>
-                                    <img src={item.images[0].url} alt={item.name} className='w-20 h-20 object-cover rounded-lg' />
+                                    <img 
+                                    // src={item.images[0].url} 
+                                    src={
+                                        item.images[0]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                            ? item.images[0].url.replace(
+                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                `${imgdburl}/uploads/images`
+                                            )
+                                            : `${imgdburl}${item.images[0]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                    }
+                                    alt={item.name} className='w-20 h-20 object-cover rounded-lg' />
                                     <div className='ml-4'>
                                         <h4 className='text-gray-700 font-medium'>{item.name}</h4>
                                         <p className='text-gray-500 text-sm'> {item.skuid}</p>

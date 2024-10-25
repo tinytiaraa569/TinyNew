@@ -2,21 +2,27 @@ const express = require("express")
 const router = express.Router()
 
 const Product = require("../model/product")
-const { upload } = require("../multer")
+// const { upload } = require("../multer")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors")
 const ErrorHandler = require("../utils/Errorhandler")
 const Shop = require("../model/shop")
 const { isSeller, isAuthenticated } = require("../middleware/auth");
-
+const crypto = require('crypto');
 const fs = require('fs')
 const Order = require("../model/order")
 const cloudinary = require("cloudinary");
-
-
+const multer = require("multer");
+const path = require("path");
 //create Product
 
+const generateRandomString = (length) => {
+    return crypto.randomBytes(length).toString('hex').slice(0, length); // Generate random bytes and convert to hex
+};
 
 router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
+    console.log(req.files, 'Uploaded files');  
+    console.log(req.body, 'Uploaded body');  
+
     try {
         const shopId = req.body.shopId;
         const shop = await Shop.findById(shopId);
@@ -94,84 +100,78 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const RoseGoldclrLinks = [];
         const WhiteGoldclrLinks = [];
 
+        const processBase64Images = (imageArray, imageLinksArray) => {
+            for (let i = 0; i < imageArray.length; i++) {
+                const base64Image = imageArray[i];
+                const matches = base64Image.match(/^data:(.+);base64,(.+)$/);
+                if (!matches) {
+                    console.error('Invalid image format:', base64Image);
+                    continue; 
+                }
+        
+                const mimeType = matches[1]; 
+                const base64Data = matches[2]; 
+        
+                const extension = mimeType.split('/')[1]; // e.g., 'png', 'jpeg', etc.
+                const imageBuffer = Buffer.from(base64Data, 'base64');
+        
+                const uniqueId = generateRandomString(20); // Adjust length as needed
+                const publicId = `products/${uniqueId}`; // Create the public_id
+        
+                const imagePath = path.join(__dirname, '../uploads/images/products', `${uniqueId}.${extension}`);
+                fs.writeFileSync(imagePath, imageBuffer); // Save the image to the file system
+        
+                imageLinksArray.push({
+                    public_id: publicId,
+                    url: `/uploads/images/products/${uniqueId}.${extension}`
+                });
+            }
+        };
 
 
+            // Process general images
+        processBase64Images(images, imagesLinks);
 
-        for (let i = 0; i < images.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(images[i], {
-                folder: "products",
-            });
+        // Process with chain images
+        processBase64Images(withchainimages, withchainimagesLinks);
 
-            imagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        // Process without chain images
+        processBase64Images(withchainoutimages, withchainoutimagesLinks);
 
-        //with chain
-        for (let i = 0; i < withchainimages.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(withchainimages[i], {
-                folder: "products",
-            });
+                // Function to save image to server and return URL(working)
+                // for (let i = 0; i < req.body.images.length; i++) {
+                //     const base64Image = req.body.images[i];
 
-            withchainimagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-        //wihtout chian
-        for (let i = 0; i < withchainoutimages.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(withchainoutimages[i], {
-                folder: "products",
-            });
+                //     // Decode base64 string and save the image
+                //     const imageBuffer = Buffer.from(base64Image.split(",")[1], 'base64'); // Get the base64 part after the comma
+                //     const uniqueId = Date.now() + '-' + Math.round(Math.random() * 1E9);
+                //     const imagePath = path.join(__dirname, '../uploads/images/products', `${uniqueId}.png`);
 
-            withchainoutimagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+                //     // Save the image
+                //     fs.writeFileSync(imagePath, imageBuffer);
+
+                //     // Prepare image link to return or save to database
+                //     imagesLinks.push({
+                //         public_id: `products/${uniqueId}`,
+                //         url: `/uploads/images/products/${uniqueId}.png`
+                //     });
+                // }
+
+                // Now imagesLinks will contain the saved image paths
+                // console.log(imagesLinks, "Image links");
+
+
+       
 
 
         // yellow gold clr
-
-        for (let i = 0; i < YellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(YellowGoldclr[i], {
-                folder: "products",
-            });
-
-            YellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(YellowGoldclr, YellowGoldclrLinks);
 
         // RoseGoldclr clr
-
-        for (let i = 0; i < RoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(RoseGoldclr[i], {
-                folder: "products",
-            });
-
-            RoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(RoseGoldclr, RoseGoldclrLinks);
 
         // WhiteGoldclr clr
-
-        for (let i = 0; i < WhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(WhiteGoldclr[i], {
-                folder: "products",
-            });
-
-            WhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
-
+        processBase64Images(WhiteGoldclr, WhiteGoldclrLinks);
 
 
         // Enamel colors
@@ -209,45 +209,20 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const deepblueWhiteGoldclrLinks = [];
 
         // yellow gold clr
+        processBase64Images(deepblueYellowGoldclr, deepblueYellowGoldclrLinks);
 
-        for (let i = 0; i < deepblueYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepblueYellowGoldclr[i], {
-                folder: "products",
-            });
 
-            deepblueYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
 
         // RoseGoldclr clr
+        processBase64Images(deepblueRoseGoldclr, deepblueRoseGoldclrLinks);
 
-        for (let i = 0; i < deepblueRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepblueRoseGoldclr[i], {
-                folder: "products",
-            });
 
-            deepblueRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+      
         // WhiteGoldclr clr
-
-        for (let i = 0; i < deepblueWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepblueWhiteGoldclr[i], {
-                folder: "products",
-            });
-
-            deepblueWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(deepblueWhiteGoldclr, deepblueWhiteGoldclrLinks);
 
 
+     
         // Pink
         let pinkYellowGoldclr = [];
         let pinkRoseGoldclr = [];
@@ -280,41 +255,20 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const pinkWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < pinkYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(pinkYellowGoldclr[i], {
-                folder: "products",
-            });
 
-            pinkYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(pinkYellowGoldclr, pinkYellowGoldclrLinks);
+
+      
 
         // RoseGoldclr clr
-        for (let i = 0; i < pinkRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(pinkRoseGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(pinkRoseGoldclr, pinkRoseGoldclrLinks);
 
-            pinkRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+       
 
         // WhiteGoldclr clr
-        for (let i = 0; i < pinkWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(pinkWhiteGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(pinkWhiteGoldclr, pinkWhiteGoldclrLinks);
 
-            pinkWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+      
 
         // Turquoise
         let turquoiseYellowGoldclr = [];
@@ -348,41 +302,13 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const turquoiseWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < turquoiseYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(turquoiseYellowGoldclr[i], {
-                folder: "products",
-            });
-
-            turquoiseYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(turquoiseYellowGoldclr, turquoiseYellowGoldclrLinks);
 
         // RoseGoldclr clr
-        for (let i = 0; i < turquoiseRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(turquoiseRoseGoldclr[i], {
-                folder: "products",
-            });
-
-            turquoiseRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(turquoiseRoseGoldclr, turquoiseRoseGoldclrLinks);
 
         // WhiteGoldclr clr
-        for (let i = 0; i < turquoiseWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(turquoiseWhiteGoldclr[i], {
-                folder: "products",
-            });
-
-            turquoiseWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+        processBase64Images(turquoiseWhiteGoldclr, turquoiseWhiteGoldclrLinks);
 
         // Red
         let redYellowGoldclr = [];
@@ -416,41 +342,18 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const redWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < redYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(redYellowGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(redYellowGoldclr, redYellowGoldclrLinks);
 
-            redYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
 
         // RoseGoldclr clr
-        for (let i = 0; i < redRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(redRoseGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(redRoseGoldclr, redRoseGoldclrLinks);
 
-            redRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+  
 
         // WhiteGoldclr clr
-        for (let i = 0; i < redWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(redWhiteGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(redWhiteGoldclr, redWhiteGoldclrLinks);
 
-            redWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+ 
 
         // Black
         let blackYellowGoldclr = [];
@@ -484,41 +387,19 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const blackWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < blackYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(blackYellowGoldclr[i], {
-                folder: "products",
-            });
 
-            blackYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(blackYellowGoldclr, blackYellowGoldclrLinks);
+
+     
 
         // RoseGoldclr clr
-        for (let i = 0; i < blackRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(blackRoseGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(blackRoseGoldclr, blackRoseGoldclrLinks);
 
-            blackRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
 
         // WhiteGoldclr clr
-        for (let i = 0; i < blackWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(blackWhiteGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(blackWhiteGoldclr, blackWhiteGoldclrLinks);
 
-            blackWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+ 
         // stocks for metal color
 
 
@@ -554,42 +435,19 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const deepgreenWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < deepgreenYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepgreenYellowGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(deepgreenYellowGoldclr, deepgreenYellowGoldclrLinks);
 
-            deepgreenYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+      
 
         // RoseGoldclr clr
-        for (let i = 0; i < deepgreenRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepgreenRoseGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(deepgreenRoseGoldclr, deepgreenRoseGoldclrLinks);
 
-            deepgreenRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+    
 
         // WhiteGoldclr clr
-        for (let i = 0; i < deepgreenWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(deepgreenWhiteGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(deepgreenWhiteGoldclr, deepgreenWhiteGoldclrLinks);
 
-            deepgreenWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
-
+     
         // Lotus green
         let lotusgreenYellowGoldclr = [];
         let lotusgreenRoseGoldclr = [];
@@ -622,40 +480,17 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         const lotusgreenWhiteGoldclrLinks = [];
 
         // yellow gold clr
-        for (let i = 0; i < lotusgreenYellowGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(lotusgreenYellowGoldclr[i], {
-                folder: "products",
-            });
 
-            lotusgreenYellowGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
+        processBase64Images(lotusgreenYellowGoldclr, lotusgreenYellowGoldclrLinks);
 
+     
         // RoseGoldclr clr
-        for (let i = 0; i < lotusgreenRoseGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(lotusgreenRoseGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(lotusgreenRoseGoldclr, lotusgreenRoseGoldclrLinks);
 
-            lotusgreenRoseGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
-
+    
         // WhiteGoldclr clr
-        for (let i = 0; i < lotusgreenWhiteGoldclr.length; i++) {
-            const result = await cloudinary.v2.uploader.upload(lotusgreenWhiteGoldclr[i], {
-                folder: "products",
-            });
+        processBase64Images(lotusgreenWhiteGoldclr, lotusgreenWhiteGoldclrLinks);
 
-            lotusgreenWhiteGoldclrLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url,
-            });
-        }
 
 
         const {
@@ -822,6 +657,815 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler(error.message || "Internal Server Error", 400));
     }
 }));
+
+
+
+// router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
+//     try {
+//         const shopId = req.body.shopId;
+//         const shop = await Shop.findById(shopId);
+
+//         if (!shop) {
+//             return next(new ErrorHandler("Shop ID is invalid", 400));
+//         }
+
+//         let images = [];
+//         let withchainimages = [];
+//         let withchainoutimages = [];
+
+//         // metal color 
+//         let YellowGoldclr = [];
+//         let RoseGoldclr = [];
+//         let WhiteGoldclr = [];
+
+
+
+//         // images 
+//         if (typeof req.body.images === "string") {
+//             images.push(req.body.images);
+//         } else {
+//             images = req.body.images;
+//         }
+//         //withchain
+
+//         if (typeof req.body.withchainimages === "string") {
+//             withchainimages.push(req.body.withchainimages);
+//         } else {
+//             withchainimages = req.body.withchainimages;
+//         }
+//         //without chain
+//         if (typeof req.body.withchainoutimages === "string") {
+//             withchainoutimages.push(req.body.withchainoutimages);
+//         } else {
+//             withchainoutimages = req.body.withchainoutimages;
+//         }
+
+
+//         // Metal color
+//         //yellow clr
+//         if (typeof req.body.YellowGoldclr === "string") {
+//             YellowGoldclr.push(req.body.YellowGoldclr);
+//         } else {
+//             YellowGoldclr = req.body.YellowGoldclr;
+//         }
+
+//         //RoseGoldclr 
+//         if (typeof req.body.RoseGoldclr === "string") {
+//             RoseGoldclr.push(req.body.RoseGoldclr);
+//         } else {
+//             RoseGoldclr = req.body.RoseGoldclr;
+//         }
+
+//         //WhiteGoldclr 
+//         if (typeof req.body.WhiteGoldclr === "string") {
+//             WhiteGoldclr.push(req.body.WhiteGoldclr);
+//         } else {
+//             WhiteGoldclr = req.body.WhiteGoldclr;
+//         }
+
+
+
+
+
+
+
+//         const imagesLinks = [];
+//         const withchainimagesLinks = [];
+//         const withchainoutimagesLinks = [];
+
+//         //meatl color links
+//         const YellowGoldclrLinks = [];
+//         const RoseGoldclrLinks = [];
+//         const WhiteGoldclrLinks = [];
+
+
+
+
+//         for (let i = 0; i < images.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(images[i], {
+//                 folder: "products",
+//             });
+
+//             imagesLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         //with chain
+//         for (let i = 0; i < withchainimages.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(withchainimages[i], {
+//                 folder: "products",
+//             });
+
+//             withchainimagesLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+//         //wihtout chian
+//         for (let i = 0; i < withchainoutimages.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(withchainoutimages[i], {
+//                 folder: "products",
+//             });
+
+//             withchainoutimagesLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // yellow gold clr
+
+//         for (let i = 0; i < YellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(YellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             YellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+
+//         for (let i = 0; i < RoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(RoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             RoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+
+//         for (let i = 0; i < WhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(WhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             WhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+
+
+//         // Enamel colors
+
+//         //deep blue
+//         let deepblueYellowGoldclr = [];
+//         let deepblueRoseGoldclr = [];
+//         let deepblueWhiteGoldclr = [];
+
+//         // Metal color
+//         //deepblueyellow clr
+//         if (typeof req.body.deepblueYellowGoldclr === "string") {
+//             deepblueYellowGoldclr.push(req.body.deepblueYellowGoldclr);
+//         } else {
+//             deepblueYellowGoldclr = req.body.deepblueYellowGoldclr;
+//         }
+
+//         //deepblueRoseGoldclr 
+//         if (typeof req.body.deepblueRoseGoldclr === "string") {
+//             deepblueRoseGoldclr.push(req.body.deepblueRoseGoldclr);
+//         } else {
+//             deepblueRoseGoldclr = req.body.deepblueRoseGoldclr;
+//         }
+
+//         //WhiteGoldclr 
+//         if (typeof req.body.deepblueWhiteGoldclr === "string") {
+//             deepblueWhiteGoldclr.push(req.body.deepblueWhiteGoldclr);
+//         } else {
+//             deepblueWhiteGoldclr = req.body.deepblueWhiteGoldclr;
+//         }
+
+
+//         const deepblueYellowGoldclrLinks = [];
+//         const deepblueRoseGoldclrLinks = [];
+//         const deepblueWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+
+//         for (let i = 0; i < deepblueYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepblueYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepblueYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+
+//         for (let i = 0; i < deepblueRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepblueRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepblueRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+
+//         for (let i = 0; i < deepblueWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepblueWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepblueWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // Pink
+//         let pinkYellowGoldclr = [];
+//         let pinkRoseGoldclr = [];
+//         let pinkWhiteGoldclr = [];
+
+//         // Metal color
+//         // pinkYellow clr
+//         if (typeof req.body.pinkYellowGoldclr === "string") {
+//             pinkYellowGoldclr.push(req.body.pinkYellowGoldclr);
+//         } else {
+//             pinkYellowGoldclr = req.body.pinkYellowGoldclr;
+//         }
+
+//         // pinkRoseGoldclr
+//         if (typeof req.body.pinkRoseGoldclr === "string") {
+//             pinkRoseGoldclr.push(req.body.pinkRoseGoldclr);
+//         } else {
+//             pinkRoseGoldclr = req.body.pinkRoseGoldclr;
+//         }
+
+//         // pinkWhiteGoldclr
+//         if (typeof req.body.pinkWhiteGoldclr === "string") {
+//             pinkWhiteGoldclr.push(req.body.pinkWhiteGoldclr);
+//         } else {
+//             pinkWhiteGoldclr = req.body.pinkWhiteGoldclr;
+//         }
+
+//         const pinkYellowGoldclrLinks = [];
+//         const pinkRoseGoldclrLinks = [];
+//         const pinkWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < pinkYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(pinkYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             pinkYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < pinkRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(pinkRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             pinkRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < pinkWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(pinkWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             pinkWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // Turquoise
+//         let turquoiseYellowGoldclr = [];
+//         let turquoiseRoseGoldclr = [];
+//         let turquoiseWhiteGoldclr = [];
+
+//         // Metal color
+//         // turquoiseYellow clr
+//         if (typeof req.body.turquoiseYellowGoldclr === "string") {
+//             turquoiseYellowGoldclr.push(req.body.turquoiseYellowGoldclr);
+//         } else {
+//             turquoiseYellowGoldclr = req.body.turquoiseYellowGoldclr;
+//         }
+
+//         // turquoiseRoseGoldclr
+//         if (typeof req.body.turquoiseRoseGoldclr === "string") {
+//             turquoiseRoseGoldclr.push(req.body.turquoiseRoseGoldclr);
+//         } else {
+//             turquoiseRoseGoldclr = req.body.turquoiseRoseGoldclr;
+//         }
+
+//         // turquoiseWhiteGoldclr
+//         if (typeof req.body.turquoiseWhiteGoldclr === "string") {
+//             turquoiseWhiteGoldclr.push(req.body.turquoiseWhiteGoldclr);
+//         } else {
+//             turquoiseWhiteGoldclr = req.body.turquoiseWhiteGoldclr;
+//         }
+
+//         const turquoiseYellowGoldclrLinks = [];
+//         const turquoiseRoseGoldclrLinks = [];
+//         const turquoiseWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < turquoiseYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(turquoiseYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             turquoiseYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < turquoiseRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(turquoiseRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             turquoiseRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < turquoiseWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(turquoiseWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             turquoiseWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // Red
+//         let redYellowGoldclr = [];
+//         let redRoseGoldclr = [];
+//         let redWhiteGoldclr = [];
+
+//         // Metal color
+//         // redYellow clr
+//         if (typeof req.body.redYellowGoldclr === "string") {
+//             redYellowGoldclr.push(req.body.redYellowGoldclr);
+//         } else {
+//             redYellowGoldclr = req.body.redYellowGoldclr;
+//         }
+
+//         // redRoseGoldclr
+//         if (typeof req.body.redRoseGoldclr === "string") {
+//             redRoseGoldclr.push(req.body.redRoseGoldclr);
+//         } else {
+//             redRoseGoldclr = req.body.redRoseGoldclr;
+//         }
+
+//         // redWhiteGoldclr
+//         if (typeof req.body.redWhiteGoldclr === "string") {
+//             redWhiteGoldclr.push(req.body.redWhiteGoldclr);
+//         } else {
+//             redWhiteGoldclr = req.body.redWhiteGoldclr;
+//         }
+
+//         const redYellowGoldclrLinks = [];
+//         const redRoseGoldclrLinks = [];
+//         const redWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < redYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(redYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             redYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < redRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(redRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             redRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < redWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(redWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             redWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // Black
+//         let blackYellowGoldclr = [];
+//         let blackRoseGoldclr = [];
+//         let blackWhiteGoldclr = [];
+
+//         // Metal color
+//         // blackYellow clr
+//         if (typeof req.body.blackYellowGoldclr === "string") {
+//             blackYellowGoldclr.push(req.body.blackYellowGoldclr);
+//         } else {
+//             blackYellowGoldclr = req.body.blackYellowGoldclr;
+//         }
+
+//         // blackRoseGoldclr
+//         if (typeof req.body.blackRoseGoldclr === "string") {
+//             blackRoseGoldclr.push(req.body.blackRoseGoldclr);
+//         } else {
+//             blackRoseGoldclr = req.body.blackRoseGoldclr;
+//         }
+
+//         // blackWhiteGoldclr
+//         if (typeof req.body.blackWhiteGoldclr === "string") {
+//             blackWhiteGoldclr.push(req.body.blackWhiteGoldclr);
+//         } else {
+//             blackWhiteGoldclr = req.body.blackWhiteGoldclr;
+//         }
+
+//         const blackYellowGoldclrLinks = [];
+//         const blackRoseGoldclrLinks = [];
+//         const blackWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < blackYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(blackYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             blackYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < blackRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(blackRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             blackRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < blackWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(blackWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             blackWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // stocks for metal color
+
+
+//         // Deep Green
+//         let deepgreenYellowGoldclr = [];
+//         let deepgreenRoseGoldclr = [];
+//         let deepgreenWhiteGoldclr = [];
+
+//         // Metal color
+//         // deepgreenYellow clr
+//         if (typeof req.body.deepgreenYellowGoldclr === "string") {
+//             deepgreenYellowGoldclr.push(req.body.deepgreenYellowGoldclr);
+//         } else {
+//             deepgreenYellowGoldclr = req.body.deepgreenYellowGoldclr;
+//         }
+
+//         // deepgreenRoseGoldclr
+//         if (typeof req.body.deepgreenRoseGoldclr === "string") {
+//             deepgreenRoseGoldclr.push(req.body.deepgreenRoseGoldclr);
+//         } else {
+//             deepgreenRoseGoldclr = req.body.deepgreenRoseGoldclr;
+//         }
+
+//         // deepgreenWhiteGoldclr
+//         if (typeof req.body.deepgreenWhiteGoldclr === "string") {
+//             deepgreenWhiteGoldclr.push(req.body.deepgreenWhiteGoldclr);
+//         } else {
+//             deepgreenWhiteGoldclr = req.body.deepgreenWhiteGoldclr;
+//         }
+
+//         const deepgreenYellowGoldclrLinks = [];
+//         const deepgreenRoseGoldclrLinks = [];
+//         const deepgreenWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < deepgreenYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepgreenYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepgreenYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < deepgreenRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepgreenRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepgreenRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < deepgreenWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(deepgreenWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             deepgreenWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         // Lotus green
+//         let lotusgreenYellowGoldclr = [];
+//         let lotusgreenRoseGoldclr = [];
+//         let lotusgreenWhiteGoldclr = [];
+
+//         // Metal color
+//         // lotusgreenYellow clr
+//         if (typeof req.body.lotusgreenYellowGoldclr === "string") {
+//             lotusgreenYellowGoldclr.push(req.body.lotusgreenYellowGoldclr);
+//         } else {
+//             lotusgreenYellowGoldclr = req.body.lotusgreenYellowGoldclr;
+//         }
+
+//         // lotusgreenRoseGoldclr
+//         if (typeof req.body.lotusgreenRoseGoldclr === "string") {
+//             lotusgreenRoseGoldclr.push(req.body.lotusgreenRoseGoldclr);
+//         } else {
+//             lotusgreenRoseGoldclr = req.body.lotusgreenRoseGoldclr;
+//         }
+
+//         // lotusgreenWhiteGoldclr
+//         if (typeof req.body.lotusgreenWhiteGoldclr === "string") {
+//             lotusgreenWhiteGoldclr.push(req.body.lotusgreenWhiteGoldclr);
+//         } else {
+//             lotusgreenWhiteGoldclr = req.body.lotusgreenWhiteGoldclr;
+//         }
+
+//         const lotusgreenYellowGoldclrLinks = [];
+//         const lotusgreenRoseGoldclrLinks = [];
+//         const lotusgreenWhiteGoldclrLinks = [];
+
+//         // yellow gold clr
+//         for (let i = 0; i < lotusgreenYellowGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(lotusgreenYellowGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             lotusgreenYellowGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // RoseGoldclr clr
+//         for (let i = 0; i < lotusgreenRoseGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(lotusgreenRoseGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             lotusgreenRoseGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+//         // WhiteGoldclr clr
+//         for (let i = 0; i < lotusgreenWhiteGoldclr.length; i++) {
+//             const result = await cloudinary.v2.uploader.upload(lotusgreenWhiteGoldclr[i], {
+//                 folder: "products",
+//             });
+
+//             lotusgreenWhiteGoldclrLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url,
+//             });
+//         }
+
+
+//         const {
+//             YellowGoldclrStock,
+//             RoseGoldclrStock,
+//             WhiteGoldclrStock,
+//             // other fields...
+//         } = req.body;
+
+//         const {
+//             deepblueYellowGoldclrStock,
+//             deepblueRoseGoldclrStock,
+//             deepblueWhiteGoldclrStock,
+
+//             pinkYellowGoldclrStock,
+//             pinkRoseGoldclrStock,
+//             pinkWhiteGoldclrStock,
+
+//             turquoiseYellowGoldclrStock,
+//             turquoiseRoseGoldclrStock,
+//             turquoiseWhiteGoldclrStock,
+
+//             redYellowGoldclrStock,
+//             redRoseGoldclrStock,
+//             redWhiteGoldclrStock,
+
+//             blackYellowGoldclrStock,
+//             blackRoseGoldclrStock,
+//             blackWhiteGoldclrStock,
+
+
+//             deepgreenYellowGoldclrStock,
+//             deepgreenRoseGoldclrStock,
+//             deepgreenWhiteGoldclrStock,
+
+//             lotusgreenYellowGoldclrStock,
+//             lotusgreenRoseGoldclrStock,
+//             lotusgreenWhiteGoldclrStock,
+
+//             // other fields...
+//         } = req.body;
+
+
+//         const {gender,ageGroup} = req.body;
+
+
+//         const productData = req.body;
+//         productData.images = imagesLinks;
+//         productData.withchainimages = withchainimagesLinks;
+//         productData.withchainoutimages = withchainoutimagesLinks;
+//         productData.shop = shop;
+//         productData.Metalcolorstock = {
+//             YellowGoldclrStock,
+//             RoseGoldclrStock,
+//             WhiteGoldclrStock
+//         }
+
+//         productData.Enamelcolorstock = {
+//             deepblue: {
+//                 deepblueYellowGoldclrStock,
+//                 deepblueRoseGoldclrStock,
+//                 deepblueWhiteGoldclrStock,
+//             },
+//             pink: {
+//                 pinkYellowGoldclrStock,
+//                 pinkRoseGoldclrStock,
+//                 pinkWhiteGoldclrStock
+//             },
+//             turquoise: {
+//                 turquoiseYellowGoldclrStock,
+//                 turquoiseRoseGoldclrStock,
+//                 turquoiseWhiteGoldclrStock,
+
+//             },
+//             red: {
+//                 redYellowGoldclrStock,
+//                 redRoseGoldclrStock,
+//                 redWhiteGoldclrStock,
+//             },
+//             black: {
+//                 blackYellowGoldclrStock,
+//                 blackRoseGoldclrStock,
+//                 blackWhiteGoldclrStock,
+//             },
+//             deepgreen: {
+//                 deepgreenYellowGoldclrStock,
+//                 deepgreenRoseGoldclrStock,
+//                 deepgreenWhiteGoldclrStock,
+
+//             },
+//             lotusgreen: {
+//                 lotusgreenYellowGoldclrStock,
+//                 lotusgreenRoseGoldclrStock,
+//                 lotusgreenWhiteGoldclrStock,
+
+//             }
+
+
+
+
+
+
+//         }
+
+
+
+//         productData.MetalColor = {
+//             YellowGoldclr: YellowGoldclrLinks,
+//             RoseGoldclr: RoseGoldclrLinks,
+//             WhiteGoldclr: WhiteGoldclrLinks,
+//         }
+//         productData.enamelColors = {
+//             Deep_Blue: {
+//                 deepblueYellowGoldclr: deepblueYellowGoldclrLinks,
+//                 deepblueRoseGoldclr: deepblueRoseGoldclrLinks,
+//                 deepblueWhiteGoldclr: deepblueWhiteGoldclrLinks,
+//             },
+//             Deep_Green: {
+//                 deepgreenYellowGoldclr: deepgreenYellowGoldclrLinks,
+//                 deepgreenRoseGoldclr: deepgreenRoseGoldclrLinks,
+//                 deepgreenWhiteGoldclr: deepgreenWhiteGoldclrLinks,
+//             },
+//             Lotus_Green: {
+//                 lotusgreenYellowGoldclr: lotusgreenYellowGoldclrLinks,
+//                 lotusgreenRoseGoldclr: lotusgreenRoseGoldclrLinks,
+//                 lotusgreenWhiteGoldclr: lotusgreenWhiteGoldclrLinks,
+//             },
+//             Pink: {
+//                 pinkYellowGoldclr: pinkYellowGoldclrLinks,
+//                 pinkRoseGoldclr: pinkRoseGoldclrLinks,
+//                 pinkWhiteGoldclr: pinkWhiteGoldclrLinks,
+//             },
+//             Turquoise: {
+//                 turquoiseYellowGoldclr: turquoiseYellowGoldclrLinks,
+//                 turquoiseRoseGoldclr: turquoiseRoseGoldclrLinks,
+//                 turquoiseWhiteGoldclr: turquoiseWhiteGoldclrLinks,
+//             },
+//             Red: {
+//                 redYellowGoldclr: redYellowGoldclrLinks,
+//                 redRoseGoldclr: redRoseGoldclrLinks,
+//                 redWhiteGoldclr: redWhiteGoldclrLinks,
+//             },
+//             Black: {
+//                 blackYellowGoldclr: blackYellowGoldclrLinks,
+//                 blackRoseGoldclr: blackRoseGoldclrLinks,
+//                 blackWhiteGoldclr: blackWhiteGoldclrLinks,
+//             },
+//         };
+
+//         productData.gender = gender;
+//         productData.ageGroup = ageGroup;
+
+
+
+
+//         const product = await Product.create(productData);
+
+//         res.status(201).json({
+//             success: true,
+//             product,
+//             enamelColors: product.enamelColors
+//         });
+//     } catch (error) {
+//         return next(new ErrorHandler(error.message || "Internal Server Error", 400));
+//     }
+// }));
 
 
 
@@ -1139,6 +1783,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             console.log("Request Files:", req.files);
         }
 
+       
+
         // let images = [];
         // if (typeof req.body.images === "string") {
         //     images.push(req.body.images); // Single image as a string
@@ -1347,7 +1993,29 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
         //     gender,
         //     ageGroup
         // };
-
+        const EditprocessBase64Image = (imagePath, destinationArray) => {
+            if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
+                const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
+                if (!matches) {
+                    console.error('Invalid base64 format:', imagePath);
+                    return;
+                }
+                const mimeType = matches[1];
+                const base64Data = matches[2];
+                const extension = mimeType.split('/')[1];
+                const imageBuffer = Buffer.from(base64Data, 'base64');
+                const uniqueId = generateRandomString(20);
+                const localImagePath = path.join(__dirname, '../uploads/images/products', `${uniqueId}.${extension}`);
+        
+                fs.writeFileSync(localImagePath, imageBuffer);
+                destinationArray.push({
+                    public_id: `products/${uniqueId}`,
+                    url: `/uploads/images/products/${uniqueId}.${extension}`
+                });
+            } else {
+                destinationArray.push({ url: imagePath });
+            }
+        };
         const product = await Product.findById(productId);
         if (!product) {
             return next(new ErrorHandler('Product not found with this ID', 404));
@@ -1378,14 +2046,9 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
 
             // Only upload new images that are not already in the database
             if (!existingImages.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, imagesLinks)
 
-                imagesLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
+             
             } else {
                 // If the image already exists, just add the existing image info
                 imagesLinks.push(product.images.find(img => img.url === imagePath));
@@ -1419,14 +2082,9 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
 
             // Only upload new images that are not already in the database
             if (!existingWithChainImages.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
 
-                withchainimagesLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
+                EditprocessBase64Image(imagePath, withchainimagesLinks)
+              
             } else {
                 // If the image already exists, just add the existing image info
                 withchainimagesLinks.push(product.withchainimages.find(img => img.url === imagePath));
@@ -1459,14 +2117,7 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
 
             // Only upload new images that are not already in the database
             if (!existingWithChainOutImages.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
-
-                withchainoutimagesLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
+                EditprocessBase64Image(imagePath, withchainoutimagesLinks)
             } else {
                 // If the image already exists, just add the existing image info
                 withchainoutimagesLinks.push(product.withchainoutimages.find(img => img.url === imagePath));
@@ -1497,14 +2148,7 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
-
-                YellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
+                EditprocessBase64Image(imagePath, YellowGoldclrLinks)
             } else {
                 YellowGoldclrLinks.push(product.MetalColor.YellowGoldclr.find(img => img.url === imagePath));
             }
@@ -1529,14 +2173,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, RoseGoldclrLinks)
 
-                RoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 RoseGoldclrLinks.push(product.MetalColor.RoseGoldclr.find(img => img.url === imagePath));
             }
@@ -1561,14 +2199,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, WhiteGoldclrLinks)
 
-                WhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 WhiteGoldclrLinks.push(product.MetalColor.WhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -1605,14 +2237,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepblueYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepblueYellowGoldclrLinks)
 
-                deepblueYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepblueYellowGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -1638,14 +2264,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepblueRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepblueRoseGoldclrLinks)
 
-                deepblueRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepblueRoseGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -1671,14 +2291,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepblueWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepblueWhiteGoldclrLinks)
 
-                deepblueWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepblueWhiteGoldclrLinks.push(product.enamelColors.Deep_Blue.deepblueWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -1710,14 +2324,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingPinkYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, pinkYellowGoldclrLinks)
 
-                pinkYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 pinkYellowGoldclrLinks.push(product.enamelColors.Pink.pinkYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -1743,14 +2351,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingPinkRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, pinkRoseGoldclrLinks)
 
-                pinkRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 pinkRoseGoldclrLinks.push(product.enamelColors.Pink.pinkRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -1776,14 +2378,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingPinkWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, pinkWhiteGoldclrLinks)
 
-                pinkWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 pinkWhiteGoldclrLinks.push(product.enamelColors.Pink.pinkWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -1816,14 +2412,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingTurquoiseYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, turquoiseYellowGoldclrLinks)
 
-                turquoiseYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 turquoiseYellowGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -1849,14 +2439,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingTurquoiseRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, turquoiseRoseGoldclrLinks)
 
-                turquoiseRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 turquoiseRoseGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -1882,14 +2466,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingTurquoiseWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, turquoiseWhiteGoldclrLinks)
 
-                turquoiseWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 turquoiseWhiteGoldclrLinks.push(product.enamelColors.Turquoise.turquoiseWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -1922,14 +2500,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingRedYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, redYellowGoldclrLinks)
 
-                redYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 redYellowGoldclrLinks.push(product.enamelColors.Red.redYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -1955,14 +2527,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingRedRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, redRoseGoldclrLinks)
 
-                redRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 redRoseGoldclrLinks.push(product.enamelColors.Red.redRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -1988,14 +2554,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingRedWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, redWhiteGoldclrLinks)
 
-                redWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 redWhiteGoldclrLinks.push(product.enamelColors.Red.redWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -2029,14 +2589,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingBlackYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, blackYellowGoldclrLinks)
 
-                blackYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 blackYellowGoldclrLinks.push(product.enamelColors.Black.blackYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -2062,14 +2616,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingBlackRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, blackRoseGoldclrLinks)
 
-                blackRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 blackRoseGoldclrLinks.push(product.enamelColors.Black.blackRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -2095,14 +2643,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingBlackWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, blackWhiteGoldclrLinks)
 
-                blackWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 blackWhiteGoldclrLinks.push(product.enamelColors.Black.blackWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -2135,14 +2677,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepgreenYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepgreenYellowGoldclrLinks)
 
-                deepgreenYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepgreenYellowGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -2168,14 +2704,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepgreenRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepgreenRoseGoldclrLinks)
 
-                deepgreenRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepgreenRoseGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -2201,14 +2731,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingDeepgreenWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, deepgreenWhiteGoldclrLinks)
 
-                deepgreenWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 deepgreenWhiteGoldclrLinks.push(product.enamelColors.Deep_Green.deepgreenWhiteGoldclr.find(img => img.url === imagePath));
             }
@@ -2241,14 +2765,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingLotusgreenYellowGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, lotusgreenYellowGoldclrLinks)
 
-                lotusgreenYellowGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 lotusgreenYellowGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenYellowGoldclr.find(img => img.url === imagePath));
             }
@@ -2274,14 +2792,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingLotusgreenRoseGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, lotusgreenRoseGoldclrLinks)
 
-                lotusgreenRoseGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 lotusgreenRoseGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenRoseGoldclr.find(img => img.url === imagePath));
             }
@@ -2307,14 +2819,8 @@ router.put("/update-product/:id", catchAsyncErrors(async (req, res, next) => {
             }
 
             if (!existingLotusgreenWhiteGoldclr.includes(imagePath)) {
-                const result = await cloudinary.v2.uploader.upload(imagePath, {
-                    folder: "products",
-                });
+                EditprocessBase64Image(imagePath, lotusgreenWhiteGoldclrLinks)
 
-                lotusgreenWhiteGoldclrLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                });
             } else {
                 lotusgreenWhiteGoldclrLinks.push(product.enamelColors.Lotus_Green.lotusgreenWhiteGoldclr.find(img => img.url === imagePath));
             }

@@ -19,6 +19,7 @@ function Signup() {
     const [password, setPassword] = useState("")
     const [visible, setVisible] = useState(false)
     const [avatar, setAvatar] = useState(null)
+    const [isLoading, setIsLoading] = useState(false); // Loading state
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -45,6 +46,7 @@ function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true); // Start loading
 
         axios
             .post(`${server}/user/create-user`, { name, email, password, avatar })
@@ -54,9 +56,12 @@ function Signup() {
                 setEmail("");
                 setPassword("");
                 setAvatar();
+                setIsLoading(false); // End loading
             })
             .catch((error) => {
+
                 toast.error(error.response.data.message);
+                setIsLoading(false); 
             });
     };
 
@@ -155,7 +160,14 @@ function Signup() {
         // </div>
 
         <div className='signuppagemaincon'>
+            {isLoading && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                     <div className="text-white text-xl">Signing up, please wait...</div>
+                </div>
+            )}
+
             <div className='singupcon'>
+            
 
                 <div className='singupconleft'>
                     <div className="signuplogo cursor-pointer" >

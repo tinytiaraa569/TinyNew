@@ -25,7 +25,7 @@ import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { backend_url, server } from '@/server';
+import { backend_url, imgdburl, server } from '@/server';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/redux/actions/cart';
 import { toast } from 'react-toastify';
@@ -442,7 +442,15 @@ function ProductDetails({ data }) {
                             onClick={() => setSelect(index)}
                         >
                             <img
-                                src={`${image?.url}`}
+                                // src={`${image?.url}`}
+                                src={
+                                    image?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                        ? image.url.replace(
+                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                            `${imgdburl}/uploads/images`
+                                          )
+                                        : `${imgdburl}${image?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                }
                                 alt=""
                                 className='w-[100%] h-[160px] object-contain'
                             />
@@ -977,7 +985,15 @@ function ProductDetails({ data }) {
                                 >
                                     <img
                                     loading='lazy'
-                                        src={selectedImage}
+                                        // src={selectedImage}
+                                        src={
+                                            selectedImage?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                ? selectedImage.replace(
+                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                    `${imgdburl}/uploads/images`
+                                                )
+                                                : `${imgdburl}${selectedImage}` // Prepend imgdburl if not a Cloudinary URL
+                                        }
                                         alt=""
                                         className="w-[100%] h-[60vh] object-contain !cursor-pointer" // Image to click and zoom
                                     />
@@ -1021,7 +1037,15 @@ function ProductDetails({ data }) {
                                                     <img
                                                         loading='lazy'
 
-                                                        src={`${imagesArray[currentImageIndex]?.url}`}
+                                                        // src={`${imagesArray[currentImageIndex]?.url}`}
+                                                        src={
+                                                            imagesArray[currentImageIndex]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                ? imagesArray[currentImageIndex].url.replace(
+                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                    `${imgdburl}/uploads/images`
+                                                                )
+                                                                : `${imgdburl}${imagesArray[currentImageIndex]?.url}` // Prepend imgdburl if not a Cloudinary URL
+                                                        }
                                                         alt=""
                                                         className="w-auto max-h-full object-contain"
                                                     />

@@ -19,7 +19,7 @@ import { BiMenuAltLeft } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose, IoMdArrowDropright, IoMdMail } from 'react-icons/io';
 import DropDown from '@/Navbar/DropDown';
-import { backend_url } from '@/server';
+import { backend_url, imgdburl } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { usePriceRange } from '@/pricerange/PriceRangeContext';
 import logo from './logo.png'
@@ -363,7 +363,9 @@ function Navbar1() {
                                                 <div>
                                                     {categoriesData && categoriesData.map((i, index) => (
                                                         <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
-                                                            <img src={i.image_Url} alt="" style={{ width: "30px", height: "35px", objectFit: "contain", userSelect: "none" }} />
+                                                            <img
+                                                             src={i.image_Url} 
+                                                             alt="" style={{ width: "30px", height: "35px", objectFit: "contain", userSelect: "none" }} />
                                                             <h3 className='text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{i.title}</h3>
                                                             <div className='  absolute left-[95%]'>
 
@@ -515,7 +517,17 @@ function Navbar1() {
 
                                                                             }}>
                                                                             <div className="w-full flex items-center pb-3 overflow-hidden">
-                                                                                <img src={`${i.images[1]?.url}`} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
+                                                                                <img 
+                                                                                // src={`${i.images[1]?.url}`} 
+                                                                                src={
+                                                                                    i.images[1]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                        ? i.images[1].url.replace(
+                                                                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                            `${imgdburl}/uploads/images`
+                                                                                          )
+                                                                                        : `${imgdburl}${i.images[1]?.url}` // Prepend imgdburl if not Cloudinary
+                                                                                }
+                                                                                alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
                                                                                 <p className='font-Poppins text-[12px]'>{i.name}</p>
                                                                             </div>
                                                                         </div>
@@ -737,7 +749,17 @@ function Navbar1() {
                                                                             closenavbar();
                                                                         }}>
                                                                         <div className="w-full flex items-center pb-3 overflow-hidden">
-                                                                            <img src={`${i.images[1]?.url}`} alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
+                                                                            <img 
+                                                                             src={
+                                                                                i.images[1]?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                    ? i.images[1].url.replace(
+                                                                                        /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                        `${imgdburl}/uploads/images`
+                                                                                      )
+                                                                                    : `${imgdburl}${i.images[1]?.url}` // Prepend imgdburl if not Cloudinary
+                                                                            }
+                                                                            // src={`${i.images[1]?.url}`} 
+                                                                            alt="" className='w-[60px] h-[50px] mr-[10px] scale-150 object-contain' />
                                                                             <p className='font-Poppins text-[15px]'>{i.name}</p>
                                                                         </div>
                                                                     </div>
@@ -799,6 +821,7 @@ function Navbar1() {
                                                                 >
                                                                     <img
                                                                         src={i.image_Url}
+                                                
                                                                         alt=""
                                                                         style={{ width: "35px", height: "40px", objectFit: "contain", userSelect: "none" }}
                                                                     />

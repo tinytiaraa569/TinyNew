@@ -17,7 +17,7 @@ import {
 import { TfiHandDrag } from 'react-icons/tfi'
 import DashboardHeader from '@/ShopDashboardPage/DashboardHeader'
 import { IoArrowBack } from 'react-icons/io5'
-import { server } from '@/server'
+import { imgdburl, server } from '@/server'
 import axios from 'axios'
 
 function ShopEditProductPage() {
@@ -2565,7 +2565,15 @@ function ShopEditProductPage() {
                                                                 className={`image-item relative m-2 ${index === draggingIndexWithChain ? 'opacity-50' : ''}`}
                                                             >
                                                                 <img
-                                                                    src={image.url || image}
+                                                                    // src={image.url || image}
+                                                                    src={
+                                                                        image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                            ? image.url.replace(
+                                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                `${imgdburl}/uploads/images`
+                                                                            )
+                                                                            : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                                    }
                                                                     alt={`With Chain ${index}`}
                                                                     className=' object-cover border-[#555] m-2'
                                                                 />
@@ -2608,7 +2616,15 @@ function ShopEditProductPage() {
                                                                 className={`image-item relative m-2 ${index === draggingIndexWithoutChain ? 'opacity-50' : ''}`}
                                                             >
                                                                 <img
-                                                                    src={image.url || image}
+                                                                    // src={image.url || image}
+                                                                    src={
+                                                                        image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                            ? image.url.replace(
+                                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                `${imgdburl}/uploads/images`
+                                                                            )
+                                                                            : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                                    }
                                                                     alt={`Without Chain ${index}`}
                                                                     className=' border-[#555] m-2'
                                                                 />
@@ -2653,7 +2669,17 @@ function ShopEditProductPage() {
                                         {withchainimages.map((image, index) => (
                                             <tr key={index} className='border-b'>
                                                 <td className='px-4 py-2'>
-                                                    <img className='h-[80px] w-[80px] object-cover' src={image.url || image} alt={`With Chain ${index}`} />
+                                                    <img className='h-[80px] w-[80px] object-cover' 
+                                                    // src={image.url || image}
+                                                    src={
+                                                        image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? image.url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                    }
+                                                     alt={`With Chain ${index}`} />
                                                 </td>
                                             </tr>
                                         ))}
@@ -2676,7 +2702,17 @@ function ShopEditProductPage() {
                                         {withchainoutimages.map((image, index) => (
                                             <tr key={index} className='border-b'>
                                                 <td className='px-4 py-2'>
-                                                    <img className='h-[80px] w-[80px] object-cover' src={image.url || image} alt={`Without Chain ${index}`} />
+                                                    <img className='h-[80px] w-[80px] object-cover' 
+                                                    // src={image.url || image} 
+                                                    src={
+                                                        image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? image.url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                    }
+                                                    alt={`Without Chain ${index}`} />
                                                 </td>
                                             </tr>
                                         ))}
@@ -2760,7 +2796,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => handleDeleteWithYellowclrImage(index)}
                                                                     />
                                                                     <img
-                                                                        src={image.url || image}
+                                                                        // src={image.url || image}
+                                                                        src={
+                                                                            image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? image.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Yellow Gold ${index}`}
                                                                         className={` border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
                                                                             }`}
@@ -2835,7 +2879,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => handleDeleteWithRoseclrImage(index)}
                                                                     />
                                                                     <img
-                                                                        src={image.url || image}
+                                                                        // src={image.url || image}
+                                                                        src={
+                                                                            image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? image.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Rose Gold ${index}`}
                                                                         className={`object-cover border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
                                                                             }`}
@@ -2910,7 +2962,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => handleDeleteWithWhiteclrImage(index)}
                                                                     />
                                                                     <img
-                                                                        src={image.url || image}
+                                                                        // src={image.url || image}
+                                                                        src={
+                                                                            image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? image.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With White Gold ${index}`}
                                                                         className={`h-[70px] w-[70px] object-cover border-[#555] m-2 ${index === draggingIndex ? 'opacity-50' : ''
                                                                             }`}
@@ -2957,7 +3017,18 @@ function ShopEditProductPage() {
                                         {YellowGoldclr && YellowGoldclr.map((i) => (
                                             <tr key={i} className='border-b'>
                                                 <td className='px-4 py-2'>
-                                                    <img className='h-[80px] w-[80px] object-cover' src={i.url || i} alt="" />
+                                                    <img className='h-[80px] w-[80px] object-cover' 
+                                                    // src={i.url || i}
+                                                    src={
+                                                        i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? i.url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                    }
+                                                    
+                                                    alt="" />
                                                 </td>
                                                 <td className='px-4 py-2'>{i.stock}</td>
                                             </tr>
@@ -2983,7 +3054,17 @@ function ShopEditProductPage() {
                                         {RoseGoldclr && RoseGoldclr.map((i) => (
                                             <tr key={i} className='border-b'>
                                                 <td className='px-4 py-2'>
-                                                    <img className='h-[80px] w-[80px] object-cover' src={i.url || i} alt="" />
+                                                    <img className='h-[80px] w-[80px] object-cover'
+                                                    //  src={i.url || i}
+                                                    src={
+                                                        i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? i.url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                    }
+                                                      alt="" />
                                                 </td>
                                                 <td className='px-4 py-2'>{i.stock}</td>
                                             </tr>
@@ -3009,7 +3090,17 @@ function ShopEditProductPage() {
                                         {WhiteGoldclr && WhiteGoldclr.map((i) => (
                                             <tr key={i} className='border-b'>
                                                 <td className='px-4 py-2'>
-                                                    <img className='h-[80px] w-[80px] object-cover' src={i.url || i} alt="" />
+                                                    <img className='h-[80px] w-[80px] object-cover'
+                                                    //  src={i.url || i}
+                                                    src={
+                                                        i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                            ? i.url.replace(
+                                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                `${imgdburl}/uploads/images`
+                                                            )
+                                                            : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                    }
+                                                      alt="" />
                                                 </td>
                                                 <td className='px-4 py-2'>{i.stock}</td>
                                             </tr>
@@ -3080,7 +3171,15 @@ function ShopEditProductPage() {
 
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className=' object-cover border-[#555] m-2'
                                                                     />
@@ -3142,7 +3241,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepbluehandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3202,7 +3309,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepbluehandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3295,7 +3410,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3351,7 +3474,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3407,7 +3538,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3496,7 +3635,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3551,7 +3698,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => turquoisehandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3606,7 +3761,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => turquoisehandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3697,7 +3860,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3752,7 +3923,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => redhandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3807,7 +3986,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => redhandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3896,7 +4083,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithYellowclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Yellow Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -3951,7 +4146,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={ i.url || i}
+                                                                        // src={ i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4006,7 +4209,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => blackhandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4095,7 +4306,15 @@ function ShopEditProductPage() {
                                                                     />
                                                                     <img
                                                                         key={`deepgreen_withchain_image_${i}`}
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4150,7 +4369,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepgreenHandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4205,7 +4432,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => deepgreenHandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4293,7 +4528,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithYellowclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`With Chain ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4348,7 +4591,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithRoseclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={ i.url || i}
+                                                                        // src={ i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`Rose Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4403,7 +4654,15 @@ function ShopEditProductPage() {
                                                                         onClick={() => lotusgreenHandleDeleteWithWhiteclrImage(i)}
                                                                     />
                                                                     <img
-                                                                        src={i.url || i}
+                                                                        // src={i.url || i}
+                                                                        src={
+                                                                            i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                                                ? i.url.replace(
+                                                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                                                    `${imgdburl}/uploads/images`
+                                                                                )
+                                                                                : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
+                                                                        }
                                                                         alt={`White Gold ${i}`}
                                                                         className='object-cover border-[#555] m-2'
                                                                     />
@@ -4709,12 +4968,28 @@ function ShopEditProductPage() {
                                     onDrop={(e) => handleDrop(e, index)}
                                     className={`relative m-2 ${index === draggingIndex ? 'opacity-50' : ''}`}
                                 >
+                                    {/* <img
+                                        src={image.url.replace(
+                                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                            `${imgdburl}/uploads/images`
+                                        ) || image}
+                                        alt=""
+                                        className='h-[120px] w-[120px] object-cover rounded-md'
+                                    /> */}
+
                                     <img
-                                        src={image.url || image}
+                                        src={
+                                            image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                                ? image.url.replace(
+                                                    /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                    `${imgdburl}/uploads/images`
+                                                )
+                                                : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
+                                        }
                                         alt=""
                                         className='h-[120px] w-[120px] object-cover rounded-md'
                                     />
-                                   
+                                                                    
 
                                     <AiOutlineCloseCircle
                                      size={22}
