@@ -37,10 +37,24 @@ router.post("/create-user", async (req, res, next) => {
             // })
             return next(new ErrorHandler("User already Exists", 400))
         }
+         // Initialize avatar object
+         let avatarData = {
+            public_id: null,
+            url: null,
+        };
 
-        const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-            folder: "avatars",
-          });
+
+         // If avatar is provided, upload to Cloudinary
+         if (avatar) {
+            const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+                folder: "avatars",
+            });
+            avatarData = {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
+            };
+        }
+
 
         // const filename = req.file.filename;
         // const fileUrl = path.join(filename)
@@ -50,10 +64,7 @@ router.post("/create-user", async (req, res, next) => {
             name: name,
             email: email,
             password: password,
-            avatar: {
-                public_id: myCloud.public_id,
-                url: myCloud.secure_url,
-              },
+            avatar: avatarData
         }
         const activationToken = createActivationToken(user)
         const activationUrl = `https://www.tinytiaraa.com/activation/${activationToken}`

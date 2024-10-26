@@ -283,6 +283,7 @@ router.post(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { name, cartItems } = req.body; // Receive the coupon code and cart items from the frontend
+      console.log(cartItems,"cartitems")
       const couponCode = await CoupounCode.findOne({ name });
 
       if (!couponCode) {
@@ -300,10 +301,12 @@ router.post(
       }
 
       // Calculate eligible cart value
-      const eligiblePrice = isCouponValid.reduce(
-        (acc, item) => acc + item.qty * item.discountPrice,
-        0
-      );
+      const eligiblePrice = isCouponValid.reduce((acc, item) => {
+        // Calculate base price, adding chain price if showWithChain is true and selectedChainSize is set
+        const basePrice = item.discountPrice + (item.showWithChain && item.selectedChainSize ? item.chainPrice : 0);
+        // Multiply by quantity and add to accumulator
+        return acc + item.qty * basePrice;
+    }, 0);
 
       // Check if eligible price falls between minAmount and maxAmount (if specified)
       if (couponCode.minAmount && eligiblePrice < couponCode.minAmount) {
@@ -322,6 +325,7 @@ router.post(
 
       // Calculate discount
       let calculatedDiscount = 0;
+      console.log(eligiblePrice,"see coupon discount price")
 
       if (couponCode.percentageDiscount) {
         calculatedDiscount = (eligiblePrice * (couponCode.percentageDiscount / 100)).toFixed(2);

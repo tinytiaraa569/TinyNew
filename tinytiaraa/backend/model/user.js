@@ -49,11 +49,11 @@ const userSchema = new mongoose.Schema({
   avatar: {
     public_id: {
       type: String,
-      required: false,
+      default: null 
     },
     url: {
       type: String,
-      required: false,
+      default: null 
     },
   },
   referralBalance: {

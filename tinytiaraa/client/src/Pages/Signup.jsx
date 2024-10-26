@@ -27,8 +27,8 @@ function Signup() {
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
-        if (file && file.size > 2 * 1024 * 1024) {  //2MB limit
-            toast.error("File size should be less than 2MB");
+        if (file && file.size > 8 * 1024 * 1024) {  //2MB limit
+            toast.error("File size should be less than 8MB");
             return;
         }
         const reader = new FileReader();
