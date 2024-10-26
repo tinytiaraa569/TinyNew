@@ -186,7 +186,7 @@ function Signup() {
 
                             <div>
                                 <label htmlFor="name" className='block text-[16px] font-medium text-[#2F2F2F] cursor-pointer'>
-                                    Full Name
+                                    Full Name <span className='text-red-500'>*</span>
                                 </label>
                                 <div className="mt-1 ">
                                     <input id='name' className=' respinpadjust appearance-none block w-[70%] px-3  py-2 border border-[#5DC2B0] rounded-[8px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm' type="text" name='fullname' autoComplete='fullname' required value={name} onChange={(e) => { setName(e.target.value) }} />
@@ -195,7 +195,7 @@ function Signup() {
 
                             <div>
                                 <label htmlFor="email" className='block text-[16px] font-medium text-[#2F2F2F] cursor-pointer'>
-                                    Email Address
+                                    Email Address <span className='text-red-500'>*</span>
                                 </label>
                                 <div className="mt-1">
                                     <input id='email' className=' respinpadjust appearance-none block w-[70%] px-3 py-2 border border-[#5DC2B0] rounded-[8px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm' type="email" name='email' autoComplete='email' required value={email} onChange={(e) => { setEmail(e.target.value) }} />
@@ -204,7 +204,7 @@ function Signup() {
 
                             <div>
                                 <label htmlFor="password" className='block text-[16px] font-medium text-[#2F2F2F] cursor-pointer'>
-                                    Password
+                                    Password <span className='text-red-500'>*</span> 
                                 </label>
                                 <div className="mt-1 relative w-[70%] respinpadjust">
                                     <input id='password' className=' appearance-none block w-[100%] px-3 py-2 border border-[#5DC2B0] rounded-[8px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm' type={visible ? "text" : "password"} name='password' autoComplete='current-password' required value={password} onChange={(e) => { setPassword(e.target.value) }} />
@@ -237,9 +237,10 @@ function Signup() {
                                         }
 
                                     </span>
-                                    <label htmlFor="file-input" className='ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'>
+                                    <label htmlFor="file-input" className='cursor-pointer ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'>
                                         <span>Uplaod a file</span>
                                         <input type="file" name='avatar' id='file-input' accept='.jpg,.jpeg,.png' onChange={handleFileInputChange} className='sr-only' />
+                                        <span className='text-xs text-gray-500 ml-2 italic'>(optional)</span>
                                     </label>
 
                                 </div>
