@@ -8,13 +8,14 @@ import './spinandwin.css';
 import { motion } from 'framer-motion';
 
 
+
 const data = [
   { option: '250Rs off', style: { backgroundColor: '#f0e68c', textColor: 'black' }, stop: 'max' ,couponCode:"Tinyspin250" },
   { option: '500Rs off', style: { backgroundColor: '#ffa500', textColor: 'black' }, stop: 'max' , couponCode:"Tiny500" },
   { option: '750Rs off', style: { backgroundColor: '#28a745', textColor: 'white' }, stop: '2%', couponCode:"Tinytiaraa750" },
   { option: '5% off', style: { backgroundColor: '#ff4500', textColor: 'white' }, stop: '2%' ,couponCode:"Tinyspin5" },
   { option: '10% off', style: { backgroundColor: '#8b0000', textColor: 'white' }, stop: 'never' ,couponCode:"Tiny10"},
-  { option: 'Free Gifts', style: { backgroundColor: '#1e90ff', textColor: 'white' }, stop: 'max',couponCode:"Kindly Take gifts from shop" },
+  { option: 'Free Gifts', style: { backgroundColor: '#1e90ff', textColor: 'white' }, stop: 'max',couponCode:"FreeGifts" },
   { option: 'Try Again', style: { backgroundColor: '#dc143c', textColor: 'white' }, stop: '2%' ,couponCode:"Try Your Luck Again"}
 ];
 
@@ -30,23 +31,53 @@ const initialWinners = [
   { name: 'Sam Wilson', option: '10% off' }
 ];
 // Winner Balloon component
-const WinnerBalloon = ({ name, option, floatDirection, onAnimationEnd }) => {
+const WinnerBalloon = ({ name, option, floatDirection, onAnimationEnd, index, isVisible }) => {
+  const delay = index * 0.7; // Adjust delay based on the index
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Check if the view is mobile (below 1080px) and also below 700px
+  const isMobileView = screenWidth < 1080;
+  const isHiddenView = screenWidth < 850;
   return (
-    <motion.div
-      className={`balloon ${floatDirection === 'left' ? 'bg-gradient-to-r from-blue-400 to-purple-500' : 'bg-gradient-to-r from-green-400 to-yellow-500'}`}
-      initial={{ opacity: 0, y: 0 }}
-      animate={{ opacity: 1, y: floatDirection === 'left' ? -300 : -300 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 2, ease: 'easeOut' }}
-      onAnimationComplete={onAnimationEnd} // Call onAnimationEnd
-      style={{
-        left: floatDirection === 'left' ? '5%' : '70%',
-        bottom: '0',
-        position: 'absolute',
-      }}
-    >
-      🎈 {name} won {option} 🎉
-    </motion.div>
+    isVisible && !isHiddenView && ( // Render the balloon only if isVisible is true
+      <motion.div
+        className={`balloon ${floatDirection === 'left' ? 'bg-gradient-to-r from-blue-400 to-purple-500' : 'bg-gradient-to-r from-green-400 to-yellow-500'}`}
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: -300 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 2, ease: 'easeOut', delay: delay }} // Apply the delay
+        onAnimationComplete={onAnimationEnd}
+        style={{
+          left: floatDirection === 'left' ? '5%' : '70%',
+          bottom: '0',
+          position: 'absolute',
+        }}
+      >
+        
+       {/** Conditional rendering based on screen width */}
+       {!isMobileView ? (
+          <div>
+            🎈 {name} won {option} 🎉
+          </div>
+        ) : (
+          <div>
+            <span className="block">{name}</span> {/* First line: Name */}
+            <span className="block !text-[18px]">{option}</span> {/* Second line: Option */}
+          </div>
+        )}
+      </motion.div>
+    )
   );
 };
 function SpinandWin() {
@@ -55,8 +86,47 @@ function SpinandWin() {
   const [userInfo, setUserInfo] = useState({ name: '', email: '', mobile: '' });
   const [showCongrats, setShowCongrats] = useState(false);
   const [couponCode, setCouponCode] = useState('');
-  const [winners, setWinners] = useState(initialWinners);
+  const [winners, setWinners] = useState([]);
+  const [visibleWinners, setVisibleWinners] = useState([]); // Initialize visibility state
 
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get(`${server}/spin/all/spin`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        });
+
+        console.log(response, "response");
+
+        const spins = response.data.spins || []; // Adjust according to your actual data structure
+
+        // Assuming 'data' is available in the scope where it contains option and couponCode
+        const matchedWinners = spins.map(spin => {
+          const matchedOption = data.find(item => item.couponCode === spin.couponCode);
+          return {
+            name: spin.name,
+            option: matchedOption ? matchedOption.option : null, // Set option if matched, else null
+          };
+        }).filter(winner => winner.option); // Filter out any entries that don't have a matched option
+  
+        setWinners(matchedWinners); // Update winners with matched values
+  
+        // Initialize visibility state based on fetched winners
+        setVisibleWinners(Array(matchedWinners.length).fill(true));
+      } catch (error) {
+        console.error('Error fetching requests:', error);
+        toast.error('Failed to fetch requests.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRequests();
+  }, []);
 
   const getWeightedPrizeNumber = () => {
     const weightedOptions = [];
@@ -129,25 +199,28 @@ function SpinandWin() {
     setShowCongrats(false); // Close the overlay after submission
   };
   const handleRemoveBalloon = (index) => {
-    // Update the state to remove the balloon directly
-    setWinners((prevWinners) => prevWinners.filter((_, i) => i !== index)); // Remove the specific winner
-    console.log(winners,"ballons")
+    setVisibleWinners((prevVisible) => {
+      const updated = [...prevVisible];
+      updated[index] = false; // Hide the balloon
+      return updated;
+    });
   };
   
   return (
     <div className="flex flex-col justify-center items-center h-auto">
-         {/* <div className="balloon  absolute flex flex-col items-center w-full h-80 space-y-4 ">
+         <div className="balloon  absolute flex flex-col items-center w-full h-80 space-y-4 ">
         {winners.map((winner, index) => (
         <WinnerBalloon
         key={index}
         name={winner.name}
         option={winner.option}
-        floatDirection={index % 2 === 0 ? 'left' : 'right'} // Alternate direction
-        delay={index * 1.5} // Staggered delay for each balloon
-        onAnimationEnd={() => handleRemoveBalloon(index)} // Call to remove the balloon after animation
-      />
+        floatDirection={index % 2 === 0 ? 'left' : 'right'}
+        onAnimationEnd={() => handleRemoveBalloon(index)}
+        index={index} // Pass the index to the WinnerBalloon
+        isVisible={visibleWinners[index]} // Pass the visibility state
+    />
         ))}
-      </div> */}
+      </div>
       <div className="p-1 rounded-lg">
         <h1 className="spinandwinheading text-[30px] font-bold text-center text-gray-800 mb-2">🎉 Spin and Win! 🎉</h1>
         <p className="spinandwinpara text-[18px] text-center text-gray-600 mb-2">🎊 Give it a whirl and unlock amazing prizes! 🎊</p>

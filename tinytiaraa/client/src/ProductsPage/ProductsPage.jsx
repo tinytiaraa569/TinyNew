@@ -1201,7 +1201,7 @@ const handleSubcatClick = (subcat) => {
 
                </>) :
               (<>
-              <p>No images available for this category.</p>
+              <p className="text-center">Loading your products, please wait...</p>
               </>)}
                 {/* Group images by collection and convert the result to an array */}
                 
