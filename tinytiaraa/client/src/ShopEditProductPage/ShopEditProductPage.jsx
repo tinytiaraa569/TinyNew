@@ -2566,12 +2566,14 @@ function ShopEditProductPage() {
                                                             >
                                                                 <img
                                                                     // src={image.url || image}
+                                                                    
                                                                     src={
                                                                         image.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
                                                                             ? image.url.replace(
                                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                 `${imgdburl}/uploads/images`
-                                                                            )
+                                                                            ): image.url.includes("base64")
+                                                                            ? `${image.url}`
                                                                             : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                                     }
                                                                     alt={`With Chain ${index}`}
@@ -2622,7 +2624,8 @@ function ShopEditProductPage() {
                                                                             ? image.url.replace(
                                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                 `${imgdburl}/uploads/images`
-                                                                            )
+                                                                            ): image.url.includes("base64")
+                                                                            ? `${image.url}`
                                                                             : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                                     }
                                                                     alt={`Without Chain ${index}`}
@@ -2676,7 +2679,8 @@ function ShopEditProductPage() {
                                                             ? image.url.replace(
                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                 `${imgdburl}/uploads/images`
-                                                            )
+                                                            ): image.url.includes("base64")
+                                                            ? `${image.url}`
                                                             : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                     }
                                                      alt={`With Chain ${index}`} />
@@ -2709,7 +2713,8 @@ function ShopEditProductPage() {
                                                             ? image.url.replace(
                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                 `${imgdburl}/uploads/images`
-                                                            )
+                                                            ): image.url.includes("base64")
+                                                            ? `${image.url}`
                                                             : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                     }
                                                     alt={`Without Chain ${index}`} />
@@ -2802,7 +2807,8 @@ function ShopEditProductPage() {
                                                                                 ? image.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): image.url.includes("base64")
+                                                                                ? `${image.url}`
                                                                                 : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Yellow Gold ${index}`}
@@ -2885,7 +2891,8 @@ function ShopEditProductPage() {
                                                                                 ? image.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): image.url.includes("base64")
+                                                                                ? `${image.url}`
                                                                                 : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Rose Gold ${index}`}
@@ -2968,7 +2975,8 @@ function ShopEditProductPage() {
                                                                                 ? image.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): image.url.includes("base64")
+                                                                                ? `${image.url}`
                                                                                 : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With White Gold ${index}`}
@@ -3019,12 +3027,14 @@ function ShopEditProductPage() {
                                                 <td className='px-4 py-2'>
                                                     <img className='h-[80px] w-[80px] object-cover' 
                                                     // src={i.url || i}
+                                                    
                                                     src={
                                                         i.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
                                                             ? i.url.replace(
                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                 `${imgdburl}/uploads/images`
-                                                            )
+                                                            ): i.url.includes("base64")
+                                                            ? `${i.url}`
                                                             : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                     }
                                                     
@@ -3061,7 +3071,8 @@ function ShopEditProductPage() {
                                                             ? i.url.replace(
                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                 `${imgdburl}/uploads/images`
-                                                            )
+                                                            ): i.url.includes("base64")
+                                                            ? `${i.url}`
                                                             : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                     }
                                                       alt="" />
@@ -3097,7 +3108,8 @@ function ShopEditProductPage() {
                                                             ? i.url.replace(
                                                                 /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                 `${imgdburl}/uploads/images`
-                                                            )
+                                                            ): i.url.includes("base64")
+                                                            ? `${i.url}`
                                                             : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                     }
                                                       alt="" />
@@ -3177,7 +3189,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3247,7 +3260,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -3315,7 +3329,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -3416,7 +3431,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3480,7 +3496,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3544,7 +3561,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3641,7 +3659,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3704,7 +3723,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -3767,7 +3787,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -3866,7 +3887,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -3929,7 +3951,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -3992,7 +4015,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -4089,7 +4113,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Yellow Gold ${i}`}
@@ -4152,7 +4177,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -4215,7 +4241,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -4312,7 +4339,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -4375,7 +4403,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -4438,7 +4467,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -4534,7 +4564,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`With Chain ${i}`}
@@ -4597,7 +4628,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`Rose Gold ${i}`}
@@ -4660,7 +4692,8 @@ function ShopEditProductPage() {
                                                                                 ? i.url.replace(
                                                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                                                     `${imgdburl}/uploads/images`
-                                                                                )
+                                                                                ): i.url.includes("base64")
+                                                                                ? `${i.url}`
                                                                                 : `${imgdburl}${i.url}` // Prepend imgdburl if not Cloudinary
                                                                         }
                                                                         alt={`White Gold ${i}`}
@@ -4983,7 +5016,8 @@ function ShopEditProductPage() {
                                                 ? image.url.replace(
                                                     /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
                                                     `${imgdburl}/uploads/images`
-                                                )
+                                                ): image.url.includes("base64")
+                                                ? `${image.url}`
                                                 : `${imgdburl}${image.url}` // Prepend imgdburl if not Cloudinary
                                         }
                                         alt=""

@@ -1119,8 +1119,10 @@ const handleSubcatClick = (subcat) => {
               
               
               <div className="mt-6">
-                {/* Group images by collection and convert the result to an array */}
-                {Object.entries(
+
+              { selectedCategory?.extraimgurl && Array.isArray(selectedCategory.extraimgurl) && selectedCategory.extraimgurl.length > 0 ?
+               (<>
+               {Object.entries(
                   selectedCategory?.extraimgurl?.reduce((acc, image) => {
                     // If the collection doesn't exist in the accumulator, add it
                     if (!acc[image.collection]) {
@@ -1196,6 +1198,13 @@ const handleSubcatClick = (subcat) => {
                     </div>
                   </div>
                 ))}
+
+               </>) :
+              (<>
+              <p>No images available for this category.</p>
+              </>)}
+                {/* Group images by collection and convert the result to an array */}
+                
               </div>
             </>
             

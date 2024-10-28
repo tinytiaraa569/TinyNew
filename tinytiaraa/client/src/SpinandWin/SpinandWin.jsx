@@ -4,7 +4,8 @@ import { FaTrophy } from 'react-icons/fa';
 import { IoIosClose } from "react-icons/io";
 import axios from 'axios';
 import { server } from '@/server';
-import './spinandwin.css'
+import './spinandwin.css';
+import { motion } from 'framer-motion';
 
 
 const data = [
@@ -22,13 +23,40 @@ const probabilityMap = {
   '2%': 1,
   never: 0
 };
-
+// Dummy data for winners
+const initialWinners = [
+  { name: 'John Doe', option: '250Rs off' },
+  { name: 'Jane Smith', option: 'Free Gifts' },
+  { name: 'Sam Wilson', option: '10% off' }
+];
+// Winner Balloon component
+const WinnerBalloon = ({ name, option, floatDirection, onAnimationEnd }) => {
+  return (
+    <motion.div
+      className={`balloon ${floatDirection === 'left' ? 'bg-gradient-to-r from-blue-400 to-purple-500' : 'bg-gradient-to-r from-green-400 to-yellow-500'}`}
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: floatDirection === 'left' ? -300 : -300 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 2, ease: 'easeOut' }}
+      onAnimationComplete={onAnimationEnd} // Call onAnimationEnd
+      style={{
+        left: floatDirection === 'left' ? '5%' : '70%',
+        bottom: '0',
+        position: 'absolute',
+      }}
+    >
+      🎈 {name} won {option} 🎉
+    </motion.div>
+  );
+};
 function SpinandWin() {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [userInfo, setUserInfo] = useState({ name: '', email: '', mobile: '' });
   const [showCongrats, setShowCongrats] = useState(false);
   const [couponCode, setCouponCode] = useState('');
+  const [winners, setWinners] = useState(initialWinners);
+
 
   const getWeightedPrizeNumber = () => {
     const weightedOptions = [];
@@ -60,6 +88,13 @@ function SpinandWin() {
     setMustSpin(false);
     setShowCongrats(true); // Open the congratulations overlay
     setCouponCode(data[prizeNumber].couponCode); // Set the correct coupon code
+
+     // Add new winner
+     const newWinner = {
+      name: userInfo.name || 'Anonymous',
+      option: data[prizeNumber].option
+    };
+    setWinners((prevWinners) => [...prevWinners, newWinner]);
   };
 
   const handleInputChange = (e) => {
@@ -93,9 +128,26 @@ function SpinandWin() {
     setUserInfo({ name: '', email: '', mobile: '' }); // Reset user info
     setShowCongrats(false); // Close the overlay after submission
   };
-
+  const handleRemoveBalloon = (index) => {
+    // Update the state to remove the balloon directly
+    setWinners((prevWinners) => prevWinners.filter((_, i) => i !== index)); // Remove the specific winner
+    console.log(winners,"ballons")
+  };
+  
   return (
     <div className="flex flex-col justify-center items-center h-auto">
+         {/* <div className="balloon  absolute flex flex-col items-center w-full h-80 space-y-4 ">
+        {winners.map((winner, index) => (
+        <WinnerBalloon
+        key={index}
+        name={winner.name}
+        option={winner.option}
+        floatDirection={index % 2 === 0 ? 'left' : 'right'} // Alternate direction
+        delay={index * 1.5} // Staggered delay for each balloon
+        onAnimationEnd={() => handleRemoveBalloon(index)} // Call to remove the balloon after animation
+      />
+        ))}
+      </div> */}
       <div className="p-1 rounded-lg">
         <h1 className="spinandwinheading text-[30px] font-bold text-center text-gray-800 mb-2">🎉 Spin and Win! 🎉</h1>
         <p className="spinandwinpara text-[18px] text-center text-gray-600 mb-2">🎊 Give it a whirl and unlock amazing prizes! 🎊</p>

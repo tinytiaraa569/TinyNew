@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "country-state-city": "^3.2.1",
     "crypto-js": "^4.2.0",
+    "framer-motion": "^11.11.10",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
     "jquery": "^3.7.1",

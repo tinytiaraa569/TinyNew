@@ -30,6 +30,7 @@ const sendOrder = async (options) => {
     const mailOptions = {
         from: process.env.SMPT_MAIL,
         to: options.email,
+        cc: options.cc,
         subject: options.subject,
         html: options.html,
     };

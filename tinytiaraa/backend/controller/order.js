@@ -1357,7 +1357,8 @@ router.post(
                 await sendOrder({
                     email: user ? user.email : shippingAddress.email,
                     subject: "Order Confirmation mail",
-                    html: htmlContent
+                    html: htmlContent,
+                     cc: "orders@tinytiaraa.com"
 
                 })
 
@@ -2322,6 +2323,8 @@ router.put("/update-order-status/:id", isSeller, catchAsyncErrors(async (req, re
                 email: order.shippingAddress?.email, // Assuming you have the user's email in order object
                 subject: "Your Order Has Been Shipped",
                 html: htmlContent,
+                cc: "orders@tinytiaraa.com"
+
             });
         }
 
@@ -3118,6 +3121,8 @@ ${order.cart.map(item => `
                 email: order.shippingAddress?.email, // Assuming you have the user's email in order object
                 subject: "Your Order Has Been Delivered",
                 html: htmlContentDelivered,
+                cc: "orders@tinytiaraa.com"
+
             });
 
         }

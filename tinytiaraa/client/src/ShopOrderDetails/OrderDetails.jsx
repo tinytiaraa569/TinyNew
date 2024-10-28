@@ -461,7 +461,9 @@ function OrderDetails() {
 
 
             <div className='border-t w-full text-right mb-5'>
+                <h5 className='pt-3 text-[15px]'>Coupon Discount :- <strong>{data?.couponDiscount ? `₹ ${data?.couponDiscount}`  : "No Coupon Applied" }</strong></h5>
                 <h5 className='pt-3 text-[18px]'>Total Price : <strong>₹{data?.totalPrice}</strong> </h5>
+
             </div>
 
             <div className="w-full flex justify-between items-center mb-5">
