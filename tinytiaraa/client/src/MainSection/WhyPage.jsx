@@ -10,7 +10,13 @@ import img7 from './whyimages/img7.svg'
 import { BiSolidCheckShield } from 'react-icons/bi'
 
 
+// <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/t7yyf96moetz77k1xd2q.webp" alt="" />
+//           <img  loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/vlpi0c0br3sgyb0evfzt.svg" alt="" />
+//           <img  loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/w3ch9irup1m4flpyfll1.svg" alt="" className='object-contain'/>
+//           <img  loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/yzyhxaclamwrl8nx2hmj.svg" alt="" />
+//           <img  loading='lazy'  src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/ojnoilbzdykmn3yh7wa8.svg" alt="" />
 
+//           <img  loading='lazy'  src="https://backend.tinytiaraa.com:8000/uploads/images/whypageicon/pqgeij2csqbbiwe6rhhy.svg" alt="" />
 
 function WhyPage() {
   return (
@@ -22,7 +28,7 @@ function WhyPage() {
 
       <div className='whypiconcon'>
         <div className='whypiconconflex'>
-          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728383076/whypageicon/t7yyf96moetz77k1xd2q.webp" alt="" />
+          <img loading='lazy' src={img1} alt="" />
 
           <div>
             <h6>Hypoallergenic Materials</h6>
@@ -30,7 +36,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728573852/whypageicon/vlpi0c0br3sgyb0evfzt.svg" alt="" />
+          <img  loading='lazy' src={img2} alt="" />
 
           <div>
             <h6>SGL Certified Jewelry</h6>
@@ -38,7 +44,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1729156466/whypageicon/w3ch9irup1m4flpyfll1.svg" alt="" className='object-contain'/>
+          <img  loading='lazy' src={img3} alt="" className='object-contain'/>
 
           <div>
             <h6>Crafted with Love</h6>
@@ -46,7 +52,7 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628481/whypageicon/yzyhxaclamwrl8nx2hmj.svg" alt="" />
+          <img  loading='lazy' src={img4} alt="" />
 
           <div>
             <h6>Customizable Options</h6>
@@ -64,14 +70,14 @@ function WhyPage() {
         </div>
 
         <div className='whypiconconflex'>
-          <img  loading='lazy'  src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628532/whypageicon/ojnoilbzdykmn3yh7wa8.svg" alt="" />
+          <img  loading='lazy'  src={img6} alt="" />
 
           <div>
             <h6>Age-Appropriate Styles</h6>
           </div>
         </div>
         <div className='whypiconconflex'>
-          <img  loading='lazy'  src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728628561/whypageicon/pqgeij2csqbbiwe6rhhy.svg" alt="" />
+          <img  loading='lazy'  src={img7} alt="" />
 
           <div>
             <h6>Free Delivery Services</h6>

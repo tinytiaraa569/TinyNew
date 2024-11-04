@@ -18,7 +18,7 @@ function Footer() {
 
             <div className='footer'>
                 <div className="footerone">
-                    <img src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" onClick={()=>navigate('/') } />
+                    <img src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" onClick={()=>navigate('/') } />
                 </div>
                 <div className="footertwo">
                     <h4 className='footerheading'>LOCATE US</h4>

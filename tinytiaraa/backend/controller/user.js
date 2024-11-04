@@ -11,7 +11,42 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const sendToken = require('../utils/jwtToken')
 const { isAuthenticated } = require('../middleware/auth')
 const cloudinary = require("cloudinary");
+const crypto = require('crypto');
 
+// Function to generate a unique ID for image names
+const generateRandomString = (length) => {
+    return crypto.randomBytes(length).toString('hex').slice(0, length);
+};
+
+// Function to process base64 images and store them locally
+const processBase64Images = (imageArray, imageLinksArray) => {
+    for (let i = 0; i < imageArray.length; i++) {
+        const base64Image = imageArray[i];
+        const matches = base64Image.match(/^data:(.+);base64,(.+)$/);
+        if (!matches) {
+            console.error('Invalid image format:', base64Image);
+            continue;
+        }
+
+        const mimeType = matches[1];
+        const base64Data = matches[2];
+        const extension = mimeType.split('/')[1]; // e.g., 'png', 'jpeg'
+        const imageBuffer = Buffer.from(base64Data, 'base64');
+
+        const uniqueId = generateRandomString(20);
+        const publicId = `products/${uniqueId}`;
+        const imagePath = path.join(__dirname, '../uploads/images/products', `${uniqueId}.${extension}`);
+
+        // Save image to local file system
+        fs.writeFileSync(imagePath, imageBuffer);
+
+        // Add the image data to the array
+        imageLinksArray.push({
+            public_id: publicId,
+            url: `/uploads/images/products/${uniqueId}.${extension}`
+        });
+    }
+};
 
 router.post("/create-user", async (req, res, next) => {
     try {
@@ -46,13 +81,9 @@ router.post("/create-user", async (req, res, next) => {
 
          // If avatar is provided, upload to Cloudinary
          if (avatar) {
-            const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-                folder: "avatars",
-            });
-            avatarData = {
-                public_id: myCloud.public_id,
-                url: myCloud.secure_url,
-            };
+            const avatarLinks = [];
+            processBase64Images([avatar], avatarLinks); // Convert avatar to local storage format
+            avatarData = avatarLinks[0] || avatarData; // Use the processed image if available
         }
 
 

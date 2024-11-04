@@ -241,7 +241,7 @@ function SpinandWin() {
                
           />
            <img 
-            src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" 
+            src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/pgqpod1dbwdxo4kudbjl.webp" 
             alt="Center Image" 
             className="adjustspnimg absolute inset-0 mx-auto my-auto w-16 h-16" // Adjust width and height as needed
             style={{ top: '15%', left: '14%', transform: 'translate(-50%, -50%)' ,zIndex:"49"}} // Center the image

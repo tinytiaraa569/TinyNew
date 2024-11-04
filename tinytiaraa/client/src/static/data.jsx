@@ -33,7 +33,7 @@ export const categoriesData = [
     id: 1,
     title: "Diamond Earrings",
     subTitle: "",
-    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728233441/homecategory/uibyrfneap5pipa9xfbd.webp",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/homecategory/uibyrfneap5pipa9xfbd.webp",
     productbanner: earringbanner,
     image_Url:
       "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320772799.png",
@@ -48,10 +48,10 @@ export const categoriesData = [
     id: 2,
     title: "Diamond Pendants",
     subcategories: [
-      { name: "Alphabet" , imageUrl:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1724665551/products/yktdqyyf8uq36roltwtk.png" },
-      { name: "Numeric" , imageUrl:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1724490065/products/i5phtsnxz7l5bcb1rkfr.png" },
+      { name: "Alphabet" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/yktdqyyf8uq36roltwtk.png" },
+      { name: "Numeric" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/i5phtsnxz7l5bcb1rkfr.png" },
       // { name: "religious" },
-      { name: "Generic" ,imageUrl : 'https://res.cloudinary.com/ddaef5aw1/image/upload/v1725259902/products/hqyu0qmdqpids34pnvuf.png' },
+      { name: "Generic" ,imageUrl : 'https://backend.tinytiaraa.com:8000/uploads/images/products/hqyu0qmdqpids34pnvuf.png' },
 
 
     ],
@@ -91,7 +91,7 @@ export const categoriesData = [
     id: 4,
     title: "Diamond Black Bead Bracelets",
     subTitle: "",
-    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728039131/jgruybidtzxt0brpc6eo.jpg",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/jgruybidtzxt0brpc6eo.jpg",
     productbanner: braceletsbanner,
     
     image_Url:
@@ -157,9 +157,9 @@ export const categoriesData = [
   {
     id: 9,
     title: "kids accessories",
-    bannerimg: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728128636/omojkqjm5kuwohjaswsy.jpg",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/omojkqjm5kuwohjaswsy.jpg",
 
-    productbanner: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1728372366/hchxwiyvrtmfehtjjdwv.jpg",
+    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/products/hchxwiyvrtmfehtjjdwv.jpg",
 
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
@@ -193,33 +193,33 @@ export const categoriesData = [
       { name: "No Products" },
     ],
     extracat:[
-      {catname:"Bangles",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728466023/subcat/bje3a3du6ghi67cp5bzs.png"},
-      {catname:"Hoops",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/rwppnecx5mrgdlg7iyy1.png"},
-      {catname:"PearlPendant",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/vdzctlcyhogvdbozxxye.png"},
-      {catname:"SetPendant",catimg:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728470595/subcat/keuchtg5y2wwznmzqxvf.png"},
+      {catname:"Bangles",catimg:"https://backend.tinytiaraa.com:8000/uploads/images/subcat/bje3a3du6ghi67cp5bzs.png"},
+      {catname:"Hoops",catimg:"https://backend.tinytiaraa.com:8000/uploads/images/subcat/rwppnecx5mrgdlg7iyy1.png"},
+      {catname:"PearlPendant",catimg:"https://backend.tinytiaraa.com:8000/uploads/images/subcat/vdzctlcyhogvdbozxxye.png"},
+      {catname:"SetPendant",catimg:"https://backend.tinytiaraa.com:8000/uploads/images/subcat/keuchtg5y2wwznmzqxvf.png"},
     ],
     extraimgurl:[
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932271/mom%20and%20me/qqcsa7s4yuqsagyirybf.png", collection:"Mom And Me Collection", subcat:"Hoops"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930094/mom%20and%20me/o5xrkryyeqfiyduj528j.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727930020/mom%20and%20me/soeeeh3sjnzryg9dmj9c.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932243/mom%20and%20me/dt2avtp4bqsisu4zxuk5.png", collection:"Mom And Me Collection", subcat:"Hoops"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932187/mom%20and%20me/df5eyj4erpqaijndoipj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/tztqfgld6hpnvxstnoxj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/qqcsa7s4yuqsagyirybf.png", collection:"Mom And Me Collection", subcat:"Hoops"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/o5xrkryyeqfiyduj528j.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/soeeeh3sjnzryg9dmj9c.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/dt2avtp4bqsisu4zxuk5.png", collection:"Mom And Me Collection", subcat:"Hoops"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/df5eyj4erpqaijndoipj.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/mgzm213yws42octzkjyl.png", collection:"Mom And Me Collection", subcat:"SetPendant"},
 
 
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474476/mom%20and%20me/eyckztgyviclkduvsnf4.png", collection:"Mom And Me Collection", subcat:"Hoops"},
-
-      
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728472894/mom%20and%20me/qeahgvk4nich337yldqx.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474083/mom%20and%20me/b9jmmadfiriqmgrs3xul.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474099/mom%20and%20me/xjqmy2m4wj6vzer8nasq.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
-
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/eyckztgyviclkduvsnf4.png", collection:"Mom And Me Collection", subcat:"Hoops"},
 
       
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474357/mom%20and%20me/muqqtz5sluoevmosqrwj.png", collection:"Mom And Me Collection", subcat:"Bangles"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474376/mom%20and%20me/liozhflrettlya85l5zk.png", collection:"Mom And Me Collection", subcat:"Bangles"},
-      {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728474401/mom%20and%20me/y5a982bpe571lww8wzxb.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/qeahgvk4nich337yldqx.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/b9jmmadfiriqmgrs3xul.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/xjqmy2m4wj6vzer8nasq.png", collection:"Mom And Me Collection", subcat:"PearlPendant"},
+
+
+      
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/muqqtz5sluoevmosqrwj.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/liozhflrettlya85l5zk.png", collection:"Mom And Me Collection", subcat:"Bangles"},
+      {url:"https://backend.tinytiaraa.com:8000/uploads/images/mom%20and%20me/y5a982bpe571lww8wzxb.png", collection:"Mom And Me Collection", subcat:"Bangles"},
 
 
 

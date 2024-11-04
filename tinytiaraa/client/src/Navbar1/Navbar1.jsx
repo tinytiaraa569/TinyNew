@@ -480,7 +480,7 @@ function Navbar1() {
 
                         <div>
                             <div className="logo py-1" onClick={() => navigate("/")}>
-                                <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
+                                <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
                             </div>
                         </div>
 
@@ -686,7 +686,7 @@ function Navbar1() {
                         setbars(false)
                         navigate("/")
                     }} >
-                        <img loading='lazy' className='w-[150px] h-[60px] object-contain' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728540659/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
+                        <img loading='lazy' className='w-[150px] h-[60px] object-contain' src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/pgqpod1dbwdxo4kudbjl.webp" alt="" />
                     </div>
 
                     <div>

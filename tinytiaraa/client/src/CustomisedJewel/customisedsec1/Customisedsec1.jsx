@@ -15,7 +15,7 @@ function Customisedsec1() {
 
     <div>
       <div className="slidersec sliderseccustom">
-        <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728373959/custombanner/dsnfxccnwbqplfiinopd.webp" alt="First Slide" />
+        <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/custombanner/dsnfxccnwbqplfiinopd.webp" alt="Banner promoting customizable jewelry designs for children by Tiny Tiaraa"  />
 
         <div className="text-overlay">
           <h1>Customize Your Own Masterpiece</h1>

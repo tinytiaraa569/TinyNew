@@ -15,7 +15,7 @@ function Aboutwho() {
     // </div>
 
     <div className="slidersec">
-          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728283528/aboutbanners/pl2slesgelhgx2uemsb3.webp" alt="First Slide" />
+          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/products/pl2slesgelhgx2uemsb3.webp"  alt="Tiny Tiaraa's kids' jewelry banner showcasing elegant designs for children"  />
         </div>
   )
 }

@@ -102,10 +102,10 @@ function SliderSection() {
           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/lsuewidepylphulztw7t.webp" alt="Slider Six" />
         </div>
         <div className="slidersec cursor-pointer">
-          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/czo3frgxqtg7yaovwrga" alt="Slider Six" />
+          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/czo3frgxqtg7yaovwrga.webp" alt="Slider Six" />
         </div>
         <div className="slidersec cursor-pointer">
-          <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1729242754/slidersbanner/biysca21wcpzrvyrbjbc.webp" alt="Third Slide" />
+          <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/biysca21wcpzrvyrbjbc.webp" alt="Third Slide" />
         </div>
 
 

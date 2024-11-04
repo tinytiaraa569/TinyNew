@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { server } from '@/server';
+import * as XLSX from 'xlsx';
+import { FaFileExcel } from 'react-icons/fa'; 
 
 function AllSpin() {
     const [requests, setRequests] = useState([]);
@@ -50,9 +52,28 @@ function AllSpin() {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+    const exportToExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(requests);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Spin Requests');
+
+        // Generate Excel file and prompt download
+        XLSX.writeFile(workbook, 'spin_requests.xlsx');
+    };
+
     return (
         <div className="p-4 w-[90%]">
             <h1 className="text-xl font-bold mb-4 text-center mt-2">All Spin Requests</h1>
+            <div className='flex justify-end'>
+
+            <button
+                onClick={exportToExcel}
+                className="mb-4 flex items-center px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
+                >
+                <FaFileExcel className="mr-2" /> {/* Add the export icon */}
+                Export to Excel
+            </button>
+            </div>
             {loading ? (
                 <p>Loading...</p>
             ) : (

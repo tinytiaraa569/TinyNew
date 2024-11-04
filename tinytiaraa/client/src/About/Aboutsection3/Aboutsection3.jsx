@@ -34,7 +34,7 @@ function Aboutsection3() {
                     </div>
 
                     <div className="founderimg" onContextMenu={(e) => e.preventDefault()} >
-                        <img loading='lazy' src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1728383544/aboutbanners/ul1cjxxwycebfjbz619h.webp" alt="Rashmi Jain - Founder" />
+                        <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/products/ul1cjxxwycebfjbz619h.webp" alt="Rashmi Jain - Founder" />
                     </div>
                 </div>
             </div>

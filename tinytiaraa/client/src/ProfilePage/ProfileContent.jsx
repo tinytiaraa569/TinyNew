@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { backend_url, server } from '../server'
+import { backend_url, imgdburl, server } from '../server'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineCamera, AiOutlineArrowRight, AiOutlineDelete } from 'react-icons/ai'
 import styles from '../Styles/styles'
@@ -16,7 +16,7 @@ import { RxCross1 } from 'react-icons/rx'
 import { Country, State } from 'country-state-city'
 import { getAllOrdersOfUser } from '@/redux/actions/order'
 import ReferralComponent from '@/Refer/ReferralComponent'
-
+import { FaRegUser } from "react-icons/fa";
 
 function ProfileContent({ active, setActive }) {
     const { user, error, successMessage } = useSelector((state) => state.user)
@@ -51,56 +51,32 @@ function ProfileContent({ active, setActive }) {
 
     }
 
-    // const handleImage = async (e) => {
-    //     const files = e.target.files[0]
-    //     setAvatar(files)
-
-
-    //     const formData = new FormData()
-    //     formData.append("image", e.target.files[0])
-
-    //     await axios.put(`${server}/user/update-avatar`, formData, {
-    //         headers: {
-    //             "Content-Type": "multipart/form-data"
-    //         },
-    //         withCredentials: true
-    //     }).then((response) => {
-    //         dispatch(loadUser())
-    //         toast.success("Picture Updated Successfully")
-    //     }).catch((error) => {
-    //         console.log(error)
-
-    //     })
-
-
-    // }
-
     const handleImage = async (e) => {
-        const reader = new FileReader();
+        const files = e.target.files[0]
+        setAvatar(files)
+
+
+        const formData = new FormData()
+        formData.append("image", e.target.files[0])
+
+        await axios.put(`${server}/user/update-avatar`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true
+        }).then((response) => {
+            dispatch(loadUser())
+            toast.success("Picture Updated Successfully")
+        }).catch((error) => {
+            console.log(error)
+
+        })
+
+
+    }
+
+
     
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setAvatar(reader.result);
-            axios
-              .put(
-                `${server}/user/update-avatar`,
-                { avatar: reader.result },
-                {
-                  withCredentials: true,
-                }
-              )
-              .then((response) => {
-                dispatch(loadUser());
-                toast.success("avatar updated successfully!");
-              })
-              .catch((error) => {
-                toast.error(error);
-              });
-          }
-        };
-    
-        reader.readAsDataURL(e.target.files[0]);
-      };
 
 
 
@@ -113,7 +89,25 @@ function ProfileContent({ active, setActive }) {
                     <>
                         <div className='flex justify-center w-full pb-6'>
                             <div className="relative">
-                                <img src={`${user?.avatar?.url}`} alt="" className='w-[130px] h-[130px] rounded-full object-fill border-[3px] border-[#60acdf]' />
+                                {/* <img src={`${user?.avatar?.url}`} alt="" className='w-[130px] h-[130px] rounded-full object-fill border-[3px] border-[#60acdf]' /> */}
+                                {user?.avatar?.url !== null ? 
+                                (
+                                    <img
+                                    src={
+                                        user?.avatar?.url?.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                                            ? user.avatar.url.replace(
+                                                /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                                                `${imgdburl}/uploads/images/products`
+                                            )
+                                            : `${imgdburl}${user.avatar.url}` // Prepend imgdburl if not Cloudinary
+                                    }
+                                    alt="User Avatar"
+                                    className="w-[130px] h-[130px] rounded-full object-fill border-[3px] border-[#60acdf]"
+                                />
+                                )
+                             :
+                             <FaRegUser className="w-[130px] h-[130px] text-gray-500 border-[3px] border-[#60acdf] rounded-full p-1" />
+                             }
 
                                 <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]">
                                     <input
