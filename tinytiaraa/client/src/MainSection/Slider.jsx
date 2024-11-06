@@ -83,45 +83,45 @@ function SliderSection() {
     ],
   };
   const navigate = useNavigate()
-  useEffect(() => {
-    axios
-      .get(`${server}/get-allbanners`)  // Your API endpoint
-      .then(response => {
-        if (response.data.success) {
-          const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
-          setBanners(sortedBanners); // Set the banner data
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching banners:', error);
-      });
-  }, []);
-  console.log(banners,"baners data")
+  // useEffect(() => {
+  //   axios
+  //     .get(`${server}/get-allbanners`)  // Your API endpoint
+  //     .then(response => {
+  //       if (response.data.success) {
+  //         const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
+  //         setBanners(sortedBanners); // Set the banner data
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching banners:', error);
+  //     });
+  // }, []);
+  // console.log(banners,"baners data")
   return (
     <>
       <Slider {...settings}>
 
-      {banners?.map((banner) => (
+      {/* {banners?.map((banner) => (
         <div key={banner._id} className="slidersec cursor-pointer">
           {/* Check if there's a link and navigate to it */}
-          <img
+          {/* <img
             loading="lazy"
             src={`${imgdburl}${banner.images[0].url}`} // Dynamically construct the image URL
             alt={banner.title}
             // onClick={() => banner.link && navigate(`/${banner.link}`)} // Navigate to link if it exists
           />
-        </div>
-      ))}
-        {/* <div className="slidersec cursor-pointer" >
+        </div> */}
+      {/* ))} */} 
+        <div className="slidersec cursor-pointer" >
         
           <img  src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp" alt="First Slide" />
-        </div> */}
+        </div>
 
         {/* <div className="slidersec cursor-pointer">
           <img loading='lazy' src={diwalioffer} alt="Slider Six" />
         </div> */}
         {/* bannner with web */}
-        {/* <div className="slidersec cursor-pointer" >
+        <div className="slidersec cursor-pointer" >
           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/snfilzvqmzpj83ck2kmp.webp" alt="Third Slide" />
         </div>
         <div className="slidersec cursor-pointer">
@@ -132,7 +132,7 @@ function SliderSection() {
         </div>
         <div className="slidersec cursor-pointer">
           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/biysca21wcpzrvyrbjbc.webp" alt="Third Slide" />
-        </div> */}
+        </div>
 
 
         {/* <div className="slidersec cursor-pointer" >
