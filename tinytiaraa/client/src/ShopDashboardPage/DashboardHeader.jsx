@@ -36,7 +36,7 @@ function DashboardHeader() {
                 <Link to="/dashboard-message">
                     <BiMessageSquareDetail  color='#555' size={30} className='mx-5 cursor-pointer'/>
                 </Link> */}
-                <Link to={`/admin-manage/${seller._id}`}>
+                <Link to={`/admin-manage/${seller?._id}`}>
                 <FaUserCircle  color='#555' size={30} className='mx-5 cursor-pointer'/>
                 </Link>
 

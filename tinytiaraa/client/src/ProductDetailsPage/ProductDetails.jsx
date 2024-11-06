@@ -1674,9 +1674,9 @@ function ProductDetails({ data }) {
                                             </>
                                         )}
                                     </div> */}
+{/* workign code  */}
 
-
-                                    {
+                                    {/* {
                                         shouldShowMetalColors && (
                                             <div className='metaloptionproduct'>
                                                 {Object.keys(data.MetalColor).length > 0 && (
@@ -1717,7 +1717,60 @@ function ProductDetails({ data }) {
                                             </div>
 
                                         )
-                                    }
+                                    } */}
+{/* workign code  */}
+            {
+                shouldShowMetalColors && (
+                    <div className='metaloptionproduct'>
+                        {Object.keys(data.MetalColor).length > 0 && (
+                            <>
+                                <div className='metaltitle'>
+                                    <h3>Metal Color :</h3>
+                                </div>
+                                <div className='metalmaincolor'>
+                                    {['YellowGoldclr', 'RoseGoldclr', 'WhiteGoldclr'].map((key, index) => {
+                                        // Check if the color exists and has images
+                                        const images = data.MetalColor[key] || [];
+                                        const hasImages = images.length > 0;
+
+                                        // If the color has no images, return null
+                                        if (!hasImages) {
+                                            return null;
+                                        }
+
+                                        // Remove "clr" from the end of the color name
+                                        const label = key.replace(/clr$/i, '');
+                                        const isSelected = selectedColor === index; // Compare with fixed index
+
+                                        return (
+                                            <div key={key} className={`metalcolor ${isSelected ? 'selected' : ''}`}>
+                                                <input
+                                                    type="radio"
+                                                    name='colorcode'
+                                                    id={`color-${key}`}
+                                                    value={key}
+                                                    checked={isSelected}
+                                                    onChange={() => handleColorChange(index)} // Use fixed index for selection
+                                                    className='hidden' // Hide the default radio button
+                                                />
+                                                <label
+                                                    htmlFor={`color-${key}`}
+                                                    className='flex items-center flex-col cursor-pointer'
+                                                >
+                                                    <span className={`metalcolorcon ${key} ${isSelected ? 'selected' : ''}`}></span>
+                                                    <span className='ml-2'>{label}</span>
+                                                </label>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )
+            }
+
+
 
 
                                     {/* enamel option */}

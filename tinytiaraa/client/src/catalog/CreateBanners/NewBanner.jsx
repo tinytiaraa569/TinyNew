@@ -5,35 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DashboardHeader from '@/ShopDashboardPage/DashboardHeader';
 import DashboardSideBar from '@/ShopDashboardPage/DashboardSideBar';
 import { IoMdArrowRoundBack } from "react-icons/io";
-
-// Sample data
-const data = [
-    {
-        id: 1,
-        title: "Summer Sale Banner",
-        link: "/summer-sale",
-        imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239445/slidersbanner/upglf2ndz3cgbfhnsgbk.webp",
-        selected: false,
-    },
-    {
-        id: 2,
-        title: "Winter Sale Banner",
-        link: "/winter-sale",
-        imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239665/slidersbanner/snfilzvqmzpj83ck2kmp.webp",
-        selected: false,
-    },
-    {
-        id: 3,
-        title: "New Arrivals Banner",
-        link: "/new-arrivals",
-        imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/czo3frgxqtg7yaovwrga",
-        selected: false,
-    },
-];
+import axios from 'axios'; // Import axios for API requests
+import { imgdburl, server } from '@/server';
+import swal from 'sweetalert';
 
 function NewBanner() {
     const navigate = useNavigate();
-    const { id } = useParams(); // Get the banner ID from the URL
+    const { id } = useParams();
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
     const [images, setImages] = useState([]);
@@ -42,18 +20,27 @@ function NewBanner() {
     const fileInputRef = useRef(null);
 
     useEffect(() => {
-        // If an ID is provided, fetch the banner data to pre-fill the form
+        window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch banner or a single banner by ID dynamically
+    useEffect(() => {
         if (id) {
-            const banner = data.find(b => b.id === parseInt(id));
-            if (banner) {
-                setTitle(banner.title);
-                setLink(banner.link);
-                setImages([{ file: null, preview: banner.imageUrl }]); // Set the image for preview
-            }
+            // Fetch a specific banner by ID
+            axios.get(`${server}/get-banner/${id}`)
+                .then((response) => {
+                    const banner = response.data.banner;
+                    setTitle(banner.title);
+                    setLink(banner.link);
+                    setImages(banner.images);
+                })
+                .catch((error) => {
+                    console.error('Error fetching banner by ID:', error);
+                    setErrors({ fetchError: 'Could not fetch banner details' });
+                });
         }
     }, [id]);
 
-    // Handle drag and drop events
     const handleDragOver = (e) => {
         e.preventDefault();
         setIsDragging(true);
@@ -67,32 +54,27 @@ function NewBanner() {
         e.preventDefault();
         setIsDragging(false);
         const files = Array.from(e.dataTransfer.files);
-        const validFiles = files.filter(file => file.type.startsWith('image/'));
-        if (validFiles.length > 0 && images.length === 0) {
-            const previewFile = {
-                file: validFiles[0],
-                preview: URL.createObjectURL(validFiles[0]),
-            };
-            setImages([previewFile]);
-            setErrors(prev => ({ ...prev, images: null }));
-        } else if (images.length > 0) {
-            setErrors(prev => ({ ...prev, images: "Only one image is allowed." }));
-        }
+        handleFileUpload(files);
     };
 
     const handleFileSelect = (e) => {
         const files = Array.from(e.target.files);
-        const validFiles = files.filter(file => file.type.startsWith('image/'));
-        if (validFiles.length > 0 && images.length === 0) {
-            const previewFile = {
-                file: validFiles[0],
-                preview: URL.createObjectURL(validFiles[0]),
+        handleFileUpload(files);
+    };
+
+    const handleFileUpload = (files) => {
+        // setImages([]);
+
+        files.forEach((file) => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImages((old) => [...old, { url: reader.result, isNew: true }]); // Add new images with a flag
+                }
             };
-            setImages([previewFile]);
-            setErrors(prev => ({ ...prev, images: null }));
-        } else if (images.length > 0) {
-            setErrors(prev => ({ ...prev, images: "Only one image is allowed." }));
-        }
+            reader.readAsDataURL(file);
+        });
     };
 
     const handleClickToSelect = () => {
@@ -104,7 +86,7 @@ function NewBanner() {
         setErrors(prev => ({ ...prev, images: null }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
 
@@ -119,16 +101,46 @@ function NewBanner() {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            // Submit form logic here
-            if (id) {
-                // Update logic
-                console.log('Updating banner:', { id, title, link, imageUrl: images[0].preview });
-            } else {
-                // Create logic
-                console.log('Creating banner:', { title, link, imageUrl: images[0].preview });
+            // Prepare banner data with URLs instead of Base64
+            console.log(images,"see the images")
+            const bannerData = { title, link, images};
+           
+
+            try {
+                if (id) {
+                    // Update logic
+                    await axios.put(`${server}/update-banner/${id}`, bannerData);
+                    console.log('Updating banner:', { id, ...bannerData });
+                    swal({
+                        title: "Banner Updated!",
+                        text: "Your banner has been successfully updated.",
+                        icon: "success",
+                        button: "Ok",
+                      });
+                      
+                } else {
+                    // Create logic
+                    await axios.post(`${server}/home-create-banners`, bannerData);
+                    swal({
+                        title: "Banner Created!",
+                        text: "Your new banner has been successfully created.",
+                        icon: "success",
+                        button: "Ok",
+                      });
+                    console.log('Creating banner:', bannerData);
+                }
+                navigate("/create-Banners");
+            } catch (error) {
+                console.error("Error while saving banner:", error);
+                swal({
+                    title: "Oops!",
+                    text: "Something went wrong while saving your banner. Please try again.",
+                    icon: "error",
+                    button: "Ok",
+                  });
+                setErrors(prev => ({ ...prev, server: "Error saving banner. Please try again." }));
+
             }
-            // After submission, navigate back or reset form
-            navigate("/create-Banners");
         }
     };
 
@@ -190,56 +202,53 @@ function NewBanner() {
                             <div className="m-3 mx-auto w-[90%]">
                                 <div className="mb-5">
                                     <label className="block text-sm text-gray-600 mb-2">Upload Banner Image <span className='text-red-500'>*</span></label>
-
-                                    {/* Drop zone */}
                                     <div
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
+                                        className={`border-2 ${isDragging ? 'border-blue-400' : 'border-gray-300'} border-dashed rounded-md p-5 flex flex-col items-center justify-center cursor-pointer`}
                                         onClick={handleClickToSelect}
-                                        className={`border-2 ${isDragging ? 'border-blue-600' : 'border-dashed border-gray-400'} rounded-lg p-6 cursor-pointer text-center bg-gray-50 hover:bg-gray-100 transition duration-300`}
                                     >
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            className="hidden"
-                                            ref={fileInputRef}
-                                            onChange={handleFileSelect}
-                                        />
-                                        {/* Upload Icon */}
-                                        <IoMdCloudUpload size={50} className="mx-auto text-gray-400 mb-3" />
-                                        <p className="text-gray-600">Drag and drop an image here, or click to select a file</p>
+                                        {images.length === 0 ? (
+                                            <>
+                                                <IoMdCloudUpload size={40} />
+                                                <p className="mt-2 text-gray-600">Drag & drop your image here or click to upload</p>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    ref={fileInputRef}
+                                                    onChange={handleFileSelect}
+                                                    className="hidden"
+                                                />
+                                            </>
+                                        ) : (
+                                            <div className="relative">
+                                                <img
+                                                    src={images[0]?.url.includes("base64") ? `${images[0].url}` : `${imgdburl}${images[0]?.url}`}
+                                                    alt="Banner Preview"
+                                                    className="w-full h-[200px] object-cover rounded-md"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={removeImage}
+                                                    className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1"
+                                                >
+                                                    <IoIosClose />
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                     {errors.images && <p className="text-red-600 text-sm">{errors.images}</p>}
-
-                                    {images.length > 0 && (
-                                        <div className="mt-4">
-                                            <img
-                                                src={images[0].preview}
-                                                alt="Banner Preview"
-                                                className="w-[320px] h-[200px] object-contain border border-gray-200 rounded-md"
-                                            />
-                                            <button
-                                                type="button"
-                                                className="mt-2 text-red-600"
-                                                onClick={removeImage}
-                                            >
-                                                Remove Image
-                                            </button>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
 
-                            {/* Submit Button */}
-                            <div className="flex justify-center mb-5">
-                                <button
-                                    type="submit"
-                                    className="bg-blue-600 text-white rounded-md px-6 py-2 hover:bg-blue-500 transition duration-300"
-                                >
+                            <div className="flex justify-end">
+                                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700">
                                     {id ? 'Update Banner' : 'Create Banner'}
                                 </button>
                             </div>
+
+                            {errors.server && <p className="text-red-600 text-sm text-center">{errors.server}</p>}
                         </form>
                     </div>
                 </div>

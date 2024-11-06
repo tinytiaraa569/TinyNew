@@ -9,7 +9,7 @@ import './customised4.css'
 
 function Customisedsec4() {
   return (
-    <div className="Customisedsec4main">
+    <div className="Customisedsec4main bg-[#F3FFFD]">
       <div className="customised4flex">
         <div className="customised4card">
           <div className="customised4logo">

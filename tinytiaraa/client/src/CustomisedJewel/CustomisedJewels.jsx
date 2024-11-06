@@ -5,6 +5,7 @@ import Customisedsec3 from './customisedsec3/Customisedsec3'
 import Customisedsec4 from './customised4/Customisedsec4'
 import Customisednew from './customisednew/Customisednew'
 import { Helmet } from 'react-helmet-async'
+import Customsample from './Customsample/Customsample'
 
 function CustomisedJewels() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function CustomisedJewels() {
       </Helmet>
       <Customisedsec1 />
       <Customisedsec4 />
+      <Customsample />
       <Customisednew />
       {/* <Customised /> */}
       <Customisedsec3 />

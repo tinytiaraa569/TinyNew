@@ -1,89 +1,135 @@
 import styles from "@/Styles/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete, MdDownload, MdEdit } from "react-icons/md";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa"; // Importing arrow icons
 import { Link } from "react-router-dom";
 import * as XLSX from 'xlsx'; // Import XLSX
+import axios from "axios";
+import { imgdburl, server } from "@/server";
+import swal from "sweetalert"; // Import SweetAlert
+
 
 function CreateBanner() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   // Dummy data for banners
-  const [banners, setBanners] = useState([
-    {
-      id: 1,
-      title: "Summer Sale Banner",
-      link: "/summer-sale",
-      imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239445/slidersbanner/upglf2ndz3cgbfhnsgbk.webp",
-      selected: false,
-    },
-    {
-      id: 2,
-      title: "Winter Sale Banner",
-      link: "/winter-sale",
-      imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/v1729239665/slidersbanner/snfilzvqmzpj83ck2kmp.webp",
-      selected: false,
-    },
-    {
-      id: 3,
-      title: "New Arrivals Banner",
-      link: "/new-arrivals",
-      imageUrl: "https://res.cloudinary.com/ddaef5aw1/image/upload/f_auto,q_auto/v1/slidersbanner/czo3frgxqtg7yaovwrga",
-      selected: false,
-    },
-  ]);
+  const [banners, setBanners] = useState([]);
 
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [bannersToDelete, setBannersToDelete] = useState([]);
   const [showNotification, setShowNotification] = useState(false); // State for notification
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+    // Fetch banners from API
+    useEffect(() => {
+      const fetchBanners = async () => {
+        try {
+          const response = await axios.get(`${server}/get-allbanners`);
+          // Sort banners by their order property before setting state
+          const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
+          setBanners(sortedBanners);
+          setLoading(false);
+        } catch (err) {
+          setError("Failed to load banners.");
+          setLoading(false);
+        }
+      };
+    
+      fetchBanners();
+    }, []);
+  
   // Handle banner selection
   const handleSelectBanner = (id) => {
+    console.log(id,"selected id")
     setBanners((prevBanners) =>
       prevBanners.map((banner) =>
-        banner.id === id ? { ...banner, selected: !banner.selected } : banner
+        banner._id === id ? { ...banner, selected: !banner.selected } : banner
       )
     );
   };
 
   // Handle banner deletion
-  const handleDeleteBanner = (id) => {
-    setBanners((prevBanners) => prevBanners.filter((banner) => banner.id !== id));
+  const handleDeleteBanner = async (id) => {
+    try {
+      await axios.delete(`${server}/delete-banner/${id}`);
+      setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
+      swal("Success", "Banner deleted successfully!", "success");
+    } catch (err) {
+      console.error("Error deleting banner:", err);
+      setError("Failed to delete banner.");
+      swal("Oops!", "Failed to delete banner.", "error");
+    }
   };
 
-  const handleMultipleDelete = () => {
-    setBanners((prevBanners) => prevBanners.filter((banner) => !bannersToDelete.includes(banner.id)));
-    setBannersToDelete([]);
-    setShowDeletePopup(false);
+  const handleMultipleDelete = async  () => {
+    // setBanners((prevBanners) => prevBanners.filter((banner) => !bannersToDelete.includes(banner._id)));
+    // setBannersToDelete([]);
+    // setShowDeletePopup(false);
+    try {
+      // Call API to delete multiple banners
+      await axios.post(`${server}/delete-multiple-banners`, { ids: bannersToDelete });
+
+      // Update state to remove deleted banners from UI
+      setBanners((prevBanners) => prevBanners.filter((banner) => !bannersToDelete.includes(banner._id)));
+      setBannersToDelete([]);
+      setShowDeletePopup(false);
+      swal("Success", "Selected banners deleted successfully!", "success");
+    } catch (err) {
+      console.error("Error deleting multiple banners:", err);
+      setError("Failed to delete selected banners.");
+      swal("Oops!", "Failed to delete selected banners.", "error");
+    }
   };
 
   // Example function to change order of banners
-  const changeBannerOrder = (index, direction) => {
-    const newBanners = [...banners]; // Create a copy of the banners array
+  const changeBannerOrder = async (index, direction) => {
+    const newBanners = [...banners];
     const targetIndex = index + direction;
   
     // Check if the new index is out of bounds
     if (targetIndex < 0 || targetIndex >= newBanners.length) return;
   
-    // Swap the banners in the newBanners array
-    [newBanners[index], newBanners[targetIndex]] = [newBanners[targetIndex], newBanners[index]];
+    // Move the selected banner up or down in the array
+    const [movedBanner] = newBanners.splice(index, 1);
+    newBanners.splice(targetIndex, 0, movedBanner);
   
-    // Update the state with the new order
+    // Reassign order for each banner to ensure a sequential order
+    const orderedBanners = newBanners.map((banner, order) => ({
+      id: banner._id,
+      order,
+    }));
+  
+    // Update state with the new order
     setBanners(newBanners);
+  
+    // Send the new order to backend
+    try {
+      await axios.post(`${server}/update-banner-order`, { orderedBanners });
+      console.log("Banner order updated successfully!");
+    } catch (error) {
+      console.error("Failed to update banner order:", error);
+      swal("Oops!", "Failed to update banner order.", "error");
+    }
   };
 
   // Function to export banners to Excel
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(banners.map(({ id, title, link, imageUrl }) => ({
-      ID: id,
+    const worksheet = XLSX.utils.json_to_sheet(banners.map(({ _id, title, link, images }) => ({
+      ID: _id,
       Title: title,
       Link: link,
-      ImageURL: imageUrl,
+      ImageURL: images && images.length > 0 ? `${imgdburl}${images[0].url}` : '',
     })));
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Banners");
     XLSX.writeFile(workbook, "banners.xlsx");
   };
+  if (loading) return <p>Loading banners...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="w-full mt-5 p-5 bg-white shadow-md rounded-lg">
@@ -120,7 +166,7 @@ function CreateBanner() {
           onClick={() => {
             const selectedBanners = banners.filter(banner => banner.selected);
             if (selectedBanners.length > 0) {
-              setBannersToDelete(selectedBanners.map(banner => banner.id));
+              setBannersToDelete(selectedBanners.map(banner => banner._id));
               setShowDeletePopup(true);
             } else {
               setShowNotification(true); // Show notification instead of alert
@@ -142,19 +188,19 @@ function CreateBanner() {
               }`}
             >
               <img
-                src={banner.imageUrl}
+               src={`${imgdburl}${banner.images[0]?.url}`}
                 alt={banner.title}
                 className="w-full h-[150px] object-cover rounded-md mb-4"
               />
               <h4 className="text-lg font-semibold mb-2">{banner.title}</h4>
               <a href={banner.link} className="text-blue-500 hover:underline">
-                {banner.link}
+                /{banner.link}
               </a>
 
               <div className="mt-4 flex items-center justify-between">
                 {/* Edit Button */}
                 <Link
-                  to={`/dashboard/banner/edit/${banner.id}`}
+                  to={`/dashboard/banner/edit/${banner._id}`}
                   className="text-blue-600 hover:underline flex items-center"
                 >
                   <MdEdit className="mr-2" /> Edit
@@ -163,7 +209,7 @@ function CreateBanner() {
                 {/* Delete Button */}
                 <button
                   className="text-red-600 hover:underline flex items-center"
-                  onClick={() => handleDeleteBanner(banner.id)}
+                  onClick={() => handleDeleteBanner(banner._id)}
                 >
                   <MdDelete className="mr-2" /> Delete
                 </button>
@@ -174,7 +220,7 @@ function CreateBanner() {
                 <input
                   type="checkbox"
                   checked={banner.selected}
-                  onChange={() => handleSelectBanner(banner.id)}
+                  onChange={() => handleSelectBanner(banner._id)}
                   className="mr-2"
                 />
                 <label>Select</label>
