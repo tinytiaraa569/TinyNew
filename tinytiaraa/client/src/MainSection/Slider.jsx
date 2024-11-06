@@ -84,21 +84,17 @@ function SliderSection() {
   };
   const navigate = useNavigate()
   useEffect(() => {
-    const cachedBanners = localStorage.getItem('banners');
-    if (cachedBanners) {
-      setBanners(JSON.parse(cachedBanners));
-    } else {
-      axios
-        .get(`${server}/get-allbanners`)
-        .then(response => {
-          if (response.data.success) {
-            const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
-            setBanners(sortedBanners);
-            localStorage.setItem('banners', JSON.stringify(sortedBanners));
-          }
-        })
-        .catch(error => console.error('Error fetching banners:', error));
-    }
+    axios
+      .get(`${server}/get-allbanners`)  // Your API endpoint
+      .then(response => {
+        if (response.data.success) {
+          const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
+          setBanners(sortedBanners); // Set the banner data
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching banners:', error);
+      });
   }, []);
   console.log(banners,"baners data")
   return (
