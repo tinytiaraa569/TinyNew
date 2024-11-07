@@ -240,26 +240,26 @@ const SliderSection = () => {
   return (
     <Slider {...settings}>
       {/* Default slide shown while loading or if banners array is empty */}
-      {!isLoading && (!banners || banners.length === 0) ? (
-      <div className="slidersec cursor-pointer">
-        <img
-          src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
-          alt="Default Slide"
-        />
-      </div>
-    ) : (
-      // Render banners when they are available
-      banners?.map((banner) => (
+      {(isLoading || !banners?.length) && (
+        <div className="slidersec cursor-pointer">
+          <img
+            src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
+            alt="Default Slide"
+          />
+        </div>
+      )}
+
+      {/* Map over banners once loaded */}
+      {banners?.map((banner) => (
         <div key={banner._id} className="slidersec cursor-pointer">
           <img
             loading="lazy"
             src={`${imgdburl}${banner.images[0].url}`}
             alt={banner.title}
+            // onClick={() => banner.link && navigate(`/${banner.link}`)}
           />
         </div>
-      ))
-    )}
-
+      ))}
     </Slider>
   );
 };
