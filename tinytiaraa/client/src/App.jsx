@@ -119,16 +119,16 @@ function App() {
 //     page_path: location.pathname + location.search,
 //   });
 // }, [location]);
-//   useEffect(() => {
-//   // Delay the gtag page view event
-//   const timeoutId = setTimeout(() => {
-//     window.gtag('config', 'G-E1YSJRP0GY', {
-//       page_path: window.location.pathname + window.location.search,
-//     });
-//   }, 9000); // 5-second delay (adjust the time as needed)
+  useEffect(() => {
+  // Delay the gtag page view event
+  const timeoutId = setTimeout(() => {
+    window.gtag('config', 'G-E1YSJRP0GY', {
+      page_path: window.location.pathname + window.location.search,
+    });
+  }, 9000); // 5-second delay (adjust the time as needed)
 
-//   return () => clearTimeout(timeoutId); // Cleanup the timeout if the component unmounts
-// }, [location]);
+  return () => clearTimeout(timeoutId); // Cleanup the timeout if the component unmounts
+}, [location]);
 
 
 
