@@ -5,6 +5,10 @@ import sample2 from './sample2.png';
 import sample3 from './sample3.png';
 import sample4 from './sample4.jpg';
 import sample5 from './sample5.png';
+import sample6 from './sample6.png';
+import sample7 from './sample7.png';
+
+
 
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
@@ -17,7 +21,7 @@ function Customsample() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
 
-  const images = [sample1, Bangle, sample2, sample3, sample4,sample5];
+  const images = [sample1, Bangle, sample2, sample3, sample4,sample5,sample6,sample7];
 
   const handleImageClick = (image) => {
     setCurrentImage(image);

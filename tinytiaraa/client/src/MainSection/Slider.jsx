@@ -193,8 +193,6 @@
 // export default SliderSection;
 
 
-
-
 import React from 'react';
 import Slider from 'react-slick';
 import { useQuery } from 'react-query';
@@ -207,7 +205,7 @@ import { imgdburl, server } from '@/server';
 
 const SliderSection = () => {
   const navigate = useNavigate();
-  
+
   // Fetch banners using React Query
   const { data: banners, isLoading } = useQuery(
     'banners',
@@ -237,18 +235,20 @@ const SliderSection = () => {
     ],
   };
 
+  // Render nothing until data is fetched
+  if (isLoading) {
+    return (
+      <div className="slidersec cursor-pointer">
+        <img
+          src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
+          alt="Loading..."
+        />
+      </div>
+    );
+  }
+
   return (
     <Slider {...settings}>
-      {/* Default slide shown while loading or if banners array is empty */}
-      {(isLoading || !banners?.length) && (
-        <div className="slidersec cursor-pointer">
-          <img
-            src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
-            alt="Default Slide"
-          />
-        </div>
-      )}
-
       {/* Map over banners once loaded */}
       {banners?.map((banner) => (
         <div key={banner._id} className="slidersec cursor-pointer">
