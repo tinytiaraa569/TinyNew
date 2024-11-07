@@ -43,14 +43,14 @@ const SliderSection = () => {
   return (
     <Slider {...settings}>
       {/* Default slide shown while loading or if banners array is empty */}
-      {(isLoading || !banners?.length) && (
+      {/* {(isLoading || !banners?.length) && (
         <div className="slidersec cursor-pointer">
           <img
             src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
             alt="Default Slide"
           />
         </div>
-      )}
+      )} */}
 
       {/* Map over banners once loaded */}
       {banners?.map((banner) => (
