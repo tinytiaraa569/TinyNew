@@ -15,9 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={Store}>
     <HelmetProvider>
     <QueryClientProvider client={queryClient}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </QueryClientProvider>
     </HelmetProvider>
   </Provider>

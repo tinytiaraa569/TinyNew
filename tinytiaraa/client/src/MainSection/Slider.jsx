@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
-import { useQuery } from 'react-query';
-import axios from 'axios';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Slider.css';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { imgdburl, server } from '@/server';
 
 const SliderSection = () => {
+  const [banners, setBanners] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  
-  // Fetch banners using React Query
-  const { data: banners, isLoading } = useQuery(
-    'banners',
-    async () => {
-      const response = await axios.get(`${server}/get-allbanners`);
-      if (response.data.success) {
-        return response.data.banners.sort((a, b) => a.order - b.order);
+
+  // Fetch banners on component mount
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await axios.get(`${server}/get-allbanners`);
+        if (response.data.success) {
+          const sortedBanners = response.data.banners.sort((a, b) => a.order - b.order);
+          setBanners(sortedBanners);
+        }
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      } finally {
+        setIsLoading(false);
       }
-      throw new Error('Failed to fetch banners');
-    }
-  );
+    };
+    fetchBanners();
+  }, []);
 
   const settings = {
     dots: true,
@@ -34,35 +41,58 @@ const SliderSection = () => {
     autoplaySpeed: 8000,
     swipeToSlide: true,
     responsive: [
-      { breakpoint: 969, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-      { breakpoint: 769, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-      { breakpoint: 500, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+      {
+        breakpoint: 969,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 769,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
+        },
+      },
     ],
   };
 
   return (
     <Slider {...settings}>
-      {/* Default slide shown while loading or if banners array is empty */}
-      {/* {(isLoading || !banners?.length) && (
+      {isLoading ? (
+        // Default slide during loading
         <div className="slidersec cursor-pointer">
           <img
             src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
             alt="Default Slide"
           />
         </div>
-      )} */}
-
-      {/* Map over banners once loaded */}
-      {banners?.map((banner) => (
-        <div key={banner._id} className="slidersec cursor-pointer">
-          <img
-            loading="lazy"
-            src={`${imgdburl}${banner.images[0].url}`}
-            alt={banner.title}
-            // onClick={() => banner.link && navigate(`/${banner.link}`)}
-          />
-        </div>
-      ))}
+      ) : (
+        banners.map((banner) => (
+          <div key={banner._id} className="slidersec cursor-pointer">
+            <img
+              loading="lazy"
+              src={`${imgdburl}${banner.images[0].url}`}
+              alt={banner.title}
+              // onClick={() => banner.link && navigate(`/${banner.link}`)}
+            />
+          </div>
+        ))
+      )}
     </Slider>
   );
 };
