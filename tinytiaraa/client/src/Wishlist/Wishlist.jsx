@@ -59,14 +59,18 @@ function Wishlist({ setOpenWishlist }) {
             </div>
             :
             <div >
+             
               <div className='flex w-full justify-end pt-5 pr-5'>
                 <RxCross1 size={25} className="cursor-pointer" onClick={() => { setOpenWishlist(false) }} />
 
               </div>
+              <div className='pt-2 text-[20px] font-[500] text-center'>
+                <h1>Your Wishlist</h1>
+              </div>
 
               <div className={`${styles.noramlFlex} p-4`}>
-                <AiOutlineHeart size={25} />
-                <h5 className='pl-2 text-[20px] font-[500]'>{wishlist && wishlist.length} Items</h5>
+                <AiOutlineHeart size={23} />
+                <h5 className='pl-2 text-[18px] font-[500]'>{wishlist && wishlist.length} Items</h5>
               </div>
 
               <div className='w-full border-t'>
