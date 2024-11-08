@@ -77,6 +77,8 @@ const spin = require("./controller/spin")
 const banner = require("./controller/banner")
 const aboutbanner = require("./controller/aboutbanner")
 const custombanner = require("./controller/custombanner")
+const contactbanner = require("./controller/contactbanner")
+
 
 
 
@@ -109,6 +111,8 @@ app.use('/api/v2/spin', spin);
 app.use("/api/v2", banner);
 app.use("/api/v2", aboutbanner);
 app.use("/api/v2", custombanner);
+app.use("/api/v2", contactbanner);
+
 
 
 
