@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Banner = require('../model/banner'); // Import the Banner model
+const AboutBanner = require('../model/aboutbanner'); // Import the Banner model
 const fs = require('fs');
 const path = require('path');
 const ErrorHandler = require('../utils/Errorhandler');
@@ -79,7 +79,7 @@ const generateRandomString = (length) => {
 //     });
 // }));
 
-router.post('/home-create-banners', catchAsyncErrors(async (req, res, next) => {
+router.post('/about-create-banners', catchAsyncErrors(async (req, res, next) => {
     const { title, link, images } = req.body;
 
     // Check if title and images are provided
@@ -102,12 +102,12 @@ router.post('/home-create-banners', catchAsyncErrors(async (req, res, next) => {
             const base64Data = matches[2];
             const extension = mimeType.split('/')[1];
             const uniqueId = generateRandomString(20);
-            const localImagePath = path.join(__dirname, '../uploads/images/banners', `${uniqueId}.${extension}`);
+            const localImagePath = path.join(__dirname, '../uploads/images/banners/about', `${uniqueId}.${extension}`);
     
             fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
             destinationArray.push({
                 public_id: `banners/${uniqueId}`,
-                url: `/uploads/images/banners/${uniqueId}.${extension}`
+                url: `/uploads/images/banners/about/${uniqueId}.${extension}`
             });
         } else {
             destinationArray.push({ url: imagePath });
@@ -130,11 +130,11 @@ router.post('/home-create-banners', catchAsyncErrors(async (req, res, next) => {
     });
 
     // Fetch the current banners and determine the next order value
-    const banners = await Banner.find();
+    const banners = await AboutBanner.find();
     const maxOrder = banners.length > 0 ? Math.max(...banners.map(banner => banner.order)) : 0;
     
     // Create a new banner with the correct order
-    const banner = new Banner({
+    const banner = new AboutBanner({
         title,
         link,
         images: processedImages,
@@ -153,10 +153,10 @@ router.post('/home-create-banners', catchAsyncErrors(async (req, res, next) => {
 
 // // Get all banners
 
-router.get('/get-allbanners', catchAsyncErrors(async (req, res, next) => {
+router.get('/get-allaboutbanners', catchAsyncErrors(async (req, res, next) => {
 
     try {
-        const banners = await Banner.find();
+        const banners = await AboutBanner.find();
 
         res.status(200).json({
             success: true,
@@ -168,14 +168,11 @@ router.get('/get-allbanners', catchAsyncErrors(async (req, res, next) => {
     }
 }));
 
-
-
-
 // // Get a banner by ID
-router.get('/get-banner/:id', catchAsyncErrors(async (req, res, next) => {
+router.get('/get-aboutbanner/:id', catchAsyncErrors(async (req, res, next) => {
 
     try {
-        const banner = await Banner.findById(req.params.id);
+        const banner = await AboutBanner.findById(req.params.id);
 
         if (!banner) {
             return next(new ErrorHandler('Banner not found', 404));
@@ -191,17 +188,15 @@ router.get('/get-banner/:id', catchAsyncErrors(async (req, res, next) => {
     }
 }));
 
-
-
 // // Update a banner by ID
 
 
 
-router.put('/update-banner/:id', catchAsyncErrors(async (req, res, next) => {
+router.put('/update-aboutbanner/:id', catchAsyncErrors(async (req, res, next) => {
     const { title, link, images } = req.body;
 
     // Find the existing banner
-    const banner = await Banner.findById(req.params.id);
+    const banner = await AboutBanner.findById(req.params.id);
     if (!banner) {
         return next(new ErrorHandler('Banner not found', 404));
     }
@@ -221,12 +216,12 @@ router.put('/update-banner/:id', catchAsyncErrors(async (req, res, next) => {
             const base64Data = matches[2];
             const extension = mimeType.split('/')[1];
             const uniqueId = generateRandomString(20);
-            const localImagePath = path.join(__dirname, '../uploads/images/banners', `${uniqueId}.${extension}`);
+            const localImagePath = path.join(__dirname, '../uploads/images/banners/about', `${uniqueId}.${extension}`);
     
             fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
             destinationArray.push({
                 public_id: `banners/${uniqueId}`,
-                url: `/uploads/images/banners/${uniqueId}.${extension}`
+                url: `/uploads/images/banners/about/${uniqueId}.${extension}`
             });
         } else {
             destinationArray.push({ url: imagePath });
@@ -278,21 +273,20 @@ router.put('/update-banner/:id', catchAsyncErrors(async (req, res, next) => {
     });
 }));
 
-
 // // Delete a banner by ID
 
-router.delete('/delete-banner/:id', catchAsyncErrors(async (req, res, next) => {
+router.delete('/delete-aboutbanner/:id', catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
     // Find and delete the banner
-    const bannerToDelete = await Banner.findByIdAndDelete(id);
+    const bannerToDelete = await AboutBanner.findByIdAndDelete(id);
 
     if (!bannerToDelete) {
         return next(new ErrorHandler('Banner not found', 404));
     }
 
     // After deleting the banner, we need to reassign the order values
-    const remainingBanners = await Banner.find().sort({ order: 1 }); // Sort banners by current order
+    const remainingBanners = await AboutBanner.find().sort({ order: 1 }); // Sort banners by current order
 
     // Reassign order values to maintain a continuous sequence starting from 0
     for (let i = 0; i < remainingBanners.length; i++) {
@@ -332,7 +326,7 @@ router.delete('/delete-banner/:id', catchAsyncErrors(async (req, res, next) => {
 //         return next(new ErrorHandler('Internal server error', 500));
 //     }
 // }));
-router.post('/delete-multiple-banners', catchAsyncErrors(async (req, res, next) => {
+router.post('/delete-multiple-aboutbanners', catchAsyncErrors(async (req, res, next) => {
     const { ids } = req.body; // Expecting an array of IDs in the request body
 
     // Check if the ids array is provided and not empty
@@ -342,14 +336,14 @@ router.post('/delete-multiple-banners', catchAsyncErrors(async (req, res, next) 
 
     try {
         // Delete all banners with the provided IDs
-        const deleteResult = await Banner.deleteMany({ _id: { $in: ids } });
+        const deleteResult = await AboutBanner.deleteMany({ _id: { $in: ids } });
 
         if (deleteResult.deletedCount === 0) {
             return next(new ErrorHandler('No banners found for the provided IDs', 404));
         }
 
         // Now, update the order of the remaining banners
-        const remainingBanners = await Banner.find().sort({ order: 1 }); // Sort by current order
+        const remainingBanners = await AboutBanner.find().sort({ order: 1 }); // Sort by current order
 
         // Reassign the order values to ensure they start from 0 and increment correctly
         for (let i = 0; i < remainingBanners.length; i++) {
@@ -367,15 +361,14 @@ router.post('/delete-multiple-banners', catchAsyncErrors(async (req, res, next) 
     }
 }));
 
-///upadte banner order 
 // In your routes file, e.g., bannerRoutes.js
-router.post('/update-banner-order', catchAsyncErrors(async (req, res, next) => {
+router.post('/update-aboutbanner-order', catchAsyncErrors(async (req, res, next) => {
     const { orderedBanners } = req.body;
 
     // Iterate over orderedBanners and update each banner's order in the database
     try {
         for (const { id, order } of orderedBanners) {
-            await Banner.findByIdAndUpdate(id, { order });
+            await AboutBanner.findByIdAndUpdate(id, { order });
         }
         res.status(200).json({ success: true, message: "Banner order updated successfully" });
     } catch (error) {
@@ -383,8 +376,6 @@ router.post('/update-banner-order', catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Failed to update banner order", 500));
     }
 }));
-
-
 
 // Export the router
 module.exports = router;

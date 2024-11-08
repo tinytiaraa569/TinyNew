@@ -7,6 +7,12 @@ import sample4 from './sample4.jpg';
 import sample5 from './sample5.png';
 import sample6 from './sample6.png';
 import sample7 from './sample7.png';
+import sample8 from './sample8.png';
+import sample9 from './sample9.png';
+import sample10 from './sample10.png';
+
+
+
 
 
 
@@ -21,7 +27,7 @@ function Customsample() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
 
-  const images = [sample1, Bangle, sample2, sample3, sample4,sample5,sample6,sample7];
+  const images = [sample1, sample10,sample5,sample6,sample9];
 
   const handleImageClick = (image) => {
     setCurrentImage(image);

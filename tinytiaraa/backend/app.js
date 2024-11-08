@@ -75,6 +75,8 @@ const ttclub = require("./controller/ttclub")
 const subscribe = require("./controller/subscribe")
 const spin = require("./controller/spin")
 const banner = require("./controller/banner")
+const aboutbanner = require("./controller/aboutbanner")
+
 
 
 
@@ -103,6 +105,8 @@ app.use('/api/v2/subscribe', subscribe);
 app.use('/api/v2/spin', spin);
 
 app.use("/api/v2", banner);
+app.use("/api/v2", aboutbanner);
+
 
 
 app.use("/api/v2", calculateEDDRoutes);

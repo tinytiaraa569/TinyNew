@@ -8,6 +8,9 @@ import * as XLSX from 'xlsx'; // Import XLSX
 import axios from "axios";
 import { imgdburl, server } from "@/server";
 import swal from "sweetalert"; // Import SweetAlert
+import AboutBanner from "./AboutBanner";
+import Custombanner from "./Custombanner";
+import ContactBanner from "./ContactBanner";
 
 
 function CreateBanner() {
@@ -22,6 +25,11 @@ function CreateBanner() {
   const [showNotification, setShowNotification] = useState(false); // State for notification
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCollection, setSelectedCollection] = useState('Home');
+
+  const handleCollectionChange = (e) => {
+    setSelectedCollection(e.target.value);
+  };
 
     // Fetch banners from API
     useEffect(() => {
@@ -131,161 +139,195 @@ function CreateBanner() {
   if (loading) return <p>Loading banners...</p>;
   if (error) return <p>{error}</p>;
 
+  const renderSelectedBanner = () => {
+    switch (selectedCollection) {
+      case 'About':
+        return <AboutBanner />;
+      case 'CustomJewelry':
+        return <Custombanner />;
+      case 'Contact':
+        return <ContactBanner />;
+      default:
+        return <div> 
+          <>
+
+          <div className="flex bg-slate-700 text-white rounded-lg py-4 px-6 justify-between items-center shadow-inner">
+            <Link to="/dashboard/banner/create">
+              <button
+                className="flex items-center bg-blue-600 px-4 py-2 rounded transition duration-300 hover:bg-blue-500"
+              >
+                <IoMdAdd size={20} className="mr-2" />
+                <span className="text-[16px] font-Poppins font-semibold">Add Banner</span>
+              </button>
+            </Link>
+            {/* Excel Export Button */}
+            <button
+              className="flex items-center bg-green-600 px-4 py-2 rounded transition duration-300 hover:bg-green-500"
+              onClick={exportToExcel} // Call export function
+            >
+              <MdDownload className="mr-2" /> Export to Excel
+            </button>
+
+
+            <button
+              className="flex items-center bg-red-600 px-4 py-2 rounded transition duration-300 hover:bg-red-500"
+              onClick={() => {
+                const selectedBanners = banners.filter(banner => banner.selected);
+                if (selectedBanners.length > 0) {
+                  setBannersToDelete(selectedBanners.map(banner => banner._id));
+                  setShowDeletePopup(true);
+                } else {
+                  setShowNotification(true); // Show notification instead of alert
+                }
+              }}
+            >
+              <MdDelete className="mr-2" /> Delete
+            </button>
+          </div>
+
+          {/* Banner list */}
+          <div className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {banners.map((banner, index) => (
+                <div
+                  key={banner.id}
+                  className={`border !rounded-[5px] p-4 shadow-lg  ${
+                    banner.selected ? "bg-blue-100 border-blue-500" : "bg-white"
+                  }`}
+                >
+                  <img
+                  src={`${imgdburl}${banner.images[0]?.url}`}
+                    alt={banner.title}
+                    className="w-full h-[150px] object-cover rounded-md mb-4"
+                  />
+                  <div className="flex justify-between">
+
+                  <h4 className="text-lg font-semibold mb-2">{banner.title}</h4>
+                  <a href={banner.link} className="text-blue-500 hover:underline">
+                    /{banner.link}
+                  </a>
+                  </div>
+
+                  <div className="mt-1 flex items-center justify-between">
+                    {/* Edit Button */}
+                    <Link
+                      to={`/dashboard/banner/edit/${banner._id}`}
+                      className="text-blue-600 hover:underline flex items-center"
+                    >
+                      <MdEdit className="mr-2" /> Edit
+                    </Link>
+
+                    {/* Delete Button */}
+                    <button
+                      className="text-red-600 hover:underline flex items-center"
+                      onClick={() => handleDeleteBanner(banner._id)}
+                    >
+                      <MdDelete className="mr-2" /> Delete
+                    </button>
+                  </div>
+
+                  {/* Select Checkbox */}
+                  <div className="mt-2 flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={banner.selected}
+                      onChange={() => handleSelectBanner(banner._id)}
+                      className="mr-2"
+                    />
+                    <label>Select</label>
+                  </div>
+
+                  {/* Reorder Buttons with icons */}
+                  <div className="flex justify-between mt-2">
+          <button
+          className="flex items-center text-gray-600 hover:text-gray-800"
+          onClick={() => changeBannerOrder(index, -1)}
+          disabled={index === 0}
+          >
+          <FaArrowUp className="mr-1" /> Move Up
+          </button>
+          <button
+          className="flex items-center text-gray-600 hover:text-gray-800"
+          onClick={() => changeBannerOrder(index, 1)}
+          disabled={index === banners.length - 1}
+          >
+          <FaArrowDown className="mr-1" /> Move Down
+          </button>
+          </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Confirmation Popup */}
+          {showDeletePopup && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
+                <p>Are you sure you want to delete the selected banners?</p>
+                <div className="flex justify-end mt-4">
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                    onClick={handleMultipleDelete}
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
+                    onClick={() => setShowDeletePopup(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Notification Popup */}
+          {showNotification && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <p className="text-black">Please select at least one banner.</p>
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded mr-2 mt-2"
+                  onClick={() => setShowNotification(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+          </>
+        </div>; // Default or 'Home' case
+    }
+  };
+
   return (
-    <div className="w-full mt-5 p-5 bg-white shadow-md rounded-lg">
+    <div className="w-full mt-1 p-5 bg-white shadow-md rounded-lg">
       <h3 className={`font-poppins text-[22px] text-center text-gray-700 font-bold`}>
         Create Banners
       </h3>
 
       <div className="flex items-center justify-between font-Poppins mb-4">
-        <h2 className="text-[22px] text-[#555]">Home Banners Collection</h2>
-
-        <Link to="/dashboard/banner/create">
-          <div
-            className={`${styles.button} w-[180px] flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 transition duration-300 rounded-md text-white px-2 py-2`}
+      <div className="relative">
+          <select
+            value={selectedCollection}
+            onChange={handleCollectionChange}
+            className="bg-white border border-gray-300 text-[#555] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <IoMdAdd />
-            <span className={`${styles.cart_button_text} font-semibold`}>
-              Add Banner
-            </span>
-          </div>
-        </Link>
+            <option value="Home">Home Banners Collection</option>
+            <option value="About">About Banners Collection</option>
+            <option value="CustomJewelry">CustomJewelry Banners Collection</option>
+            <option value="Contact">Contact Banners Collection</option>
+          </select>
+        </div>
+
+
+        
       </div>
 
-      <div className="flex bg-slate-700 text-white rounded-lg py-4 px-6 justify-between items-center shadow-inner">
-        {/* Excel Export Button */}
-        <button
-          className="flex items-center bg-green-600 px-4 py-2 rounded transition duration-300 hover:bg-green-500"
-          onClick={exportToExcel} // Call export function
-        >
-          <MdDownload className="mr-2" /> Export to Excel
-        </button>
-
-        <button
-          className="flex items-center bg-red-600 px-4 py-2 rounded transition duration-300 hover:bg-red-500"
-          onClick={() => {
-            const selectedBanners = banners.filter(banner => banner.selected);
-            if (selectedBanners.length > 0) {
-              setBannersToDelete(selectedBanners.map(banner => banner._id));
-              setShowDeletePopup(true);
-            } else {
-              setShowNotification(true); // Show notification instead of alert
-            }
-          }}
-        >
-          <MdDelete className="mr-2" /> Delete
-        </button>
-      </div>
-
-      {/* Banner list */}
-      <div className="mt-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {banners.map((banner, index) => (
-            <div
-              key={banner.id}
-              className={`border rounded-lg p-4 shadow-sm ${
-                banner.selected ? "bg-blue-100 border-blue-500" : "bg-white"
-              }`}
-            >
-              <img
-               src={`${imgdburl}${banner.images[0]?.url}`}
-                alt={banner.title}
-                className="w-full h-[150px] object-cover rounded-md mb-4"
-              />
-              <h4 className="text-lg font-semibold mb-2">{banner.title}</h4>
-              <a href={banner.link} className="text-blue-500 hover:underline">
-                /{banner.link}
-              </a>
-
-              <div className="mt-4 flex items-center justify-between">
-                {/* Edit Button */}
-                <Link
-                  to={`/dashboard/banner/edit/${banner._id}`}
-                  className="text-blue-600 hover:underline flex items-center"
-                >
-                  <MdEdit className="mr-2" /> Edit
-                </Link>
-
-                {/* Delete Button */}
-                <button
-                  className="text-red-600 hover:underline flex items-center"
-                  onClick={() => handleDeleteBanner(banner._id)}
-                >
-                  <MdDelete className="mr-2" /> Delete
-                </button>
-              </div>
-
-              {/* Select Checkbox */}
-              <div className="mt-4 flex items-center">
-                <input
-                  type="checkbox"
-                  checked={banner.selected}
-                  onChange={() => handleSelectBanner(banner._id)}
-                  className="mr-2"
-                />
-                <label>Select</label>
-              </div>
-
-              {/* Reorder Buttons with icons */}
-              <div className="flex justify-between mt-2">
-  <button
-    className="flex items-center text-gray-600 hover:text-gray-800"
-    onClick={() => changeBannerOrder(index, -1)}
-    disabled={index === 0}
-  >
-    <FaArrowUp className="mr-1" /> Move Up
-  </button>
-  <button
-    className="flex items-center text-gray-600 hover:text-gray-800"
-    onClick={() => changeBannerOrder(index, 1)}
-    disabled={index === banners.length - 1}
-  >
-    <FaArrowDown className="mr-1" /> Move Down
-  </button>
-</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Confirmation Popup */}
-      {showDeletePopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
-            <p>Are you sure you want to delete the selected banners?</p>
-            <div className="flex justify-end mt-4">
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                onClick={handleMultipleDelete}
-              >
-                Confirm
-              </button>
-              <button
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-                onClick={() => setShowDeletePopup(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Notification Popup */}
-      {showNotification && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <p className="text-black">Please select at least one banner.</p>
-            <button
-              className="bg-red-500 text-white px-2 py-1 rounded mr-2 mt-2"
-              onClick={() => setShowNotification(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+     
+      {renderSelectedBanner()}
     </div>
   );
 }
