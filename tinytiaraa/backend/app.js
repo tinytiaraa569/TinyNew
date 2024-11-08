@@ -14,7 +14,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'https://tiny-tiaraanew.vercel.app',
+    origin: 'http://localhost:5173',
     credentials: true
 }));
 
@@ -76,6 +76,8 @@ const subscribe = require("./controller/subscribe")
 const spin = require("./controller/spin")
 const banner = require("./controller/banner")
 const aboutbanner = require("./controller/aboutbanner")
+const custombanner = require("./controller/custombanner")
+
 
 
 
@@ -106,6 +108,8 @@ app.use('/api/v2/spin', spin);
 
 app.use("/api/v2", banner);
 app.use("/api/v2", aboutbanner);
+app.use("/api/v2", custombanner);
+
 
 
 

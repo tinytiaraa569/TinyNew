@@ -97,6 +97,7 @@ import ShopCreateBanner from './catalog/CreateBanners/ShopCreateBanner'
 import NewBanner from './catalog/CreateBanners/NewBanner'
 import MetaPixelTracker from './MetaPixelTracker';
 import AboutNewBanner from './catalog/CreateBanners/Bannerscreating/AboutNewBanner';
+import CustomNewBanner from './catalog/CreateBanners/Bannerscreating/CustomNewBanner';
 
 
 // import MyChatbot from './chatbot/Chatbotmsg';
@@ -533,6 +534,9 @@ function App() {
           <Route path='/dashboard/aboutbanner/create' element={<AboutNewBanner />} />
           
 
+          {/* custom banners  */}
+          <Route path='/dashboard/custombanner/edit/:id' element={<CustomNewBanner />} /> 
+          <Route path='/dashboard/custombanner/create' element={<CustomNewBanner />} />
          
 
 
