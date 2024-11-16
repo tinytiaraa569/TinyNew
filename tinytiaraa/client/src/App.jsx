@@ -100,6 +100,7 @@ import AboutNewBanner from './catalog/CreateBanners/Bannerscreating/AboutNewBann
 import CustomNewBanner from './catalog/CreateBanners/Bannerscreating/CustomNewBanner';
 import ContactBanner from './catalog/CreateBanners/ContactBanner';
 import ContactNewBanner from './catalog/CreateBanners/Bannerscreating/ContactNewBanner';
+import CategoryDetails from './catalog/CategoryDetails';
 
 
 // import MyChatbot from './chatbot/Chatbotmsg';
@@ -202,6 +203,11 @@ function App() {
     location.pathname.startsWith('/dashboard-allspin') ||
     location.pathname.startsWith('/dashboard-currency') ||
     location.pathname.startsWith('/create-Banners') ||
+
+    location.pathname.startsWith('/dashboard/categories/view/:categoryId') |
+
+
+    
 
     location.pathname.startsWith('/order/:id')
 
@@ -544,7 +550,6 @@ function App() {
           {/* custom banners  */}
           <Route path='/dashboard/contactbanner/edit/:id' element={<ContactNewBanner />} /> 
           <Route path='/dashboard/contactbanner/create' element={<ContactNewBanner />} />
-
 
 
         </Routes>

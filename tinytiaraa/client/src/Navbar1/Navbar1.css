@@ -221,6 +221,14 @@
 .hidden {
     display: none;
 }
+.shopdrop.hidden {
+    display: none !important;
+  }
+  .shopdrop.visible {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 
 /* Additional custom classes */
 .subcatmain {

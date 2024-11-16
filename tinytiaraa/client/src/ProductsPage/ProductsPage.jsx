@@ -32,11 +32,13 @@ function ProductsPage() {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-
+  
   console.log(products, "products");
 
   const categoryData = searchParams.get("category");
   const subcategoryData = searchParams.get("subcategory");
+  const metalType = searchParams.get("type");
+  console.log(metalType,"Metal type -----------")
   console.log(categoryData, "see what is category data");
   console.log(subcategoryData, "see what is subcategory data");
   const useIsMobile = () => {
@@ -70,14 +72,15 @@ function ProductsPage() {
     const searchParams = new URLSearchParams(location.search);
     const categoryData = searchParams.get("category");
     const subcategoryData = searchParams.get("subcategory"); // Extract the subcategory
-
+    
+    
     console.log(categoryData, "see what is category data");
     console.log(subcategoryData, "see what is subcategory data");
 
     // Find the category that matches the categoryData
     if (categoryData) {
         const matchedCategory = categoriesData.find(
-            (category) => category.title === categoryData
+            (category) => category?.title === categoryData
         );
         setSelectedCategory(matchedCategory);
     }
@@ -172,6 +175,18 @@ function ProductsPage() {
         );
       }
 
+
+      if (metalType === "silver") {
+        filteredProducts = filteredProducts.filter(
+          (product) => ["Tabeez Collection", "kids accessories"].includes(product.category)
+        );
+      }
+
+      if (metalType === "gold") {
+        filteredProducts = filteredProducts.filter(
+          (product) => !["Tabeez Collection", "kids accessories"].includes(product.category)
+        );
+      }
       // Filter by search query
       if (searchQuery) {
         filteredProducts = filteredProducts.filter((product) =>

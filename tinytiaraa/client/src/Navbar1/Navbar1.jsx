@@ -92,9 +92,9 @@ function Navbar1() {
         const subcategoryParam = subcategory ? `&subcategory=${subcategory.name}` : '';
         navigate(`/products?category=${category.title}${subcategoryParam}`);
     };
-    const toggleShopDropdown = () => {
-        setShopDropdownOpen((prevState) => !prevState);
-    };
+    // const toggleShopDropdown = () => {
+    //     setShopDropdownOpen((prevState) => !prevState);
+    // };
 
     var settings = {
         dots: false,
@@ -200,6 +200,23 @@ function Navbar1() {
         toggleCurrencySelector(); // Close the selector after selecting
     };
 
+  
+
+      const handleMetalSelect = (type) => {
+        navigate(`/products?type=${type}`);
+      };
+      const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+        const toggleShopDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+        };
+
+        // const closeDropdown = () => {
+        // setIsDropdownVisible(false);
+        // };
+    
+        
+
     console.log(user,"user details")
     return (
         <>
@@ -300,10 +317,12 @@ function Navbar1() {
                         <ul className='menu'>
                             <li><NavLink to="/" activeClassName="active">Home</NavLink></li>
                             <li><NavLink to="/about" activeClassName="active">Our Story</NavLink></li>
-                            <span className='parenthover'  ref={shopRef}>
-                                <li onClick={toggleShopDropdown}><NavLink to="/products" activeClassName="active">Shop</NavLink>
+                            <span className='parenthover'  ref={shopRef}   onMouseEnter={() => setIsDropdownVisible(true)} onMouseLeave={() => setIsDropdownVisible(false)}>
+                                <li onClick={toggleShopDropdown} ><NavLink to="/products" activeClassName="active">Shop</NavLink>
 
-                                    <div className='shopdrop shadow-sm`'>
+                                {
+                                     isDropdownVisible && (
+                                        <div className={`shopdrop shadow-sm `} id="shopDropdown">
                                         <div className='flex gap-5'>
 
                                             <div className='navshopimg mt-5 ml-10'>
@@ -311,9 +330,9 @@ function Navbar1() {
                                             </div>
 
 
-                                            <div className='mt-5 ml-4'>
+                                            {/* <div className='mt-5 ml-4'>
                                                 <div className='mb-2'>
-                                                    <h3 className='font-[500]'>Shop Now</h3>
+                                                    <h3 className='font-[500]'>Shop By Metal</h3>
                                                 </div>
                                                 <div className='flex !items-center'>
                                                 <AiFillGolden size={22} color="#FFD700" />
@@ -330,12 +349,45 @@ function Navbar1() {
 
 
 
-                                            </div>
+                                            </div> */}
+
+                                                <div className='mt-5 ml-4'>
+                                                    <div className='mb-2'>
+                                                        <h3 className='font-[500]'>Shop By Metal</h3>
+                                                    </div>
+
+                                                    <div className='flex !items-center'>
+                                                        <AiFillGolden size={22} color="#FFD700" />
+                                                        <span
+                                                        className='pt-2 pb-1 collectionnav1 pl-1'
+                                                        onClick={() => {
+                                                            handleMetalSelect('gold')
+                                                            // closeDropdown();
+                                                        }}
+                                                        >
+                                                        Gold
+                                                        </span>
+                                                    </div>
+
+                                                    <div className='flex items-center'>
+                                                        <AiFillGolden size={22} color="#C0C0C0" />
+                                                        <h6
+                                                        className='pb-1 pt-2 pl-1 collectionnav1'
+                                                        onClick={() => handleMetalSelect('silver')}
+                                                        >
+                                                        Silver
+                                                        </h6>
+                                                    </div>
+                                                    </div>
+
+
+
+
 
                                             <div className='mt-5 ml-6'>
                                                 <div className='borderright'>
                                                     <div className='mb-2'>
-                                                        <h3 className='font-[500]'>Collection</h3>
+                                                        <h3 className='font-[500]'>Shop By Collection</h3>
                                                     </div>
 
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
@@ -358,7 +410,7 @@ function Navbar1() {
 
                                             <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>
-                                                    <h3 className='font-[500]'>By Category</h3>
+                                                    <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
                                                 <div>
                                                     {categoriesData && categoriesData.map((i, index) => (
@@ -413,7 +465,7 @@ function Navbar1() {
 
                                             <div className='pricenav mt-5 ml-7'>
                                                 <div className='mb-2'>
-                                                    <h3 className='font-[500] text-black'>By Price</h3>
+                                                    <h3 className='font-[500] text-black'>Shop By Price</h3>
                                                 </div>
 
                                                 <Link
@@ -468,6 +520,11 @@ function Navbar1() {
                                         </div>
 
                                     </div>
+
+                                     )
+                                }
+
+                                      
 
                                 </li>
                             </span>

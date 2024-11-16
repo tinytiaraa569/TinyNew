@@ -216,7 +216,7 @@ function ShopEditProductPage() {
 
     const handleCategoryChange = (e) => {
         const selectedCategory = e.target.value;
-        const foundCategory = categoriesData.find((cat) => cat.title === selectedCategory);
+        const foundCategory = categoriesData.find((cat) => cat?.title === selectedCategory);
         if (foundCategory) {
             setCategory(selectedCategory);
             // Clear subcategory when category changes
@@ -2507,7 +2507,7 @@ function ShopEditProductPage() {
                             <option value=''>Choose a Subcategory</option>
                             {category &&
                                 categoriesData
-                                    .find((cat) => cat.title === category)
+                                    .find((cat) => cat?.title === category)
                                     ?.subcategories.map((subcat, index) => (
                                         <option key={index} value={subcat.name}>{subcat.name}</option>
                                     ))}

@@ -42,7 +42,8 @@ export const categoriesData = [
       { name: "tops" },
       { name: "Hoops" },
 
-    ]
+    ],
+    type:'Gold'
   },
   {
     id: 2,
@@ -57,6 +58,7 @@ export const categoriesData = [
     ],
     bannerimg: pendantimg,
     productbanner: pendantbanner,
+    type:'Gold',
 
     subTitle: "",
     image_Url:
@@ -104,7 +106,8 @@ export const categoriesData = [
     extraimgurl:[
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1728055284/blackbead/y0rjx87oqv4nvkcosuhw.jpg" ,Price:"13429"},
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727933596/blackbead/viwnib6ruqfwzyyb44he.jpg" ,Price:"17109"},
-    ]
+    ],
+    type:'Gold'
   },
   {
     id: 5,
@@ -118,6 +121,7 @@ export const categoriesData = [
     subTitle: "",
     bannerimg: bangleimg,
     productbanner: braceletsbanner,
+    type:'Gold',
 
 
     image_Url:
@@ -133,6 +137,7 @@ export const categoriesData = [
 
     ],
     bannerimg: setimg,
+    type:'Gold',
     productbanner:setsbanner,
 
     image_Url:
@@ -144,7 +149,7 @@ export const categoriesData = [
     subTitle: "",
     bannerimg: religiousimg,
     productbanner:religiousbanner,
-
+    type:'Gold',
 
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
     subcategories: [
@@ -153,7 +158,6 @@ export const categoriesData = [
 
     ],
   },
- 
   {
     id: 9,
     title: "kids accessories",
@@ -167,8 +171,6 @@ export const categoriesData = [
       { name: "glass" },
       { name: "spoon" },
       { name: "bowl" },
-
-
     ],
     extraimgurl:[
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png"},
@@ -178,7 +180,23 @@ export const categoriesData = [
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932243/mom%20and%20me/dt2avtp4bqsisu4zxuk5.png"},
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932187/mom%20and%20me/df5eyj4erpqaijndoipj.png"},
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png"},
-    ]
+    ],
+    type:'silver'
+  },
+  {
+    id: 10,
+    title: "Tabeez Collection",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/omojkqjm5kuwohjaswsy.jpg",
+
+    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/products/hchxwiyvrtmfehtjjdwv.jpg",
+
+    subTitle: "",
+    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
+    subcategories: [
+      { name: "No Products" }
+    ],
+    type:'silver'
+   
   },
   {
     id: 8,
