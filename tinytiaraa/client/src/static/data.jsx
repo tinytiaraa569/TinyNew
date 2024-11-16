@@ -168,9 +168,9 @@ export const categoriesData = [
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
     subcategories: [
-      { name: "glass" },
-      { name: "spoon" },
-      { name: "bowl" },
+      { name: "spoon" , imageUrl:"	https://backend.tinytiaraa.com:8000/uploads/images/products/qapvo2imabmqaf7sdjpv.png" },
+      { name: "glass" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/lcorqs0jxdewmafwiokp.png"},
+      { name: "bowl" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/fridyanrb2g7cbsr9hhx.png" },
     ],
     extraimgurl:[
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929985/mom%20and%20me/tztqfgld6hpnvxstnoxj.png"},
@@ -182,21 +182,6 @@ export const categoriesData = [
       {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727929947/mom%20and%20me/mgzm213yws42octzkjyl.png"},
     ],
     type:'silver'
-  },
-  {
-    id: 10,
-    title: "Tabeez Collection",
-    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/omojkqjm5kuwohjaswsy.jpg",
-
-    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/products/hchxwiyvrtmfehtjjdwv.jpg",
-
-    subTitle: "",
-    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
-    subcategories: [
-      { name: "No Products" }
-    ],
-    type:'silver'
-   
   },
   {
     id: 8,
@@ -258,6 +243,21 @@ export const categoriesData = [
         
     ]
   },
+  {
+    id: 10,
+    title: "Tabeez Collection",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/omojkqjm5kuwohjaswsy.jpg",
+
+    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/products/hchxwiyvrtmfehtjjdwv.jpg",
+
+    subTitle: "",
+    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
+    subcategories: [
+      { name: "No Products" }
+    ],
+    type:'silver'
+   
+  }
 ];
 
 // product Data

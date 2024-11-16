@@ -413,7 +413,7 @@ function Navbar1() {
                                                     <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
                                                 <div>
-                                                    {categoriesData && categoriesData.map((i, index) => (
+                                                    {categoriesData && categoriesData.filter(i => i.title !== "Coming Soon ...").map((i, index) => (
                                                         <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
                                                             <img
                                                              src={i.image_Url} 
@@ -429,9 +429,26 @@ function Navbar1() {
                                                                 
                                                                 
                                                             }
+                                                            {
+                                                                i.title === "kids accessories" ?
+                                                                <IoMdArrowDropright />
+                                                                :
+                                                                ""
+                                                                
+                                                                
+                                                            }
                                                             </div>
 
                                                              { i.title === "Diamond Pendants" && (
+                                                                <div className={`subcatchild top-3 left-[100%] pt-[2px] pb-2 w-[230px] bg-[#fff] border border-[#eee] absolute z-30 rounded-[3px] shadow-sm`}>
+                                                                    {i.subcategories.map((val, subIndex) => (
+                                                                        <div className='pl-[10px]' key={subIndex} onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}>
+                                                                            <h3 className='m-2 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]'>{val.name}</h3>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                             { i.title === "kids accessories" && (
                                                                 <div className={`subcatchild top-3 left-[100%] pt-[2px] pb-2 w-[230px] bg-[#fff] border border-[#eee] absolute z-30 rounded-[3px] shadow-sm`}>
                                                                     {i.subcategories.map((val, subIndex) => (
                                                                         <div className='pl-[10px]' key={subIndex} onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}>

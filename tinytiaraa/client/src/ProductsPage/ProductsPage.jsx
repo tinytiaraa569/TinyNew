@@ -696,13 +696,14 @@ function ProductsPage() {
   const submitHandle = (category, subcategory = null) => {
     const subcategoryParam = subcategory ? `&subcategory=${subcategory.name}` : '';
     navigate(`/products?category=${category.title}${subcategoryParam}`);
-};
-const [selectedSubcat, setSelectedSubcat] = useState(null); // State to track selected subcategory
+  };
+
+  const [selectedSubcat, setSelectedSubcat] = useState(null); // State to track selected subcategory
 
 // Handle tab click to filter images based on subcategory
-const handleSubcatClick = (subcat) => {
-  setSelectedSubcat(subcat); // Update the selected subcategory
-};
+  const handleSubcatClick = (subcat) => {
+    setSelectedSubcat(subcat); // Update the selected subcategory
+  };
  
 
   return (
@@ -1273,6 +1274,42 @@ const handleSubcatClick = (subcat) => {
                                           )}
                                           </div>
                                           <div className="mt-[-20px] mb-3">
+                                          <button
+                                              
+                                              className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]"
+                                              >
+                                              View {subcat.name}
+                                          </button>
+                                            </div>
+                                      </div>
+                                  ))}
+                              </div>
+                          </div>
+                      </div>
+                  )}
+
+
+                  {/* //only for kids accessories */}
+                  {selectedCategory && selectedCategory.title === "kids accessories" && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
+                      <div className="mt-3 mb-10 pb-7 border-b border-[#5DC2B0]">
+                          <h2 className="text-center text-[18px] font-[500] text-[#000000cf] mb-4">SubCategories</h2>
+                          <div className="flex justify-center">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                                  {selectedCategory.subcategories.map((subcat, subIndex) => (
+                                      <div onClick={() => submitHandle(selectedCategory, subcat)} key={subIndex} className="subpendantcat cursor-pointer w-[230px] bg-white border border-[#41d399c1] shadow-lg rounded-[22px] p-4 text-center transition-transform duration-300 hover:shadow-xl hover:scale-105">
+
+                                          <h3 className="font-Poppins text-[16px] text-[#000000c2] mb-2">{subcat.name}</h3>
+                                          <div className="overflow-hidden">
+
+                                          {subcat?.imageUrl && (
+                                            <img
+                                            src={subcat.imageUrl}
+                                            alt={subcat.name}
+                                            className="w-full h-29 object-contain  rounded-md mt-[-5px]"
+                                            />
+                                          )}
+                                          </div>
+                                          <div className="mt-[-16px] mb-3">
                                           <button
                                               
                                               className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]"
