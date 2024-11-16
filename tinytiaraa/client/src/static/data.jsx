@@ -246,9 +246,9 @@ export const categoriesData = [
   {
     id: 10,
     title: "Tabeez Collection",
-    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/omojkqjm5kuwohjaswsy.jpg",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
 
-    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/products/hchxwiyvrtmfehtjjdwv.jpg",
+    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
 
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",

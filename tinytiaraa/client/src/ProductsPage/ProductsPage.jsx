@@ -1305,11 +1305,11 @@ function ProductsPage() {
                                             <img
                                             src={subcat.imageUrl}
                                             alt={subcat.name}
-                                            className="w-full h-29 object-contain  rounded-md mt-[-5px]"
+                                            className="w-full !h-[100px] object-contain  rounded-md mt-[-5px]"
                                             />
                                           )}
                                           </div>
-                                          <div className="mt-[-16px] mb-3">
+                                          <div className="mt-[-5px] mb-3">
                                           <button
                                               
                                               className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]"
