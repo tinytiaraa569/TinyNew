@@ -249,7 +249,31 @@ const SliderSection = () => {
 
   return (
     <Slider {...settings}>
-      {/* Map over banners once loaded */}
+      <>
+      <div className="slidersec cursor-pointer">
+           <img
+             src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/upglf2ndz3cgbfhnsgbk.webp"
+            alt="Default Slide"
+          />
+        </div>
+        <div className="slidersec cursor-pointer" >
+           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/snfilzvqmzpj83ck2kmp.webp" alt="Third Slide" />
+         </div>
+         <div className="slidersec cursor-pointer">
+           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/lsuewidepylphulztw7t.webp" alt="Slider Six" />
+         </div>
+         <div className="slidersec cursor-pointer">
+           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/czo3frgxqtg7yaovwrga.webp" alt="Slider Six" />
+         </div>
+         <div className="slidersec cursor-pointer">
+           <img loading='lazy' src="https://backend.tinytiaraa.com:8000/uploads/images/slidersbanner/biysca21wcpzrvyrbjbc.webp" alt="Third Slide" />
+         </div>
+
+      
+     
+
+
+      {/* Map over banners once loaded
       {banners?.map((banner) => (
         <div key={banner._id} className="slidersec cursor-pointer">
           <img
@@ -259,7 +283,8 @@ const SliderSection = () => {
             // onClick={() => banner.link && navigate(`/${banner.link}`)}
           />
         </div>
-      ))}
+      ))} */}
+      </>
     </Slider>
   );
 };
