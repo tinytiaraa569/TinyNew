@@ -50,9 +50,16 @@ const categorySchema = new mongoose.Schema({
     subcategories: [
         {
           name: String,  // Name of the subcategory
-          // You can add more details for each subcategory as needed
+          image_Url: {  // Subcategory image field
+            public_id: {
+              type: String,
+            },
+            url: {
+              type: String,
+            },
+          },
         },
-      ],
+    ],
     createdAt: {
         type: Date,
         default: Date.now, // Use Date.now without parentheses for the default value

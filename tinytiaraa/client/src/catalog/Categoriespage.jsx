@@ -15,6 +15,7 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert'; // Import SweetAlert
+import * as XLSX from 'xlsx';
 
 const PreviewCategory = ({ category, onClose }) => {
   const [showImages, setShowImages] = useState(false); // State to toggle image visibility
@@ -113,7 +114,7 @@ const PreviewCategory = ({ category, onClose }) => {
               <img
                 src={`${imgdburl}${category.image_Url?.url}`}
                 alt="Category"
-                className="w-full h-auto object-contain mt-3 rounded-md shadow-md"
+                className="w-full h-[300px] object-contain mt-3 rounded-md shadow-md"
               />
             </div>
           </>
@@ -141,7 +142,7 @@ const PreviewCategory = ({ category, onClose }) => {
 };
 
 
-const EditCategoryModal = ({ category, onClose, onSave }) => {
+const EditCategoryModal = ({ category, onClose, onSave ,setCategories }) => {
   const [title, setTitle] = useState(category.title);
   const [subTitle, setSubTitle] = useState(category.subTitle);
   const [bannerImg, setBannerImg] = useState(category.bannerimg?.url || ''); 
@@ -150,7 +151,7 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
   const [selectedBannerImage, setSelectedBannerImage] = useState(null);
   const [selectedProductBanner, setSelectedProductBanner] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [type, setType] = useState(category.type || ''); // New state for type
+  const [type, setType] = useState(category?.type || ''); // New state for type
 
   // Handle image preview and file selection
   const handleImageChange = (e, imageType) => {
@@ -177,7 +178,7 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
 
   // Save the changes to category
   const handleSave = async () => {
-    if (!title || !subTitle) {
+    if (!title ) {
       alert('All fields are required!');
       return;
     }
@@ -198,7 +199,16 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
         image_Url: selectedImageUrl || imageUrl,
       };
   
+      // Update the category using a PUT request
       await axios.put(`${server}/update-category/${category.id}`, payload);
+
+      // Fetch the updated list of categories
+      const response = await axios.get(`${server}/get-allcategories`);
+
+      // Update the state with the updated list of categories
+      setCategories(response.data.categories);
+
+      // Optionally, call onSave with updated category details
       onSave({
         ...category,
         title,
@@ -208,8 +218,8 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
         productbanner: selectedProductBanner || productBanner,
         image_Url: selectedImageUrl || imageUrl,
       });
-      
 
+      // Close the modal
       onClose();
     } catch (err) {
       alert('Failed to update category');
@@ -290,7 +300,10 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
             <p>No Banner Image</p>
           )}
           <input type="file" onChange={(e) => handleImageChange(e, 'bannerImg')} className="hidden" id="bannerImgInput" />
-          <label htmlFor="bannerImgInput" className="cursor-pointer text-blue-500 underline">
+          <label
+            htmlFor="bannerImgInput"
+            className="cursor-pointer inline-block px-4 py-2 mt-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all"
+          >
             Change Banner Image
           </label>
         </div>
@@ -306,7 +319,8 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
             <p>No Product Banner Image</p>
           )}
           <input type="file" onChange={(e) => handleImageChange(e, 'productBanner')} className="hidden" id="productBannerInput" />
-          <label htmlFor="productBannerInput" className="cursor-pointer text-blue-500 underline">
+          <label htmlFor="productBannerInput"
+           className="cursor-pointer inline-block px-4 py-2 mt-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all">
             Change Product Banner Image
           </label>
         </div>
@@ -315,20 +329,21 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
         <div className="mb-4">
           <label className="block mb-2">Additional Image</label>
           {selectedImageUrl ? (
-            <img src={selectedImageUrl} alt="Selected Image" className="w-full h-auto mb-2" />
+            <img src={selectedImageUrl} alt="Selected Image" className="w-full h-[300px]  object-contain mb-2" />
           ) : imageUrl ? (
-            <img src={`${imgdburl}${imageUrl}`} alt="Current Image" className="w-full h-auto mb-2" />
+            <img src={`${imgdburl}${imageUrl}`} alt="Current Image" className="w-full h-[300px] object-contain  mb-2" />
           ) : (
             <p>No Additional Image</p>
           )}
           <input type="file" onChange={(e) => handleImageChange(e, 'imageUrl')} className="hidden" id="imageUrlInput" />
-          <label htmlFor="imageUrlInput" className="cursor-pointer text-blue-500 underline">
+          <label htmlFor="imageUrlInput"
+           className="cursor-pointer inline-block px-4 py-2 mt-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all">
             Change Additional Image
           </label>
         </div>
 
         <div className="flex justify-end mt-6">
-          <Button variant="contained" color="secondary" onClick={onClose} className="px-6 py-2 rounded-lg shadow-md mr-2">
+          <Button variant="contained" color="secondary" onClick={onClose} className="px-6 py-2 rounded-lg shadow-md !mr-2">
             Cancel
           </Button>
           <Button variant="contained" color="primary" onClick={handleSave} className="px-6 py-2 rounded-lg shadow-md">
@@ -339,6 +354,8 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
     </Modal>
   );
 };
+
+
 
 
 
@@ -357,7 +374,21 @@ function Categoriespage() {
   const [editSubcategoryModal, setEditSubcategoryModal] = useState(false);
   const [editingSubcategory, setEditingSubcategory] = useState(null);
   const [editedName, setEditedName] = useState('');
+  const [editedImageUrl, setEditedImageUrl] = useState('');
   const [editCategoryModalOpen, setEditCategoryModalOpen] = useState(false);
+
+  const [selectedSubcategoryImage, setSelectedSubcategoryImage] = useState(null);
+
+  const handleSubcategoryImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedSubcategoryImage(reader.result); // Set the preview image as base64
+      };
+      reader.readAsDataURL(file); // Read the image file as base64
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -383,16 +414,27 @@ function Categoriespage() {
       alert("Subcategory name is required");
       return;
     }
-
+  
     try {
-      await axios.post(`${server}/add-subcategory`, {
+      // Ensure the selectedSubcategoryImage is not empty or null
+      
+  
+      const subcategoryData = {
         categoryId: selectedCategoryId,
         name: subcategoryName,
-      });
+        subcategoryImage: selectedSubcategoryImage, // Pass the image to the backend
+      };
+  
+      // Send the POST request with the subcategory data, including the image
+      await axios.post(`${server}/add-subcategory`, subcategoryData);
+  
+      // Reset form values after successfully adding the subcategory
       setSubcategoryName('');
       setSelectedCategoryId('');
-      setOpenSubcategoryModal(false);
-
+      setSelectedSubcategoryImage(''); // Clear the subcategory image state
+      setOpenSubcategoryModal(false); // Close the modal
+  
+      // Fetch the updated categories and subcategories
       const response = await axios.get(`${server}/get-allcategories`);
       setCategories(response.data.categories);
     } catch (err) {
@@ -436,6 +478,7 @@ function Categoriespage() {
   const handleOpenEditSubcategoryModal = (subcategory) => {
     setEditingSubcategory(subcategory);
     setEditedName(subcategory.name);
+    setEditedImageUrl(subcategory.image_Url?.url || '');
     setEditSubcategoryModal(true);
   };
 
@@ -454,17 +497,29 @@ function Categoriespage() {
       alert("Subcategory name cannot be empty");
       return;
     }
-
+  
+    // Prepare the image data
+    const subcategoryImage = selectedSubcategoryImage ;
+  
     try {
-      await axios.put(`${server}/edit-subcategory/${editingSubcategory._id}`, {
+      // Construct the payload with the subcategory name and image
+      const payload = {
         name: editedName,
-      });
+        imageUrl: subcategoryImage, // Include the new or existing image URL
+      };
+  
+      // Update the subcategory with the new name and image
+      await axios.put(`${server}/edit-subcategory/${editingSubcategory._id}`, payload);
+  
+      // Close the modal
       handleCloseEditSubcategoryModal();
-
+  
+      // Fetch the updated categories list
       const response = await axios.get(`${server}/get-allcategories`);
       setCategories(response.data.categories);
     } catch (err) {
       alert("Failed to edit subcategory");
+      console.error(err);
     }
   };
 
@@ -508,7 +563,7 @@ function Categoriespage() {
   const columns = [
     { field: 'id', headerName: 'Category Id', minWidth: 110, flex: 0.7 },
     { field: 'title', headerName: 'Category Name', minWidth: 100, flex: 1.4 },
-    { field: 'subTitle', headerName: 'Subtitle', minWidth: 120, flex: 1.5 },
+    // { field: 'subTitle', headerName: 'Subtitle', minWidth: 120, flex: 1.5 },
     {
       field: 'Preview',
       headerName: 'Preview',
@@ -584,7 +639,7 @@ function Categoriespage() {
   const rows = categories.map((category) => ({
     id: category?._id,
     title: category?.title,
-    subTitle: category?.subTitle,
+    // subTitle: category?.subTitle,
     subcategories: category?.subcategories,
     bannerimg: category?.bannerimg,
     productbanner: category?.productbanner,
@@ -613,6 +668,10 @@ function Categoriespage() {
   const handleCloseEditCategoryModal = () => {
     setEditCategoryModalOpen(false);
     setSelectedCategory(null);
+    setEditedName('');
+    setEditedImageUrl(''); // Reset edited image URL state
+    setSelectedSubcategoryImage(''); // Clear selected subcategory image
+    setOpenModal(false);
   };
 
   const handleSaveEditedCategory = (updatedCategory) => {
@@ -623,6 +682,40 @@ function Categoriespage() {
     );
   };
 
+  const exportToExcel = (data) => {
+    // Prepare the data for export, including subcategories
+    const formattedData = data.map((item) => {
+      // Handle subcategories, joining their names with commas or indicating absence
+      const subcategoriesList = item.subcategories && Array.isArray(item.subcategories) && item.subcategories.length > 0
+        ? item.subcategories.map((sub) => sub.name).join(', ') // Only list names, no IDs
+        : 'No Subcategories'; // Handle empty or missing subcategories
+  
+      // Create the base data object with subcategories list as a single field
+      return {
+        CategoryID: item._id,
+        CategoryTitle: item.title,
+        SubTitle: item.subTitle,
+        Type: item.type,
+        BannerImage: item.bannerimg?.url ? `${imgdburl}${item.bannerimg.url}` : 'N/A',
+        ProductBanner: item.productbanner?.url ? `${imgdburl}${item.productbanner.url}` : 'N/A',
+        ImageURL: item.image_Url?.url ? `${imgdburl}${item.image_Url.url}` : 'N/A',
+        Order: item.order,
+        Subcategories: subcategoriesList, // Include consolidated subcategories here
+      };
+    });
+  
+    // Create a new worksheet and workbook
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+  
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Categories');
+  
+    // Export the workbook
+    XLSX.writeFile(workbook, 'categories_with_subcategories.xlsx');
+  };
+
+  
   return (
     <div className="w-full">
       <DashboardHeader />
@@ -654,7 +747,7 @@ function Categoriespage() {
           </div>
 
           <Paper className="w-full flex justify-between p-4 mb-5" elevation={3}>
-            <Button variant="contained" color="primary" className="flex items-center">
+            <Button variant="contained" color="primary" className="flex items-center" onClick={() => exportToExcel(categories)}>
               <MdDownload className="mr-1" /> Export
             </Button>
             <Button variant="contained" color="error" className="flex items-center">
@@ -729,6 +822,22 @@ function Categoriespage() {
                   fullWidth
                   margin="normal"
                 />
+
+                 {/* Image Upload Input */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleSubcategoryImageChange} // Create a handler function for image input
+                  style={{ display: 'block', marginTop: '16px' }}
+                />
+                {selectedSubcategoryImage && (
+                  <img
+                    src={selectedSubcategoryImage}
+                    alt="Selected Subcategory"
+                    style={{ marginTop: '10px', maxWidth: '100%', height: '300px' }}
+                  />
+                )}
+
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleAddSubcategory} color="primary">
@@ -742,25 +851,48 @@ function Categoriespage() {
 
             {/* Modal to edit a subcategory */}
             <Dialog open={editSubcategoryModal} onClose={handleCloseEditSubcategoryModal}>
-              <DialogTitle>Edit Subcategory</DialogTitle>
-              <DialogContent>
-                <TextField
-                  label="Subcategory Name"
-                  value={editedName}
-                  onChange={(e) => setEditedName(e.target.value)}
-                  fullWidth
-                  margin="normal"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleEditSubcategory} color="primary">
-                  Save
-                </Button>
-                <Button onClick={handleCloseEditSubcategoryModal} color="secondary">
-                  Cancel
-                </Button>
-              </DialogActions>
-            </Dialog>
+                <DialogTitle>Edit Subcategory</DialogTitle>
+                <DialogContent>
+                  {/* Input for Subcategory Name */}
+                  <TextField
+                    label="Subcategory Name"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                    fullWidth
+                    margin="normal"
+                  />
+
+                 
+
+                  {/* File input for uploading new images */}
+                  <div className="file-input-container">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleSubcategoryImageChange}
+                      className="file-input"
+                    />
+                  </div>
+
+                  {/* Display a preview of the selected image if available */}
+                  {selectedSubcategoryImage ? (
+                  <img src={selectedSubcategoryImage} alt="Selected Image" className="w-full h-[300px] mb-2" />
+                ) : editedImageUrl ? (
+                  <img src={`${imgdburl}${editedImageUrl}`} alt="Current Image" className="w-full h-[300px] mb-2" />
+                ) : (
+                  <p>No Additional Image</p>
+                )}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleEditSubcategory} color="primary">
+                    Save
+                  </Button>
+                  <Button onClick={handleCloseEditSubcategoryModal} color="secondary">
+                    Cancel
+                  </Button>
+                </DialogActions>
+              </Dialog>
+
 
             {previewCategory && (
             <PreviewCategory category={previewCategory} onClose={handleClosePreview} />
@@ -772,6 +904,7 @@ function Categoriespage() {
               category={selectedCategory}
               onClose={handleCloseEditCategoryModal}
               onSave={handleSaveEditedCategory}
+              setCategories={setCategories}
             />
           )}
 

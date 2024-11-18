@@ -168,7 +168,7 @@ export const categoriesData = [
     subTitle: "",
     image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
     subcategories: [
-      { name: "spoon" , imageUrl:"	https://backend.tinytiaraa.com:8000/uploads/images/products/qapvo2imabmqaf7sdjpv.png" },
+      { name: "spoon" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/qapvo2imabmqaf7sdjpv.png" },
       { name: "glass" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/lcorqs0jxdewmafwiokp.png"},
       { name: "bowl" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/fridyanrb2g7cbsr9hhx.png" },
     ],

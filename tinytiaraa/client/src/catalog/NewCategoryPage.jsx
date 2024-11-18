@@ -203,7 +203,7 @@ function NewCategoryPage() {
                     <img
                       src={categoryData.productbanner}
                       alt="Product Banner Preview"
-                      className="object-cover w-full h-full rounded-lg"
+                      className="object-contain w-full h-full rounded-lg"
                     />
                     <button
                       onClick={() => handleRemoveImage('productbanner')}
@@ -236,7 +236,7 @@ function NewCategoryPage() {
                     <img
                       src={categoryData.image_Url}
                       alt="Category Image Preview"
-                      className="object-cover w-full h-full rounded-lg"
+                      className="object-contain w-full h-full rounded-lg"
                     />
                     <button
                       onClick={() => handleRemoveImage('image_Url')}

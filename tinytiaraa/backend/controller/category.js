@@ -95,46 +95,186 @@ router.get('/get-allcategories', catchAsyncErrors(async (req, res, next) => {
 }));
 
 // add subcategory
-router.post('/add-subcategory', async (req, res) => {
-    const { categoryId, name } = req.body;
-    try {
-      // Find the category and add the new subcategory to the subcategories array
-      const category = await Category.findById(categoryId);
-      category.subcategories.push({ name });
-      await category.save();
-      res.status(200).json({ message: 'Subcategory added successfully' });
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to add subcategory' });
+// router.post('/add-subcategory', async (req, res) => {
+//     const { categoryId, name } = req.body;
+//     try {
+//       // Find the category and add the new subcategory to the subcategories array
+//       const category = await Category.findById(categoryId);
+//       category.subcategories.push({ name });
+//       await category.save();
+//       res.status(200).json({ message: 'Subcategory added successfully' });
+//     } catch (error) {
+//       res.status(500).json({ message: 'Failed to add subcategory' });
+//     }
+//   });
+
+router.post('/add-subcategory', catchAsyncErrors(async (req, res) => {
+  const { categoryId, name, subcategoryImage } = req.body;
+
+  // Check if categoryId and name are provided
+  if (!categoryId || !name) {
+    return res.status(400).json({ message: 'Category ID and Subcategory name are required' });
+  }
+
+  // Helper function to process base64 images
+  const processBase64Image = (imagePath) => {
+    if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
+      const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
+      if (!matches) {
+        console.error('Invalid base64 format:', imagePath);
+        return null;
+      }
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      const extension = mimeType.split('/')[1];
+      const uniqueId = generateRandomString(20);  // Generate unique ID for the image
+      const localImagePath = path.join(__dirname, '../uploads/images/categories', `${uniqueId}.${extension}`);
+
+      fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64')); // Save image to local storage
+      return {
+        public_id: `categories/${uniqueId}`,
+        url: `/uploads/images/categories/${uniqueId}.${extension}`
+      };
+    } else {
+      return { url: imagePath };  // If it's not base64, return the URL directly
     }
-  });
+  };
+
+  try {
+    // Find the category to add the subcategory
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
+    // Process the image if provided
+    let processedSubcategoryImage = null;
+    if (subcategoryImage) {
+      processedSubcategoryImage = processBase64Image(subcategoryImage); // Process image
+    }
+
+    // Add the new subcategory to the category
+    const newSubcategory = {
+      name,
+      image_Url: processedSubcategoryImage || {}  // Add the image if available
+    };
+
+    category.subcategories.push(newSubcategory);
+    await category.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Subcategory added successfully',
+      subcategory: newSubcategory
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to add subcategory' });
+  }
+}));
 
 
 //edit subcategory 
-  router.put('/edit-subcategory/:subcategoryId', async (req, res) => {
+  // router.put('/edit-subcategory/:subcategoryId', async (req, res) => {
+  //   const { subcategoryId } = req.params;
+  //   const { name } = req.body;
+  
+  //   try {
+  //     // Find the category that contains the subcategory
+  //     const category = await Category.findOne({ 'subcategories._id': subcategoryId });
+  
+  //     if (!category) {
+  //       return res.status(404).json({ message: 'Category not found' });
+  //     }
+  
+  //     // Find the subcategory and update its name
+  //     const subcategory = category.subcategories.id(subcategoryId);
+  //     subcategory.name = name;
+  
+  //     // Save the updated category
+  //     await category.save();
+  
+  //     res.status(200).json({ message: 'Subcategory updated successfully', subcategory });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ message: 'Server error' });
+  //   }
+  // });
+
+  router.put('/edit-subcategory/:subcategoryId', catchAsyncErrors(async (req, res) => {
     const { subcategoryId } = req.params;
-    const { name } = req.body;
-  
+    const { name, imageUrl } = req.body;
+
     try {
-      // Find the category that contains the subcategory
-      const category = await Category.findOne({ 'subcategories._id': subcategoryId });
-  
-      if (!category) {
-        return res.status(404).json({ message: 'Category not found' });
-      }
-  
-      // Find the subcategory and update its name
-      const subcategory = category.subcategories.id(subcategoryId);
-      subcategory.name = name;
-  
-      // Save the updated category
-      await category.save();
-  
-      res.status(200).json({ message: 'Subcategory updated successfully', subcategory });
+        // Find the category containing the subcategory
+        const category = await Category.findOne({ 'subcategories._id': subcategoryId });
+
+        if (!category) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+
+        // Find the specific subcategory
+        const subcategory = category.subcategories.id(subcategoryId);
+
+        if (name) {
+            subcategory.name = name; // Update subcategory name if provided
+        }
+
+        // Function to process the image URL or base64 image
+        const processBase64Image = (imagePath) => {
+            if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
+                const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
+                if (!matches) {
+                    console.error('Invalid base64 format:', imagePath);
+                    return null;
+                }
+                const mimeType = matches[1];
+                const base64Data = matches[2];
+                const extension = mimeType.split('/')[1];
+                const uniqueId = generateRandomString(20); // Generate a unique ID for the image
+                const localImagePath = path.join(__dirname, '../uploads/images/categories', `${uniqueId}.${extension}`);
+
+                // Write the image to disk
+                try {
+                    fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
+                } catch (err) {
+                    console.error('Error saving image:', err);
+                    return null;
+                }
+
+                // Return an object with public_id and url
+                return {
+                    public_id: `categories/${uniqueId}`,
+                    url: `/uploads/images/categories/${uniqueId}.${extension}`
+                };
+            } else {
+                // If the image is already a URL, return it as an object with url key
+                return { url: imagePath };
+            }
+        };
+
+        // Process and update the image URL if provided
+        if (imageUrl) {
+            const processedSubcategoryImage = processBase64Image(imageUrl);
+            if (processedSubcategoryImage) {
+                subcategory.image_Url = processedSubcategoryImage; // Set image_Url as an object
+            }
+        }
+
+        // Save the updated category document
+        await category.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Subcategory updated successfully',
+            subcategory
+        });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
+        console.error('Error updating subcategory:', error);
+        res.status(500).json({ message: 'Failed to update subcategory' });
     }
-  });
+}));
+
 
 
   // Delete subcategory
