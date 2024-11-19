@@ -194,7 +194,7 @@ function Categories() {
     <div className="Categories pb-5">
       <h1 className="Categoriesexplore text-[30px] font-[450]">Explore By Category</h1>
 
-      <div className="categoriessection">
+      <div className="categoriessection !relative !overflow-hidden">
         {loading ? (
           // Render skeletons with a greyish color and loading effect
           Array(8).fill(0).map((_, index) => (
