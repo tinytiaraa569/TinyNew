@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { MdChevronRight, MdOutlineArrowDropDown, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
 import navimg from './about.webp'
-import { categoriesData } from '@/static/data';
+// import { categoriesData } from '@/static/data';
 import styles from '@/Styles/styles';
 import Wishlist from '../Wishlist/Wishlist.jsx'
 import { useSelector } from 'react-redux';
@@ -19,12 +19,13 @@ import { BiMenuAltLeft } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
 import { IoIosArrowDown, IoIosArrowUp, IoIosClose, IoMdArrowDropright, IoMdMail } from 'react-icons/io';
 import DropDown from '@/Navbar/DropDown';
-import { backend_url, imgdburl } from '@/server';
+import { backend_url, imgdburl, server } from '@/server';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { usePriceRange } from '@/pricerange/PriceRangeContext';
 import logo from './logo.png'
 import { IoSearchOutline } from 'react-icons/io5';
 import CurrencySelector from '../../CurrencySelector/CurrencySelector';
+import axios from 'axios';
 
 
 function Navbar1() {
@@ -214,6 +215,26 @@ function Navbar1() {
         // const closeDropdown = () => {
         // setIsDropdownVisible(false);
         // };
+
+                const [categoriesData, setCategoriesData] = useState([]);
+                const [Loading, setLoading] = useState(true);
+             useEffect(() => {
+            const fetchCategories = async () => {
+            try {
+                const response = await axios.get(`${server}/get-allcategories`);
+                // Assuming your API response has a `categories` key
+                const filteredData = response.data.categories.filter(i => i.title !== 'Coming Soon ...');
+                setCategoriesData(filteredData);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                alert('Failed to fetch categories');
+            } finally {
+                setLoading(false);
+            }
+            };
+
+            fetchCategories();
+        }, []);
     
         
 
@@ -408,12 +429,12 @@ function Navbar1() {
 
 
 
-                                            <div className='mt-5 ml-7'>
+                                            {/* <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>
                                                     <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
                                                 <div>
-                                                    {categoriesData && categoriesData.filter(i => i.title !== "Coming Soon ...").map((i, index) => (
+                                                    {/* {categoriesData && categoriesData.filter(i => i.title !== "Coming Soon ...").map((i, index) => (
                                                         <div key={index} className={`subcatmain ${styles.noramlFlex} relative`} onClick={() => { submitHandle(i) }}>
                                                             <img
                                                              src={i.image_Url} 
@@ -473,10 +494,64 @@ function Navbar1() {
 
                                                             
                                                          
-                                                        </div>
-                                                    ))}
+                                                        {/* </div>
+                                                    ))} */} 
+
+                                                    
+                                                {/* </div>
+                                            </div> */} 
+
+
+                                        {/* api code working  */}
+
+                                                <div className='mt-5 ml-7'>
+                                                <div className='mb-2 '>
+                                                    <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
-                                            </div>
+                                                <div>
+                                                {categoriesData && categoriesData.map((i, index) => (
+                                                    <div
+                                                    key={index}
+                                                    className="subcatmain relative"
+                                                    onClick={() => submitHandle(i)}
+                                                    >
+                                                    {/* Category Image */}
+                                                    <img
+                                                        loading='lazy'
+                                                        src={`${imgdburl}${i?.image_Url?.url}`}
+                                                        alt={i.title}
+                                                        style={{ width: '30px', height: '35px', objectFit: 'contain', userSelect: 'none' }}
+                                                    />
+                                                    {/* Category Title */}
+                                                    <h3 className="text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]">
+                                                        {i.title}
+                                                    </h3>
+                                                    {/* Conditional Right Arrow Icon */}
+                                                    {(i.title === 'Diamond Pendants' || i.title === 'kids accessories') && (
+                                                        <div className="absolute left-[95%]">
+                                                        <IoMdArrowDropright />
+                                                        </div>
+                                                    )}
+                                                    {/* Subcategories Dropdown */}
+                                                     {(i.title === 'Diamond Pendants' || i.title === 'kids accessories') && (
+                                                        <div className="subcatchild top-3 left-[100%] pt-[2px] pb-2 w-[230px] bg-[#fff] border border-[#eee] absolute z-30 rounded-[3px] shadow-sm">
+                                                        {i.subcategories && i.subcategories.map((val, subIndex) => (
+                                                            <div
+                                                            key={subIndex}
+                                                            className="pl-[10px]"
+                                                            onClick={(e) => { e.stopPropagation(); submitHandle(i, val); }}
+                                                            >
+                                                            <h3 className="m-2 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]">
+                                                                {val.name}
+                                                            </h3>
+                                                            </div>
+                                                        ))}
+                                                        </div>
+                                                    )}
+                                                    </div>
+                                                ))}
+                                                </div>
+                                            </div> 
 
 
 
