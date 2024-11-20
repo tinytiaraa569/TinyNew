@@ -208,7 +208,7 @@ app.post("/order/validate", async (req, res) => {
 //     });
 // });
 
-
+//new code to insert
 app.post("/payu/hash", async (req, res) => {
     function decryptAmount(encryptedAmount, encryptionKey) {
         try {
@@ -271,8 +271,7 @@ app.post("/payu/hash", async (req, res) => {
         // Return the hash and encrypted amount to frontend
         return res.status(200).send({
             hash: hash,
-            transactionId: transactionId,
-           
+            transactionId: transactionId,     
         });
     } catch (error) {
         console.error("Error processing request:", error);
