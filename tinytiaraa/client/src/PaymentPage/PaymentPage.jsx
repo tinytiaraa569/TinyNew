@@ -970,14 +970,79 @@ function PaymentPage() {
     // };
 
     //code for test payu
+    // const handlePayUPayment = async () => {
+    //     try {
+    //         const transactionId = generateTransactionID(); // Use the same transaction ID logic
+    
+    //         const paymentData = {
+    //             name: orderData.shippingAddress.name,
+    //             email: orderData.shippingAddress.email,
+    //             amount: orderData.totalPrice,
+    //             transactionId: transactionId,
+    //             phone: orderData.shippingAddress.phoneNumber,
+    //         };
+    
+    //         // Step 1: Request hash from backend
+    //         const response = await fetch(`${backend_url}payu/hash`, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(paymentData),
+    //         });
+    
+    //         const data = await response.json();
+    //         const { hash } = data;
+    
+    //         const payuOptions = {
+    //             key: "XA5XsM",
+    //             txnid: transactionId,
+    //             amount: orderData.totalPrice,
+    //             productinfo: "TEST PRODUCT",
+    //             firstname: orderData.shippingAddress.name,
+    //             email: orderData.shippingAddress.email,
+    //             phone: orderData.shippingAddress.phoneNumber,
+    //             surl: `${backend_url}payu/success`,
+    //             furl: `${backend_url}payu/failure`,
+    //             udf1: 'details1',
+    //             udf2: 'details2',
+    //             udf3: 'details3',
+    //             udf4: 'details4',
+    //             udf5: 'details5',
+    //             hash: hash,
+    //         };
+    
+    //         // Redirect to PayU payment gateway
+    //         const form = document.createElement('form');
+    //         form.setAttribute('method', 'POST');
+    //         form.setAttribute('action', 'https://secure.payu.in/_payment');
+    
+    //         Object.keys(payuOptions).forEach(key => {
+    //             const hiddenField = document.createElement('input');
+    //             hiddenField.setAttribute('type', 'hidden');
+    //             hiddenField.setAttribute('name', key);
+    //             hiddenField.setAttribute('value', payuOptions[key]);
+    //             form.appendChild(hiddenField);
+    //         });
+    
+    //         document.body.appendChild(form);
+    //         form.submit();
+    //     } catch (error) {
+    //         console.error("Error in handlePayUPayment:", error);
+    //         alert("Error occurred while processing payment.");
+    //     }
+    // };
+
+    // Helper function to handle conversion
+   
     const handlePayUPayment = async () => {
         try {
-            const transactionId = generateTransactionID(); // Use the same transaction ID logic
+            const transactionId = generateTransactionID(); // Use your transaction ID logic
     
             const paymentData = {
                 name: orderData.shippingAddress.name,
                 email: orderData.shippingAddress.email,
-                amount: orderData.totalPrice,
+                amount: orderData.totalPrice, // Send plain amount here for hash generation
                 transactionId: transactionId,
                 phone: orderData.shippingAddress.phoneNumber,
             };
@@ -992,27 +1057,27 @@ function PaymentPage() {
             });
     
             const data = await response.json();
-            const { hash } = data;
+            const { hash } = data; // Only use hash from backend response
     
             const payuOptions = {
-                key: "XA5XsM",
+                key: "XA5XsM", // Your PayU merchant key
                 txnid: transactionId,
-                amount: orderData.totalPrice,
+                amount: orderData.totalPrice, // Use plain amount here, not encrypted
                 productinfo: "TEST PRODUCT",
                 firstname: orderData.shippingAddress.name,
                 email: orderData.shippingAddress.email,
                 phone: orderData.shippingAddress.phoneNumber,
-                surl: `${backend_url}payu/success`,
-                furl: `${backend_url}payu/failure`,
+                surl: `${backend_url}payu/success`, // Success URL
+                furl: `${backend_url}payu/failure`, // Failure URL
                 udf1: 'details1',
                 udf2: 'details2',
                 udf3: 'details3',
                 udf4: 'details4',
                 udf5: 'details5',
-                hash: hash,
+                hash: hash, // Use hash generated from backend
             };
     
-            // Redirect to PayU payment gateway
+            // Create a form and submit to PayU payment gateway
             const form = document.createElement('form');
             form.setAttribute('method', 'POST');
             form.setAttribute('action', 'https://secure.payu.in/_payment');
@@ -1032,8 +1097,7 @@ function PaymentPage() {
             alert("Error occurred while processing payment.");
         }
     };
-
-    // Helper function to handle conversion
+   
     const convertPrice = (price) => (price * (conversionRates[currency] || 1)).toFixed(2);
 
     const gstAmount = (orderData?.subTotalPrice || 0) * 0.03;

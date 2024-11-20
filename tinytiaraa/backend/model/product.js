@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
     },
     subcategory: {
         type: String,
-        required: [true, 'Please Enter Product Subcategory']
+       
     },
     tags: {
         type: String,

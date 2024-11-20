@@ -170,43 +170,102 @@ app.post("/order/validate", async (req, res) => {
 
 // PayU payment initiation route
 
+// app.post("/payu/hash", async (req, res) => {
+//     const { name, email, amount, transactionId } = req.body;
+
+//     console.log("Received data:", { name, email, amount, transactionId });
+
+//     const data = {
+//         key: process.env.PAYU_MERCHANT_KEY,
+//         salt: process.env.PAYU_SALT,
+//         txnid: transactionId,
+//         amount: amount,
+//         productinfo: "TEST PRODUCT",
+//         firstname: name,
+//         email: email,
+//         udf1: 'details1',
+//         udf2: 'details2',
+//         udf3: 'details3',
+//         udf4: 'details4',
+//         udf5: 'details5',
+
+//     };
+
+//     const cryp = crypto.createHash('sha512');
+//     const string = data.key + '|' + data.txnid + '|' + data.amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
+
+//     console.log("String to hash:", string);
+
+//     cryp.update(string);
+//     const hash = cryp.digest('hex');
+
+//     console.log("Generated hash:", hash);
+
+//     return res.status(200).send({
+//         hash: hash,
+//         transactionId: transactionId
+//     });
+// });
+
+
 app.post("/payu/hash", async (req, res) => {
-    const { name, email, amount, transactionId } = req.body;
+    function encryptAmount(amount, encryptionKey) {
+        try {
+            const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(encryptionKey), Buffer.alloc(16, 0)); // IV of 16 null bytes (not recommended for production)
+            let encrypted = cipher.update(amount.toString(), 'utf8', 'hex');
+            encrypted += cipher.final('hex');
+            return encrypted;
+        } catch (error) {
+            console.error("Encryption error:", error);
+            throw new Error("Encryption failed");
+        }
+    }
 
-    console.log("Received data:", { name, email, amount, transactionId });
+    try {
+        const { name, email, amount, transactionId } = req.body;
+        const encryptionKey = 'qwertyuiopasdfghjklzxcvbnm123456'; // Replace with your actual key
 
-    const data = {
-        key: process.env.PAYU_MERCHANT_KEY,
-        salt: process.env.PAYU_SALT,
-        txnid: transactionId,
-        amount: amount,
-        productinfo: "TEST PRODUCT",
-        firstname: name,
-        email: email,
-        udf1: 'details1',
-        udf2: 'details2',
-        udf3: 'details3',
-        udf4: 'details4',
-        udf5: 'details5',
+        console.log("Received data:", { name, email, transactionId });
 
-    };
+        // Encrypt the amount
+        const encryptedAmount = encryptAmount(amount, encryptionKey);
 
-    const cryp = crypto.createHash('sha512');
-    const string = data.key + '|' + data.txnid + '|' + data.amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
+        const data = {
+            key: process.env.PAYU_MERCHANT_KEY,
+            salt: process.env.PAYU_SALT,
+            txnid: transactionId,
+            amount: encryptedAmount, // Using encrypted amount
+            productinfo: "TEST PRODUCT",
+            firstname: name,
+            email: email,
+            udf1: 'details1',
+            udf2: 'details2',
+            udf3: 'details3',
+            udf4: 'details4',
+            udf5: 'details5',
+        };
 
-    console.log("String to hash:", string);
+        // Generate the hash using the original, unencrypted amount
+        const cryp = crypto.createHash('sha512');
+        const string = data.key + '|' + data.txnid + '|' + amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
 
-    cryp.update(string);
-    const hash = cryp.digest('hex');
+        console.log("String to hash:", string);
 
-    console.log("Generated hash:", hash);
+        cryp.update(string);
+        const hash = cryp.digest('hex');
 
-    return res.status(200).send({
-        hash: hash,
-        transactionId: transactionId
-    });
+        console.log("Generated hash:", hash);
+
+        return res.status(200).send({
+            hash: hash,
+            transactionId: transactionId,
+            encryptedAmount: encryptedAmount // Send the encrypted amount to the frontend
+        });
+    } catch (error) {
+        console.error("Error processing request:", error);
+        res.status(500).send({ error: "Server error occurred" });
+    }
 });
-
 
 // payu  new route crypto.hash
 

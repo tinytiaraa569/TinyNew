@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/popover"
 import EnamelColorsList from './EnamelColorsList'
 import { TfiHandDrag } from 'react-icons/tfi'
+import axios from 'axios'
+import { server } from '@/server'
 
 function CreateProduct() {
     const { seller } = useSelector((state) => state.seller)
@@ -1555,6 +1557,26 @@ function CreateProduct() {
         teens: false,
         mom: false,
     });
+    // const[categoriesData,setcategoriesData] =useState([])
+    // const[Loading,setLoading] =useState(true)
+
+
+    // useEffect(() => {
+    //     const fetchCategories = async () => {
+    //       try {
+    //         const response = await axios.get(`${server}/get-allcategories`);
+    //         setcategoriesData(response.data.categories);
+    //       } catch (error) {
+    //         console.error('Error fetching categories:', error);
+    //       } finally {
+    //         setLoading(false);
+    //       }
+    //     };
+    
+    //     fetchCategories();
+    //   }, []);
+
+
 
 
     const handleSubmit = (e) => {
