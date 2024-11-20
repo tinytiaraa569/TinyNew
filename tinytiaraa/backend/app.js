@@ -8,6 +8,7 @@ const path = require("path")
 const crypto = require('crypto');
 const mongoose = require('mongoose')
 require('dotenv').config();
+const CryptoJS = require('crypto-js');
 
 const app = express()
 
@@ -209,15 +210,25 @@ app.post("/order/validate", async (req, res) => {
 
 
 app.post("/payu/hash", async (req, res) => {
-    function encryptAmount(amount, encryptionKey) {
+    function decryptAmount(encryptedAmount, encryptionKey) {
         try {
-            const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(encryptionKey), Buffer.alloc(16, 0)); // IV of 16 null bytes (not recommended for production)
-            let encrypted = cipher.update(amount.toString(), 'utf8', 'hex');
-            encrypted += cipher.final('hex');
-            return encrypted;
+            // The encrypted string in the format: U2FsdGVkX18fQ0ir73v9GOPIA52hYrKuezlqaxuz4U0=
+            // CryptoJS AES encrypts the data in base64 and includes a header like 'U2FsdGVkX1' for OpenSSL encryption compatibility.
+            
+            // Decode the base64 encrypted data
+            const encryptedBytes = CryptoJS.AES.decrypt(encryptedAmount, encryptionKey);
+    
+            // If the decryption process failed
+            if (!encryptedBytes) {
+                throw new Error("Decryption failed");
+            }
+    
+            // Convert the decrypted bytes back to a string
+            const decryptedText = encryptedBytes.toString(CryptoJS.enc.Utf8);
+            return decryptedText; // Return the decrypted amount
         } catch (error) {
-            console.error("Encryption error:", error);
-            throw new Error("Encryption failed");
+            console.error("Decryption error:", error);
+            throw new Error("Decryption failed");
         }
     }
 
@@ -225,16 +236,17 @@ app.post("/payu/hash", async (req, res) => {
         const { name, email, amount, transactionId } = req.body;
         const encryptionKey = 'qwertyuiopasdfghjklzxcvbnm123456'; // Replace with your actual key
 
-        console.log("Received data:", { name, email, transactionId });
+        console.log("Received data:", { name, email, transactionId ,amount });
 
-        // Encrypt the amount
-        const encryptedAmount = encryptAmount(amount, encryptionKey);
-
+        // Encrypt the amount for PayU
+        const decryptedAmount = decryptAmount(amount, encryptionKey);
+        console.log("Decrypted amount:", decryptedAmount); // Should log the orig
+        // Prepare the data to generate the hash
         const data = {
             key: process.env.PAYU_MERCHANT_KEY,
             salt: process.env.PAYU_SALT,
             txnid: transactionId,
-            amount: encryptedAmount, // Using encrypted amount
+            amount: decryptedAmount, // Use plain amount here for hash generation
             productinfo: "TEST PRODUCT",
             firstname: name,
             email: email,
@@ -247,7 +259,7 @@ app.post("/payu/hash", async (req, res) => {
 
         // Generate the hash using the original, unencrypted amount
         const cryp = crypto.createHash('sha512');
-        const string = data.key + '|' + data.txnid + '|' + amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
+        const string = data.key + '|' + data.txnid + '|' + data.amount + '|' + data.productinfo + '|' + data.firstname + '|' + data.email + '|' + data.udf1 + '|' + data.udf2 + '|' + data.udf3 + '|' + data.udf4 + '|' + data.udf5 + '||||||' + data.salt;
 
         console.log("String to hash:", string);
 
@@ -256,10 +268,11 @@ app.post("/payu/hash", async (req, res) => {
 
         console.log("Generated hash:", hash);
 
+        // Return the hash and encrypted amount to frontend
         return res.status(200).send({
             hash: hash,
             transactionId: transactionId,
-            encryptedAmount: encryptedAmount // Send the encrypted amount to the frontend
+           
         });
     } catch (error) {
         console.error("Error processing request:", error);
