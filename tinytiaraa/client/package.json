@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "country-state-city": "^3.2.1",
     "crypto-js": "^4.2.0",
+    "exceljs": "^4.4.0",
     "framer-motion": "^11.11.10",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
@@ -38,6 +39,7 @@
     "jspdf-autotable": "^3.8.2",
     "lucide-react": "^0.400.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-confetti-explosion": "^2.1.2",
     "react-custom-roulette": "^1.4.1",
     "react-dnd": "^16.0.1",
@@ -74,6 +76,8 @@
     "timeago.js": "^4.0.2",
     "twilio": "^5.3.3",
     "xlsx": "^0.18.5",
+    "xlsx-populate": "^1.21.0",
+    "xlsx-style": "^0.8.13",
     "xzoom": "^1.0.15"
   },
   "devDependencies": {

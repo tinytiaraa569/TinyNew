@@ -884,6 +884,13 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
                   <span className="font-[500]">Enamel Colour:</span> {data.selectedEnamelColor}
                 </h3>
               )}
+              {data?.selectedCombination && (
+                <h3 className="text-[0.6rem]">
+                  <span className="font-[500]">Combination Colour:</span> {data?.selectedCombination}
+                </h3>
+              )}
+
+
 
               {/* Render chain option only if showWithChain is true */}
               {shouldShowChainOptions && (

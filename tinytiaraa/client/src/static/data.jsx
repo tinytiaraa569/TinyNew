@@ -16,13 +16,10 @@ import braceletsbanner from './productpage/braceletsbanner.jpg'
 import setsbanner from './productpage/setsbanner.jpg'
 import mombanner from './productpage/mombanner.jpg'
 import religiousbanner from './productpage/religiousbanner.jpg'
+import pearlbanner from './productpage/pearlbanner.jpg'
+
 
 import set from './productpage/set.webp'
-
-
-
-
-
 
 
 
@@ -64,31 +61,32 @@ export const categoriesData = [
     image_Url:
       "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388144518.png",
   },
-  // {
-  //   id: 3,
-  //   title: "Pearl Collection",
-  //   subTitle: "",
-  //   image_Url:
-  //     "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
+  {
+    id: 3,
+    title: "Pearl Collection",
+    subTitle: "",
+    image_Url:
+      "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4388136306.png",
 
-  //   bannerimg: pearlimg,
-  //   productbanner: pendantbanner,
-  //   subcategories: [
-  //     { name: "No Products" },
+    bannerimg: pearlimg,
+     type:'Gold',
+    productbanner: pearlbanner,
+    subcategories: [
+      { name: "No Products" },
 
 
-  //   ],
-  //   extraimgurl:[
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png"},
-  //     {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png"},
-  //   ]
+    ],
+    // extraimgurl:[
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932466/pearl/aqpvh5efmqorimrfcfoi.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932441/pearl/vtwqjs16ndzoquyyruho.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932406/pearl/iqng1yqdw8qbpo9p1v3p.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932386/pearl/ghz6lhn9ji0fxt6vabc3.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932358/pearl/knycdbd0pfhgpznojz8h.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932334/pearl/dyd8wjsrpjka5edcezgk.png"},
+    //   {url:"https://res.cloudinary.com/ddaef5aw1/image/upload/v1727932315/pearl/zo1kytzffku72mmvosyh.png"},
+    // ]
    
-  // },
+  },
   {
     id: 4,
     title: "Diamond Black Bead Bracelets",
@@ -184,6 +182,20 @@ export const categoriesData = [
     type:'silver'
   },
   {
+    id: 10,
+    title: "Tabeez Collection",
+    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
+
+    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
+
+    subTitle: "",
+    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
+    subcategories: [
+      { name: "No Products" }
+    ],
+    type:'silver'
+   
+  },{
     id: 8,
     title: "Coming Soon ...",
     bannerimg: meandmomimg,
@@ -243,21 +255,6 @@ export const categoriesData = [
         
     ]
   },
-  {
-    id: 10,
-    title: "Tabeez Collection",
-    bannerimg: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
-
-    productbanner: "https://backend.tinytiaraa.com:8000/uploads/images/categories/38d46aca1fdd02d40e20.png",
-
-    subTitle: "",
-    image_Url: "https://d2j6dbq0eux0bg.cloudfront.net/images/90976509/4320761225.png",
-    subcategories: [
-      { name: "No Products" }
-    ],
-    type:'silver'
-   
-  }
 ];
 
 // product Data

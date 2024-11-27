@@ -264,7 +264,50 @@ function ProductDetails({ data }) {
                 }
 
                 stockMessage = `Stock for ${selectedEnamelColor} with ${selectedMetalColor}: ${availableStock}`;
-            } else if (selectedMetalColor) {
+            } else if (selectedCombination) {
+                const formattedCombination = selectedCombination
+                    .toLowerCase()
+                    .replace(/[_+\s]/g, ''); // Normalize combination name
+                console.log('Formatted Combination:', formattedCombination);
+            
+                const combinationStock = data?.combinationStocks?.[formattedCombination];
+                console.log('Resolved Combination Stock:', combinationStock);
+            
+                if (combinationStock) {
+                    const selectedMetalKey = selectedMetalColor.toLowerCase().replace(/\s/g, ''); // Normalize metal key
+                    console.log('Selected Metal Key:', selectedMetalKey);
+            
+                    const yellowGoldStock = combinationStock?.yellowGold || 0;
+                    const roseGoldStock = combinationStock?.roseGold || 0;
+                    const whiteGoldStock = combinationStock?.whiteGold || 0;
+            
+                    console.log('Yellow Gold Stock:', yellowGoldStock);
+                    console.log('Rose Gold Stock:', roseGoldStock);
+                    console.log('White Gold Stock:', whiteGoldStock);
+            
+                    if (selectedMetalKey === 'yellowgold') {
+                        availableStock = yellowGoldStock;
+                    } else if (selectedMetalKey === 'rosegold') {
+                        availableStock = roseGoldStock;
+                    } else if (selectedMetalKey === 'whitegold') {
+                        availableStock = whiteGoldStock;
+                    }
+            
+                    // Check if stock is available
+                    if (availableStock === 0 || availableStock === null) {
+                        availableStock = 0;
+                        stockMessage = `Stock for ${formattedCombination} with ${selectedMetalKey}: ${availableStock}`;
+                        console.warn(stockMessage);
+                        return;
+                    }
+                } else {
+                    console.warn(`Combination not found: ${formattedCombination}`);
+                    availableStock = 0;
+                }
+            
+            }
+            
+            else if (selectedMetalColor) {
                 // Construct the key to access the specific metal color stock
                 const metalKey = `${selectedMetalColor.replace(/ /g, '')}clrStock`;
 
@@ -299,6 +342,7 @@ function ProductDetails({ data }) {
                 showWithChain: showWithChain,
                 selectedEnamelColor: selectedEnamelColor,
                 selectedChainSize: selectedChainSize, // Add selected chain size,
+                selectedCombination: selectedCombination,
                 chainPrice: chainPrice
             };
             dispatch(addToCart(cartData));
@@ -535,7 +579,7 @@ function ProductDetails({ data }) {
         // Reset validation error on color or chain change
 
         setValidationError('');
-    }, [selectedColorIndex, showWithChain, selectedColor, selectedEnamelColor]);
+    }, [selectedColorIndex, showWithChain, selectedColor, selectedEnamelColor ]);
 
     // Determine if chain options should be displayed
     const shouldShowChainOptions = data.withchainimages.length > 0 || data.withchainoutimages.length > 0;
@@ -668,6 +712,61 @@ function ProductDetails({ data }) {
         );
     };
 
+    // --------------------------------
+
+    const [selectedCombination, setSelectedCombination] = useState(''); 
+
+    const getAvailableCombinationImages = (combinationImages, selectedMetalColor) => {
+        console.log(combinationImages, "+===================");
+    
+        return Object.entries(combinationImages)
+            .filter(([combination, metalData]) => {
+                const baseCombination = combination.toLowerCase().replace(/_/g, '');
+    
+                // Metal colors for each combination (yellowGold, roseGold, whiteGold)
+                const metalKeys = ['yellowGold', 'roseGold', 'whiteGold'];
+    
+                if (selectedMetalColor) {
+                    // If a specific metal color is selected, filter for that metal
+                    const metalKey = selectedMetalColor // Convert selected color to lowercase
+                    return Array.isArray(metalData[metalKey]) && metalData[metalKey].length > 0;
+                } else {
+                    // If no specific metal color is selected, show all available metal colors
+                    return metalKeys.some(key => Array.isArray(metalData[key]) && metalData[key].length > 0);
+                }
+            })
+            .map(([combination, metalData]) => {
+                const baseCombination = combination.toLowerCase().replace(/_/g, '');
+    
+                // Filter metal colors that have available images
+                const availableMetalKeys = ['yellowGold', 'roseGold', 'whiteGold'].filter(key => 
+                    Array.isArray(metalData[key]) && metalData[key].length > 0
+                );
+    
+                // Flatten the images of the available metal colors
+                const images = availableMetalKeys.map(key => metalData[key]).flat();
+    
+                return {
+                    combinationName: combination.replace(/_/g, ' '), // Format combination name (e.g., blueblack -> Blue Black)
+                    availableMetalKeys,
+                    images
+                };
+            });
+    };
+    
+    // In your component, call the function with the appropriate data and selected metal color
+    const availableCombinationImages = getAvailableCombinationImages(
+        data.combinationmetalImages || {}, // Ensure data is available
+        selectedColor !== null ? ["yellowGold", "roseGold", "whiteGold"][selectedColor] : null
+    );
+    
+    console.log(availableCombinationImages, "see the available combination images");
+    
+    // Check if there are available combinations
+    const shouldShowCombinations = availableCombinationImages.length > 0;
+    console.log(shouldShowCombinations, "----------------------------");
+    
+
 
 
     function getAvailableMetalColors(metalColors) {
@@ -682,20 +781,78 @@ function ProductDetails({ data }) {
     }
     const availableMetalColors = getAvailableMetalColors(data.MetalColor || {});
     const shouldShowMetalColors = availableMetalColors.length > 0;
+    
+
+    // const imagesArray = (() => {
+    //     const enamelColorData = data.enamelColors[selectedEnamelColor] || {};
+    //     console.log(enamelColorData, "see enamel data");
+    //     console.log(selectedEnamelColor, "see enamel color");
+
+    //     if (selectedEnamelColor) {
+    //         const formattedColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+
+    //         if (selectedColor !== null) {
+    //             // Construct the enamel key for the selected metal color
+    //             const enamelKey = `${formattedColor}${["YellowGold", "RoseGold", "WhiteGold"][selectedColor]}clr`;
+    //             console.log("Enamel Key:", enamelKey);
+
+    //             // Return images for the selected enamel and metal color
+    //             const images = enamelColorData[enamelKey] || [];
+    //             if (images.length > 0) {
+    //                 return images;
+    //             } else {
+    //                 // Reset selectedEnamelColor if no images are found for the selected metal color
+    //                 setSelectedEnamelColor(null);
+    //             }
+    //         } else {
+    //             // Initial state: Show all images for the selected enamel color across all metal colors
+    //             const availableKeys = getAvailableEnamelColors(data.enamelColors || {}, null)
+    //                 .find(color => color._id === selectedEnamelColor)?.availableKeys || [];
+
+    //             return availableKeys.flatMap(key => enamelColorData[key] || []);
+    //         }
+    //     }
+
+    //      // Handle selected metal colors when no enamel color is selected
+    //      if (selectedColor === 0 ) {
+    //         return data.MetalColor.YellowGoldclr || []; // Return Yellow Gold images
+            
+    //     } else if (selectedColor === 1) {
+    //         return data.MetalColor.RoseGoldclr || []; // Return Rose Gold images
+    //     } else if (selectedColor === 2) {
+    //         return data.MetalColor.WhiteGoldclr || []; // Return White Gold images
+    //     }
+
+
+    //     // Default to metal color images if no enamel color is selected
+    //     if (showWithChain === true) {
+    //         return data.withchainimages || []; // Return chain images if the chain is selected
+    //     } else if (showWithChain === false) {
+    //         return data.withchainoutimages || []; // Return non-chain images if the chain is not selected
+    //     }
+    
+       
+    
+
+    //     return data.images || [];
+    // })();
+
 
     const imagesArray = (() => {
         const enamelColorData = data.enamelColors[selectedEnamelColor] || {};
+        const combinationData = data.combinationmetalImages || {};
         console.log(enamelColorData, "see enamel data");
         console.log(selectedEnamelColor, "see enamel color");
-
+        
+        // Handle Enamel Color and Metal Color Images
         if (selectedEnamelColor) {
             const formattedColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-
+            
             if (selectedColor !== null) {
                 // Construct the enamel key for the selected metal color
                 const enamelKey = `${formattedColor}${["YellowGold", "RoseGold", "WhiteGold"][selectedColor]}clr`;
                 console.log("Enamel Key:", enamelKey);
-
+    
                 // Return images for the selected enamel and metal color
                 const images = enamelColorData[enamelKey] || [];
                 if (images.length > 0) {
@@ -708,36 +865,83 @@ function ProductDetails({ data }) {
                 // Initial state: Show all images for the selected enamel color across all metal colors
                 const availableKeys = getAvailableEnamelColors(data.enamelColors || {}, null)
                     .find(color => color._id === selectedEnamelColor)?.availableKeys || [];
-
+    
                 return availableKeys.flatMap(key => enamelColorData[key] || []);
             }
         }
+        // Handle selected combination of metal color and enamel color
+                if (selectedCombination) {
+                    const formattedCombination = selectedCombination.toLowerCase().replace(/_/g, '');
+                    console.log("Formatted Combination:", formattedCombination);
 
-         // Handle selected metal colors when no enamel color is selected
-         if (selectedColor === 0 ) {
+                    const combinationKey = combinationData[formattedCombination];
+                    console.log("Combination Key Data:", combinationKey);
+
+                    if (combinationKey) {
+                        if (selectedColor !== null) {
+                            // Handle specific metal color selection
+                            const selectedMetal = ["yellowGold", "roseGold", "whiteGold"][selectedColor]; // Determine the metal color key
+
+                            // Ensure the selectedMetal key exists and contains images
+                            if (selectedMetal && Array.isArray(combinationKey[selectedMetal])) {
+                                const images = combinationKey[selectedMetal];
+                                if (images.length > 0) {
+                                    return images; // Return images for the selected combination and metal color
+                                } else {
+                                    // console.warn(`No images found for combination: ${selectedCombination}, metal: ${selectedMetal}`);
+                                }
+                            } else {
+                                // console.warn(`Invalid metal color or no images found for combination: ${selectedCombination}`);
+                            }
+                        } 
+                        
+                        // Check for all images related to the specific combination, ignoring metal color
+                        const availableCombinationImages = [];
+                        const availableMetalKeys = ["yellowGold", "roseGold", "whiteGold"];
+
+                        // Collect all images across metal colors for the specific combination
+                        availableMetalKeys.forEach(key => {
+                            if (Array.isArray(combinationKey[key])) {
+                                availableCombinationImages.push(...combinationKey[key]);
+                            }
+                        });
+
+                        if (availableCombinationImages.length > 0) {
+                            return availableCombinationImages; // Return all images for the selected combination
+                        } else {
+                            // console.warn(`No general images found for combination: ${selectedCombination}`);
+                        }
+                    } else {
+                        // console.warn(`Invalid combination: ${selectedCombination}`);
+                    }
+                }
+        
+    
+        // Handle selected metal colors when no enamel color is selected
+        if (selectedColor === 0) {
             return data.MetalColor.YellowGoldclr || []; // Return Yellow Gold images
-            
         } else if (selectedColor === 1) {
             return data.MetalColor.RoseGoldclr || []; // Return Rose Gold images
         } else if (selectedColor === 2) {
             return data.MetalColor.WhiteGoldclr || []; // Return White Gold images
         }
-
-
-        // Default to metal color images if no enamel color is selected
+    
+        // Handle Combination Color Images
+       
+        // Default behavior: Show images based on chain selection
         if (showWithChain === true) {
             return data.withchainimages || []; // Return chain images if the chain is selected
         } else if (showWithChain === false) {
             return data.withchainoutimages || []; // Return non-chain images if the chain is not selected
         }
     
-       
-    
-
+        // Fallback: Return general images if no specific selection is made
         return data.images || [];
     })();
-
     console.log(imagesArray, "see image array");
+
+    // --------------------------------
+
 
     const [finalPrice, setFinalPrice] = useState(data.discountPrice);
     const [finalOriginalPrice, setFinalOriginalPrice] = useState(data.originalPrice);
@@ -880,7 +1084,7 @@ function ProductDetails({ data }) {
     const selectedImage = (() => {
         let imageUrl = null;
     
-        if (selectedColor !== null && selectedEnamelColor === null) {
+        if (selectedColor !== null && selectedEnamelColor === null && selectedCombination === null) {
             const metalColorImages = [
                 data.MetalColor.YellowGoldclr || [],
                 data.MetalColor.RoseGoldclr || [],
@@ -903,8 +1107,7 @@ function ProductDetails({ data }) {
     
         return imageUrl;
     })();
-    
-    
+   
    
    
     return (
@@ -1412,195 +1615,481 @@ function ProductDetails({ data }) {
   </div>
 </div> */}
 
+                    <div className="instockcon">
+                    <div className="instockconflex">
+                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {(() => {
 
-<div className="instockcon">
-  <div className="instockconflex">
-    <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {(() => {
-        // Handle case when both enamel and metal colors are selected
-        if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
-          const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-          const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
-
-          console.warn("enamel code running ")
+                                                        
+                           
 
 
-          if (!metalColor) return  <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />; // Fallback if metalColor is undefined
+                            // Handle case when both enamel and metal colors are selected
+                            if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
+                            const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                            const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
 
-          const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
-
-          // Log for debugging
-          console.log('Constructed Stock Key:', enamelMetalStockKey);
-          console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
-
-          const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
-
-          // Debug stock value
-          console.log('Enamel-Metal Stock Value:', enamelMetalStock);
-
-          return enamelMetalStock > 0 ? 
-           <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> 
-           :  
-           <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />;
-        }
-
-        // Handle case when only metal color is selected
-        if (selectedColor >= 0 && shouldShowEnamel === false) {
-          const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
-
-          console.warn("metal code running ")
-
-          if (!metalStockKey) return "Out of Stock"; // Fallback if metalStockKey is undefined
-
-          const metalStock = data?.Metalcolorstock?.[metalStockKey];
-
-          // Debug metal stock value
-          console.log('Metal Stock Key:', metalStockKey);
-          console.log('Metal Stock Value:', metalStock);
-
-          if (metalStock === null || metalStock === 0) {
-          console.warn("normal code running ")
-
-            return  <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />; // Explicitly handle null and zero stock
-          } else if (metalStock > 0) {
-            return <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> ;
-          }
-        }
-
-        // Handle global stock fallback when no specific color is selected
-        if (data?.stock !== null && data?.stock !== undefined) {
-          return data.stock > 0 ?  
-          <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> 
-           :
-           <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />;
-        }
-
-        return  <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> ; // Default fallback
-      })()}
-      </svg>
-      
-    <span
-      style={{
-        color: (() => {
-          // Handle case when both enamel and metal colors are selected
-          if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
-            const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-            const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
-
-            if (!metalColor) return '#FF0000'; // Fallback if metalColor is undefined
-
-            // Construct the enamel-metal stock key
-            const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
-
-            // Log for debugging purposes
-            console.log('Constructed Stock Key:', enamelMetalStockKey);
-            console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
-
-            const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
-
-            // Debug stock data
-            console.log('Enamel-Metal Stock Value:', enamelMetalStock);
-
-            return enamelMetalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
-          }
-
-          // Handle case when only metal color is selected
-          if (selectedColor >= 0 && shouldShowEnamel === false) {
-            const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
-
-            if (!metalStockKey) return '#FF0000'; // Fallback if metalStockKey is undefined
-
-            const metalStock = data?.Metalcolorstock?.[metalStockKey] ;
-
-            console.log('Metal Stock Key:', metalStockKey);
-            console.log('Metal Stock Value:', metalStock);
-
-          
-            // // Initial rendering: If the stock data is not available, assume in stock
-            // if (metalStock === undefined ) {
-            //     console.warn("Initial state running, assuming stock is available");
-            //     return "#0B8D08"; // Default to green
-            // }
-            // Explicitly handle null and zero stock
-            if (metalStock === 0 || metalStock === null ) {
-                // console.warn("normal code running");
-                return "#FF0000"; // Red for out of stock
-            } else {
-                return "#0B8D08"; // Green for in stock
-            }
-           
-
-             // Green if in stock, red if out of stock
-          }
-
-          // Handle global stock fallback when no specific color is selected
-          if (data?.stock !== null && data?.stock !== undefined) {
-            return data.stock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
-          }
-
-          return '#0B8D08'; // Default fallback color
-        })()
-      }}
-      className="text-[14px] font-medium leading-[24px]"
-    >
-      {(() => {
-        // Handle case when both enamel and metal colors are selected
-        if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
-          const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
-          const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
-
-          console.warn("enamel code running ")
+                            console.warn("enamel code running ")
 
 
-          if (!metalColor) return "Out of Stock"; // Fallback if metalColor is undefined
+                            if (!metalColor) return  <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />; // Fallback if metalColor is undefined
 
-          const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+                            const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
 
-          // Log for debugging
-          console.log('Constructed Stock Key:', enamelMetalStockKey);
-          console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
+                            // Log for debugging
+                            console.log('Constructed Stock Key:', enamelMetalStockKey);
+                            console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
 
-          const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+                            const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
 
-          // Debug stock value
-          console.log('Enamel-Metal Stock Value:', enamelMetalStock);
+                            // Debug stock value
+                            console.log('Enamel-Metal Stock Value:', enamelMetalStock);
 
-          return enamelMetalStock > 0 ? "In Stock" : "Out of Stock";
-        }
+                            return enamelMetalStock > 0 ? 
+                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> 
+                            :  
+                            <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />;
+                            }
 
-        // Handle case when only metal color is selected
-        if (selectedColor >= 0 && shouldShowEnamel === false) {
-          const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
+                            // Handle case when only metal color is selected
+                            if (selectedColor >= 0 && shouldShowEnamel === false && shouldShowCombinations === false) {
+                            const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
 
-          console.warn("metal code running ")
+                            console.warn("metal code running ")
 
-          if (!metalStockKey) return "Out of Stock"; // Fallback if metalStockKey is undefined
+                            if (!metalStockKey) return "Out of Stock"; // Fallback if metalStockKey is undefined
 
-          const metalStock = data?.Metalcolorstock?.[metalStockKey];
+                            const metalStock = data?.Metalcolorstock?.[metalStockKey];
 
-          // Debug metal stock value
-          console.log('Metal Stock Key:', metalStockKey);
-          console.log('Metal Stock Value:', metalStock);
+                            // Debug metal stock value
+                            console.log('Metal Stock Key:', metalStockKey);
+                            console.log('Metal Stock Value:', metalStock);
 
-          if (metalStock === null || metalStock === 0) {
-          console.warn("normal code running ")
+                            if (metalStock === null || metalStock === 0) {
+                            console.warn("normal code running ")
 
-            return "Out of Stock"; // Explicitly handle null and zero stock
-          } else if (metalStock > 0) {
-            return "In Stock";
-          }
-        }
+                                return  <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />; // Explicitly handle null and zero stock
+                            } else if (metalStock > 0) {
+                                return <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> ;
+                            }
+                            }
 
-        // Handle global stock fallback when no specific color is selected
-        if (data?.stock !== null && data?.stock !== undefined) {
-          return data.stock > 0 ? "In Stock" : "Out of Stock";
-        }
+                            // Handle global stock fallback when no specific color is selected
+                            if (data?.stock !== null && data?.stock !== undefined) {
+                            return data.stock > 0 ?  
+                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> 
+                            :
+                            <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />;
+                            }
 
-        return "In Stock"; // Default fallback
-      })()}
-    </span>
-  </div>
-</div>
+                            if (selectedCombination !== null && selectedCombination !== undefined && selectedColor !== null && shouldShowEnamel === false) {
+                                console.warn("Product combination stock is working");
+
+                                // Clean up the selected combination and metal color
+                                const combinationKey = selectedCombination ? selectedCombination.toLowerCase().replace(/_/g, '') : null; // e.g. 'blueblack'
+                                const metalColor = (metalColors[selectedColor]?.replace(/\s+/g, '')).toLowerCase(); // e.g. 'rosegold'
+                                
+                                // Log the cleaned combination and metal color for debugging
+                                console.log("Combination Key: ", combinationKey);
+                                console.log("Metal Color: ", metalColor);
+
+                                // If a combination is selected, check stock for that combination and metal color
+                                if (combinationKey) {
+                                    console.log("Checking stock for combination and metal color...");
+                                    
+                                    // Check if combinationStocks data exists for the selected combination key
+                                    if (data?.combinationStocks?.[combinationKey]) {
+                                        const stockData = data?.combinationStocks?.[combinationKey];
+                                        console.log("Stock Data: ", stockData);
+
+                                        // Convert stock data keys to lowercase to match the metalColor
+                                        const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                            acc[key.toLowerCase()] = stockData[key]; // normalize the keys to lowercase
+                                            return acc;
+                                        }, {});
+
+                                        console.log("Normalized Stock Data: ", normalizedStockData);
+
+                                        // Check if stock data exists for the selected metal color (case-insensitive)
+                                        if (normalizedStockData[metalColor] !== undefined) {
+                                            const stockValue = normalizedStockData[metalColor];
+
+                                            // If stock is null or 0, show red icon (Out of Stock)
+                                            if (stockValue === null || stockValue === 0) {
+                                                console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is out of stock.`);
+                                                return (
+                                                    <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />
+                                                ); // Red icon
+                                            }
+
+                                            // If stock is available (greater than 0), show green icon (In Stock)
+                                            if (stockValue > 0) {
+                                                console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is available: ${stockValue}`);
+                                                return (
+                                                    <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                                ); // Green icon
+                                            }
+                                        } else {
+                                            console.log(`No stock data available for combination ${combinationKey} and metal color ${metalColor}`);
+                                            return (
+                                                <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />
+                                            ); // Red icon
+                                        }
+                                    } else {
+                                        console.log(`No stock data available for combination ${combinationKey}`);
+                                        return (
+                                            <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />
+                                        ); // Red icon
+                                    }
+                                } 
+                                // If no combination is selected, check only based on metal color
+                                else {
+                                    console.log("Checking stock based only on metal color...");
+
+                                    // Loop through all combinations to check if any stock data exists for the metal color
+                                    let inStock = false;
+                                    for (let combination in data?.combinationStocks) {
+                                        const stockData = data?.combinationStocks[combination];
+                                        console.log(`Checking stock for combination: ${combination}`);
+                                        
+                                        // Normalize stock data keys to lowercase
+                                        const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                            acc[key.toLowerCase()] = stockData[key];
+                                            return acc;
+                                        }, {});
+
+                                        // If stock exists for the selected metal color, set `inStock` to true
+                                        if (normalizedStockData[metalColor] !== undefined && normalizedStockData[metalColor] > 0) {
+                                            console.log(`Stock for metal color ${metalColor} is available in combination ${combination}`);
+                                            inStock = true;
+                                            break; // Exit loop once stock is found
+                                        }
+                                    }
+
+                                    // Return the appropriate icon based on availability for metal color
+                                    if (inStock) {
+                                        return (
+                                            <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" />
+                                        ); // Green icon if in stock
+                                    } else {
+                                        console.log(`No stock data available for metal color ${metalColor}`);
+                                        return (
+                                            <path d="M1 1L12 10M12 1L1 10" stroke="#FF0000" strokeWidth="2" />
+                                        ); // Red icon if out of stock
+                                    }
+                                }
+                            }
+                           
+
+                            return  <path d="M13 1.1566L4.08571 11L0 6.48844L1.04743 5.33184L4.08571 8.6786L11.9526 0L13 1.1566Z" fill="#0B8D08" /> ; // Default fallback
+                        })()}
+                        </svg>
+                        
+                        <span
+                        style={{
+                            color: (() => {
+                            // Handle case when both enamel and metal colors are selected
+
+    
+                            
+                            if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
+                                const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                                const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
+
+                                if (!metalColor) return '#FF0000'; // Fallback if metalColor is undefined
+
+                                // Construct the enamel-metal stock key
+                                const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+
+                                // Log for debugging purposes
+                                console.log('Constructed Stock Key:', enamelMetalStockKey);
+                                console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
+
+                                const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                                // Debug stock data
+                                console.log('Enamel-Metal Stock Value:', enamelMetalStock);
+
+                                return enamelMetalStock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                            }
+
+                           
+
+                            // Handle case when only metal color is selected
+                            if (selectedColor >= 0 && shouldShowEnamel === false && shouldShowCombinations === false) {
+                                const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
+
+                                if (!metalStockKey) return '#FF0000'; // Fallback if metalStockKey is undefined
+
+                                const metalStock = data?.Metalcolorstock?.[metalStockKey] ;
+
+                                console.log('Metal Stock Key:', metalStockKey);
+                                console.log('Metal Stock Value:', metalStock);
+
+                            
+                                // // Initial rendering: If the stock data is not available, assume in stock
+                                // if (metalStock === undefined ) {
+                                //     console.warn("Initial state running, assuming stock is available");
+                                //     return "#0B8D08"; // Default to green
+                                // }
+                                // Explicitly handle null and zero stock
+                                if (metalStock === 0 || metalStock === null ) {
+                                    // console.warn("normal code running");
+                                    return "#FF0000"; // Red for out of stock
+                                } else {
+                                    return "#0B8D08"; // Green for in stock
+                                }
+                            
+
+                                // Green if in stock, red if out of stock
+                            }
+
+                            // Handle global stock fallback when no specific color is selected
+                            if (data?.stock !== null && data?.stock !== undefined) {
+                                return data.stock > 0 ? '#0B8D08' : '#FF0000'; // Green if in stock, red if out of stock
+                            }
+
+                            if (selectedCombination !== null && selectedCombination !== undefined && selectedColor !== null && shouldShowEnamel === false) {
+                                console.warn("Product combination stock is working");
+                            
+                                // Clean up the selected combination and metal color
+                                const combinationKey = selectedCombination ? selectedCombination.toLowerCase().replace(/_/g, '') : null; // e.g. 'blueblack'
+                                const metalColor = (metalColors[selectedColor]?.replace(/\s+/g, '')).toLowerCase(); // e.g. 'rosegold'
+                                
+                                // Log the cleaned combination and metal color for debugging
+                                console.log("Combination Key: ", combinationKey);
+                                console.log("Metal Color: ", metalColor);
+                            
+                                // If a combination is selected, check stock for that combination and metal color
+                                if (combinationKey) {
+                                    console.log("Checking stock for combination and metal color...");
+                                    
+                                    // Check if combinationStocks data exists for the selected combination key
+                                    if (data?.combinationStocks?.[combinationKey]) {
+                                        const stockData = data?.combinationStocks?.[combinationKey];
+                                        console.log("Stock Data: ", stockData);
+                            
+                                        // Convert stock data keys to lowercase to match the metalColor
+                                        const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                            acc[key.toLowerCase()] = stockData[key]; // normalize the keys to lowercase
+                                            return acc;
+                                        }, {});
+                            
+                                        console.log("Normalized Stock Data: ", normalizedStockData);
+                            
+                                        // Check if stock data exists for the selected metal color (case-insensitive)
+                                        if (normalizedStockData[metalColor] !== undefined) {
+                                            const stockValue = normalizedStockData[metalColor];
+                            
+                                            if (stockValue === null || stockValue === 0) {
+                                                console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is out of stock.`);
+                                                return "#FF0000"; // Red color if out of stock
+                                            }
+                            
+                                            if (stockValue > 0) {
+                                                console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is available: ${stockValue}`);
+                                                return "#0B8D08"; // Green color if in stock
+                                            }
+                                        } else {
+                                            console.log(`No stock data available for combination ${combinationKey} and metal color ${metalColor}`);
+                                            return "#FF0000"; // Red if no stock data available
+                                        }
+                                    } else {
+                                        console.log(`No stock data available for combination ${combinationKey}`);
+                                        return "#FF0000"; // Red if no stock data for the combination
+                                    }
+                                } 
+                                // If no combination is selected, check only based on metal color
+                                else {
+                                    console.log("Checking stock based only on metal color...");
+                            
+                                    // Loop through all combinations to check if any stock data exists for the metal color
+                                    let inStock = false;
+                                    for (let combination in data?.combinationStocks) {
+                                        const stockData = data?.combinationStocks[combination];
+                                        console.log(`Checking stock for combination: ${combination}`);
+                                        
+                                        // Normalize stock data keys to lowercase
+                                        const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                            acc[key.toLowerCase()] = stockData[key];
+                                            return acc;
+                                        }, {});
+                            
+                                        // If stock exists for the selected metal color, set `inStock` to true
+                                        if (normalizedStockData[metalColor] !== undefined && normalizedStockData[metalColor] > 0) {
+                                            console.log(`Stock for metal color ${metalColor} is available in combination ${combination}`);
+                                            inStock = true;
+                                            break; // Exit loop once stock is found
+                                        }
+                                    }
+                            
+                                    // Return green or red color based on availability for metal color
+                                    if (inStock) {
+                                        return "#0B8D08"; // Green color if in stock
+                                    } else {
+                                        console.log(`No stock data available for metal color ${metalColor}`);
+                                        return "#FF0000"; // Red if out of stock
+                                    }
+                                }
+                            }
+                           
+
+                            return '#0B8D08'; // Default fallback color
+                            })()
+                        }}
+                        className="text-[14px] font-medium leading-[24px]"
+                        >
+                        {(() => {
+                            
+                            // combination instock message 
+                                              
+                            // Handle case when both enamel and metal colors are selected
+                            if (selectedEnamelColor !== null && selectedEnamelColor !== undefined && selectedColor !== null) {
+                            const cleanedEnamelColor = selectedEnamelColor.toLowerCase().replace(/_/g, '');
+                            const metalColor = metalColors[selectedColor]?.replace(/\s+/g, '');
+
+                            console.warn("enamel code running ")
+
+
+                            if (!metalColor) return "Out of Stock"; // Fallback if metalColor is undefined
+
+                            const enamelMetalStockKey = `${cleanedEnamelColor}${metalColor}clrStock`;
+
+                            // Log for debugging
+                            console.log('Constructed Stock Key:', enamelMetalStockKey);
+                            console.log('Enamel Color Stock Data:', data?.Enamelcolorstock?.[cleanedEnamelColor]);
+
+                            const enamelMetalStock = data?.Enamelcolorstock?.[cleanedEnamelColor]?.[enamelMetalStockKey] || 0;
+
+                            // Debug stock value
+                            console.log('Enamel-Metal Stock Value:', enamelMetalStock);
+
+                            return enamelMetalStock > 0 ? "In Stock" : "Out of Stock";
+                            }
+
+                            
+
+
+                            // Handle case when only metal color is selected
+                            if (selectedColor >= 0 && shouldShowEnamel === false && shouldShowCombinations === false) {
+                            const metalStockKey = `${metalColors[selectedColor]?.replace(/\s+/g, '')}clrStock`;
+
+                            console.warn("metal code running ")
+
+                            if (!metalStockKey) return "Out of Stock"; // Fallback if metalStockKey is undefined
+
+                            const metalStock = data?.Metalcolorstock?.[metalStockKey];
+
+                            // Debug metal stock value
+                            console.log('Metal Stock Key:', metalStockKey);
+                            console.log('Metal Stock Value:', metalStock);
+
+                            if (metalStock === null || metalStock === 0) {
+                            console.warn("normal code running ")
+
+                                return "Out of Stock"; // Explicitly handle null and zero stock
+                            } else if (metalStock > 0) {
+                                return "In Stock";
+                            }
+                            }
+
+                            // Handle global stock fallback when no specific color is selected
+                            if (data?.stock !== null && data?.stock !== undefined) {
+                            return data.stock > 0 ? "In Stock" : "Out of Stock";
+                            }
+                            
+                            if(selectedCombination !== null && selectedCombination !== undefined && selectedColor !== null && shouldShowEnamel === false){
+                                console.warn("product combination stock is working ")
+
+
+                                // Clean up the selected combination and metal color
+                            // Clean up the selected combination and metal color
+                                    const combinationKey = selectedCombination ? selectedCombination.toLowerCase().replace(/_/g, '') : null; // e.g. 'blueblack'
+                                    const metalColor = (metalColors[selectedColor]?.replace(/\s+/g, '')).toLowerCase(); // e.g. 'rosegold'
+                                    
+                                    // Log the cleaned combination and metal color for debugging
+                                    console.log("Combination Key: ", combinationKey);
+                                    console.log("Metal Color: ", metalColor);
+
+                                    // If a combination is selected, check stock for that combination and metal color
+                                    if (combinationKey) {
+                                        console.log("Checking stock for combination and metal color...");
+                                        
+                                        // Check if combinationStocks data exists for the selected combination key
+                                        if (data?.combinationStocks?.[combinationKey]) {
+                                            const stockData = data?.combinationStocks?.[combinationKey];
+                                            console.log("Stock Data: ", stockData);
+
+                                            // Convert stock data keys to lowercase to match the metalColor
+                                            const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                                acc[key.toLowerCase()] = stockData[key]; // normalize the keys to lowercase
+                                                return acc;
+                                            }, {});
+
+                                            console.log("Normalized Stock Data: ", normalizedStockData);
+
+                                            // Check if stock data exists for the selected metal color (case-insensitive)
+                                            if (normalizedStockData[metalColor] !== undefined) {
+                                                const stockValue = normalizedStockData[metalColor];
+
+                                                if (stockValue === null || stockValue === 0) {
+                                                    console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is out of stock.`);
+                                                    return "Out of Stock";
+                                                }
+
+                                                if (stockValue > 0) {
+                                                    console.log(`Stock for combination ${combinationKey} and metal color ${metalColor} is available: ${stockValue}`);
+                                                    return "In Stock";
+                                                }
+                                            } else {
+                                                console.log(`No stock data available for combination ${combinationKey} and metal color ${metalColor}`);
+                                                return "Out of Stock";
+                                            }
+                                        } else {
+                                            console.log(`No stock data available for combination ${combinationKey}`);
+                                            return "Out of Stock";
+                                        }
+                                    } 
+                                    // If no combination is selected, check only based on metal color
+                                    else {
+                                        console.log("Checking stock based only on metal color...");
+
+                                        // Loop through all combinations to check if any stock data exists for the metal color
+                                        let inStock = false;
+                                        for (let combination in data?.combinationStocks) {
+                                            const stockData = data?.combinationStocks[combination];
+                                            console.log(`Checking stock for combination: ${combination}`);
+                                            
+                                            // Normalize stock data keys to lowercase
+                                            const normalizedStockData = Object.keys(stockData).reduce((acc, key) => {
+                                                acc[key.toLowerCase()] = stockData[key];
+                                                return acc;
+                                            }, {});
+
+                                            // If stock exists for the selected metal color, set `inStock` to true
+                                            if (normalizedStockData[metalColor] !== undefined && normalizedStockData[metalColor] > 0) {
+                                                console.log(`Stock for metal color ${metalColor} is available in combination ${combination}`);
+                                                inStock = true;
+                                                break; // Exit loop once stock is found
+                                            }
+                                        }
+
+                                        // Return "In Stock" or "Out of Stock" based on availability for metal color
+                                        if (inStock) {
+                                            return "In Stock";
+                                        } else {
+                                            console.log(`No stock data available for metal color ${metalColor}`);
+                                            return "Out of Stock";
+                                        }
+                                    }
+                            }
+                            
+
+                            return "In Stock"; // Default fallback
+                        })()}
+                        </span>
+                    </div>
+                    </div>
 
 
 
@@ -1815,6 +2304,32 @@ function ProductDetails({ data }) {
                                                     {availableEnamelColors.map((color) => (
                                                         <option key={color._id} value={color._id}>
                                                             {color.enamelColorName}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    )}
+
+
+                                    {/* combination of enamel */}
+                                    {shouldShowCombinations && (
+                                        <div className="enamelotion pt-3">
+                                            <div className='enameltitle'>
+                                                <h3 className="text-[20px] font-[600] font-Poppins">Enamel Combination : </h3>
+                                            </div>
+                                            <div className="enamelselect text-[16px] font-Poppins py-1">
+                                                <select
+                                                    name="combinationColors"
+                                                    id="combinationColors"
+                                                    className="border"
+                                                    onChange={(e) => setSelectedCombination(e.target.value)}
+                                                    value={selectedCombination}
+                                                >
+                                                    <option value="">Select Combination Color</option>
+                                                    {availableCombinationImages.map((color, index) => (
+                                                        <option key={index} value={color.combinationName}>
+                                                            {color.combinationName}
                                                         </option>
                                                     ))}
                                                 </select>

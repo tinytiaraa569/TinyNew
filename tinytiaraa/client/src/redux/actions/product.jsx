@@ -66,7 +66,10 @@ export const createProduct = (
     // enamelColorImages
 
     gender,
-    ageGroup
+    ageGroup,
+    combinations,
+    combinationmetalImages,
+    combinationStocks
 
 ) => async (dispatch) => {
     try {
@@ -138,6 +141,9 @@ export const createProduct = (
             lotusgreenWhiteGoldclrStock,
             gender,
             ageGroup,
+            combinations,
+            combinationmetalImages,
+            combinationStocks,
             config
         )
 

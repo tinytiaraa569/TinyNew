@@ -5,10 +5,14 @@ import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye, AiOutlineWarning } from '
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import { DataGrid } from '@mui/x-data-grid';
+import * as XLSX from 'xlsx'; // Import XLSX library
+import { FaFileExcel } from 'react-icons/fa';
+
 
 function AllProducts() {
     const { seller } = useSelector((state) => state.seller);
     const { products = [], isLoading } = useSelector((state) => state.products);
+    console.log(products,"al products data ")
 
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -147,6 +151,154 @@ function AllProducts() {
         },
     ];
 
+  
+
+const handleExportToExcel = (productsdata) => {
+
+   
+    // Transform the product data into an array of objects for the Excel sheet
+    const excelData = productsdata.map((product) => ({
+        ID: product._id || "-",
+        SKU: product.skuid || "-",
+        Name: product.name || "-",
+        OriginalPrice: product.originalPrice || "-",
+        Price: product.discountPrice || "-",
+        Stock: product.stock || "-",
+        Sold_Out: product.sold_out || "-",
+        Category: product.category || "-",
+        Subcategory: product.subcategory || "-",
+        Description: product.description || "-",
+
+        // Metl colr 
+        YellowGold_MetalColor: 
+        (product.MetalColor?.YellowGoldclr?.length > 0 ? "✓" : "-"),
+    
+        RoseGold_MetalColor: 
+        (product.MetalColor?.RoseGoldclr?.length > 0 ? "✓" : "-"),
+            
+        WhiteGold_MetalColor: 
+        (product.MetalColor?.WhiteGoldclr?.length > 0 ? "✓" : "-"),
+
+        // Nested MetalColorStock
+        Stock_YellowGoldStock_MetalColor: product.Metalcolorstock?.YellowGoldclrStock || "-",
+        Stock_RoseGoldStock_MetalColor: product.Metalcolorstock?.RoseGoldclrStock || "-",
+        Stock_WhiteGoldStock_MetalColor: product.Metalcolorstock?.WhiteGoldclrStock || "-",
+
+        // ENamel color 
+        Black_EnamelColor: 
+        (product.enamelColors?.Black?.blackYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Black?.blackYellowGoldclr?.length > 0 && product.enamelColors?.Black?.blackRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Black?.blackRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Black?.blackRoseGoldclr?.length > 0 && product.enamelColors?.Black?.blackWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Black?.blackWhiteGoldclr?.length > 0 ? "WG" : "") ||
+        "-",
+    
+        DeepBlue_EnamelColor: 
+        (product.enamelColors?.Deep_Blue?.deepblueYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Deep_Blue?.deepblueYellowGoldclr?.length > 0 && product.enamelColors?.Deep_Blue?.deepblueRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Deep_Blue?.deepblueRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Deep_Blue?.deepblueRoseGoldclr?.length > 0 && product.enamelColors?.Deep_Blue?.deepblueWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Deep_Blue?.deepblueWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+    
+        DeepGreen_EnamelColor: 
+        (product.enamelColors?.Deep_Green?.deepgreenYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Deep_Green?.deepgreenYellowGoldclr?.length > 0 && product.enamelColors?.Deep_Green?.deepgreenRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Deep_Green?.deepgreenRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Deep_Green?.deepgreenRoseGoldclr?.length > 0 && product.enamelColors?.Deep_Green?.deepgreenWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Deep_Green?.deepgreenWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+    
+        LotusGreen_EnamelColor: 
+        (product.enamelColors?.Lotus_Green?.lotusgreenYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Lotus_Green?.lotusgreenYellowGoldclr?.length > 0 && product.enamelColors?.Lotus_Green?.lotusgreenRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Lotus_Green?.lotusgreenRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Lotus_Green?.lotusgreenRoseGoldclr?.length > 0 && product.enamelColors?.Lotus_Green?.lotusgreenWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Lotus_Green?.lotusgreenWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+    
+        Pink_EnamelColor: 
+        (product.enamelColors?.Pink?.pinkYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Pink?.pinkYellowGoldclr?.length > 0 && product.enamelColors?.Pink?.pinkRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Pink?.pinkRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Pink?.pinkRoseGoldclr?.length > 0 && product.enamelColors?.Pink?.pinkWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Pink?.pinkWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+    
+        Red_EnamelColor: 
+        (product.enamelColors?.Red?.redYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Red?.redYellowGoldclr?.length > 0 && product.enamelColors?.Red?.redRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Red?.redRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Red?.redRoseGoldclr?.length > 0 && product.enamelColors?.Red?.redWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Red?.redWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+    
+        Turquoise_EnamelColor: 
+        (product.enamelColors?.Turquoise?.turquoiseYellowGoldclr?.length > 0 ? "YG" : "") +
+        (product.enamelColors?.Turquoise?.turquoiseYellowGoldclr?.length > 0 && product.enamelColors?.Turquoise?.turquoiseRoseGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Turquoise?.turquoiseRoseGoldclr?.length > 0 ? "RG" : "") +
+        (product.enamelColors?.Turquoise?.turquoiseRoseGoldclr?.length > 0 && product.enamelColors?.Turquoise?.turquoiseWhiteGoldclr?.length > 0 ? "+" : "") +
+        (product.enamelColors?.Turquoise?.turquoiseWhiteGoldclr?.length > 0 ? "WG" : "") || 
+        "-",
+
+        // Nested EnamelColorStock
+        Stock_Black_YellowGold_EnamelColor: product.Enamelcolorstock?.black?.blackYellowGoldclrStock || "-",
+        Stock_Black_RoseGold_EnamelColor: product.Enamelcolorstock?.black?.blackRoseGoldclrStock || "-",
+        Stock_Black_WhiteGold_EnamelColor: product.Enamelcolorstock?.black?.blackWhiteGoldclrStock || "-",
+        Stock_DeepBlue_YellowGold_EnamelColor: product.Enamelcolorstock?.deepblue?.deepblueYellowGoldclrStock || "-",
+        Stock_DeepBlue_RoseGold_EnamelColor: product.Enamelcolorstock?.deepblue?.deepblueRoseGoldclrStock || "-",
+        Stock_DeepBlue_WhiteGold_EnamelColor: product.Enamelcolorstock?.deepblue?.deepblueWhiteGoldclrStock || "-",
+        Stock_DeepGreen_YellowGold_EnamelColor: product.Enamelcolorstock?.deepgreen?.deepgreenYellowGoldclrStock || "-",
+        Stock_DeepGreen_RoseGold_EnamelColor: product.Enamelcolorstock?.deepgreen?.deepgreenRoseGoldclrStock || "-",
+        Stock_DeepGreen_WhiteGold_EnamelColor: product.Enamelcolorstock?.deepgreen?.deepgreenWhiteGoldclrStock || "-",
+        Stock_LotusGreen_YellowGold_EnamelColor: product.Enamelcolorstock?.lotusgreen?.lotusgreenYellowGoldclrStock || "-",
+        Stock_LotusGreen_RoseGold_EnamelColor: product.Enamelcolorstock?.lotusgreen?.lotusgreenRoseGoldclrStock || "-",
+        Stock_LotusGreen_WhiteGold_EnamelColor: product.Enamelcolorstock?.lotusgreen?.lotusgreenWhiteGoldclrStock || "-",
+        Stock_Pink_YellowGold_EnamelColor: product.Enamelcolorstock?.pink?.pinkYellowGoldclrStock || "-",
+        Stock_Pink_RoseGold_EnamelColor: product.Enamelcolorstock?.pink?.pinkRoseGoldclrStock || "-",
+        Stock_Pink_WhiteGold_EnamelColor: product.Enamelcolorstock?.pink?.pinkWhiteGoldclrStock || "-",
+        Stock_Red_YellowGold_EnamelColor: product.Enamelcolorstock?.red?.redYellowGoldclrStock || "-",
+        Stock_Red_RoseGold_EnamelColor: product.Enamelcolorstock?.red?.redRoseGoldclrStock || "-",
+        Stock_Red_WhiteGold_EnamelColor: product.Enamelcolorstock?.red?.redWhiteGoldclrStock || "-",
+        Stock_Turquoise_YellowGold_EnamelColor: product.Enamelcolorstock?.turquoise?.turquoiseYellowGoldclrStock || "-",
+        Stock_Turquoise_RoseGold_EnamelColor: product.Enamelcolorstock?.turquoise?.turquoiseRoseGoldclrStock || "-",
+        Stock_Turquoise_WhiteGold_EnamelColor: product.Enamelcolorstock?.turquoise?.turquoiseWhiteGoldclrStock || "-",
+        // Additional Data
+        AgeGroup_Infants: product.ageGroup?.infants ? "Yes" : "No",
+        AgeGroup_Kids: product.ageGroup?.kids ? "Yes" : "No",
+        AgeGroup_Mom: product.ageGroup?.mom ? "Yes" : "No",
+        AgeGroup_Teens: product.ageGroup?.teens ? "Yes" : "No",
+        Gender_Girl: product.gender?.girl ? "Yes" : "No",
+        Gender_Boy: product.gender?.boy ? "Yes" : "No",
+        Gender_Unisex: product.gender?.unisex ? "Yes" : "No",
+        DiamondWeight: product.diamondWeight?.weight || "-",
+        DiamondQuality: product.diamondWeight?.quality || "-",
+        GoldWeight: product.goldWeight?.weight || "-",
+        GoldPurity: product.goldWeight?.purity || "-",
+        Dimension_Height: product.dimension?.height || "-",
+        Dimension_Width: product.dimension?.width || "-",
+        Tags: product.tags || "-",
+        Designno:product.designno || "-",
+
+
+
+        CreatedAt: product.CreatedAt || "-",
+       
+
+    }));
+
+    // Create a worksheet and workbook
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    
+    // Define frozen pane by freezing the first row (header row)
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+
+    // Generate the Excel file and trigger download
+    XLSX.writeFile(workbook, "Products.xlsx");
+};
+
+
     return (
         <>
             {isLoading ? (
@@ -164,7 +316,18 @@ function AllProducts() {
                             />
                         </div>
                         <div>
-                            <h3>Total Products : - <span className="font-[600]">{products?.length}</span> products</h3>
+                        <button
+                            onClick={() => { handleExportToExcel(products) }}
+                            className="flex items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                        >
+                            <FaFileExcel className="h-5 w-5 mr-2" />
+                            Export to Excel
+                        </button>
+                        </div>
+                        <div className="flex items-center space-x-2 text-gray-700">
+                            <h3 className="text-lg font-semibold">Total Products:</h3>
+                            <span className="text-sm font-bold text-blue-600">{products?.length}</span>
+                            <span className="text-sm text-gray-600 !ml-1">products</span>
                         </div>
                     </div>
 

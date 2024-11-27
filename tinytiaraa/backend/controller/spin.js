@@ -141,7 +141,7 @@ router.post('/spin', catchAsyncErrors(async (req, res, next) => {
         <body>
         <div class="emailconfirm">
             <div class="headeremail" style="text-align: center;">
-                <img class="a2adjustimg" src="https://res.cloudinary.com/ddaef5aw1/image/upload/v1725949453/duvdwbtbmyr8ipqrevot.png" alt="Logo">
+                <img class="a2adjustimg" src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/duvdwbtbmyr8ipqrevot.png" alt="Logo">
                 <h2>Congratulations, You've Won a Reward!</h2>
             </div>
         

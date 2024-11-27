@@ -492,6 +492,28 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
         processBase64Images(lotusgreenWhiteGoldclr, lotusgreenWhiteGoldclrLinks);
 
 
+          // Handle combinations and combinationmetalImages
+          const combinationImagesData = req.body.combinationmetalImages;
+          const combinationMetalImages = {};
+  
+          // Iterate through each combination
+          for (const combination of Object.keys(combinationImagesData)) {
+              combinationMetalImages[combination] = {};
+  
+              // Iterate through each metal type for the combination
+              for (const metalType of ["yellowGold", "roseGold", "whiteGold"]) {
+                  const metalImages = combinationImagesData[combination][metalType] || [];
+                  const metalImageLinks = [];
+  
+                  processBase64Images(metalImages, metalImageLinks);
+                  combinationMetalImages[combination][metalType] = metalImageLinks;
+              }
+          }
+  
+          
+  
+
+
 
         const {
             YellowGoldclrStock,
@@ -533,6 +555,10 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
             // other fields...
         } = req.body;
 
+        const {
+            combinationStocks
+        } = req.body
+
 
         const {gender,ageGroup} = req.body;
 
@@ -547,6 +573,11 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
             RoseGoldclrStock,
             WhiteGoldclrStock
         }
+        productData.combinations = Object.keys(combinationMetalImages);
+        productData.combinationmetalImages = combinationMetalImages;
+        productData.combinationStocks=combinationStocks
+
+        
 
         productData.Enamelcolorstock = {
             deepblue: {
@@ -638,7 +669,12 @@ router.post("/create-product", catchAsyncErrors(async (req, res, next) => {
                 blackRoseGoldclr: blackRoseGoldclrLinks,
                 blackWhiteGoldclr: blackWhiteGoldclrLinks,
             },
+          
+        
+            
+
         };
+
 
         productData.gender = gender;
         productData.ageGroup = ageGroup;

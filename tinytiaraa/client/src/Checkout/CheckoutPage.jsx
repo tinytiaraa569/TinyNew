@@ -854,6 +854,13 @@ const calculateEDD = async () => {
                                                             <span className="text-[#161618] text-[13px] pl-2">{val.selectedEnamelColor}</span>
                                                         </div>
                                                     )}
+
+                                                     {val?.selectedCombination && (
+                                                        <div className="">
+                                                            <span className="text-[#161618] font-[500] text-[13px]">Combination Color :</span>
+                                                            <span className="text-[#161618] text-[13px] pl-2">{val?.selectedCombination}</span>
+                                                        </div>
+                                                    )}
                                                 </div>
 
 

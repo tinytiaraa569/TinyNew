@@ -356,6 +356,7 @@ const productSchema = new mongoose.Schema({
                 },
             ],
         }
+        
     },
 
 
@@ -549,6 +550,35 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+
+
+    // new combination 
+
+        combinations: {
+          type: [String],  // Array of combination names, e.g., redgreen, blackgreen
+          
+        },
+
+        combinationmetalImages: {
+          type: Map,
+          of: {
+            type: Map,
+            of: [
+              {
+                public_id: { type: String },
+                url: { type: String },
+              },
+            ],  // List of image URLs for each metal type (yellowGold, roseGold, whiteGold)
+          },
+      },
+      combinationStocks: {
+        type: Map,
+        of: {
+          yellowGold: { type: Number, default: 0 },
+          roseGold: { type: Number, default: 0 },
+          whiteGold: { type: Number, default: 0 },
+        },
+      },
     CreatedAt: {
         type: Date,
         default: Date.now()

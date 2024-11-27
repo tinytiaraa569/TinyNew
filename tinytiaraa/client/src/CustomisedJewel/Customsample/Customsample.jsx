@@ -10,6 +10,9 @@ import sample7 from './sample7.png';
 import sample8 from './sample8.png';
 import sample9 from './sample9.png';
 import sample10 from './sample10.png';
+import sample11 from './sample11.png';
+import sample12 from './sample12.png';
+
 
 
 
@@ -27,7 +30,7 @@ function Customsample() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
 
-  const images = [sample1, sample10,sample5,sample6,sample9];
+  const images = [sample1, sample10,sample5,sample6,sample9,sample11,sample12];
 
   const handleImageClick = (image) => {
     setCurrentImage(image);
@@ -42,7 +45,7 @@ function Customsample() {
   return (
     <div className="py-7 px-8">
       <div className="text-center mb-8">
-        <h1 className="text-[26px] font-extrabold text-gray-600 mb-1 tracking-wide">Our Custom Collection</h1>
+        <h1 className="text-[26px] font-extrabold text-gray-600 mb-1 tracking-wide">Crafted On Request</h1>
         <p className="text-[14px] text-gray-500 max-w-3xl mx-auto leading-relaxed">
           Discover a curated selection of custom-made designs, each crafted with precision and elegance to bring you unmatched quality and sophistication.
         </p>
