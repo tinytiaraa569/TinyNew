@@ -104,7 +104,7 @@ const GoogleAnalyticsGraph = () => {
         </div>
 
 
-          <div className="w-full h-[312px] mt-2 cursor-pointer">
+          <div className="w-full h-[318px] mt-2 cursor-pointer">
             <Line data={chartData} options={{
               responsive: true,
               plugins: {
