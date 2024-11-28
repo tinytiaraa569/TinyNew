@@ -103,6 +103,7 @@ import ContactNewBanner from './catalog/CreateBanners/Bannerscreating/ContactNew
 import CategoryDetails from './catalog/CategoryDetails';
 
 
+
 // import MyChatbot from './chatbot/Chatbotmsg';
 // import Chatbotmsg from './chatbot/Chatbotmsg';
 
@@ -568,6 +569,7 @@ function App() {
 
         />
         {/* <CurrencySelector /> */}
+
 
         <Footer />
 

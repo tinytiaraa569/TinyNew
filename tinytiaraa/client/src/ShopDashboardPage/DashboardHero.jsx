@@ -187,6 +187,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllOrdersOfShop } from '@/redux/actions/order';
 import { getAllProductShop } from '@/redux/actions/product';
 import { DataGrid } from '@mui/x-data-grid'
+import GoogleAnalyticsGraph from '@/shopgoogleanalytics/GoogleAnalyticsGraph';
+import CountryWiseData from '@/shopgoogleanalytics/CountryWiseData';
 
 
 function DashboardHero() {
@@ -276,7 +278,7 @@ function DashboardHero() {
     })
 
     return (
-        <div className='w-full p-8 '>
+        <div className='w-full px-8 py-3'>
             <h3 className='text-[22px] pb-2'>Overview</h3>
 
             <div className="w-full flex justify-between items-center">
@@ -316,6 +318,7 @@ function DashboardHero() {
 
                 </div>
 
+
                 <div className="mb-4 w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-7">
                     <div className="flex items-center">
                         <AiFillProduct size={30} className='mr-2' fill='#00000085' />
@@ -334,6 +337,16 @@ function DashboardHero() {
 
                 </div>
 
+            </div>
+
+            <div className='py-2 flex justify-between'>
+                <div className='w-[48%]'>
+                <GoogleAnalyticsGraph />
+                </div>
+
+                <div className='w-[48%]'>
+                    <CountryWiseData />
+                </div>
             </div>
 
             <h3 className='text-[22px] pb-2'>Latest Orders</h3>

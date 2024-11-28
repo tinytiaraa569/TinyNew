@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose')
 require('dotenv').config();
 const CryptoJS = require('crypto-js');
+const { google } = require('googleapis'); // to import new package
 
 const app = express()
 
@@ -424,5 +425,145 @@ app.get('/api/conversion-rates', (req, res) => {
     };
     res.json(conversionRates);
   });
+
+
+// updated code from here 
+// The service account credentials 
+const credentials = {
+    "type": "service_account",
+    "project_id": "bubbly-observer-442607-i7",
+    "private_key_id": "1364e1bf53b80c888de995c19d77f83cc060b3af",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGPT3TNJpR0eJG\n6We//7H320JR8dyfjdNWp0Eu2a7T6JOB91MbFVIs9phYliM3rH5493Egr7r1+8js\n/CYm1D9vevNw5obOgaaRIsklQmPd4nkaldGaOROr8YWVYddgAc5lz8qiABczPJQn\nKh4AE25vWlCMDkuHhObr91N5k+TnZq0a4CGEu0zngltO5QST8wVLFP9cXQGf218D\nnDgfhbD2z9Te8PBt3mf2I4LHaGevYbNMPH+Npvz6nZhKRtkT9wvhFtJSiVism0A9\nQ+ElFVqDB1YiJ8UFmrAfQnHDuUTt1D2kRyDnGP5a7jSZt4qz1WmUEbouCx3rLsmq\nt8WeNCHJAgMBAAECggEANFvJgAa1OaYLMzqDhhEFUtcM6bLNWDDv4EO1sieZhuu3\nRgzqXM1hUnHhJAinjZVYJCAKt5zibwTM+VbRxtCpXorlUGz6rwFMWqoK4XXrBZhC\n7zQh069+lBvq8d0RMxDXEEn1FZubhRNbeAqmONPpB60deBhwd38xNKKy3/oha8JZ\nmWnRDH1UrvodEDK/KxpaJRbDMtFggl1xv7OqmNdnx+pq9yQDZhW23WEW55FhZ2rc\nmfjtbUs7mMtzAEgcAhCBh/Cy95CJDeQA3kOVBbPhm+6m/TgVYL/xEd/lL8eaP93i\nY0bOAPwb36v94NNloQdPaGvcAwM7FzaA6tR4VkwWNwKBgQD5YsFnFe4ZgCW17eWR\nxb+w6uAX53atDFcjlY1tcSkeTWleNmUc1X+ZRSEHBtKVvQHPIHf4cnCuX7Botvy5\ni0uSOcH5f/5882V3e8p1pkVsobb8kcFHA0iGqU7915/w9fP3glpR03PKd+vzyF6L\ns6WU5vWpWXxIIwMJM//04YuWwwKBgQDLfzfqWpfpU16RbFRXsObuMCvoZuhd0tLu\n4mTNrQXrRMbIRhPcQqunm889oj9j6lcEbAzT+qw37q/AxLygimovbPQf48l5vmK2\nCR2d6KXVYGd1sDYuQFvDV20Dxx0EfzprhKZiXJuksKUZsdWbM6uTdUwYiZ2Z1zP+\nvNgsJ5pUgwKBgQCiFN8iAozHIhRgU4ea4G0frOeMYbEt8xFHXVGXya4xtZo/0xaQ\nUOonUViP2o1PKJJebfnLDYXSrvpWdGd4p+Gr3cIGSHu79e0CZQBGypPgcJIfQRPe\n9XFTpAJk1Jls4E15lczh1Y4yDxLZVGauYUnCpwEO2cv+jlLQzm0SWOyCRQKBgQCt\n1/G5uEj8oCcyzrvC6jJuGyL3eCpcNMXUI/3/oydiVLAI2a0PxrkEB9xkh93lioVq\nFrBiy0wiwDrO0INgFr8d4tMvBxbQdW+4mVL+2ogJIEFiTfYLTxnVaDOOPaSxecs7\nnOfTMdAZQnrY145m9x5Fa7hlYfMMQMd/gG6gUfjK5wKBgCwoNYlRSF35OySqIH8x\nBTQtV5Sx9GCC+pOY3fj61+4lclbWm2p34cryAW6UIa+JMIKpmd4toTF1arCjq4pN\npWQAhNANvskEFanBw0XVQkwr8n0mIUaU0x235b8eWsGV7rWMnKi+j6QWo9xQCDN7\nRyczBmsD5PD2WeiPc8a0ikv9\n-----END PRIVATE KEY-----\n",
+    "client_email": "tinytiaraa@bubbly-observer-442607-i7.iam.gserviceaccount.com",
+    "client_id": "107747084266381924066",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tinytiaraa%40bubbly-observer-442607-i7.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  // Authenticate Google Analytics Data API
+  const auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
+  });
+  
+  // Function to fetch data from GA4
+  const getGA4AnalyticsData = async () => {
+    const analyticsData = google.analyticsdata('v1beta');
+    console.log(analyticsData,'Attempting to fetch data from GA4...');
+  
+    try {
+      // Make the request to Google Analytics Data API
+      const response = await analyticsData.properties.runReport({
+        property: 'properties/461487720', // Replace with your GA4 Property ID
+        requestBody: {
+          dateRanges: [
+            { startDate: '30daysAgo', endDate: 'today' },
+          ],
+          dimensions: [
+            { name: 'date' }, // GA4 dimension for dates
+          ],
+          metrics: [
+            { name: 'sessions' }, // GA4 metric for sessions
+            { name: 'activeUsers' },
+          ],
+        },
+        auth,
+      });
+  
+      // Log the entire response object for debugging
+      console.log('GA4 Response:', JSON.stringify(response.data, null, 2));
+  
+      // Parse and return data in the desired format
+      const parsedData = response.data.rows.map(row => ({
+        date: row.dimensionValues[0].value,
+        sessions: row.metricValues[0].value,
+        activeUsers: row.metricValues[1].value,
+      }));
+  
+      // Log the parsed data
+      console.log('Parsed Data:', parsedData);
+  
+      return parsedData;
+  
+    } catch (error) {
+      console.error('Error fetching GA4 analytics data:', error);
+      throw error;
+    }
+  };
+  
+  // API Endpoint to serve analytics data
+  app.get('/api/v2/analytics', async (req, res) => {
+    console.log('Received request for analytics data');
+    try {
+      const data = await getGA4AnalyticsData();
+      console.log('Data sent to client:', data); // Log the data being sent to the client
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching GA4 analytics data:', error);
+      res.status(500).send('Error fetching GA4 analytics data');
+    }
+  });
+
+
+
+
+  const getCountryWiseAnalyticsData = async () => {
+    const analyticsData = google.analyticsdata('v1beta');
+    console.log('Attempting to fetch country-wise data from GA4...');
+  
+    try {
+      // Make the request to Google Analytics Data API
+      const response = await analyticsData.properties.runReport({
+        property: 'properties/461487720', // Replace with your GA4 Property ID
+        requestBody: {
+          dateRanges: [
+            { startDate: '30daysAgo', endDate: 'today' },
+          ],
+          dimensions: [
+            { name: 'country' }, // Fetch data by country
+          ],
+          metrics: [
+            { name: 'activeUsers' }, // Metric for active users
+          ],
+        },
+        auth,
+      });
+  
+      // Log the entire response object for debugging
+      console.log('GA4 Country-Wise Response:', JSON.stringify(response.data, null, 2));
+  
+      // Parse and return country-wise data
+      const countryData = response.data.rows.map(row => ({
+        country: row.dimensionValues[0].value, // Country name
+        activeUsers: Number(row.metricValues[0].value), // Active users
+      }));
+  
+      console.log('Country-Wise Data:', countryData);
+      return countryData;
+  
+    } catch (error) {
+      console.error('Error fetching country-wise GA4 analytics data:', error);
+      throw error;
+    }
+  };
+  
+
+  app.get('/api/v2/analytics/countries', async (req, res) => {
+    console.log('Received request for country-wise analytics data');
+    try {
+      const data = await getCountryWiseAnalyticsData();
+      console.log('Country-wise data sent to client:', data); // Log the data being sent to the client
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching country-wise GA4 analytics data:', error);
+      res.status(500).send('Error fetching country-wise GA4 analytics data');
+    }
+  });
+
+
+
+
 app.use(ErrorHandler)
 module.exports = app;

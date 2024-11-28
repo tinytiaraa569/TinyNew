@@ -121,7 +121,7 @@ function SpinandWin() {
         console.error('Error fetching requests:', error);
         toast.error('Failed to fetch requests.');
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -254,6 +254,7 @@ function SpinandWin() {
             }
         `}</style>
         </div>
+        
         
         <div className="flex justify-center mt-4 mb-3">
           <button
