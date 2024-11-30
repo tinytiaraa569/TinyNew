@@ -189,6 +189,9 @@ import { getAllProductShop } from '@/redux/actions/product';
 import { DataGrid } from '@mui/x-data-grid'
 import GoogleAnalyticsGraph from '@/shopgoogleanalytics/GoogleAnalyticsGraph';
 import CountryWiseData from '@/shopgoogleanalytics/CountryWiseData';
+import SalesChart from '@/shopsales/Shopsalegraph';
+import SearchConsoleData from '@/shopsales/SearchConsoleData';
+import PerformanceDashboard from '@/shopsales/PerformanceData';
 
 
 function DashboardHero() {
@@ -268,7 +271,7 @@ function DashboardHero() {
     const row = [];
 
     // Map the sorted orders to rows
-    orders && orders.forEach((item) => {
+    orders && orders.slice(0, 12).forEach((item) => {
         row.push({
             id: item._id,
             itemsQty: item.cart.length,
@@ -359,6 +362,23 @@ function DashboardHero() {
                     autoHeight
                 />
             </div>
+
+            <div className="flex gap-3 space-x-4 my-5">
+            <div className="w-[49%] ">
+                <SalesChart />
+            </div>
+            <div className="w-[49%] ">
+            <SearchConsoleData />
+
+            </div>
+           
+            </div>
+
+            <div className='my-2'>
+                <PerformanceDashboard />
+            </div>
+
+
         </div>
     )
 }

@@ -564,6 +564,200 @@ const credentials = {
 
 
 
+  //seach console integration
+  const searchConsolecredentials = {
+    type: "service_account",
+    project_id: "tinytiaraa",
+    private_key_id: process.env.GOOGLE_SEARCH_CONSOLE_private_key_id,
+    private_key: process.env.GOOGLE_SEARCH_CONSOLE_private_key.replace(/\\n/g, '\n'),
+    client_email: process.env.GOOGLE_SEARCH_CONSOLE_client_email,
+    client_id: process.env.GOOGLE_SEARCH_CONSOLE_client_id,
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url: process.env.GOOGLE_CLOUD_CLIENT_X509_CERT_URL,
+    universe_domain: "googleapis.com"
+  };
+  
+  // Google Search Console API setup
+  const searchConsole = google.webmasters('v3');
+  
+  // Authenticate with the service account
+  async function authenticate() {
+    const auth = new google.auth.GoogleAuth({
+      credentials: searchConsolecredentials, // Pass credentials correctly
+      scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
+    });
+  
+    const authClient = await auth.getClient();
+    google.options({ auth: authClient });
+    return authClient;
+  }
+  
+  // Fetch data from Google Search Console
+  async function getSearchConsoleData() {
+    const authClient = await authenticate();
+    const siteUrl = 'https://www.tinytiaraa.com'; // Replace with your site's URL
+  
+    // Get today's date
+    const today = new Date();
+  
+    // Calculate the date 30 days ago
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 30);
+  
+    // Format the date as YYYY-MM-DD
+    const startDateString = startDate.toISOString().split('T')[0]; // Extracts the date portion (YYYY-MM-DD)
+  
+    // Get the current date in YYYY-MM-DD format
+    const endDateString = today.toISOString().split('T')[0];
+  
+    try {
+      const response = await searchConsole.searchanalytics.query({
+        siteUrl: siteUrl,
+        auth: authClient,
+        requestBody: {
+          startDate: startDateString, // 30 days ago
+          endDate: endDateString,     // Today's date
+          dimensions: ['query'],
+          rowLimit: 10,               // Number of rows to retrieve
+        },
+      });
+  
+      // Check if response.data.rows is defined and has data
+      if (response.data.rows && response.data.rows.length > 0) {
+        const searchData = response.data.rows.map((row) => ({
+          query: row.keys[0],
+          clicks: row.clicks,
+          impressions: row.impressions,
+          avgPosition: row.position,
+        }));
+        return searchData;
+      } else {
+        console.log('No data found for the given date range or query.');
+        return []; // Return an empty array if no data is found
+      }
+  
+    } catch (error) {
+      console.error('Error fetching Search Console data:', error);
+      throw new Error('Error fetching Search Console data');
+    }
+  }
+  
+  // Set up a route to return the data
+  app.get('/api/v2/search-console-data', async (req, res) => {
+    try {
+      const searchData = await getSearchConsoleData();
+      if (searchData.length === 0) {
+        res.json({ success: false, message: 'No search data available for the specified date range or query.' });
+      } else {
+        res.json({ success: true, data: searchData });
+      }
+    } catch (error) {
+      res.status(500).send('Error fetching Search Console data');
+    }
+  });
+
+
+  // Fetch performance data from Google Search Console
+
+
+// Fetch performance data with flexible date ranges and filters
+// Fetch performance data with flexible date ranges and filters
+async function getPerformanceData(filterOption = '1_month') {
+  const authClient = await authenticate();
+  const siteUrl = 'https://www.tinytiaraa.com';
+
+  // Calculate date range
+  const today = new Date();
+  const startDate = new Date(today);
+
+  if (filterOption === '3_months') {
+    startDate.setMonth(today.getMonth() - 3); // 3 months ago
+  } else {
+    startDate.setMonth(today.getMonth() - 1); // 1 month ago
+  }
+
+  const startDateString = startDate.toISOString().split('T')[0];
+  const endDateString = today.toISOString().split('T')[0];
+
+  try {
+    const response = await searchConsole.searchanalytics.query({
+      siteUrl,
+      auth: authClient,
+      requestBody: {
+        startDate: startDateString,
+        endDate: endDateString,
+        dimensions: ['page', 'date'], // Added country dimension
+        rowLimit: 1000,
+      },
+    });
+
+    if (response.data.rows && response.data.rows.length > 0) {
+      // Process the data considering all dimensions (page, date, country)
+      const data = response.data.rows.map((row) => ({
+        page: row.keys[0],
+        date: row.keys[1],
+       
+        clicks: row.clicks || 0,
+        impressions: row.impressions || 0,
+        avgCTR: row.ctr ? (row.ctr * 100).toFixed(2) + '%' : 'N/A',
+        avgPosition: row.position !== null && row.position !== undefined ? row.position.toFixed(2) : 'N/A',
+      }));
+
+      // Aggregate metrics (sum clicks, impressions, and average position)
+      const totalClicks = data.reduce((sum, row) => sum + row.clicks, 0);
+      console.log(totalClicks,"taotal linked")
+      const totalImpressions = data.reduce((sum, row) => sum + row.impressions, 0);
+      const avgCTR = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) + '%' : 'N/A';
+      const avgPosition =
+        data.length > 0
+          ? (
+              data.reduce((sum, row) => sum + (row.avgPosition !== 'N/A' ? parseFloat(row.avgPosition) : 0), 0) /
+              data.length
+            ).toFixed(2)
+          : 'N/A';
+
+      return {
+        success: true,
+        data,
+        metrics: {
+          totalClicks,
+          totalImpressions,
+          avgCTR,
+          avgPosition,
+        },
+      };
+    } else {
+      return { success: false, message: 'No data found for the specified range or query.' };
+    }
+  } catch (error) {
+    console.error('Error fetching performance data:', error);
+    throw new Error('Error fetching performance data');
+  }
+}
+
+app.get('/api/v2/performance-data', async (req, res) => {
+  const { filter } = req.query;
+  const filterOption = filter === '3_months' ? '3_months' : '1_month';
+
+  try {
+    const performanceData = await getPerformanceData(filterOption);
+    res.json(performanceData);
+  } catch (error) {
+    console.error('Error in performance data API:', error);
+    res.status(500).json({ success: false, message: 'Error fetching performance data' });
+  }
+});
+
+
+
+
+
+
+  
+
+
 
 app.use(ErrorHandler)
 module.exports = app;
