@@ -661,99 +661,223 @@ const credentials = {
 
   // Fetch performance data from Google Search Console
 
-
 // Fetch performance data with flexible date ranges and filters
-// Fetch performance data with flexible date ranges and filters
-async function getPerformanceData(filterOption = '1_month') {
-  const authClient = await authenticate();
-  const siteUrl = 'https://www.tinytiaraa.com';
+  async function getPerformanceData(filterOption = '1_month') {
+    const authClient = await authenticate();
+    const siteUrl = 'https://www.tinytiaraa.com';
 
-  // Calculate date range
-  const today = new Date();
-  const startDate = new Date(today);
+    // Calculate date range
+    const today = new Date();
+    const startDate = new Date(today);
 
-  if (filterOption === '3_months') {
-    startDate.setMonth(today.getMonth() - 3); // 3 months ago
-  } else {
-    startDate.setMonth(today.getMonth() - 1); // 1 month ago
-  }
-
-  const startDateString = startDate.toISOString().split('T')[0];
-  const endDateString = today.toISOString().split('T')[0];
-
-  try {
-    const response = await searchConsole.searchanalytics.query({
-      siteUrl,
-      auth: authClient,
-      requestBody: {
-        startDate: startDateString,
-        endDate: endDateString,
-        dimensions: ['page', 'date'], // Added country dimension
-        rowLimit: 1000,
-      },
-    });
-
-    if (response.data.rows && response.data.rows.length > 0) {
-      // Process the data considering all dimensions (page, date, country)
-      const data = response.data.rows.map((row) => ({
-        page: row.keys[0],
-        date: row.keys[1],
-       
-        clicks: row.clicks || 0,
-        impressions: row.impressions || 0,
-        avgCTR: row.ctr ? (row.ctr * 100).toFixed(2) + '%' : 'N/A',
-        avgPosition: row.position !== null && row.position !== undefined ? row.position.toFixed(2) : 'N/A',
-      }));
-
-      // Aggregate metrics (sum clicks, impressions, and average position)
-      const totalClicks = data.reduce((sum, row) => sum + row.clicks, 0);
-      console.log(totalClicks,"taotal linked")
-      const totalImpressions = data.reduce((sum, row) => sum + row.impressions, 0);
-      const avgCTR = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) + '%' : 'N/A';
-      const avgPosition =
-        data.length > 0
-          ? (
-              data.reduce((sum, row) => sum + (row.avgPosition !== 'N/A' ? parseFloat(row.avgPosition) : 0), 0) /
-              data.length
-            ).toFixed(2)
-          : 'N/A';
-
-      return {
-        success: true,
-        data,
-        metrics: {
-          totalClicks,
-          totalImpressions,
-          avgCTR,
-          avgPosition,
-        },
-      };
+    if (filterOption === '3_months') {
+      startDate.setMonth(today.getMonth() - 3); // 3 months ago
     } else {
-      return { success: false, message: 'No data found for the specified range or query.' };
+      startDate.setMonth(today.getMonth() - 1); // 1 month ago
     }
-  } catch (error) {
-    console.error('Error fetching performance data:', error);
-    throw new Error('Error fetching performance data');
-  }
-}
 
-app.get('/api/v2/performance-data', async (req, res) => {
-  const { filter } = req.query;
-  const filterOption = filter === '3_months' ? '3_months' : '1_month';
+    const startDateString = startDate.toISOString().split('T')[0];
+    const endDateString = today.toISOString().split('T')[0];
+
+    try {
+      const response = await searchConsole.searchanalytics.query({
+        siteUrl,
+        auth: authClient,
+        requestBody: {
+          startDate: startDateString,
+          endDate: endDateString,
+          dimensions: ['page', 'date'], // Added country dimension
+          rowLimit: 1000,
+        },
+      });
+
+      if (response.data.rows && response.data.rows.length > 0) {
+        // Process the data considering all dimensions (page, date, country)
+        const data = response.data.rows.map((row) => ({
+          page: row.keys[0],
+          date: row.keys[1],
+        
+          clicks: row.clicks || 0,
+          impressions: row.impressions || 0,
+          avgCTR: row.ctr ? (row.ctr * 100).toFixed(2) + '%' : 'N/A',
+          avgPosition: row.position !== null && row.position !== undefined ? row.position.toFixed(2) : 'N/A',
+        }));
+
+        // Aggregate metrics (sum clicks, impressions, and average position)
+        const totalClicks = data.reduce((sum, row) => sum + row.clicks, 0);
+        console.log(totalClicks,"taotal linked")
+        const totalImpressions = data.reduce((sum, row) => sum + row.impressions, 0);
+        const avgCTR = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) + '%' : 'N/A';
+        const avgPosition =
+          data.length > 0
+            ? (
+                data.reduce((sum, row) => sum + (row.avgPosition !== 'N/A' ? parseFloat(row.avgPosition) : 0), 0) /
+                data.length
+              ).toFixed(2)
+            : 'N/A';
+
+        return {
+          success: true,
+          data,
+          metrics: {
+            totalClicks,
+            totalImpressions,
+            avgCTR,
+            avgPosition,
+          },
+        };
+      } else {
+        return { success: false, message: 'No data found for the specified range or query.' };
+      }
+    } catch (error) {
+      console.error('Error fetching performance data:', error);
+      throw new Error('Error fetching performance data');
+    }
+  }
+
+  app.get('/api/v2/performance-data', async (req, res) => {
+    const { filter } = req.query;
+    const filterOption = filter === '3_months' ? '3_months' : '1_month';
+
+    try {
+      const performanceData = await getPerformanceData(filterOption);
+      res.json(performanceData);
+    } catch (error) {
+      console.error('Error in performance data API:', error);
+      res.status(500).json({ success: false, message: 'Error fetching performance data' });
+    }
+  });
+
+
+
+
+  // get pageviews data through google analyitcs
+
+  // Function to fetch page views
+
+  const getPageViews = async (dateRange) => {
+    const analyticsData = google.analyticsdata('v1beta');
+    console.log(`Fetching page views for the past ${dateRange}...`);
+  
+    // Define date ranges based on user input
+    const ranges = {
+      '1month': { startDate: '2024-11-01', endDate: '2024-11-30' }, // Custom date range for testing
+      '3months': { startDate: '90daysAgo', endDate: 'today' },      // Standard 3-month range
+    };
+  
+    const selectedRange = ranges[dateRange];
+    if (!selectedRange) {
+      throw new Error(`Invalid date range: ${dateRange}`);
+    }
+  
+    try {
+      // Fetch data from Google Analytics API
+      const response = await analyticsData.properties.runReport({
+        property: 'properties/461487720', // Replace with your GA4 Property ID
+        requestBody: {
+          dateRanges: [selectedRange],
+          dimensions: [
+            { name: 'pageTitle' },  // Page title
+            // { name: "streamName" }, // Screen class
+            
+          ],
+          metrics: [
+            { name: 'screenPageViews' }, // Page views metric
+          ],
+          orderBys: [
+            {
+              metric: {
+                metricName: 'screenPageViews',
+              },
+              desc: true,
+            },
+          ],
+        },
+        auth,
+      });
+  
+      // Parse and return the data
+      const parsedData = response.data.rows.map(row => ({
+        pageTitle: row.dimensionValues[0].value,
+        // screenClass: row.dimensionValues[1].value,
+        views: row.metricValues[0].value,
+      }));
+  
+      console.log('Parsed Page Views Data:', parsedData);
+      return parsedData;
+  
+    } catch (error) {
+      console.error('Error fetching page views:', error);
+      throw error;
+    }
+  };
+
+// API Endpoint for page views
+app.get('/api/v2/page-views', async (req, res) => {
+  console.log('Received request for page views data');
+  const { dateRange } = req.query;
 
   try {
-    const performanceData = await getPerformanceData(filterOption);
-    res.json(performanceData);
+    const data = await getPageViews(dateRange || '1month');
+    console.log('Page views data sent to client:', data);
+    res.json(data);
   } catch (error) {
-    console.error('Error in performance data API:', error);
-    res.status(500).json({ success: false, message: 'Error fetching performance data' });
+    console.error('Error fetching page views data:', error);
+    res.status(500).send('Error fetching page views data');
   }
 });
 
 
 
 
+const getRealTimeActiveUsers = async () => {
+  const analyticsData = google.analyticsdata('v1beta');
 
+  try {
+    const response = await analyticsData.properties.runRealtimeReport({
+      property: 'properties/461487720',  // Your GA4 Property ID
+      requestBody: {
+        dimensions: [{ name: 'country' }],
+        metrics: [{ name: 'activeUsers' }],
+      },
+      auth,
+    });
+
+    // Log the full response to inspect data structure
+    console.log('GA4 Real-time Data:', JSON.stringify(response.data, null, 2));
+
+    if (!response.data || !response.data.rows || response.data.rows.length === 0) {
+      console.error('No real-time data returned from GA4');
+      return [];
+    }
+
+    const liveUsersData = response.data.rows.map((row) => ({
+      country: row.dimensionValues[0].value,
+      activeUsers: row.metricValues[0].value,
+    }));
+
+    console.log('Live Active Users:', liveUsersData);
+    return liveUsersData;
+
+  } catch (error) {
+    console.error('Error fetching real-time data:', error);
+    return [];
+  }
+};
+
+
+// API Route to fetch live active users
+app.get('/api/v2/live-active-users', async (req, res) => {
+  console.log('Received request for live active users data');
+  try {
+    const data = await getRealTimeActiveUsers(); // Call the function to get the live active users
+    console.log('Data sent to client:', data); // Log the data being sent to the client
+    res.json(data); // Return the live active users data as JSON
+  } catch (error) {
+    console.error('Error fetching live active users data:', error);
+    res.status(500).send('Error fetching live active users data');
+  }
+});
 
   
 

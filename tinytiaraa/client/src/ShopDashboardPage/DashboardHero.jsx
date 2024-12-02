@@ -192,6 +192,8 @@ import CountryWiseData from '@/shopgoogleanalytics/CountryWiseData';
 import SalesChart from '@/shopsales/Shopsalegraph';
 import SearchConsoleData from '@/shopsales/SearchConsoleData';
 import PerformanceDashboard from '@/shopsales/PerformanceData';
+import PageViewsTable from '@/shopsales/PageViewsTable';
+import LiveActiveUsers from '@/shopsales/RealTimeActiveUsers';
 
 
 function DashboardHero() {
@@ -374,10 +376,20 @@ function DashboardHero() {
            
             </div>
 
-            <div className='my-2'>
+            <div className='my-4'>
                 <PerformanceDashboard />
             </div>
 
+            <div className='flex justify-between gap-5 my-5'>
+
+            <div className='w-[48%]'>
+            <PageViewsTable />
+            </div>
+            <div className='w-[48%]'>
+            <LiveActiveUsers />
+            </div>
+
+            </div>
 
         </div>
     )
