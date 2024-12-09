@@ -273,7 +273,7 @@ router.post('/add-subcategory', catchAsyncErrors(async (req, res) => {
         console.error('Error updating subcategory:', error);
         res.status(500).json({ message: 'Failed to update subcategory' });
     }
-}));
+  }));
 
 
 
@@ -336,72 +336,139 @@ router.get('/get-category/:categoryId', catchAsyncErrors(async (req, res, next) 
 
 
 // Update specific category
+// router.put('/update-category/:categoryId', catchAsyncErrors(async (req, res, next) => {
+//   const { categoryId } = req.params;
+//   const { title, subTitle, bannerimg, productbanner, image_Url ,type  } = req.body;
+
+//   try {
+//       // Find the category by its ID
+//       const category = await Category.findById(categoryId);
+
+//       if (!category) {
+//           return res.status(404).json({ message: 'Category not found' });
+//       }
+
+//       // Update fields if provided in the request body
+//       if (title !== undefined) category.title = title;
+//       if (subTitle !== undefined) category.subTitle = subTitle;
+//       if (type !== undefined) category.type = type; 
+
+//       // Helper function to process base64 images, if needed
+//       const processBase64Image = (imagePath) => {
+//           if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
+//               const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
+//               if (!matches) {
+//                   console.error('Invalid base64 format:', imagePath);
+//                   return null;
+//               }
+//               const mimeType = matches[1];
+//               const base64Data = matches[2];
+//               const extension = mimeType.split('/')[1];
+//               const uniqueId = generateRandomString(20);
+//               const localImagePath = path.join(__dirname, '../uploads/images/categories', `${uniqueId}.${extension}`);
+
+//               fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
+//               return {
+//                   public_id: `categories/${uniqueId}`,
+//                   url: `/uploads/images/categories/${uniqueId}.${extension}`
+//               };
+//           } else {
+//               return { url: imagePath };
+//           }
+//       };
+
+//       // Process and update images if provided
+//       if (bannerimg) {
+//           category.bannerimg = processBase64Image(bannerimg.url || bannerimg.path || bannerimg) || category.bannerimg;
+//       }
+//       if (productbanner) {
+//           category.productbanner = processBase64Image(productbanner.url || productbanner.path || productbanner) || category.productbanner;
+//       }
+//       if (image_Url) {
+//           category.image_Url = processBase64Image(image_Url.url || image_Url.path || image_Url) || category.image_Url;
+//       }
+
+//       // Save the updated category
+//       await category.save();
+
+//       res.status(200).json({
+//           success: true,
+//           message: 'Category updated successfully',
+//           category
+//       });
+//   } catch (error) {
+//       console.error('Error updating category:', error);
+//       return next(new ErrorHandler('Internal server error', 500));
+//   }
+// }));
+
+// Update specific category
 router.put('/update-category/:categoryId', catchAsyncErrors(async (req, res, next) => {
   const { categoryId } = req.params;
-  const { title, subTitle, bannerimg, productbanner, image_Url ,type  } = req.body;
+  const { title, subTitle, bannerimg, productbanner, image_Url, type, order } = req.body; // Include `order` in the request body
 
   try {
-      // Find the category by its ID
-      const category = await Category.findById(categoryId);
+    // Find the category by its ID
+    const category = await Category.findById(categoryId);
 
-      if (!category) {
-          return res.status(404).json({ message: 'Category not found' });
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
+    // Update fields if provided in the request body
+    if (title !== undefined) category.title = title;
+    if (subTitle !== undefined) category.subTitle = subTitle;
+    if (type !== undefined) category.type = type; 
+    if (order !== undefined) category.order = order; // Update the order if provided
+
+    // Helper function to process base64 images, if needed
+    const processBase64Image = (imagePath) => {
+      if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
+        const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
+        if (!matches) {
+          console.error('Invalid base64 format:', imagePath);
+          return null;
+        }
+        const mimeType = matches[1];
+        const base64Data = matches[2];
+        const extension = mimeType.split('/')[1];
+        const uniqueId = generateRandomString(20);
+        const localImagePath = path.join(__dirname, '../uploads/images/categories', `${uniqueId}.${extension}`);
+
+        fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
+        return {
+          public_id: `categories/${uniqueId}`,
+          url: `/uploads/images/categories/${uniqueId}.${extension}`
+        };
+      } else {
+        return { url: imagePath };
       }
+    };
 
-      // Update fields if provided in the request body
-      if (title !== undefined) category.title = title;
-      if (subTitle !== undefined) category.subTitle = subTitle;
-      if (type !== undefined) category.type = type; 
+    // Process and update images if provided
+    if (bannerimg) {
+      category.bannerimg = processBase64Image(bannerimg.url || bannerimg.path || bannerimg) || category.bannerimg;
+    }
+    if (productbanner) {
+      category.productbanner = processBase64Image(productbanner.url || productbanner.path || productbanner) || category.productbanner;
+    }
+    if (image_Url) {
+      category.image_Url = processBase64Image(image_Url.url || image_Url.path || image_Url) || category.image_Url;
+    }
 
-      // Helper function to process base64 images, if needed
-      const processBase64Image = (imagePath) => {
-          if (typeof imagePath === "string" && imagePath.startsWith("data:")) {
-              const matches = imagePath.match(/^data:(.+);base64,(.+)$/);
-              if (!matches) {
-                  console.error('Invalid base64 format:', imagePath);
-                  return null;
-              }
-              const mimeType = matches[1];
-              const base64Data = matches[2];
-              const extension = mimeType.split('/')[1];
-              const uniqueId = generateRandomString(20);
-              const localImagePath = path.join(__dirname, '../uploads/images/categories', `${uniqueId}.${extension}`);
+    // Save the updated category
+    await category.save();
 
-              fs.writeFileSync(localImagePath, Buffer.from(base64Data, 'base64'));
-              return {
-                  public_id: `categories/${uniqueId}`,
-                  url: `/uploads/images/categories/${uniqueId}.${extension}`
-              };
-          } else {
-              return { url: imagePath };
-          }
-      };
-
-      // Process and update images if provided
-      if (bannerimg) {
-          category.bannerimg = processBase64Image(bannerimg.url || bannerimg.path || bannerimg) || category.bannerimg;
-      }
-      if (productbanner) {
-          category.productbanner = processBase64Image(productbanner.url || productbanner.path || productbanner) || category.productbanner;
-      }
-      if (image_Url) {
-          category.image_Url = processBase64Image(image_Url.url || image_Url.path || image_Url) || category.image_Url;
-      }
-
-      // Save the updated category
-      await category.save();
-
-      res.status(200).json({
-          success: true,
-          message: 'Category updated successfully',
-          category
-      });
+    res.status(200).json({
+      success: true,
+      message: 'Category updated successfully',
+      category
+    });
   } catch (error) {
-      console.error('Error updating category:', error);
-      return next(new ErrorHandler('Internal server error', 500));
+    console.error('Error updating category:', error);
+    return next(new ErrorHandler('Internal server error', 500));
   }
 }));
-
 
 // Delete a specific category by ID
 router.delete('/delete-category/:categoryId', catchAsyncErrors(async (req, res, next) => {

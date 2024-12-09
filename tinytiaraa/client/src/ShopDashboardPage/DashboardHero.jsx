@@ -283,115 +283,105 @@ function DashboardHero() {
     })
 
     return (
-        <div className='w-full px-8 py-3'>
-            <h3 className='text-[22px] pb-2'>Overview</h3>
+        <div className="w-full px-8 py-3 bg-[#f0f8ff]"> {/* Light blue background */}
+        <h3 className="text-[24px] pb-2 font-semibold text-gray-700 border-b-[3px]inline-block">
+        Overview
+        </h3>
 
-            <div className="w-full flex justify-between items-center">
-                <div className="mb-4 w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-7">
-                    <div className="flex items-center">
-                        <AiOutlineMoneyCollect size={30} className='mr-2' fill='#00000085' />
-
-                        <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-[#00000085]`}>
-                            Total Earning
-                        </h3>
-
-                    </div>
-                    <h5 className='pt-2 pl-[36px] text-[22px] font-[500]'>
-                        ₹ {totalEarning}
-                    </h5>
-                    <Link to="">
-                        <h5 className='pt-4 pl-2 text-[#077f9c]'>View Transactions</h5>
-                    </Link>
-
-                </div>
-
-                <div className="mb-4 w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-7">
-                    <div className="flex items-center">
-                        <LuListOrdered size={30} className='mr-2' fill='#00000085' />
-
-                        <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-[#00000085]`}>
-                            All orders
-                        </h3>
-
-                    </div>
-                    <h5 className='pt-2 pl-[36px] text-[22px] font-[500]'>
-                        {orders && orders.length}
-                    </h5>
-                    <Link to="/dashboard-orders">
-                        <h5 className='pt-4 pl-2 text-[#077f9c]'>View Orders</h5>
-                    </Link>
-
-                </div>
-
-
-                <div className="mb-4 w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-7">
-                    <div className="flex items-center">
-                        <AiFillProduct size={30} className='mr-2' fill='#00000085' />
-
-                        <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-[#00000085]`}>
-                            All Products
-                        </h3>
-
-                    </div>
-                    <h5 className='pt-2 pl-[36px] text-[22px] font-[500]'>
-                        {products && products.length}
-                    </h5>
-                    <Link to="/dashboard-products">
-                        <h5 className='pt-4 pl-2 text-[#077f9c]'>View Products</h5>
-                    </Link>
-
-                </div>
-
+    <div className="w-full flex justify-between items-center">
+        {/* Total Earning Panel */}
+        <div className="cursor-pointer mb-4 w-[30%] min-h-[20vh] bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 shadow-lg rounded-[10px] px-2 py-7 hover:scale-105 hover:shadow-xl">
+            <div className="flex items-center">
+                <AiOutlineMoneyCollect size={30} className="mr-2 text-white" />
+                <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-white`}>
+                    Total Earning
+                </h3>
             </div>
-
-            <div className='py-2 flex justify-between'>
-                <div className='w-[48%]'>
-                <GoogleAnalyticsGraph />
-                </div>
-
-                <div className='w-[48%]'>
-                    <CountryWiseData />
-                </div>
-            </div>
-
-            <h3 className='text-[22px] pb-2'>Latest Orders</h3>
-            <div className='w-full min-h-[45vh] bg-white shadow rounded'>
-                <DataGrid
-                    rows={row}
-                    columns={columns}
-                    pageSize={10}
-                    disableSelectionOnClick
-                    autoHeight
-                />
-            </div>
-
-            <div className="flex gap-3 space-x-4 my-5">
-            <div className="w-[49%] ">
-                <SalesChart />
-            </div>
-            <div className="w-[49%] ">
-            <SearchConsoleData />
-
-            </div>
-           
-            </div>
-
-            <div className='my-4'>
-                <PerformanceDashboard />
-            </div>
-
-            <div className='flex justify-between gap-5 my-5'>
-
-            <div className='w-[48%]'>
-            <PageViewsTable />
-            </div>
-            <div className='w-[48%]'>
-            <LiveActiveUsers />
-            </div>
-
-            </div>
-
+            <h5 className="pt-2 pl-[36px] text-[22px] font-[500] text-white">
+                ₹ {totalEarning}
+            </h5>
+            <Link to="">
+                <h5 className="pt-4 ml-2 text-[#f0f8ff] inline-block border-b border-[#f0f8ff92]">View Transactions</h5>
+            </Link>
         </div>
+
+        {/* All Orders Panel */}
+        <div className="cursor-pointer mb-4 w-[30%] min-h-[20vh] bg-gradient-to-r from-green-500 via-green-400 to-green-300 shadow-lg rounded-[10px] px-2 py-7 hover:scale-105 hover:shadow-xl">
+            <div className="flex items-center">
+                <LuListOrdered size={30} className="mr-2 text-white" />
+                <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-white`}>
+                    All Orders
+                </h3>
+            </div>
+            <h5 className="pt-2 pl-[36px] text-[22px] font-[500] text-white">
+                {orders && orders.length}
+            </h5>
+            <Link to="/dashboard-orders">
+                <h5 className="pt-4 ml-2 text-[#f0f8ff] inline-block border-b border-[#f0f8ff92]">View Orders</h5>
+            </Link>
+        </div>
+
+        {/* All Products Panel */}
+        <div className="cursor-pointer mb-4 w-[30%] min-h-[20vh] bg-gradient-to-r from-violet-500 via-violet-400 to-violet-300 shadow-lg rounded-[10px] px-2 py-7 hover:scale-105 hover:shadow-xl">
+            <div className="flex items-center">
+                <AiFillProduct size={30} className="mr-2 text-white" />
+                <h3 className={`${styles.productTitle} !text-[18px] leading-5 !font-[500] text-white`}>
+                    All Products
+                </h3>
+            </div>
+            <h5 className="pt-2 pl-[36px] text-[22px] font-[500] text-white">
+                {products && products.length}
+            </h5>
+            <Link to="/dashboard-products">
+                <h5 className="pt-4 ml-2 text-[#f0f8ff] inline-block border-b border-[#f0f8ff92]">View Products</h5>
+            </Link>
+        </div>
+    </div>
+
+    {/* The rest of the content remains unchanged */}
+    <div className="py-2 flex justify-between ">
+        <div className="w-[48%]">
+            <GoogleAnalyticsGraph />
+        </div>
+        <div className="w-[48%]">
+            <CountryWiseData />
+        </div>
+    </div>
+
+    <h3 className="text-[22px] pb-2">Latest Orders</h3>
+    <div className="w-full min-h-[45vh] bg-white shadow rounded">
+        <DataGrid
+            rows={row}
+            columns={columns}
+            pageSize={10}
+            disableSelectionOnClick
+            autoHeight
+        />
+    </div>
+
+    <div className="flex gap-3 space-x-4 my-5">
+        <div className="w-[49%]">
+            <SalesChart />
+        </div>
+        <div className="w-[49%] ">
+            <SearchConsoleData />
+        </div>
+    </div>
+
+    <div className="my-4">
+        <PerformanceDashboard />
+    </div>
+
+    <div className="flex justify-between gap-5 my-5">
+        <div className="w-[48%]">
+            <PageViewsTable />
+        </div>
+        <div className="w-[48%]">
+            <LiveActiveUsers />
+        </div>
+    </div>
+</div>
+
     )
 }
 

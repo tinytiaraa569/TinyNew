@@ -50,6 +50,10 @@ export const categoriesData = [
       { name: "Numeric" , imageUrl:"https://backend.tinytiaraa.com:8000/uploads/images/products/i5phtsnxz7l5bcb1rkfr.png" },
       // { name: "religious" },
       { name: "Generic" ,imageUrl : 'https://backend.tinytiaraa.com:8000/uploads/images/products/hqyu0qmdqpids34pnvuf.png' },
+      { name: "Pearl" ,imageUrl : 'https://backend.tinytiaraa.com:8000/uploads/images/products/f5b55912bf6abbf04e19.png' },
+
+      
+     
 
 
     ],

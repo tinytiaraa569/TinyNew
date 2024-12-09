@@ -16,11 +16,11 @@ function DashboardHeader() {
     <div className='w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4'>
         <div className='ml-5'>
             <Link to="/dashboard">
-            <img src="https://lirp.cdn-website.com/48f148a6/dms3rep/multi/opt/Tiny+Tiaraa_C5-1920w.png" className='w-[100px] h-[70px]' alt="" />
+            <img src="https://backend.tinytiaraa.com:8000/uploads/images/logowebsite/pgqpod1dbwdxo4kudbjl.webp" className='w-[100px] h-[90px]' alt="" />
             </Link>
         </div>
         <div className='flex items-center'>
-            <div className='flex items-center mr-4'>
+            <div className='flex items-center mr-2'>
                 <Link to="/dashboard-gifts">
                     <AiOutlineGift color='#555' size={30} className='mx-5 cursor-pointer'/>
                 </Link>

@@ -42,11 +42,6 @@ function DashboardSideBar({ active }) {
             title: "Category",
             href: '/create-category',
             icon:<BiCategory />
-        },
-        {
-            title: "SubCategory",
-            href: '/create-SubCategory',
-            icon:<TbCategoryPlus />
         }
         
        
@@ -65,10 +60,10 @@ function DashboardSideBar({ active }) {
 
     return (
         <div className='w-full h-auto md:h-[auto] bg-white shadow-sm sticky top-0 left-0 z-10'>
-            <div className="w-full flex items-center p-4 mt-4">
+            <div className="w-full flex items-center p-4 mt-4 ">
                 <Link to="/dashboard" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start ' >
                     <RxDashboard size={30} color={`${active === 1 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={`pl-2 text-[15px]  md:text-[18px]   font-400 ${active === 1 ? "text-[#3d9bc0] font-600" : "text-[#555]"} font-Poppins`}>DashBoard</h5>
+                    <h5 className={`pl-2 text-[15px]  md:text-[18px]   font-400 ${active === 1 ? "text-[#3d9bc0]  font-600" : "text-[#555]"} font-Poppins`}>DashBoard</h5>
 
                 </Link>
             </div>
@@ -123,23 +118,24 @@ function DashboardSideBar({ active }) {
                 }
                 
             </Collapsible>
+
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-orders" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
                     <FiPackage size={30} color={`${active === 10 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={`  pl-2 text-[18px] font-[400] text-center ${active === 10 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>All orders</h5>
+                    <h5 className={`pl-2 text-[18px] font-[400] text-center ${active === 10 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>All orders</h5>
                 </Link>
             </div>
 
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-products" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
                     <FiPackage size={30} color={`${active === 3 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={`  pl-2 text-[18px] font-[400] text-center ${active === 3 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>All Products</h5>
+                    <h5 className={`pl-2 text-[18px] font-[400] text-center ${active === 3 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>All Products</h5>
                 </Link>
             </div>
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-create-product" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
                     <MdOutlineAddBusiness size={30} color={`${active === 4 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={` pl-2 text-[18px] text-center font-[400] ${active === 4 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>Create Product</h5>
+                    <h5 className={`pl-2 text-[18px] text-center font-[400] ${active === 4 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>Create Product</h5>
                 </Link>
             </div>
             <div className="w-full flex items-center p-4">
@@ -176,14 +172,14 @@ function DashboardSideBar({ active }) {
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-referral" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
                     <FaPeopleGroup size={30} color={`${active === 11 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={`pl-2 text-[18px] font-[400] ${active ===11 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>Referral Status</h5>
+                    <h5 className={`pl-2 text-[18px] font-[400] ${active ===11 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>Affiliate Status</h5>
                 </Link>
             </div>
 
             <div className="w-full flex items-center p-4">
                 <Link to="/dashboard-requests" className='w-full flex items-center justify-center flex-col md:flex-row md:justify-start '>
-                    <BiCustomize  size={30} color={`${active === 12 ? "#3d9bc0" : "#555"}`} />
-                    <h5 className={`pl-2 text-[18px] font-[400] ${active ===12 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>custom Requests</h5>
+                    <BiCustomize  size={28} color={`${active === 12 ? "#3d9bc0" : "#555"}`} />
+                    <h5 className={`pl-2 text-[16px] font-[400] ${active ===12 ? "text-[#3d9bc0] " : "text-[#555]"} font-Poppins`}>Customization Requests</h5>
                 </Link>
             </div>
             <div className="w-full flex items-center p-4">

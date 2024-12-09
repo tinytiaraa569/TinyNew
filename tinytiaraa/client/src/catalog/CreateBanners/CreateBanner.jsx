@@ -303,7 +303,7 @@ function CreateBanner() {
   };
 
   return (
-    <div className="w-full mt-1 p-5 bg-white shadow-md rounded-lg">
+    <div className="w-full mt-1 p-5 bg-[#f0f8ff] shadow-md rounded-lg">
       <h3 className={`font-poppins text-[22px] text-center text-gray-700 font-bold`}>
         Create Banners
       </h3>

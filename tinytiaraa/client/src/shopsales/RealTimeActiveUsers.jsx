@@ -89,7 +89,7 @@ const LiveActiveUsers = () => {
         :
         (
             
-    <div className="px-6 pt-5 pb-6 border border-gray-100 shadow-md rounded-[10px]">
+    <div className="bg-white px-6 pt-5 pb-6 border border-gray-100 shadow-md rounded-[10px]">
       
     <>
       <h3 className="text-lg font-semibold">Active Users in Last 30 Minutes</h3>

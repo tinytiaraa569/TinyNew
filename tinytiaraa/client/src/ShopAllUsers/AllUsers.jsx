@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { server } from '../server'; // Ensure your server URL is correct
+import { imgdburl, server } from '../server'; // Ensure your server URL is correct
 import { DataGrid } from '@mui/x-data-grid';
 import Loader from '../Loader/Loader';
 
@@ -54,9 +54,21 @@ function AllUsers() {
             headerName: 'Avatar',
             minWidth: 100,
             flex: 1,
-            renderCell: (params) => (
-                params.value?.url ? <img src={params.value.url} alt="User Avatar" width={50} height={50} /> : 'No Avatar'
-            ),
+            renderCell: (params) => {
+               
+                if (params.value?.url) {
+                    // Transform the URL to replace 'avatars' with 'products'
+                    const imageUrl = params.value.url.match(/https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/)
+                        ? params.value.url.replace(
+                            /https:\/\/res\.cloudinary\.com\/ddaef5aw1\/image\/upload\/v[0-9]+/,
+                            `${imgdburl}/uploads/images`
+                        ).replace('/avatars/', '/products/') // Replace 'avatars' with 'products'
+                        : `${imgdburl}${params.value.url.replace('/avatars/', '/products/')}`; // Prepend imgdburl and replace 'avatars'
+            
+                    return <img src={imageUrl} alt="User Product" width={50} height={50} />;
+                }
+                return 'No Image';
+            }
         },
     ];
 

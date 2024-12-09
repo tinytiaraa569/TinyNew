@@ -66,7 +66,7 @@ function ReferDetail({ referralId, onClose }) {
 
     console.log(referral, "see data")
 
-    const totalReferredRewardsUsed = referral.referredRewardAmounts.reduce((total, amount) => {
+    const totalReferredRewardsUsed = (referral.referredRewardAmounts || []).reduce((total, amount) => {
         // Convert amount to a number, or treat as 0 if it's NaN
         const numericAmount = parseFloat(amount) || 0; // or use +amount
         return total + numericAmount;

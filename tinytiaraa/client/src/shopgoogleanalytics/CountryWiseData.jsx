@@ -103,7 +103,7 @@ const CountryWiseData = () => {
   
 
   return (
-    <div className="w-full px-5 pt-2 pb-4 bg-white shadow rounded">
+    <div className="w-full px-5 pt-2 pb-4 bg-white shadow rounded-[10px]">
      {
       loading ? (
         <div className="space-y-4">

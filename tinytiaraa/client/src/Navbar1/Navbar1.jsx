@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { MdChevronRight, MdOutlineArrowDropDown, MdOutlineKeyboardArrowRight, MdOutlineShoppingBag, MdSupportAgent } from 'react-icons/md';
 import navimg from './about.webp'
-import { categoriesData } from '@/static/data';
+// import { categoriesData } from '@/static/data';
 import styles from '@/Styles/styles';
 import Wishlist from '../Wishlist/Wishlist.jsx'
 import { useSelector } from 'react-redux';
@@ -153,14 +153,48 @@ function Navbar1() {
         setsearchData(null);
     };
 
-    const submitHandleagegroup = (ageGroupKey) => {
-        if (!products || !ageGroupKey) return;
+    // const submitHandleagegroup = (ageGroupKey) => {
+    //     if (!products || !ageGroupKey) return;
 
-        const filteredProducts = products.filter(product =>
-            product.ageGroup && product.ageGroup[ageGroupKey] === true
-        );
-        console.log("age group", filteredProducts)
+    //     const filteredProducts = products.filter(product =>
+    //         product.ageGroup && product.ageGroup[ageGroupKey] === true
+    //     );
+    //     console.log("age group", filteredProducts)
+    //     navigate(`/products?ageGroup=${ageGroupKey}`, { state: { filteredProducts } });
+    //     setShopDropdownOpen(false);
+    // };
+    
+
+    const submitHandleagegroup = (ageGroupKey) => {
+        if (!products || !ageGroupKey) {
+            console.error("Products or ageGroupKey is missing");
+            return;
+        }
+    
+        let filteredProducts = [];
+    
+        if (ageGroupKey === "momandme") {
+            // Filter products where infants, kids, and mom are true
+            filteredProducts = products.filter(product =>
+                product.ageGroup &&
+                product.ageGroup.infants === true &&
+                product.ageGroup.kids === true &&
+                product.ageGroup.mom === true
+            );
+        } else {
+            // Filter for specific age group key
+            filteredProducts = products.filter(product =>
+                product.ageGroup && product.ageGroup[ageGroupKey] === true
+            );
+        }
+    
+        // Debugging outputs
+        console.log("Filtered Products:", filteredProducts);
+    
+        // Navigate to filtered products
         navigate(`/products?ageGroup=${ageGroupKey}`, { state: { filteredProducts } });
+    
+        // Close the dropdown
         setShopDropdownOpen(false);
     };
 
@@ -212,29 +246,29 @@ function Navbar1() {
         setIsDropdownVisible(!isDropdownVisible);
         };
 
-        // const closeDropdown = () => {
-        // setIsDropdownVisible(false);
-        // };
+        const closeDropdown = () => {
+        setIsDropdownVisible(false);
+        };
 
-        //         const [categoriesData, setCategoriesData] = useState([]);
-        //         const [Loading, setLoading] = useState(true);
-        //      useEffect(() => {
-        //     const fetchCategories = async () => {
-        //     try {
-        //         const response = await axios.get(`${server}/get-allcategories`);
-        //         // Assuming your API response has a `categories` key
-        //         const filteredData = response.data.categories.filter(i => i.title !== 'Coming Soon ...');
-        //         setCategoriesData(filteredData);
-        //     } catch (error) {
-        //         console.error('Error fetching categories:', error);
-        //         alert('Failed to fetch categories');
-        //     } finally {
-        //         setLoading(false);
-        //     }
-        //     };
+                const [categoriesData, setCategoriesData] = useState([]);
+                const [Loading, setLoading] = useState(true);
+             useEffect(() => {
+            const fetchCategories = async () => {
+            try {
+                const response = await axios.get(`${server}/get-allcategories`);
+                // Assuming your API response has a `categories` key
+                const filteredData = response.data.categories.filter(i => i.title !== 'Coming Soon ...');
+                setCategoriesData(filteredData);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                alert('Failed to fetch categories');
+            } finally {
+                setLoading(false);
+            }
+            };
 
-        //     fetchCategories();
-        // }, []);
+            fetchCategories();
+        }, []);
     
         
 
@@ -414,8 +448,10 @@ function Navbar1() {
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("infants") }}>Infants (0-3 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => { submitHandleagegroup("kids") }}>Kids (3-10 Yrs)</h6>
                                                     <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("teens")}>Teens </h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom & Me <span className='text-[#ff0000d6] text-[11px]'> (coming soon)</span></h6>
-                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization <span className='text-[#ff0000d6] text-[11px]'> (coming soon)</span></h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("mom")}>Mom  </h6>
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => submitHandleagegroup("momandme")}>Mom & Me </h6>
+
+                                                    <h6 className='pb-2 collectionnav1' onClick={() => { navigate("/personalised-prosperity") }}>Customization </h6>
                                                     {/* <h6 className='pb-2 collectionnav1'>Gifts</h6>
                                                     <h6 className='pb-2 collectionnav1'>Gallery </h6>
                                                     <h6 className='pb-2 collectionnav1'>Media</h6> */}
@@ -429,7 +465,7 @@ function Navbar1() {
 
 
 
-                                             <div className='mt-5 ml-7'>
+                                             {/* <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>
                                                     <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
@@ -478,7 +514,7 @@ function Navbar1() {
                                                                     ))}
                                                                 </div>
                                                             )}
- 
+  */}
 
                                                             {/* Display subcategories */}
                                                             {/* <div className={`subcatchild top-3 left-[100%]  pb-4 w-[250px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm`}>
@@ -492,19 +528,19 @@ function Navbar1() {
                                                                 ))}
                                                             </div> */}
 
-                                                            
+{/*                                                             
                                                          
                                                          </div>
                                                     ))} 
 
                                                     
                                                  </div>
-                                            </div> 
+                                            </div>  */}
 
 
                                         {/* api code working  */}
 
-                                                {/* <div className='mt-5 ml-7'>
+                                                <div className='mt-5 ml-7'>
                                                 <div className='mb-2 '>
                                                     <h3 className='font-[500]'>Shop By Category</h3>
                                                 </div>
@@ -514,26 +550,26 @@ function Navbar1() {
                                                     key={index}
                                                     className="subcatmain relative"
                                                     onClick={() => submitHandle(i)}
-                                                    > */}
+                                                    >
                                                     {/* Category Image */}
-                                                    {/* <img
+                                                    <img
                                                         loading='lazy'
                                                         src={`${imgdburl}${i?.image_Url?.url}`}
                                                         alt={i.title}
                                                         style={{ width: '30px', height: '35px', objectFit: 'contain', userSelect: 'none' }}
-                                                    /> */}
+                                                    />
                                                     {/* Category Title */}
-                                                    {/* <h3 className="text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]">
+                                                    <h3 className="text-[14px] m-1 cursor-pointer select-none font-Poppins hover:text-[#1BB8E5]">
                                                         {i.title}
-                                                    </h3> */}
+                                                    </h3>
                                                     {/* Conditional Right Arrow Icon */}
-                                                    {/* {(i.title === 'Diamond Pendants' || i.title === 'kids accessories') && (
+                                                    {(i.subcategories.length > 0 ) && (
                                                         <div className="absolute left-[95%]">
                                                         <IoMdArrowDropright />
                                                         </div>
-                                                    )} */}
+                                                    )}
                                                     {/* Subcategories Dropdown */}
-                                                     {/* {(i.title === 'Diamond Pendants' || i.title === 'kids accessories') && (
+                                                     {(i.subcategories.length > 0 ) && (
                                                         <div className="subcatchild top-3 left-[100%] pt-[2px] pb-2 w-[230px] bg-[#fff] border border-[#eee] absolute z-30 rounded-[3px] shadow-sm">
                                                         {i.subcategories && i.subcategories.map((val, subIndex) => (
                                                             <div
@@ -551,7 +587,7 @@ function Navbar1() {
                                                     </div>
                                                 ))}
                                                 </div>
-                                            </div>  */}
+                                            </div> 
 
 
 

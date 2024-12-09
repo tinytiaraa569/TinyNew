@@ -79,7 +79,7 @@ const PerformanceDashboard = () => {
   const paginatedData = sortedData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="px-6 pt-3 pb-6 border border-gray-100 shadow-lg rounded-[10px]">
+    <div className="px-6 pt-3 pb-6 border bg-white border-gray-100 shadow-lg rounded-[10px]">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-[20px] font-[00] text-gray-600">Performance Dashboard</h1>
         <select

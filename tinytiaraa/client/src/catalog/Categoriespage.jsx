@@ -717,7 +717,7 @@ function Categoriespage() {
 
   
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <DashboardHeader />
       <div className="w-full flex">
         <div className="w-[100px] md:w-[330px] max-w-[800px] min-w-[100px]">

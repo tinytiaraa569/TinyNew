@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { categoriesData } from '../static/data'
+// import { categoriesData } from '../static/data'
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { createProduct } from '../redux/actions/product'
 import { IoIosAdd, IoMdClose } from "react-icons/io";
@@ -1557,24 +1557,24 @@ function CreateProduct() {
         teens: false,
         mom: false,
     });
-    // const[categoriesData,setcategoriesData] =useState([])
-    // const[Loading,setLoading] =useState(true)
+    const[categoriesData,setcategoriesData] =useState([])
+    const[Loading,setLoading] =useState(true)
 
 
-    // useEffect(() => {
-    //     const fetchCategories = async () => {
-    //       try {
-    //         const response = await axios.get(`${server}/get-allcategories`);
-    //         setcategoriesData(response.data.categories);
-    //       } catch (error) {
-    //         console.error('Error fetching categories:', error);
-    //       } finally {
-    //         setLoading(false);
-    //       }
-    //     };
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await axios.get(`${server}/get-allcategories`);
+            setcategoriesData(response.data.categories);
+          } catch (error) {
+            console.error('Error fetching categories:', error);
+          } finally {
+            setLoading(false);
+          }
+        };
     
-    //     fetchCategories();
-    //   }, []);
+        fetchCategories();
+      }, []);
 
 
 
@@ -2101,9 +2101,17 @@ function CreateProduct() {
                         {category &&
                             categoriesData
                                 .find((cat) => cat.title === category)
-                                ?.subcategories.map((subcat, index) => (
-                                    <option key={index} value={subcat.name}>{subcat.name}</option>
-                                ))}
+                                ?.subcategories.length > 0 ? (
+                                // If subcategories exist, map through them
+                                categoriesData
+                                    .find((cat) => cat.title === category)
+                                    ?.subcategories.map((subcat, index) => (
+                                        <option key={index} value={subcat.name}>{subcat.name}</option>
+                                    ))
+                            ) : (
+                                // If no subcategories, show "No Products" option
+                                <option value='No Products' >No Products</option>
+                            )}
                     </select>
                 </div>
 

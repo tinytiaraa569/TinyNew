@@ -7,10 +7,10 @@ import ReferDetail from './ReferDetail';
 function AllReferral() {
     const [referrals, setReferrals] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [referralsPerPage] = useState(5); // Number of referrals to show per page
+    const [referralsPerPage] = useState(12); // Number of referrals to show per page
     const [loading, setLoading] = useState(true);
     const [selectedReferral, setSelectedReferral] = useState(null);
-
+    const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
     useEffect(() => {
         const fetchReferrals = async () => {
@@ -34,17 +34,29 @@ function AllReferral() {
         fetchReferrals();
     }, []);
 
-    // Calculate the referrals to show on the current page
+    // Filter referrals based on the search query (code, name, or email)
+    const filteredReferrals = referrals.filter(
+        (referral) =>
+            referral.referralCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            referral.referrer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            referral.referrer.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
+    // Calculate the referrals to show on the current page after filtering
     const indexOfLastReferral = currentPage * referralsPerPage;
     const indexOfFirstReferral = indexOfLastReferral - referralsPerPage;
-    const currentReferrals = referrals.slice(indexOfFirstReferral, indexOfLastReferral);
+    const currentReferrals = filteredReferrals.slice(indexOfFirstReferral, indexOfLastReferral);
 
     // Pagination logic
-    const totalPages = Math.ceil(referrals.length / referralsPerPage);
+    const totalPages = Math.ceil(filteredReferrals.length / referralsPerPage);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
     const openDetails = (referralId) => {
         setSelectedReferral(referralId);
     };
@@ -53,34 +65,51 @@ function AllReferral() {
         setSelectedReferral(null);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+        setCurrentPage(1); // Reset to the first page when the search query changes
+    };
+
     return (
-        <div className="p-4 w-[90%] ">
-            <h1 className="text-xl font-bold mb-4">All Referrals</h1>
+        <div className="p-6 bg-[#f0f8ff] rounded-lg shadow-lg w-full mx-auto">
+            <h1 className="text-2xl font-semibold text-gray-800 mb-6">All Referrals</h1>
+
+            {/* Search bar */}
+            <div className="mb-4">
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    placeholder="Search by Referral Code, Referrer Name, or Email"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                />
+            </div>
+
             {loading ? (
-                <p>Loading...</p>
+                <p className="text-center text-lg text-gray-500">Loading...</p>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+                    <table className="min-w-full bg-white">
                         <thead>
-                            <tr className="bg-gray-100 border-b border-gray-200">
-                                <th className="py-2 px-4 border-r">Referral Code</th>
-                                <th className="py-2 px-4 border-r">Referrer Name</th>
-                                <th className="py-2 px-4 border-r">Referrer Email</th>
-                                <th className="py-2 px-4 border-r">Created At</th>
-                                <th className="py-2 px-4">Details</th>
+                            <tr className="bg-gray-100 border-b border-gray-300">
+                                <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">Referral Code</th>
+                                <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">Referrer Name</th>
+                                <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">Referrer Email</th>
+                                <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">Created At</th>
+                                <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">Details</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentReferrals.map((referral) => (
                                 <tr key={referral._id} className="hover:bg-gray-50">
-                                    <td className="py-2 px-4 border-b border-gray-200">{referral.referralCode}</td>
-                                    <td className="py-2 px-4 border-b border-gray-200">{referral.referrer.name}</td>
-                                    <td className="py-2 px-4 border-b border-gray-200">{referral.referrer.email}</td>
-                                    <td className="py-2 px-4 border-b border-gray-200">{new Date(referral.createdAt).toLocaleDateString()}</td>
-                                    <td className="py-2 px-4 border-b border-gray-200">
+                                    <td className="py-4 px-6 text-sm text-gray-700">{referral.referralCode}</td>
+                                    <td className="py-4 px-6 text-sm text-gray-700">{referral.referrer.name}</td>
+                                    <td className="py-4 px-6 text-sm text-gray-700">{referral.referrer.email}</td>
+                                    <td className="py-4 px-6 text-sm text-gray-700">{new Date(referral.createdAt).toLocaleDateString()}</td>
+                                    <td className="py-4 px-6 text-sm">
                                         <button
                                             onClick={() => openDetails(referral._id)}
-                                            className="text-blue-500 hover:underline"
+                                            className="text-blue-600 hover:underline font-medium"
                                         >
                                             View Details
                                         </button>
@@ -89,42 +118,49 @@ function AllReferral() {
                             ))}
                         </tbody>
                     </table>
-                    <div className="flex justify-center mt-4">
-                        <nav className="inline-flex">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 border border-gray-300 rounded-l-md bg-white text-gray-500 hover:bg-gray-100"
-                            >
-                                Previous
-                            </button>
-                            {Array.from({ length: totalPages }, (_, index) => (
+
+                    {/* Pagination controls */}
+                    <div className="flex justify-between items-center mt-6">
+                        <div className="text-sm text-gray-700">
+                            Showing {indexOfFirstReferral + 1} to {Math.min(indexOfLastReferral, filteredReferrals.length)} of {filteredReferrals.length} referrals
+                        </div>
+                        <div>
+                            <nav className="inline-flex space-x-2">
                                 <button
-                                    key={index}
-                                    onClick={() => handlePageChange(index + 1)}
-                                    className={`px-4 py-2 border-t border-b border-gray-300 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-gray-500'} hover:bg-gray-100`}
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="px-4 py-2 bg-white border border-gray-300 rounded-l-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50"
                                 >
-                                    {index + 1}
+                                    Previous
                                 </button>
-                            ))}
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                                className="px-4 py-2 border border-gray-300 rounded-r-md bg-white text-gray-500 hover:bg-gray-100"
-                            >
-                                Next
-                            </button>
-                        </nav>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handlePageChange(index + 1)}
+                                        className={`px-4 py-2 border text-sm ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-gray-600'} hover:bg-gray-100 rounded-md`}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 bg-white border border-gray-300 rounded-r-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+                                >
+                                    Next
+                                </button>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             )}
+
             {selectedReferral && (
                 <ReferDetail
                     referralId={selectedReferral}
                     onClose={closeDetails}
                 />
             )}
-
         </div>
     );
 }

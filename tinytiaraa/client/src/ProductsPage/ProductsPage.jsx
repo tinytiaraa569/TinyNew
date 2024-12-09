@@ -5,7 +5,7 @@ import ProductCard from "../MainSection/Productcard/ProductCard";
 import "./productpage.css";
 import { RiCloseFill } from "react-icons/ri"; // Import the cross icon
 import { IoSearchOutline } from "react-icons/io5";
-import { categoriesData } from "@/static/data";
+// import { categoriesData } from "@/static/data";
 import bannerimg from "./banner.jpg";
 import allproductbanner from "./allproductbanner.jpg";
 
@@ -15,6 +15,8 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import axios from "axios";
+import { imgdburl, server } from "@/server";
 
 function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +36,27 @@ function ProductsPage() {
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   
   console.log(products, "products");
+
+  const [categoriesData, setCategoriesData] = useState([]);
+    useEffect(() => {
+    const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${server}/get-allcategories`);
+      // Assuming your API response has a `categories` key
+      const filteredData = response.data.categories.filter(i => i.title !== 'Coming Soon ...');
+      setCategoriesData(filteredData);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      alert('Failed to fetch categories');
+    } finally {
+      setLoading(false);
+    }
+    };
+
+    fetchCategories();
+    }, []);
+
+    console.log(categoriesData,"from product page ")
 
   const categoryData = searchParams.get("category");
   const subcategoryData = searchParams.get("subcategory");
@@ -60,6 +83,14 @@ function ProductsPage() {
   };
   const isMobile = useIsMobile();
 
+
+
+  
+
+
+
+
+
   useEffect(() => {
     if (isMobile) {
       setIsFilterVisible(false);
@@ -78,7 +109,7 @@ function ProductsPage() {
     console.log(subcategoryData, "see what is subcategory data");
 
     // Find the category that matches the categoryData
-    if (categoryData) {
+    if (categoryData && categoriesData?.length > 0) {
         const matchedCategory = categoriesData.find(
             (category) => category?.title === categoryData
         );
@@ -89,7 +120,8 @@ function ProductsPage() {
     if (subcategoryData) {
         setSelectedSubcategory(subcategoryData); // Assuming selectedSubcategory is defined in state
     }
-}, [location.search]); // Dependency array to re-run when URL changes
+}, [location.search,categoriesData]); // Dependency array to re-run when URL changes
+
   // useEffect(() => {
   //   const subcategoryData = searchParams.get("subcategory");
   //   console.log(subcategoryData, "see what is subcategory data");
@@ -466,16 +498,39 @@ function ProductsPage() {
         );
       }
 
+      // if (selectedAgeGroup) {
+      //   filteredProducts = filteredProducts.filter((product) => {
+      //     // Check if `ageGroup` is defined and is an object
+      //     if (product.ageGroup && typeof product.ageGroup === "object") {
+      //       // Check if `selectedAgeGroup` exists in `ageGroup`
+      //       return product.ageGroup[selectedAgeGroup] === true;
+      //     }
+      //     return false; // Exclude products with undefined or invalid `ageGroup`
+      //   });
+      // }
+
       if (selectedAgeGroup) {
         filteredProducts = filteredProducts.filter((product) => {
-          // Check if `ageGroup` is defined and is an object
-          if (product.ageGroup && typeof product.ageGroup === "object") {
-            // Check if `selectedAgeGroup` exists in `ageGroup`
-            return product.ageGroup[selectedAgeGroup] === true;
-          }
-          return false; // Exclude products with undefined or invalid `ageGroup`
+            // Check if `ageGroup` is defined and is an object
+            if (product.ageGroup && typeof product.ageGroup === "object") {
+                if (selectedAgeGroup === "momandme") {
+                    // Check if `infants`, `kids`, and `mom` are true for "momandme"
+                    return (
+                        product.ageGroup.infants === true &&
+                        product.ageGroup.kids === true &&
+                        product.ageGroup.mom === true
+                    );
+                } else {
+                    // Check if `selectedAgeGroup` exists in `ageGroup`
+                    return product.ageGroup[selectedAgeGroup] === true;
+                }
+            }
+            return false; // Exclude products with undefined or invalid `ageGroup`
         });
-      }
+    }
+
+
+
       // Sort products
       switch (sortOption) {
         case "priceLowToHigh":
@@ -704,6 +759,7 @@ function ProductsPage() {
   const handleSubcatClick = (subcat) => {
     setSelectedSubcat(subcat); // Update the selected subcategory
   };
+  console.log(selectedCategory,'selectedCategory')
  
 
   return (
@@ -718,7 +774,7 @@ function ProductsPage() {
           <div className="productbanner">
             <img
               loading="lazy"
-              src={selectedCategory.productbanner}
+              src={`${imgdburl}${selectedCategory.productbanner.url}`}
               alt={selectedCategory.title}
             />
           </div>
@@ -1254,26 +1310,26 @@ function ProductsPage() {
 
 
               {/* //only for diamond endant */}
-              {selectedCategory && selectedCategory.title === "Diamond Pendants" && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
+              {selectedCategory && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
                       <div className="mt-3 mb-10 pb-7 border-b border-[#5DC2B0]">
                           <h2 className="text-center text-[18px] font-[500] text-[#000000cf] mb-4">SubCategories</h2>
                           <div className="flex justify-center">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                              <div className={`grid justify-center grid-cols-1 sm:grid-cols-2 ${selectedCategory.subcategories.length >= 4 ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "}  gap-8`}>
                                   {selectedCategory.subcategories.map((subcat, subIndex) => (
-                                      <div onClick={() => submitHandle(selectedCategory, subcat)} key={subIndex} className="subpendantcat cursor-pointer w-[230px] bg-white border border-[#41d399c1] shadow-lg rounded-[22px] p-4 text-center transition-transform duration-300 hover:shadow-xl hover:scale-105">
+                                      <div onClick={() => submitHandle(selectedCategory, subcat)} key={subIndex} className="subpendantcat cursor-pointer w-[210px] bg-white border border-[#41d399c1] shadow-lg rounded-[22px] p-4 text-center transition-transform duration-300 hover:shadow-xl hover:scale-105">
 
                                           <h3 className="font-Poppins text-[16px] text-[#000000c2] mb-2">{subcat.name}</h3>
                                           <div className="overflow-hidden">
 
-                                          {subcat?.imageUrl && (
+                                          {subcat?.image_Url && (
                                             <img
-                                            src={subcat.imageUrl}
+                                            src={`${imgdburl}${subcat.image_Url.url}`}
                                             alt={subcat.name}
-                                            className="w-full h-32 object-contain scale-[1.35] rounded-md mt-2"
+                                            className={`w-full h-32 object-contain ${selectedCategory.title === "kids accessories" ? "" : "scale-125"}  rounded-md mt-2`}
                                             />
                                           )}
                                           </div>
-                                          <div className="mt-[-20px] mb-3">
+                                          <div className={`${selectedCategory.title === "kids accessories" ? "mt-[-2px]" : "mt-[-15px]"}  mb-3`}>
                                           <button
                                               
                                               className="subpendantcatbtn px-5 py-2 bg-[#35a578] text-white rounded hover:bg-[#006039] text-[10px]"
@@ -1288,9 +1344,9 @@ function ProductsPage() {
                       </div>
                   )}
 
-
+{/* 
                   {/* //only for kids accessories */}
-                  {selectedCategory && selectedCategory.title === "kids accessories" && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
+                  {/* {selectedCategory && selectedCategory.title === "kids accessories" && selectedCategory.subcategories && selectedCategory.subcategories.length > 0 && (
                       <div className="mt-3 mb-10 pb-7 border-b border-[#5DC2B0]">
                           <h2 className="text-center text-[18px] font-[500] text-[#000000cf] mb-4">SubCategories</h2>
                           <div className="flex justify-center">
@@ -1322,7 +1378,7 @@ function ProductsPage() {
                               </div>
                           </div>
                       </div>
-                  )}
+                  )} */} 
 
 
 

@@ -35,7 +35,7 @@ const coupounCodeSchema = new mongoose.Schema({
     //     required: true,
     //    },
 
-    selectedProduct :{
+    selectedProducts :{
         type:String,
 
 

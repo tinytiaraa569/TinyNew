@@ -1,12 +1,9 @@
-
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProduct, getAllProductShop } from '../redux/actions/product'
-import { AiOutlineArrowRight, AiOutlineDelete, AiOutlineEye } from 'react-icons/ai'
+import { AiOutlineArrowRight, AiOutlineCheckCircle, AiOutlineClockCircle, AiOutlineExclamationCircle } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import Loader from '../Loader/Loader'
 import { DataGrid } from '@mui/x-data-grid'
-import { getAllEventsShop } from '@/redux/actions/event'
 import { getAllOrdersOfShop } from '@/redux/actions/order'
 
 function AllOrders() {
@@ -14,23 +11,11 @@ function AllOrders() {
     
     const { orders, isLoading } = useSelector((state) => state.order)
 
-    
     const dispatch = useDispatch()
-
-
-
-    // const handleDelete = (id) =>{
-    //     // console.log(id)
-    //     dispatch(deleteProduct(id))
-    //     window.location.reload()
-    // }
-
-    
 
     useEffect(() => {
         dispatch(getAllOrdersOfShop(seller._id));
     }, [dispatch]);
-
 
     const columns = [
         { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -40,8 +25,40 @@ function AllOrders() {
             minWidth: 130,
             flex: 0.7,
             cellClassName: (params) => {
-                return params.value === "Delivered" ? "greenColor" : "redColor";
+                switch (params.value) {
+                    case "Delivered":
+                        return "text-green-600";  // Green for Delivered
+                    case "Processing":
+                        return "text-red-600";   // Red for Processing
+                    case "Shipping":
+                        return "text-orange-600"; // Orange for Shipping
+                    default:
+                        return "text-gray-500";  // Default color if status is not matched
+                }
             },
+            renderCell: (params) => {
+                let icon;
+                switch (params.value) {
+                    case "Delivered":
+                        icon = <AiOutlineCheckCircle className="inline mr-2" size={16} />;
+                        break;
+                    case "Processing":
+                        icon = <AiOutlineClockCircle className="inline mr-2" size={16} />;
+                        break;
+                    case "Shipping":
+                        icon = <AiOutlineExclamationCircle className="inline mr-2" size={16} />;
+                        break;
+                    default:
+                        icon = null;
+                }
+
+                return (
+                    <div className="flex items-center">
+                        {icon}
+                        <span>{params.value}</span>
+                    </div>
+                );
+            }
         },
         {
             field: "itemsQty",
@@ -73,6 +90,7 @@ function AllOrders() {
             ),
         },
     ];
+
     const row = [];
 
     orders && orders.forEach((item) => {
@@ -81,11 +99,8 @@ function AllOrders() {
             itemsQty: item.cart.length,
             total: "Inr ₹" + item.totalPrice,
             status: item.status
-        })
-
-    })
-
-
+        });
+    });
 
     return (
         <>
@@ -93,6 +108,9 @@ function AllOrders() {
                 <Loader />
             ) : (
                 <div className="w-full mx-8 pt-1 mt-10 bg-white">
+                    <div className='mb-2'>
+                        <h2 className='text-[22px] font-[500]'>All Orders</h2>
+                    </div>
                     <DataGrid
                         rows={row}
                         columns={columns}
@@ -107,4 +125,3 @@ function AllOrders() {
 }
 
 export default AllOrders
-

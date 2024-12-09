@@ -90,7 +90,7 @@ const PageViewsTable = () => {
         )
         :
         (
-            <div className='px-6 pt-5 pb-6 border border-gray-100 shadow-md rounded-[10px]'>
+            <div className='bg-white px-6 pt-5 pb-6 border border-gray-100 shadow-md rounded-[10px]'>
             <div className='flex justify-between items-center'>
               <div>
                 <h3 className='text-[18px] text-[#000000a8]'>Page Views</h3>
